@@ -1,4 +1,4 @@
-package com.passon
+package com.wsr
 
 import org.junit.Test
 
