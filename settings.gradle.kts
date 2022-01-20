@@ -9,3 +9,4 @@
 
 rootProject.name = "Passon"
 include("core")
+include(":android", ":android:app")
