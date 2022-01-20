@@ -8,4 +8,4 @@
  */
 
 rootProject.name = "Passon"
-include("app")
+include("core")
