@@ -7,7 +7,7 @@ android {
     compileSdk = 31
     defaultConfig {
         applicationId = "com.passon"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 31
         versionCode = 1
         versionName = "1.0"
@@ -45,4 +45,7 @@ dependencies {
     //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
+
+    implementation(project(":core:usecase"))
+    implementation(project(":core:repository"))
 }

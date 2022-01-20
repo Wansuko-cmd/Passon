@@ -5,5 +5,8 @@ import com.wsr.user.Email
 class GetPasswordGroupUseCase(
     private val passwordGroupRepository: PasswordGroupRepository
 ) {
-    fun getAllByEmail(email: Email): List<PasswordGroup> = passwordGroupRepository.getAllByEmail(email)
+    fun getAllByEmail(email: String): List<ExternalPasswordGroup> =
+        passwordGroupRepository
+            .getAllByEmail(Email(email))
+            .map { it.toExternal() }
 }
