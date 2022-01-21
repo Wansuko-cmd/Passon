@@ -7,6 +7,7 @@ import com.wsr.password_group.ExternalPasswordGroup
 class IndexViewHolder(
     private val binding: FragmentIndexItemRowBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
+
     fun bind(passwordGroup: ExternalPasswordGroup) {
         binding.title.text = passwordGroup.title
     }

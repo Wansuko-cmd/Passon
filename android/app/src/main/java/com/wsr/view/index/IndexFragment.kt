@@ -44,6 +44,7 @@ class IndexFragment : Fragment() {
             adapter = indexAdapter
         }
 
+        //テスト用
         indexAdapter.submitList(indexViewModel.getAllPasswordGroup("example1@gmail.com"))
     }
 }

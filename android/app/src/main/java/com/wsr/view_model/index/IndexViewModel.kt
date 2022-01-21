@@ -7,7 +7,7 @@ import com.wsr.password_group.TestPasswordGroupRepositoryImpl
 
 class IndexViewModel : ViewModel() {
 
-    private val getPasswordGroupUseCase = GetPasswordGroupUseCase(TestPasswordGroupRepositoryImpl())
+    private val getPasswordGroupUseCase = GetPasswordGroupUseCase()
 
     fun getAllPasswordGroup(email: String): List<ExternalPasswordGroup> =
         getPasswordGroupUseCase.getAllByEmail(email)
