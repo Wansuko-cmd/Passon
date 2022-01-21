@@ -9,6 +9,6 @@
         android:id="@+id/index_fragment"
         android:name="com.wsr.view.index.IndexFragment"
         android:label="index_fragment"
-        tools:layout="@layout/fragment_index"/>
+        tools:layout="@layout/fragment_index" />
 
 </navigation>

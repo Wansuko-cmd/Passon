@@ -8,5 +8,5 @@ data class PasswordGroup(
     val id: UniqueId,
     val email: Email,
     val title: String,
-    val  remark: String,
+    val remark: String,
 )

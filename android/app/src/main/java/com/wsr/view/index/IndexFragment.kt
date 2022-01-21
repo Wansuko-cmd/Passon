@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.databinding.FragmentIndexBinding
 import com.wsr.view_model.index.IndexViewModel
@@ -16,9 +15,9 @@ class IndexFragment : Fragment() {
     private lateinit var _binding: FragmentIndexBinding
     private val binding get() = _binding
 
-    lateinit var indexRecyclerView: RecyclerView
-    lateinit var indexAdapter: IndexAdapter
-    lateinit var indexViewModel: IndexViewModel
+    private lateinit var indexRecyclerView: RecyclerView
+    private lateinit var indexAdapter: IndexAdapter
+    private lateinit var indexViewModel: IndexViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +39,6 @@ class IndexFragment : Fragment() {
         indexAdapter = IndexAdapter()
         indexRecyclerView = binding.indexFragmentRecyclerView.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
             adapter = indexAdapter
         }
 

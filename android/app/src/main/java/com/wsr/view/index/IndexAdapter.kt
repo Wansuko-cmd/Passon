@@ -23,7 +23,6 @@ class IndexAdapter : ListAdapter<ExternalPasswordGroup, IndexViewHolder>(diffCal
 }
 
 
-
 private val diffCallback = object : DiffUtil.ItemCallback<ExternalPasswordGroup>() {
 
     override fun areItemsTheSame(

@@ -10,14 +10,14 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/title"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:layout_gravity="center_vertical"
-        android:textSize="35sp"
-        android:layout_height="wrap_content"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
         android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
         android:text="title"
-        android:focusable="true" />
+        android:textSize="35sp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
