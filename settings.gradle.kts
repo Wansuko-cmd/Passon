@@ -8,5 +8,5 @@
  */
 
 rootProject.name = "Passon"
-include("core")
-include(":android", ":android:app")
+include("core", "core:domain", "core:usecase", "core:repository")
+include("android", "android:app")
