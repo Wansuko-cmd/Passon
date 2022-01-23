@@ -1,8 +1,8 @@
-package com.wsr.view_model.index
+package com.wsr.index
 
 import androidx.lifecycle.ViewModel
-import com.wsr.password_group.ExternalPasswordGroup
-import com.wsr.password_group.GetPasswordGroupUseCase
+import com.wsr.passwordgroup.ExternalPasswordGroup
+import com.wsr.passwordgroup.GetPasswordGroupUseCase
 
 class IndexViewModel : ViewModel() {
 

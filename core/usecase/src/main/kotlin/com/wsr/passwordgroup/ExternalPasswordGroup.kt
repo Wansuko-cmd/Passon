@@ -1,4 +1,4 @@
-package com.wsr.password_group
+package com.wsr.passwordgroup
 
 data class ExternalPasswordGroup(
     val id: String,

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/index_fragment"
-        android:name="com.wsr.view.index.IndexFragment"
+        android:name="com.wsr.index.IndexFragment"
         android:label="index_fragment"
         tools:layout="@layout/fragment_index" />
 

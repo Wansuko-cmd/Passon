@@ -1,11 +1,11 @@
-package com.wsr.view.index
+package com.wsr.index
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.wsr.databinding.FragmentIndexItemRowBinding
-import com.wsr.password_group.ExternalPasswordGroup
+import com.wsr.passwordgroup.ExternalPasswordGroup
 
 class IndexAdapter : ListAdapter<ExternalPasswordGroup, IndexViewHolder>(diffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndexViewHolder {

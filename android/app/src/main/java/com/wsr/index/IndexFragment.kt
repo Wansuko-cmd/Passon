@@ -1,4 +1,4 @@
-package com.wsr.view.index
+package com.wsr.index
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.databinding.FragmentIndexBinding
-import com.wsr.view_model.index.IndexViewModel
 
 class IndexFragment : Fragment() {
 

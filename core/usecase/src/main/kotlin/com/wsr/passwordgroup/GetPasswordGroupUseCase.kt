@@ -1,4 +1,4 @@
-package com.wsr.password_group
+package com.wsr.passwordgroup
 
 import com.wsr.user.Email
 
