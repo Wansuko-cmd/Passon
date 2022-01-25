@@ -47,7 +47,7 @@ class IndexFragment : Fragment() {
 
         lifecycleScope.launch {
             indexViewModel.uiState.collect {
-                if(it.isFetching) indexAdapter.submitList(it.passwordGroups)
+                if (it.isFetching) indexAdapter.submitList(it.passwordGroups)
             }
         }
     }

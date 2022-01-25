@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.wsr.databinding.FragmentIndexItemRowBinding
 
-class IndexAdapter : ListAdapter<PasswordGroupIndexUIState, IndexViewHolder>(diffCallback) {
+class IndexAdapter : ListAdapter<PasswordGroupIndexUiState, IndexViewHolder>(diffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndexViewHolder {
         val view = FragmentIndexItemRowBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -22,15 +22,15 @@ class IndexAdapter : ListAdapter<PasswordGroupIndexUIState, IndexViewHolder>(dif
 }
 
 
-private val diffCallback = object : DiffUtil.ItemCallback<PasswordGroupIndexUIState>() {
+private val diffCallback = object : DiffUtil.ItemCallback<PasswordGroupIndexUiState>() {
 
     override fun areItemsTheSame(
-        oldItem: PasswordGroupIndexUIState,
-        newItem: PasswordGroupIndexUIState,
+        oldItem: PasswordGroupIndexUiState,
+        newItem: PasswordGroupIndexUiState,
     ): Boolean = oldItem.id == newItem.id
 
     override fun areContentsTheSame(
-        oldItem: PasswordGroupIndexUIState,
-        newItem: PasswordGroupIndexUIState,
+        oldItem: PasswordGroupIndexUiState,
+        newItem: PasswordGroupIndexUiState,
     ): Boolean = oldItem == newItem
 }

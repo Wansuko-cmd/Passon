@@ -12,14 +12,14 @@ class IndexViewModel : ViewModel() {
 
     private val getPasswordGroupUseCase = GetPasswordGroupUseCase()
 
-    private val _uiState = MutableStateFlow(IndexUIState())
+    private val _uiState = MutableStateFlow(IndexUiState())
     val uiState = _uiState.asStateFlow()
 
     fun fetchPasswordGroup(email: String) {
         viewModelScope.launch {
             val passwordGroups = getPasswordGroupUseCase
                 .getAllByEmail(email)
-                .map { it.toIndexUIState() }
+                .map { it.toIndexUiState() }
 
             _uiState.update { it.copy(isFetching = true, passwordGroups = passwordGroups) }
         }

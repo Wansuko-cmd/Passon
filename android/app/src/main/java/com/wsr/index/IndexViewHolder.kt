@@ -7,7 +7,7 @@ class IndexViewHolder(
     private val binding: FragmentIndexItemRowBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bindPasswordGroup(passwordGroup: PasswordGroupIndexUIState) {
+    fun bindPasswordGroup(passwordGroup: PasswordGroupIndexUiState) {
         binding.title.text = passwordGroup.title
     }
 }
