@@ -51,4 +51,7 @@ dependencies {
 
     implementation(project(":core:usecase"))
     implementation(project(":core:repository"))
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
 }
