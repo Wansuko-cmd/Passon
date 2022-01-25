@@ -42,23 +42,23 @@ class TestPasswordGroupRepositoryImpl : PasswordGroupRepository {
         )
     }
 
-    override fun getAllByEmail(email: Email): List<PasswordGroup> =
+    override suspend fun getAllByEmail(email: Email): List<PasswordGroup> =
         data.filter { it.email == email }
 
-    override fun getById(id: UniqueId): PasswordGroup =
+    override suspend fun getById(id: UniqueId): PasswordGroup =
         data.first { it.id == id }
 
-    override fun create(passwordGroup: PasswordGroup) {
+    override suspend fun create(passwordGroup: PasswordGroup) {
         data.add(passwordGroup)
     }
 
-    override fun update(id: UniqueId, title: String, remark: String) {
+    override suspend fun update(id: UniqueId, title: String, remark: String) {
         val oldPasswordGroup = data.first { it.id == id }
         data.removeIf { it == oldPasswordGroup }
         data.add(PasswordGroup(id, oldPasswordGroup.email, title, remark))
     }
 
-    override fun delete(id: UniqueId) {
+    override suspend fun delete(id: UniqueId) {
         data.removeIf { it.id == id }
     }
 }

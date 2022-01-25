@@ -26,9 +26,9 @@ class TestUserRepositoryImpl : UserRepository {
         )
     }
 
-    override fun getByEmail(email: Email): User = data.first { it.email == email }
+    override suspend fun getByEmail(email: Email): User = data.first { it.email == email }
 
-    override fun create(user: User) {
+    override suspend fun create(user: User) {
         data.add(user)
     }
 }

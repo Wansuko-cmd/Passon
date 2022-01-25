@@ -1,7 +1,7 @@
 package com.wsr.user
 
 interface UserRepository {
-    fun getByEmail(email: Email): User
+    suspend fun getByEmail(email: Email): User
 
-    fun create(user: User)
+    suspend fun create(user: User)
 }

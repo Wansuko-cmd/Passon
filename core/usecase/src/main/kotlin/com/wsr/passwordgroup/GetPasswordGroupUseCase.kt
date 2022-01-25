@@ -6,7 +6,7 @@ class GetPasswordGroupUseCase {
 
     private val passwordGroupRepository: PasswordGroupRepository = TestPasswordGroupRepositoryImpl()
 
-    fun getAllByEmail(email: String): List<PasswordGroupUseCaseModel> =
+    suspend fun getAllByEmail(email: String): List<PasswordGroupUseCaseModel> =
         passwordGroupRepository
             .getAllByEmail(Email(email))
             .map { it.toUseCaseModel() }

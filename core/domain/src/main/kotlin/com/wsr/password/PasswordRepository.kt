@@ -3,8 +3,8 @@ package com.wsr.password
 import com.wsr.utils.UniqueId
 
 interface PasswordRepository {
-    fun getAllByPasswordGroupId(passwordGroupId: UniqueId): List<Password>
-    fun create(password: Password)
-    fun update(password: Password)
-    fun delete(id: UniqueId)
+    suspend fun getAllByPasswordGroupId(passwordGroupId: UniqueId): List<Password>
+    suspend fun create(password: Password)
+    suspend fun update(password: Password)
+    suspend fun delete(id: UniqueId)
 }
