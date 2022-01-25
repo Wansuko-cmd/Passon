@@ -1,0 +1,7 @@
+groups:
+  - name: teachers # name of the group
+    reviewers: 2 # how many reviewers do you want to assign?
+    usernames: # github usernames of the reviewers
+      - blackbracken
+      - Index197511
+      - ymdkit

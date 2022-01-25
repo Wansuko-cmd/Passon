@@ -1,13 +1,27 @@
 package com.wsr.index
 
 import androidx.lifecycle.ViewModel
-import com.wsr.passwordgroup.ExternalPasswordGroup
+import androidx.lifecycle.viewModelScope
 import com.wsr.passwordgroup.GetPasswordGroupUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class IndexViewModel : ViewModel() {
 
     private val getPasswordGroupUseCase = GetPasswordGroupUseCase()
 
-    fun getAllPasswordGroup(email: String): List<ExternalPasswordGroup> =
-        getPasswordGroupUseCase.getAllByEmail(email)
+    private val _uiState = MutableStateFlow(IndexUiState())
+    val uiState = _uiState.asStateFlow()
+
+    fun fetchPasswordGroup(email: String) {
+        viewModelScope.launch {
+            val passwordGroups = getPasswordGroupUseCase
+                .getAllByEmail(email)
+                .map { it.toIndexUiState() }
+
+            _uiState.update { it.copy(isFetching = true, passwordGroups = passwordGroups) }
+        }
+    }
 }
