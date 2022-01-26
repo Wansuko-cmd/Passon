@@ -6,9 +6,7 @@ allprojects {
     repositories {
         mavenCentral()
     }
-}
 
-subprojects {
     apply(plugin = "kotlin")
 
     tasks.test {
@@ -16,7 +14,6 @@ subprojects {
     }
 
     dependencies {
-        implementation(project(":utils"))
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     }
 }

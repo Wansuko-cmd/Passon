@@ -3,6 +3,8 @@ package com.wsr.index
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.passwordgroup.GetPasswordGroupUseCase
+import com.wsr.state.map
+import com.wsr.state.mapBoth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -17,11 +19,15 @@ class IndexViewModel : ViewModel() {
 
     fun fetchPasswordGroup(email: String) {
         viewModelScope.launch {
-            val passwordGroups = getPasswordGroupUseCase
+            getPasswordGroupUseCase
                 .getAllByEmail(email)
-                .map { it.toIndexUiState() }
-
-            _uiState.update { it.copy(isFetching = true, passwordGroups = passwordGroups) }
+                .map { list -> list.map { it.toIndexUiState() } }
+                .mapBoth(
+                    onSuccess = { list ->
+                        _uiState.update { it.copy(isFetching = true, passwordGroups = list) }
+                    },
+                    onError = {}
+                )
         }
     }
 }
