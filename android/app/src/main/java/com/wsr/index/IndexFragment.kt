@@ -49,7 +49,7 @@ class IndexFragment : Fragment() {
 
         lifecycleScope.launch {
             indexViewModel.uiState.collect {
-                it.passwordGroups.execute(
+                it.passwordGroupsState.execute(
                     onLoading = {},
                     onSuccess = { list -> indexAdapter.submitList(list) },
                     onFailure = { state ->

@@ -14,5 +14,5 @@ fun PasswordGroupUseCaseModel.toIndexUiState() =
     PasswordGroupIndexUiState(this.id, this.title)
 
 data class IndexUiState(
-    val passwordGroups: State<List<PasswordGroupIndexUiState>, ErrorIndexUiState> = State.Loading(),
+    val passwordGroupsState: State<List<PasswordGroupIndexUiState>, ErrorIndexUiState> = State.Loading(),
 )

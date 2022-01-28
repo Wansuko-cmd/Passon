@@ -26,13 +26,13 @@ class IndexViewModel : ViewModel() {
                 .mapBoth(
                     success = { list ->
                         _uiState.update {
-                            it.copy(passwordGroups = State.Success(list))
+                            it.copy(passwordGroupsState = State.Success(list))
                         }
                     },
                     failure = { error ->
                         _uiState.update {
                             it.copy(
-                                passwordGroups = State.Failure(
+                                passwordGroupsState = State.Failure(
                                     ErrorIndexUiState(error.message ?: "")
                                 )
                             )
