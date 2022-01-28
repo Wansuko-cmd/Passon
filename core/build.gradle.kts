@@ -16,7 +16,7 @@ subprojects {
     }
 
     dependencies {
-        implementation(project(":utils"))
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+        implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.14")
     }
 }

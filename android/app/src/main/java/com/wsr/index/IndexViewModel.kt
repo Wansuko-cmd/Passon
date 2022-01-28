@@ -2,9 +2,10 @@ package com.wsr.index
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.michaelbull.result.map
+import com.github.michaelbull.result.mapBoth
 import com.wsr.passwordgroup.GetPasswordGroupUseCase
-import com.wsr.state.map
-import com.wsr.state.mapBoth
+import com.wsr.utils.State
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -23,10 +24,18 @@ class IndexViewModel : ViewModel() {
                 .getAllByEmail(email)
                 .map { list -> list.map { it.toIndexUiState() } }
                 .mapBoth(
-                    onSuccess = { list ->
-                        _uiState.update { it.copy(isFetching = true, passwordGroups = list) }
+                    success = { list ->
+                        _uiState.update {
+                            it.copy(passwordGroups = State.Success(list))
+                        }
                     },
-                    onError = {}
+                    failure = { error ->
+                        _uiState.update {
+                            it.copy(
+                                passwordGroups = State.Failure(ErrorIndexUiState(error.message ?: ""))
+                            )
+                        }
+                    }
                 )
         }
     }
