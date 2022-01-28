@@ -33,9 +33,7 @@ class IndexViewModel : ViewModel() {
                         _uiState.update {
                             it.copy(
                                 passwordGroups = State.Failure(
-                                    ErrorIndexUiState(
-                                        error.message ?: ""
-                                    )
+                                    ErrorIndexUiState(error.message ?: "")
                                 )
                             )
                         }

@@ -10,9 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.databinding.FragmentIndexBinding
-import com.wsr.utils.onFailure
-import com.wsr.utils.onLoading
-import com.wsr.utils.onSuccess
+import com.wsr.utils.*
 import kotlinx.coroutines.launch
 
 class IndexFragment : Fragment() {
@@ -51,12 +49,13 @@ class IndexFragment : Fragment() {
 
         lifecycleScope.launch {
             indexViewModel.uiState.collect {
-                it.passwordGroups
-                    .onLoading { }
-                    .onSuccess { list -> indexAdapter.submitList(list) }
-                    .onFailure { state ->
+                it.passwordGroups.execute(
+                    onLoading = {},
+                    onSuccess = { list -> indexAdapter.submitList(list) },
+                    onFailure = { state ->
                         Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
-                    }
+                    },
+                )
             }
         }
     }
