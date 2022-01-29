@@ -1,4 +1,4 @@
-@EpoxyDataBindingLayouts({ R.layout.fragment_index_item_row })
+@EpoxyDataBindingLayouts({ R.layout.fragment_index_model_password_group})
 
 package com.wsr;
 
