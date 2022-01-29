@@ -1,14 +1,14 @@
 package com.wsr.index
 
 import com.airbnb.epoxy.TypedEpoxyController
-import com.wsr.fragmentIndexModelPasswordGroup
+import com.wsr.fragmentIndexPasswordGroupRow
 
 class IndexEpoxyController :
     TypedEpoxyController<List<PasswordGroupIndexUiState>>() {
 
     override fun buildModels(list: List<PasswordGroupIndexUiState>) {
         list.forEach { passwordGroup ->
-            fragmentIndexModelPasswordGroup {
+            fragmentIndexPasswordGroupRow {
                 id(passwordGroup.id)
                 title(passwordGroup.title)
             }

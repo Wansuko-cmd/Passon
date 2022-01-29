@@ -1,5 +1,5 @@
-@EpoxyDataBindingLayouts({ R.layout.fragment_index_model_password_group})
+@EpoxyDataBindingPattern(rClass = R.class, layoutPrefix = "model")
 
 package com.wsr;
 
-import com.airbnb.epoxy.EpoxyDataBindingLayouts;
+import com.airbnb.epoxy.EpoxyDataBindingPattern;

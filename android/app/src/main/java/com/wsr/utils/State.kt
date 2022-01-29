@@ -11,7 +11,7 @@ fun <T, E> State<T, E>.execute(
     onSuccess: (T) -> Unit,
     onFailure: (E) -> Unit
 ): State<T, E> {
-    when(this) {
+    when (this) {
         is State.Loading -> onLoading()
         is State.Success -> onSuccess(this.value)
         is State.Failure -> onFailure(this.value)

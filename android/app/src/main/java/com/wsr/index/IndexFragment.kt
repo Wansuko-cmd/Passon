@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.databinding.FragmentIndexBinding
-import com.wsr.utils.*
+import com.wsr.utils.execute
 import kotlinx.coroutines.launch
 
 class IndexFragment : Fragment() {
