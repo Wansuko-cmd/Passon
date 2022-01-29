@@ -8,6 +8,6 @@ class IndexViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindPasswordGroup(passwordGroup: PasswordGroupIndexUiState) {
-        binding.title.text = passwordGroup.title
+//        binding.title.text = passwordGroup.title
     }
 }
