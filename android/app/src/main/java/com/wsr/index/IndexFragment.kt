@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.databinding.FragmentIndexBinding
-import com.wsr.utils.*
+import com.wsr.utils.State
 import kotlinx.coroutines.launch
 
 class IndexFragment : Fragment() {
@@ -18,8 +18,8 @@ class IndexFragment : Fragment() {
     private lateinit var _binding: FragmentIndexBinding
     private val binding get() = _binding
 
+    private lateinit var indexEpoxyController: IndexEpoxyController
     private lateinit var indexRecyclerView: RecyclerView
-    private lateinit var indexAdapter: IndexAdapter
     private lateinit var indexViewModel: IndexViewModel
 
     override fun onCreateView(
@@ -41,21 +41,28 @@ class IndexFragment : Fragment() {
             fetchPasswordGroup("example1@gmail.com")
         }
 
-        indexAdapter = IndexAdapter()
+        indexEpoxyController = IndexEpoxyController()
+
         indexRecyclerView = binding.indexFragmentRecyclerView.apply {
             setHasFixedSize(true)
-            adapter = indexAdapter
+            adapter = indexEpoxyController.adapter
         }
 
         lifecycleScope.launch {
             indexViewModel.uiState.collect {
-                it.passwordGroupsState.execute(
-                    onLoading = {},
-                    onSuccess = { list -> indexAdapter.submitList(list) },
-                    onFailure = { state ->
-                        Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
-                    },
-                )
+                when (it.passwordGroupsState) {
+                    is State.Loading -> {}
+                    is State.Success -> {
+                        indexEpoxyController.setData(it.passwordGroupsState.value)
+                    }
+                    is State.Failure -> {
+                        Toast.makeText(
+                            context,
+                            it.passwordGroupsState.value.message,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
             }
         }
     }

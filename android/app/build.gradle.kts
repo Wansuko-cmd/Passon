@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -33,6 +34,10 @@ android {
     viewBinding {
         isEnabled = true
     }
+
+    dataBinding {
+        isEnabled = true
+    }
 }
 
 dependencies {
@@ -56,4 +61,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
 
     implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.14")
+
+    implementation("com.airbnb.android:epoxy:3.9.0")
+    implementation("com.airbnb.android:epoxy-databinding:3.9.0")
+    kapt("com.airbnb.android:epoxy-processor:3.9.0")
 }
