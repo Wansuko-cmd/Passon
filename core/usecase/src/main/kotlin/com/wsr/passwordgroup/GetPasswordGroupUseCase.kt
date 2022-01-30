@@ -14,5 +14,4 @@ class GetPasswordGroupUseCase {
                 .getAllByEmail(Email(email))
                 .map { it.toUseCaseModel() }
         }
-
 }
