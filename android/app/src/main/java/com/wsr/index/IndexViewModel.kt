@@ -2,13 +2,9 @@ package com.wsr.index
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.michaelbull.result.map
-import com.github.michaelbull.result.mapOrElse
 import com.wsr.passwordgroup.GetPasswordGroupUseCase
-import com.wsr.utils.State
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import com.wsr.state.mapBoth
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class IndexViewModel : ViewModel() {
@@ -18,19 +14,21 @@ class IndexViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(IndexUiState())
     val uiState = _uiState.asStateFlow()
 
+    init {
+        getPasswordGroupUseCase.data.onEach { state ->
+            val passwordGroupsState = state.mapBoth(
+                success = { list -> list.map { it.toIndexUiState() } },
+                failure = { ErrorIndexUiState(it.message ?: "") }
+            )
+
+            _uiState.update { it.copy(passwordGroupsState = passwordGroupsState) }
+
+        }.launchIn(viewModelScope)
+    }
+
     fun fetchPasswordGroup(email: String) {
-
         viewModelScope.launch {
-
-            val passwordGroupState = getPasswordGroupUseCase
-                .getAllByEmail(email)
-                .map { list -> list.map { it.toIndexUiState() } }
-                .mapOrElse(
-                    transform = { list -> State.Success(list) },
-                    default = { error -> State.Failure(ErrorIndexUiState(error.message ?: "")) }
-                )
-
-            _uiState.update { it.copy(passwordGroupsState = passwordGroupState) }
+            getPasswordGroupUseCase.getAllByEmail(email)
         }
     }
 }
