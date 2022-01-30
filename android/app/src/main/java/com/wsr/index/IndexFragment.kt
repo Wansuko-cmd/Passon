@@ -49,16 +49,16 @@ class IndexFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            indexViewModel.uiState.collect {
-                when (it.passwordGroupsState) {
+            indexViewModel.uiState.collect { indexUiState ->
+                when (indexUiState.passwordGroupsState) {
                     is State.Loading -> {}
                     is State.Success -> {
-                        indexEpoxyController.setData(it.passwordGroupsState.value)
+                        indexEpoxyController.setData(indexUiState.passwordGroupsState.value)
                     }
                     is State.Failure -> {
                         Toast.makeText(
                             context,
-                            it.passwordGroupsState.value.message,
+                            indexUiState.passwordGroupsState.value.message,
                             Toast.LENGTH_LONG
                         ).show()
                     }

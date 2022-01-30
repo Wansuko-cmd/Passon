@@ -62,7 +62,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
 
 
-    implementation("com.airbnb.android:epoxy:3.9.0")
-    implementation("com.airbnb.android:epoxy-databinding:3.9.0")
-    kapt("com.airbnb.android:epoxy-processor:3.9.0")
+    val epoxyVersion = "4.6.3"
+    implementation("com.airbnb.android:epoxy:$epoxyVersion")
+    implementation("com.airbnb.android:epoxy-databinding:$epoxyVersion")
+    kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
 }
