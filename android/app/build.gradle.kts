@@ -54,15 +54,17 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
 
+    implementation(project(":utils"))
     implementation(project(":core:usecase"))
     implementation(project(":core:repository"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha01")
 
-    implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.14")
 
-    implementation("com.airbnb.android:epoxy:3.9.0")
-    implementation("com.airbnb.android:epoxy-databinding:3.9.0")
-    kapt("com.airbnb.android:epoxy-processor:3.9.0")
+    val epoxyVersion = "4.6.3"
+    implementation("com.airbnb.android:epoxy:$epoxyVersion")
+    implementation("com.airbnb.android:epoxy-databinding:$epoxyVersion")
+    kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
 }

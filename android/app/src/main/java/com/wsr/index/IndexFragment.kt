@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.databinding.FragmentIndexBinding
-import com.wsr.utils.State
+import com.wsr.state.State
 import kotlinx.coroutines.launch
 
 class IndexFragment : Fragment() {
@@ -49,18 +51,20 @@ class IndexFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            indexViewModel.uiState.collect {
-                when (it.passwordGroupsState) {
-                    is State.Loading -> {}
-                    is State.Success -> {
-                        indexEpoxyController.setData(it.passwordGroupsState.value)
-                    }
-                    is State.Failure -> {
-                        Toast.makeText(
-                            context,
-                            it.passwordGroupsState.value.message,
-                            Toast.LENGTH_LONG
-                        ).show()
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                indexViewModel.uiState.collect { indexUiState ->
+                    when (indexUiState.passwordGroupsState) {
+                        is State.Loading -> {}
+                        is State.Success -> {
+                            indexEpoxyController.setData(indexUiState.passwordGroupsState.value)
+                        }
+                        is State.Failure -> {
+                            Toast.makeText(
+                                context,
+                                indexUiState.passwordGroupsState.value.message,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     }
                 }
             }

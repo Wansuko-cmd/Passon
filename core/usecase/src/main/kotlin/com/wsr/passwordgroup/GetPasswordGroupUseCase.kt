@@ -1,17 +1,23 @@
 package com.wsr.passwordgroup
 
-import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.runCatching
+import com.wsr.state.State
 import com.wsr.user.Email
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class GetPasswordGroupUseCase {
 
     private val passwordGroupRepository: PasswordGroupRepository = TestPasswordGroupRepositoryImpl()
 
-    suspend fun getAllByEmail(email: String): Result<List<PasswordGroupUseCaseModel>, Throwable> =
-        runCatching {
-            passwordGroupRepository
-                .getAllByEmail(Email(email))
-                .map { it.toUseCaseModel() }
-        }
+    private val _data =
+        MutableStateFlow<State<List<PasswordGroupUseCaseModel>, Throwable>>(State.Loading)
+    val data get() = _data.asStateFlow()
+
+    suspend fun getAllByEmail(email: String) {
+        val passwordGroup = passwordGroupRepository
+            .getAllByEmail(Email(email))
+            .map { it.toUseCaseModel() }
+
+        _data.emit(State.Success(passwordGroup))
+    }
 }
