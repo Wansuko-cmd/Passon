@@ -51,7 +51,7 @@ class IndexFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 indexViewModel.uiState.collect { indexUiState ->
                     when (indexUiState.passwordGroupsState) {
                         is State.Loading -> {}

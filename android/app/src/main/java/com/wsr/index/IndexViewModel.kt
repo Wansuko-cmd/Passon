@@ -3,6 +3,7 @@ package com.wsr.index
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.passwordgroup.GetPasswordGroupUseCase
+import com.wsr.passwordgroup.TestPasswordGroupRepositoryImpl
 import com.wsr.state.mapBoth
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -12,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class IndexViewModel : ViewModel() {
 
-    private val getPasswordGroupUseCase = GetPasswordGroupUseCase()
+    private val getPasswordGroupUseCase = GetPasswordGroupUseCase(TestPasswordGroupRepositoryImpl())
 
     val uiState = emptyFlow<IndexUiState>()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), IndexUiState())

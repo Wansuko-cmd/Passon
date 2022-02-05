@@ -5,9 +5,9 @@ import com.wsr.user.Email
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class GetPasswordGroupUseCase {
-
-    private val passwordGroupRepository: PasswordGroupRepository = TestPasswordGroupRepositoryImpl()
+class GetPasswordGroupUseCase(
+    private val passwordGroupRepository: PasswordGroupRepository
+) {
 
     private val _data =
         MutableStateFlow<State<List<PasswordGroupUseCaseModel>, Throwable>>(State.Loading)
