@@ -11,7 +11,7 @@ import org.koin.dsl.module
 val module = module {
 
     /* View Model */
-    viewModel { IndexViewModel() }
+    viewModel { IndexViewModel(get()) }
 
     /* UseCase */
     single<GetPasswordGroupUseCase> { GetPasswordGroupUseCaseImpl(get()) }

@@ -7,12 +7,10 @@ import com.wsr.state.mapBoth
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class IndexViewModel : ViewModel(), KoinComponent {
-
-    private val getPasswordGroupUseCase by inject<GetPasswordGroupUseCase>()
+class IndexViewModel(
+    private val getPasswordGroupUseCase: GetPasswordGroupUseCase,
+) : ViewModel(){
 
     val uiState = flowOf(IndexUiState())
         .combine(getPasswordGroupUseCase.data) { uiState, state ->
