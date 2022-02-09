@@ -7,17 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.databinding.FragmentIndexBinding
 import com.wsr.state.State
 import com.wsr.utils.launchInLifecycleScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class IndexFragment : Fragment() {
 
@@ -26,7 +20,7 @@ class IndexFragment : Fragment() {
 
     private lateinit var indexEpoxyController: IndexEpoxyController
     private lateinit var indexRecyclerView: RecyclerView
-    private lateinit var indexViewModel: IndexViewModel
+    private val indexViewModel: IndexViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,10 +34,7 @@ class IndexFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        indexViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(IndexViewModel::class.java).apply {
+        indexViewModel.apply {
             fetchPasswordGroup("example1@gmail.com")
         }
 

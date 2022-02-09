@@ -68,4 +68,10 @@ dependencies {
     implementation("com.airbnb.android:epoxy:$epoxyVersion")
     implementation("com.airbnb.android:epoxy-databinding:$epoxyVersion")
     kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
+
+    val koinVersion = "3.0.2"
+    //Koin
+    implementation("io.insert-koin:koin-ktor:$koinVersion")
+    implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
+    implementation("io.insert-koin:koin-android:$koinVersion")
 }

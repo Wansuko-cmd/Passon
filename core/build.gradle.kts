@@ -32,5 +32,11 @@ subprojects {
     dependencies {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
         implementation(project(":utils"))
+
+
+        val koinVersion = "3.0.2"
+        //Koin
+        implementation("io.insert-koin:koin-ktor:$koinVersion")
+        implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
     }
 }
