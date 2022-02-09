@@ -13,6 +13,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.databinding.FragmentIndexBinding
 import com.wsr.state.State
+import com.wsr.utils.launchInLifecycleScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class IndexFragment : Fragment() {
@@ -50,24 +54,23 @@ class IndexFragment : Fragment() {
             adapter = indexEpoxyController.adapter
         }
 
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                indexViewModel.uiState.collect { indexUiState ->
-                    when (indexUiState.passwordGroupsState) {
-                        is State.Loading -> {}
-                        is State.Success -> {
-                            indexEpoxyController.setData(indexUiState.passwordGroupsState.value)
-                        }
-                        is State.Failure -> {
-                            Toast.makeText(
-                                context,
-                                indexUiState.passwordGroupsState.value.message,
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
+        launchInLifecycleScope(Lifecycle.State.STARTED) {
+            indexViewModel.uiState.collect { indexUiState ->
+                when (indexUiState.passwordGroupsState) {
+                    is State.Loading -> {}
+                    is State.Success -> {
+                        indexEpoxyController.setData(indexUiState.passwordGroupsState.value)
+                    }
+                    is State.Failure -> {
+                        Toast.makeText(
+                            context,
+                            indexUiState.passwordGroupsState.value.message,
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
             }
         }
     }
 }
+

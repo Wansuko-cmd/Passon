@@ -1,23 +1,21 @@
 package com.wsr.index
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wsr.passwordgroup.GetPasswordGroupUseCase
+import com.wsr.passwordgroup.GetPasswordGroupUseCaseImpl
 import com.wsr.passwordgroup.TestPasswordGroupRepositoryImpl
 import com.wsr.state.mapBoth
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class IndexViewModel : ViewModel() {
 
-    private val getPasswordGroupUseCase = GetPasswordGroupUseCase(TestPasswordGroupRepositoryImpl())
+    private val getPasswordGroupUseCase = GetPasswordGroupUseCaseImpl(TestPasswordGroupRepositoryImpl())
 
-    val uiState = emptyFlow<IndexUiState>()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), IndexUiState())
+    val uiState = flowOf(IndexUiState())
         .combine(getPasswordGroupUseCase.data) { uiState, state ->
+            Log.d("UI_STATE", "OUT")
             uiState.copy(
                 passwordGroupsState = state.mapBoth(
                     success = { list -> list.map { it.toIndexUiState() } },
