@@ -4,18 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.passwordgroup.GetPasswordGroupUseCase
 import com.wsr.state.mapBoth
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
-class IndexViewModel : ViewModel() {
+class IndexViewModel(
+    private val getPasswordGroupUseCase: GetPasswordGroupUseCase,
+) : ViewModel(){
 
-    private val getPasswordGroupUseCase = GetPasswordGroupUseCase()
-
-    val uiState = emptyFlow<IndexUiState>()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), IndexUiState())
+    val uiState = flowOf(IndexUiState())
         .combine(getPasswordGroupUseCase.data) { uiState, state ->
             uiState.copy(
                 passwordGroupsState = state.mapBoth(
