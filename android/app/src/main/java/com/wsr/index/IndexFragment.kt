@@ -34,9 +34,7 @@ class IndexFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        indexViewModel.apply {
-            fetchPasswordGroup("example1@gmail.com")
-        }
+        indexViewModel.fetchPasswordGroup("example1@gmail.com")
 
         indexEpoxyController = IndexEpoxyController()
 
