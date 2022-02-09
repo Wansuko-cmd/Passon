@@ -1,6 +1,5 @@
 package com.wsr.index
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.passwordgroup.GetPasswordGroupUseCase
@@ -17,7 +16,6 @@ class IndexViewModel : ViewModel(), KoinComponent {
 
     val uiState = flowOf(IndexUiState())
         .combine(getPasswordGroupUseCase.data) { uiState, state ->
-            Log.d("UI_STATE", "OUT")
             uiState.copy(
                 passwordGroupsState = state.mapBoth(
                     success = { list -> list.map { it.toIndexUiState() } },
