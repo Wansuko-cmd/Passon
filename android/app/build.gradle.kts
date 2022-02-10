@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -50,27 +51,33 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 
-    //Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.4.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.4.0")
-
+    //Project
     implementation(project(":utils"))
     implementation(project(":core:usecase"))
     implementation(project(":core:repository"))
     implementation(project(":core:domain"))
 
+    //Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.4.0")
+    implementation("androidx.navigation:navigation-ui-ktx:2.4.0")
+
+    //SafeArgs
+//    implementation("android.arch.navigation:navigation-fragment:1.0.0")
+//    implementation("android.arch.navigation:navigation-ui:1.0.0")
+
+    //Coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha01")
 
-
+    //Epoxy
     val epoxyVersion = "4.6.3"
     implementation("com.airbnb.android:epoxy:$epoxyVersion")
     implementation("com.airbnb.android:epoxy-databinding:$epoxyVersion")
     kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
 
-    val koinVersion = "3.0.2"
     //Koin
+    val koinVersion = "3.0.2"
     implementation("io.insert-koin:koin-ktor:$koinVersion")
     implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
     implementation("io.insert-koin:koin-android:$koinVersion")

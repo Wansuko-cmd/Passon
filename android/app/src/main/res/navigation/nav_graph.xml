@@ -9,6 +9,20 @@
         android:id="@+id/index_fragment"
         android:name="com.wsr.index.IndexFragment"
         android:label="index_fragment"
-        tools:layout="@layout/fragment_index" />
+        tools:layout="@layout/fragment_index" >
+        <action
+            android:id="@+id/action_index_fragment_to_show_fragment"
+            app:destination="@id/show_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/show_fragment"
+        android:name="com.wsr.show.ShowFragment"
+        android:label="show_fragment"
+        tools:layout="@layout/fragment_show">
+        <argument
+            android:name="password_group_id"
+            app:argType="string"/>
+    </fragment>
 
 </navigation>

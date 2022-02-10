@@ -1,9 +1,10 @@
 package com.wsr.index
 
+import android.util.Log
 import com.airbnb.epoxy.TypedEpoxyController
 import com.wsr.indexPasswordGroupRow
 
-class IndexEpoxyController :
+class IndexEpoxyController(private val onClickListener: (String) -> Unit) :
     TypedEpoxyController<List<PasswordGroupIndexUiState>>() {
 
     override fun buildModels(list: List<PasswordGroupIndexUiState>) {
@@ -11,6 +12,9 @@ class IndexEpoxyController :
             indexPasswordGroupRow {
                 id(passwordGroup.id)
                 title(passwordGroup.title)
+                listener { _, _, _, _ ->
+                    this@IndexEpoxyController.onClickListener(passwordGroup.id)
+                }
             }
         }
     }
