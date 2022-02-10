@@ -1,5 +1,8 @@
 package com.wsr.show
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +46,17 @@ class ShowFragment : Fragment() {
         showEpoxyController = ShowEpoxyController(
             onClickShowPassword = {
                 showViewModel.changePasswordState(it.id, it.showPassword)
+            },
+            onClickPasswordCopy = {
+                val clip = ClipData.newPlainText("password", it.password)
+                val clipBoardManager = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                clipBoardManager.setPrimaryClip(clip)
+
+                Toast.makeText(
+                    context,
+                    "コピーしました",
+                    Toast.LENGTH_LONG,
+                ).show()
             }
         )
 

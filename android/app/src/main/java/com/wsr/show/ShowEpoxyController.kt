@@ -1,9 +1,15 @@
 package com.wsr.show
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import com.airbnb.epoxy.TypedEpoxyController
 import com.wsr.showPasswordRow
 
-class ShowEpoxyController(private val onClickShowPassword: (PasswordShowUiState) -> Unit) :
+class ShowEpoxyController(
+    private val onClickShowPassword: (PasswordShowUiState) -> Unit,
+    private val onClickPasswordCopy: (PasswordShowUiState) -> Unit,
+) :
     TypedEpoxyController<List<PasswordShowUiState>>() {
 
     override fun buildModels(list: List<PasswordShowUiState>) {
@@ -17,6 +23,9 @@ class ShowEpoxyController(private val onClickShowPassword: (PasswordShowUiState)
                     this@ShowEpoxyController.onClickShowPassword(
                         password.copy(showPassword = !password.showPassword)
                     )
+                }
+                onClickPasswordCopy { _, _, _, _ ->
+                    this@ShowEpoxyController.onClickPasswordCopy(password)
                 }
             }
         }
