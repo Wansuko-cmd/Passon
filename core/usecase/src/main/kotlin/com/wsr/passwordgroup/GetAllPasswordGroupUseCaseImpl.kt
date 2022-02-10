@@ -1,6 +1,6 @@
 package com.wsr.passwordgroup
 
-import com.wsr.exceptions.GetAllException
+import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.state.State
 import com.wsr.user.Email
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +11,7 @@ class GetAllPasswordGroupUseCaseImpl(
 ) : GetAllPasswordGroupUseCase {
 
     private val _data =
-        MutableStateFlow<State<List<PasswordGroupUseCaseModel>, GetAllException>>(State.Loading)
+        MutableStateFlow<State<List<PasswordGroupUseCaseModel>, GetAllDataFailedException>>(State.Loading)
     override val data get() = _data.asStateFlow()
 
     override suspend fun getAllByEmail(email: String) {
@@ -22,7 +22,7 @@ class GetAllPasswordGroupUseCaseImpl(
 
             _data.emit(State.Success(passwordGroups))
 
-        } catch (e: GetAllException) {
+        } catch (e: GetAllDataFailedException) {
             _data.emit(State.Failure(e))
         }
     }
