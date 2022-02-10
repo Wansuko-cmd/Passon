@@ -81,4 +81,7 @@ dependencies {
     implementation("io.insert-koin:koin-ktor:$koinVersion")
     implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
     implementation("io.insert-koin:koin-android:$koinVersion")
+
+    //Material UI
+    implementation("com.google.android.material:material:1.6.0-alpha02")
 }

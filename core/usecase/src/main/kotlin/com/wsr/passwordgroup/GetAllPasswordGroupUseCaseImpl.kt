@@ -16,11 +16,11 @@ class GetAllPasswordGroupUseCaseImpl(
 
     override suspend fun getAllByEmail(email: String) {
         try {
-            val passwordGroup = passwordGroupRepository
+            val passwordGroups = passwordGroupRepository
                 .getAllByEmail(Email(email))
                 .map { it.toUseCaseModel() }
 
-            _data.emit(State.Success(passwordGroup))
+            _data.emit(State.Success(passwordGroups))
 
         } catch (e: GetAllException) {
             _data.emit(State.Failure(e))

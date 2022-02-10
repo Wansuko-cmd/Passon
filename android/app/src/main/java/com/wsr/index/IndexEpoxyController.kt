@@ -1,6 +1,5 @@
 package com.wsr.index
 
-import android.util.Log
 import com.airbnb.epoxy.TypedEpoxyController
 import com.wsr.indexPasswordGroupRow
 

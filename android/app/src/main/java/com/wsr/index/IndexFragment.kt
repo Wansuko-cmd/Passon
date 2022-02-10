@@ -1,14 +1,12 @@
 package com.wsr.index
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.databinding.FragmentIndexBinding
@@ -37,7 +35,7 @@ class IndexFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        indexViewModel.fetchPasswordGroup("example1@gmail.com")
+        indexViewModel.fetchPasswordGroups("example1@gmail.com")
 
         indexEpoxyController = IndexEpoxyController(::navigateToShow)
 
@@ -57,7 +55,7 @@ class IndexFragment : Fragment() {
                         Toast.makeText(
                             context,
                             indexUiState.passwordGroupsState.value.message,
-                            Toast.LENGTH_LONG
+                            Toast.LENGTH_LONG,
                         ).show()
                     }
                 }
