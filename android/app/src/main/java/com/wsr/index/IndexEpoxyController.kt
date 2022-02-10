@@ -3,7 +3,7 @@ package com.wsr.index
 import com.airbnb.epoxy.TypedEpoxyController
 import com.wsr.indexPasswordGroupRow
 
-class IndexEpoxyController(private val onClickListener: (String) -> Unit) :
+class IndexEpoxyController(private val onClick: (String) -> Unit) :
     TypedEpoxyController<List<PasswordGroupIndexUiState>>() {
 
     override fun buildModels(list: List<PasswordGroupIndexUiState>) {
@@ -11,8 +11,8 @@ class IndexEpoxyController(private val onClickListener: (String) -> Unit) :
             indexPasswordGroupRow {
                 id(passwordGroup.id)
                 title(passwordGroup.title)
-                onClickListener { _, _, _, _ ->
-                    this@IndexEpoxyController.onClickListener(passwordGroup.id)
+                onClick { _, _, _, _ ->
+                    this@IndexEpoxyController.onClick(passwordGroup.id)
                 }
             }
         }
