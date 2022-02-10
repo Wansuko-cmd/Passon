@@ -3,7 +3,7 @@ package com.wsr.show
 import com.airbnb.epoxy.TypedEpoxyController
 import com.wsr.showPasswordRow
 
-class ShowEpoxyController :
+class ShowEpoxyController() :
     TypedEpoxyController<List<PasswordShowUiState>>() {
 
     override fun buildModels(list: List<PasswordShowUiState>) {
@@ -11,7 +11,9 @@ class ShowEpoxyController :
             showPasswordRow {
                 id(password.id)
                 name(password.name)
-                password(password.password)
+                password(if(password.showPassword) password.password else "非表示")
+                showPassword(password.showPassword)
+                onClickShowPassword { _, _, _, _ -> }
             }
         }
     }

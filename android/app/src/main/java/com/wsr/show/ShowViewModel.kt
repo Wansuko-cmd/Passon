@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 class ShowViewModel(
     private val getAllPasswordUseCase: GetAllPasswordUseCase
 ) : ViewModel() {
+
     val uiState = flowOf(ShowUiState("Title"))
         .combine(getAllPasswordUseCase.data) { uiState, state ->
             uiState.copy(

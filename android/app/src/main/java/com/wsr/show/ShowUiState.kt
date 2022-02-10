@@ -7,7 +7,7 @@ data class PasswordShowUiState(
     val id: String,
     val name: String,
     val password: String,
-    val isShowPassword: Boolean,
+    val showPassword: Boolean,
 )
 
 data class ErrorShowUiState(val message: String)

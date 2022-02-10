@@ -11,7 +11,7 @@ class IndexEpoxyController(private val onClickListener: (String) -> Unit) :
             indexPasswordGroupRow {
                 id(passwordGroup.id)
                 title(passwordGroup.title)
-                listener { _, _, _, _ ->
+                onClickListener { _, _, _, _ ->
                     this@IndexEpoxyController.onClickListener(passwordGroup.id)
                 }
             }
