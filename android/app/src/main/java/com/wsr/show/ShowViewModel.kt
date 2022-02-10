@@ -34,13 +34,13 @@ class ShowViewModel(
         }
     }
 
-    fun changePasswordState(id: String, showPassword: Boolean) = viewModelScope.launch {
+    fun changePasswordState(id: String, showPassword: Boolean) =
         viewModelScope.launch {
-            if(_uiState.value.passwordsState is State.Success) {
-                val newPasswordsState = (_uiState.value.passwordsState as State.Success<List<PasswordShowUiState>>).value
-                    .map { if(it.id == id) it.copy(showPassword = showPassword) else it }
+            if (_uiState.value.passwordsState is State.Success) {
+                val newPasswordsState =
+                    (_uiState.value.passwordsState as State.Success<List<PasswordShowUiState>>).value
+                        .map { if (it.id == id) it.copy(showPassword = showPassword) else it }
                 _uiState.emit(_uiState.value.copy(passwordsState = State.Success(newPasswordsState)))
             }
         }
-    }
 }

@@ -2,7 +2,6 @@ package com.wsr.show
 
 import com.airbnb.epoxy.TypedEpoxyController
 import com.wsr.showPasswordRow
-import java.util.*
 
 class ShowEpoxyController(private val onClickShowPassword: (PasswordShowUiState) -> Unit) :
     TypedEpoxyController<List<PasswordShowUiState>>() {

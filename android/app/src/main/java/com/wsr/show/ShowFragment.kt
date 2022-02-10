@@ -1,7 +1,6 @@
 package com.wsr.show
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,9 +40,11 @@ class ShowFragment : Fragment() {
 
         showViewModel.fetchPasswords(passwordGroupId)
 
-        showEpoxyController = ShowEpoxyController {
-            showViewModel.changePasswordState(it.id, it.showPassword)
-        }
+        showEpoxyController = ShowEpoxyController(
+            onClickShowPassword = {
+                showViewModel.changePasswordState(it.id, it.showPassword)
+            }
+        )
 
         showRecyclerView = binding.showFragmentRecyclerView.apply {
             setHasFixedSize(true)
