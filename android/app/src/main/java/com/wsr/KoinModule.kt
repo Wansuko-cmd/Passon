@@ -1,8 +1,8 @@
 package com.wsr
 
 import com.wsr.index.IndexViewModel
-import com.wsr.passwordgroup.GetPasswordGroupUseCase
-import com.wsr.passwordgroup.GetPasswordGroupUseCaseImpl
+import com.wsr.passwordgroup.GetAllPasswordGroupUseCase
+import com.wsr.passwordgroup.GetAllPasswordGroupUseCaseImpl
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.TestPasswordGroupRepositoryImpl
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -14,7 +14,7 @@ val module = module {
     viewModel { IndexViewModel(get()) }
 
     /* UseCase */
-    single<GetPasswordGroupUseCase> { GetPasswordGroupUseCaseImpl(get()) }
+    single<GetAllPasswordGroupUseCase> { GetAllPasswordGroupUseCaseImpl(get()) }
 
     /* Repository */
     single<PasswordGroupRepository> { TestPasswordGroupRepositoryImpl() }

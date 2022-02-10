@@ -2,14 +2,14 @@ package com.wsr.index
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wsr.passwordgroup.GetPasswordGroupUseCase
+import com.wsr.passwordgroup.GetAllPasswordGroupUseCase
 import com.wsr.state.mapBoth
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
 class IndexViewModel(
-    private val getPasswordGroupUseCase: GetPasswordGroupUseCase,
+    private val getPasswordGroupUseCase: GetAllPasswordGroupUseCase,
 ) : ViewModel(){
 
     val uiState = flowOf(IndexUiState())
