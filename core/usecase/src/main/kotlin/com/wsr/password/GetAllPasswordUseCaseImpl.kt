@@ -10,7 +10,8 @@ class GetAllPasswordUseCaseImpl(
     private val passwordRepository: PasswordRepository
 ) : GetAllPasswordUseCase {
 
-    private val _data = MutableStateFlow<State<List<PasswordUseCaseModel>, GetAllException>>(State.Loading)
+    private val _data =
+        MutableStateFlow<State<List<PasswordUseCaseModel>, GetAllException>>(State.Loading)
     override val data get() = _data.asStateFlow()
 
     override suspend fun getAllByPasswordGroupId(passwordGroupId: String) {

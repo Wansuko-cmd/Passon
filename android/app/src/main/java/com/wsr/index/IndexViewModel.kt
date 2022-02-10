@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class IndexViewModel(
     private val getAllPasswordGroupUseCase: GetAllPasswordGroupUseCase,
-) : ViewModel(){
+) : ViewModel() {
 
     val uiState = flowOf(IndexUiState())
         .combine(getAllPasswordGroupUseCase.data) { uiState, state ->

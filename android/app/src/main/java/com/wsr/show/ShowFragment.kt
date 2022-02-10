@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wsr.databinding.FragmentShowBinding
 import com.wsr.state.State
 import com.wsr.utils.launchInLifecycleScope
-import kotlinx.coroutines.flow.collect
-import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ShowFragment : Fragment() {
@@ -43,7 +41,9 @@ class ShowFragment : Fragment() {
 
         showViewModel.fetchPasswords(passwordGroupId)
 
-        showEpoxyController = ShowEpoxyController()
+        showEpoxyController = ShowEpoxyController {
+            showViewModel.changePasswordState(it.id, it.showPassword)
+        }
 
         showRecyclerView = binding.showFragmentRecyclerView.apply {
             setHasFixedSize(true)
@@ -52,10 +52,9 @@ class ShowFragment : Fragment() {
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             showViewModel.uiState.collect { showUiState ->
-                when(showUiState.passwordsState) {
+                when (showUiState.passwordsState) {
                     is State.Loading -> {}
                     is State.Success -> {
-                        Log.d("OK", showUiState.passwordsState.value.toString())
                         showEpoxyController.setData(showUiState.passwordsState.value)
                     }
                     is State.Failure -> {
