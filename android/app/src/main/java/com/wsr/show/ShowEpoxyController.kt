@@ -12,7 +12,7 @@ class ShowEpoxyController(
     override fun buildModels(list: List<PasswordShowUiState>) {
         list.forEach { password ->
             showPasswordRow {
-                id(password.hashCode())
+                id(password.id)
                 name(password.name)
                 password(if (password.showPassword) password.password else "非表示")
                 showPassword(password.showPassword)
