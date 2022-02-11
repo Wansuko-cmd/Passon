@@ -6,9 +6,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.wsr.R
+import com.wsr.databinding.LayoutTextFieldWithIconBinding
 
 class LayoutTextFieldWithIcon @JvmOverloads constructor(
     context: Context,
@@ -16,17 +18,20 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
     defStyleAttr: Int = 0,
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
+    private val binding: LayoutTextFieldWithIconBinding
+
     private val textInputLayout: TextInputLayout
     private val textInputEditText: TextInputEditText
     private val iconView: ImageView
 
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.layout_text_field_with_icon, this)
+        val inflater = LayoutInflater.from(context)
+        binding = LayoutTextFieldWithIconBinding.inflate(inflater, this, false)
 
-        textInputLayout = findViewById(R.id.layout_text_field_with_icon_text)
-        textInputEditText = findViewById(R.id.layout_text_field_with_icon_text_input)
-        iconView = findViewById(R.id.layout_text_field_with_icon_icon)
+        textInputLayout = binding.layoutTextFieldWithIconText
+        textInputEditText = binding.layoutTextFieldWithIconTextInput
+        iconView = binding.layoutTextFieldWithIconIcon
 
         context.theme.obtainStyledAttributes(
             attrs,

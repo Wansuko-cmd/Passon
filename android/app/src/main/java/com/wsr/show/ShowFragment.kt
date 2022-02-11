@@ -44,7 +44,7 @@ class ShowFragment : Fragment() {
         showViewModel.fetchPasswords(passwordGroupId)
 
         showEpoxyController = ShowEpoxyController(
-            onClickShowPassword = { showViewModel.changePasswordState(it.id, it.showPassword) },
+            onClickShowPassword = { showViewModel.changePasswordState(it.id) },
             onClickPasswordCopy = { writeToClipboard("password", it.password) }
         )
 

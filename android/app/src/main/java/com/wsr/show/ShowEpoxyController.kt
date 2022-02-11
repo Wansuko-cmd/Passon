@@ -17,9 +17,7 @@ class ShowEpoxyController(
                 password(if (password.showPassword) password.password else "非表示")
                 showPassword(password.showPassword)
                 onClickShowPassword { _, _, _, _ ->
-                    this@ShowEpoxyController.onClickShowPassword(
-                        password.copy(showPassword = !password.showPassword)
-                    )
+                    this@ShowEpoxyController.onClickShowPassword(password)
                 }
                 onClickPasswordCopy { _, _, _, _ ->
                     this@ShowEpoxyController.onClickPasswordCopy(password)
