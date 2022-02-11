@@ -44,20 +44,8 @@ class ShowFragment : Fragment() {
         showViewModel.fetchPasswords(passwordGroupId)
 
         showEpoxyController = ShowEpoxyController(
-            onClickShowPassword = {
-                showViewModel.changePasswordState(it.id, it.showPassword)
-            },
-            onClickPasswordCopy = {
-                val clip = ClipData.newPlainText("password", it.password)
-                val clipBoardManager = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                clipBoardManager.setPrimaryClip(clip)
-
-                Toast.makeText(
-                    context,
-                    "コピーしました",
-                    Toast.LENGTH_LONG,
-                ).show()
-            }
+            onClickShowPassword = { showViewModel.changePasswordState(it.id, it.showPassword) },
+            onClickPasswordCopy = { writeToClipboard("password", it.password) }
         )
 
         showRecyclerView = binding.showFragmentRecyclerView.apply {
@@ -82,5 +70,18 @@ class ShowFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun writeToClipboard(tag: String, text: String) {
+        val clip = ClipData.newPlainText(tag, text)
+        val clipBoardManager =
+            context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipBoardManager.setPrimaryClip(clip)
+
+        Toast.makeText(
+            context,
+            "コピーしました",
+            Toast.LENGTH_LONG,
+        ).show()
     }
 }

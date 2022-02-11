@@ -1,8 +1,5 @@
 package com.wsr.show
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import com.airbnb.epoxy.TypedEpoxyController
 import com.wsr.showPasswordRow
 
