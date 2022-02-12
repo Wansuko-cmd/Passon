@@ -2,11 +2,10 @@
 <resources>
     <declare-styleable name="LayoutTextFieldWithIcon">
 
-        <attr name="text" format="string"/>
-        <attr name="enabled" format="boolean"/>
+        <attr name="text" format="string" />
+        <attr name="enabled" format="boolean" />
 
-        <attr name="icon" format="reference"/>
+        <attr name="icon" format="reference" />
         <attr name="endIconDrawable" format="reference" />
-<!--        <attr name="" />-->
     </declare-styleable>
 </resources>

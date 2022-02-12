@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -24,10 +25,17 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
     private val textInputEditText: TextInputEditText
     private val iconView: ImageView
 
+    fun setText(text: String) = textInputEditText.setText(text)
+
+    @JvmName("setEndIconOnClickListener1")
+    fun setEndIconOnClickListener(listener: OnClickListener) =
+        textInputLayout.setEndIconOnClickListener(listener)
+
 
     init {
         val inflater = LayoutInflater.from(context)
-        binding = LayoutTextFieldWithIconBinding.inflate(inflater, this, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.layout_text_field_with_icon, this, true)
 
         textInputLayout = binding.layoutTextFieldWithIconText
         textInputEditText = binding.layoutTextFieldWithIconTextInput
@@ -46,7 +54,7 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
 
     private fun TypedArray.setTextInputLayout() {
         val endIcon = getResourceId(R.styleable.LayoutTextFieldWithIcon_endIconDrawable, NULL)
-        if(endIcon != NULL) {
+        if (endIcon != NULL) {
             textInputLayout.setEndIconDrawable(endIcon)
         }
     }
@@ -61,10 +69,19 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
 
     private fun TypedArray.setIconView() {
         val icon = getResourceId(R.styleable.LayoutTextFieldWithIcon_icon, NULL)
-        if(icon != NULL) iconView.setImageResource(icon)
+        if (icon != NULL) iconView.setImageResource(icon)
     }
 
     companion object {
         private const val NULL = -1
+
+        @BindingAdapter("text")
+        @JvmStatic
+        fun setText(view: LayoutTextFieldWithIcon, text: String) = view.setText(text)
+
+        @BindingAdapter("setEndIconOnClickListener")
+        @JvmStatic
+        fun setEndIconOnClickListener(view: LayoutTextFieldWithIcon, listener: OnClickListener) =
+            view.setEndIconOnClickListener(listener)
     }
 }
