@@ -63,9 +63,11 @@ class ShowFragment : Fragment() {
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             showViewModel.uiState.collect { showUiState ->
 
-                when(showUiState.title) {
+                when (showUiState.title) {
                     is State.Loading -> {}
-                    is State.Success -> { binding.showFragmentToolBar.title = showUiState.title.value }
+                    is State.Success -> {
+                        binding.showFragmentToolBar.title = showUiState.title.value
+                    }
                     is State.Failure -> {
                         Toast.makeText(
                             context,

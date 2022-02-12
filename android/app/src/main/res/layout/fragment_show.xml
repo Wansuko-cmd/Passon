@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/show_fragment_tool_bar"
-        app:menu="@menu/show_menu"
-        app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24_white"
-        app:titleTextColor="@color/white"
-        android:background="@color/moss_green"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:background="@color/moss_green"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/show_menu"
+        app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24_white"
+        app:titleTextColor="@color/white" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/show_fragment_recycler_view"
@@ -23,6 +22,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/show_fragment_tool_bar"/>
+        app:layout_constraintTop_toBottomOf="@id/show_fragment_tool_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

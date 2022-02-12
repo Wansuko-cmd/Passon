@@ -5,12 +5,12 @@ import com.wsr.password.GetAllPasswordUseCase
 import com.wsr.password.GetAllPasswordUseCaseImpl
 import com.wsr.password.PasswordRepository
 import com.wsr.password.TestPasswordRepositoryImpl
-import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCase
-import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCaseImpl
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.TestPasswordGroupRepositoryImpl
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCaseImpl
+import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCase
+import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCaseImpl
 import com.wsr.show.ShowViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
