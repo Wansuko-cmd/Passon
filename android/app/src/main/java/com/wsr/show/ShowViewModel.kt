@@ -23,7 +23,7 @@ class ShowViewModel(
                 showUiState.copy(
                     title = state.mapBoth(
                         success = { passwordGroup -> passwordGroup.title },
-                        failure = { "Error" }
+                        failure = { ErrorShowUiState(it.message ?: "") }
                     )
                 )
             }

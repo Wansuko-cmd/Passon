@@ -71,7 +71,7 @@ class ShowFragment : Fragment() {
                     is State.Failure -> {
                         Toast.makeText(
                             context,
-                            showUiState.title.value,
+                            showUiState.title.value.message,
                             Toast.LENGTH_LONG,
                         ).show()
                     }
