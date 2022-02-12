@@ -2,7 +2,7 @@ package com.wsr.index
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wsr.passwordgroup.GetAllPasswordGroupUseCase
+import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCase
 import com.wsr.state.mapBoth
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf

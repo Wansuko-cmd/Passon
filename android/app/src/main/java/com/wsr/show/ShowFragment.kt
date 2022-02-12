@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.wsr.R
 import com.wsr.databinding.FragmentShowBinding
 import com.wsr.state.State
 import com.wsr.utils.launchInLifecycleScope
@@ -41,7 +43,12 @@ class ShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        showViewModel.fetchPasswords(passwordGroupId)
+        setToolbar()
+
+        showViewModel.run {
+            fetchTitle(passwordGroupId)
+            fetchPasswords(passwordGroupId)
+        }
 
         showEpoxyController = ShowEpoxyController(
             onClickShowPassword = { showViewModel.changePasswordState(it.id) },
@@ -55,6 +62,19 @@ class ShowFragment : Fragment() {
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             showViewModel.uiState.collect { showUiState ->
+
+                when(showUiState.title) {
+                    is State.Loading -> {}
+                    is State.Success -> { binding.showFragmentToolBar.title = showUiState.title.value }
+                    is State.Failure -> {
+                        Toast.makeText(
+                            context,
+                            showUiState.title.value,
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    }
+                }
+
                 when (showUiState.passwordsState) {
                     is State.Loading -> {}
                     is State.Success -> {
@@ -69,6 +89,12 @@ class ShowFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    private fun setToolbar() = with(binding.showFragmentToolBar) {
+        setNavigationOnClickListener {
+            findNavController().navigate(R.id.action_show_fragment_to_index_fragment)
         }
     }
 

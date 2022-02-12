@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">android</string>
+    <string name="app_name">Passon</string>
+
+    <!-- メニュー画面 -->
+    <string name="menu_title_edit">Edit</string>
+    <string name="menu_title_setting">Setting</string>
 </resources>
