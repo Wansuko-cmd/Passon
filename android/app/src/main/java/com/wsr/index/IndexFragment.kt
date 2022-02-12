@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.databinding.FragmentIndexBinding
 import com.wsr.state.State
@@ -34,9 +35,9 @@ class IndexFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        indexViewModel.fetchPasswordGroup("example1@gmail.com")
+        indexViewModel.fetchPasswordGroups("example1@gmail.com")
 
-        indexEpoxyController = IndexEpoxyController()
+        indexEpoxyController = IndexEpoxyController(::navigateToShow)
 
         indexRecyclerView = binding.indexFragmentRecyclerView.apply {
             setHasFixedSize(true)
@@ -54,12 +55,17 @@ class IndexFragment : Fragment() {
                         Toast.makeText(
                             context,
                             indexUiState.passwordGroupsState.value.message,
-                            Toast.LENGTH_LONG
+                            Toast.LENGTH_LONG,
                         ).show()
                     }
                 }
             }
         }
+    }
+
+    private fun navigateToShow(id: String) {
+        val action = IndexFragmentDirections.actionIndexFragmentToShowFragment(id)
+        findNavController().navigate(action)
     }
 }
 
