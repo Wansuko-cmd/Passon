@@ -1,9 +1,7 @@
 package com.wsr.layout
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
-import android.text.InputType
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
@@ -62,7 +60,7 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
 
         @BindingAdapter("inputType")
         @JvmStatic
-        fun setInputType(view: LayoutTextFieldWithIcon, inputType: com.wsr.layout.InputType) {
+        fun setInputType(view: LayoutTextFieldWithIcon, inputType: InputType) {
             view.textInputEditText.inputType = inputType.value
         }
 

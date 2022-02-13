@@ -5,9 +5,3 @@ enum class InputType(val value: Int) {
     Text(1),
     TextPassword(129);
 }
-
-fun String.toInputType() = InputType.values()
-    .toList()
-    .filter { it.name.lowercase() == this.lowercase() }
-    .getOrNull(1) ?: InputType.Text
-

@@ -49,7 +49,6 @@ class ShowViewModel(
     }
 
 
-
     fun fetch(passwordGroupId: String) {
         fetchTitle(passwordGroupId)
         fetchPasswords(passwordGroupId)

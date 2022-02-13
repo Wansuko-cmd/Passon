@@ -28,7 +28,7 @@ inline fun <T, E> State<T, E>.consume(
     onFailure: (E) -> Unit,
     onLoading: () -> Unit,
 ) {
-    when(this) {
+    when (this) {
         is State.Success -> onSuccess(value)
         is State.Failure -> onFailure(value)
         is State.Loading -> onLoading()

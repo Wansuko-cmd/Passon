@@ -8,5 +8,6 @@
     <string name="show_password_text">Show Password</string>
 
     <style name="textPassword">textPassword</style>
+
     <style name="text">text</style>
 </resources>

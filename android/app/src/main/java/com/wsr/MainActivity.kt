@@ -1,7 +1,6 @@
 package com.wsr
 
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
 import androidx.navigation.NavController
