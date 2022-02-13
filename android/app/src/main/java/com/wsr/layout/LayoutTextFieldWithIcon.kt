@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.textfield.TextInputEditText
@@ -17,7 +17,7 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet,
     defStyleAttr: Int = 0,
-) : LinearLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val binding: LayoutTextFieldWithIconBinding
 
@@ -60,8 +60,8 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
     }
 
     private fun TypedArray.setTextInputEditText() {
-        val text = getString(R.styleable.LayoutTextFieldWithIcon_text)
-        textInputEditText.setText(text)
+//        val text = getString(R.styleable.LayoutTextFieldWithIcon_text)
+//        textInputEditText.setText(text)
 
         val isEnabled = getBoolean(R.styleable.LayoutTextFieldWithIcon_enabled, true)
         textInputEditText.isEnabled = isEnabled

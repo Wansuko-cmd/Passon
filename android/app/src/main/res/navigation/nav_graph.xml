@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/index_fragment"
         android:name="com.wsr.index.IndexFragment"
-        android:label="index_fragment"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_index">
         <action
             android:id="@+id/action_index_fragment_to_show_fragment"
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/show_fragment"
         android:name="com.wsr.show.ShowFragment"
-        android:label="show_fragment"
+        android:label="Loading"
         tools:layout="@layout/fragment_show">
         <argument
             android:name="password_group_id"

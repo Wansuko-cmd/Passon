@@ -1,16 +1,15 @@
 package com.wsr.index
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.wsr.R
 import com.wsr.databinding.FragmentIndexBinding
-import com.wsr.state.State
+import com.wsr.state.consume
 import com.wsr.utils.launchInLifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,8 +27,13 @@ class IndexFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         _binding = FragmentIndexBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.index_menu, menu)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,19 +50,18 @@ class IndexFragment : Fragment() {
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             indexViewModel.uiState.collect { indexUiState ->
-                when (indexUiState.passwordGroupsState) {
-                    is State.Loading -> {}
-                    is State.Success -> {
-                        indexEpoxyController.setData(indexUiState.passwordGroupsState.value)
-                    }
-                    is State.Failure -> {
+
+                indexUiState.passwordGroupsState.consume(
+                    onSuccess = { indexEpoxyController.setData(it) },
+                    onFailure = {
                         Toast.makeText(
                             context,
-                            indexUiState.passwordGroupsState.value.message,
+                            it.message,
                             Toast.LENGTH_LONG,
                         ).show()
-                    }
-                }
+                    },
+                    onLoading = {},
+                )
             }
         }
     }

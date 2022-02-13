@@ -4,16 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/index_fragment_tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/moss_green"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/index_menu"
-        app:title="@string/app_name"
-        app:titleTextColor="@color/white" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/index_fragment_recycler_view"
         android:layout_width="0dp"
@@ -22,7 +12,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/index_fragment_tool_bar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/index_fragment_fab"
