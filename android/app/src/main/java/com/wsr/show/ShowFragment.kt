@@ -47,10 +47,7 @@ class ShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        showViewModel.run {
-            fetchTitle(passwordGroupId)
-            fetchPasswords(passwordGroupId)
-        }
+        showViewModel.fetch(passwordGroupId)
 
         showEpoxyController = ShowEpoxyController(
             onClickShowPassword = { showViewModel.changePasswordState(it.id) },

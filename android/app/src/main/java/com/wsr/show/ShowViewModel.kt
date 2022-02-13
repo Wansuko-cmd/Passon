@@ -18,6 +18,11 @@ class ShowViewModel(
     val uiState = _uiState.asStateFlow()
 
     init {
+        setupTitle()
+        setupPasswords()
+    }
+
+    private fun setupTitle() {
         getPasswordGroupUseCase.data.onEach { state ->
             _uiState.update { showUiState ->
                 showUiState.copy(
@@ -28,7 +33,9 @@ class ShowViewModel(
                 )
             }
         }.launchIn(viewModelScope)
+    }
 
+    private fun setupPasswords() {
         getAllPasswordUseCase.data.onEach { state ->
             _uiState.update { showUiState ->
                 showUiState.copy(
@@ -41,17 +48,25 @@ class ShowViewModel(
         }.launchIn(viewModelScope)
     }
 
-    fun fetchTitle(passwordGroupId: String) {
+
+
+    fun fetch(passwordGroupId: String) {
+        fetchTitle(passwordGroupId)
+        fetchPasswords(passwordGroupId)
+    }
+
+    private fun fetchTitle(passwordGroupId: String) {
         viewModelScope.launch {
             getPasswordGroupUseCase.getById(passwordGroupId)
         }
     }
 
-    fun fetchPasswords(passwordGroupId: String) {
+    private fun fetchPasswords(passwordGroupId: String) {
         viewModelScope.launch {
             getAllPasswordUseCase.getAllByPasswordGroupId(passwordGroupId)
         }
     }
+
 
     fun changePasswordState(id: String) =
         viewModelScope.launch {
