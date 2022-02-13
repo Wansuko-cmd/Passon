@@ -1,6 +1,7 @@
 package com.wsr.show
 
 import com.airbnb.epoxy.TypedEpoxyController
+import com.wsr.layout.InputType
 import com.wsr.showPasswordRow
 
 class ShowEpoxyController(
@@ -14,8 +15,9 @@ class ShowEpoxyController(
             showPasswordRow {
                 id(password.id)
                 name(password.name)
-                password(if (password.showPassword) password.password else "非表示")
+                password(password.password)
                 showPassword(password.showPassword)
+                passwordStatus(if(password.showPassword) InputType.Text else InputType.TextPassword)
                 onClickShowPassword { _, _, _, _ ->
                     this@ShowEpoxyController.onClickShowPassword(password)
                 }
