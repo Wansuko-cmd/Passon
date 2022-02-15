@@ -24,13 +24,13 @@ inline fun <T, E, NT> State<T, E>.map(block: (T) -> NT): State<NT, E> =
     }
 
 inline fun <T, E> State<T, E>.consume(
-    onSuccess: (T) -> Unit,
-    onFailure: (E) -> Unit,
-    onLoading: () -> Unit,
+    success: (T) -> Unit,
+    failure: (E) -> Unit,
+    loading: () -> Unit,
 ) {
     when (this) {
-        is State.Success -> onSuccess(value)
-        is State.Failure -> onFailure(value)
-        is State.Loading -> onLoading()
+        is State.Success -> success(value)
+        is State.Failure -> failure(value)
+        is State.Loading -> loading()
     }
 }

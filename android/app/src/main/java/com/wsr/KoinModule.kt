@@ -1,5 +1,6 @@
 package com.wsr
 
+import com.wsr.edit.EditViewModel
 import com.wsr.index.IndexViewModel
 import com.wsr.password.GetAllPasswordUseCase
 import com.wsr.password.GetAllPasswordUseCaseImpl
@@ -20,6 +21,7 @@ val module = module {
     /*** View Model ***/
     viewModel { IndexViewModel(get()) }
     viewModel { ShowViewModel(get(), get()) }
+    viewModel { EditViewModel(get(), get()) }
 
     /*** UseCase ***/
     // Password Group

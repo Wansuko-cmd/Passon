@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.R
@@ -59,35 +60,35 @@ class ShowFragment : Fragment() {
             adapter = showEpoxyController.adapter
         }
 
+        binding.showFragmentFab.setOnClickListener { navigateToEdit(passwordGroupId) }
+
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             showViewModel.uiState.collect { showUiState ->
 
-                showUiState.title.consume(
-                    onSuccess = {
+                showUiState.titleState.consume(
+                    success = {
                         (requireActivity() as AppCompatActivity).supportActionBar?.title = it
                     },
-                    onFailure = {
+                    failure = {
                         Toast.makeText(
                             context,
                             it.message,
                             Toast.LENGTH_LONG,
                         ).show()
                     },
-                    onLoading = {},
+                    loading = {},
                 )
 
                 showUiState.passwordsState.consume(
-                    onSuccess = {
-                        showEpoxyController.setData(it)
-                    },
-                    onFailure = {
+                    success = { showEpoxyController.setData(it) },
+                    failure = {
                         Toast.makeText(
                             context,
                             it.message,
                             Toast.LENGTH_LONG,
                         ).show()
                     },
-                    onLoading = {},
+                    loading = {},
                 )
             }
         }
@@ -104,5 +105,10 @@ class ShowFragment : Fragment() {
             "コピーしました",
             Toast.LENGTH_LONG,
         ).show()
+    }
+
+    private fun navigateToEdit(passwordGroupId: String) {
+        val action = ShowFragmentDirections.actionShowFragmentToEditFragment(passwordGroupId)
+        findNavController().navigate(action)
     }
 }

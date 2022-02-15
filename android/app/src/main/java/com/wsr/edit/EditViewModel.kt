@@ -1,21 +1,21 @@
-package com.wsr.show
+package com.wsr.edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.password.GetAllPasswordUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
-import com.wsr.state.map
+import com.wsr.state.State
 import com.wsr.state.mapBoth
 import com.wsr.utils.updateWith
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class ShowViewModel(
+class EditViewModel(
     private val getPasswordGroupUseCase: GetPasswordGroupUseCase,
     private val getAllPasswordUseCase: GetAllPasswordUseCase,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(ShowUiState())
+    private val _uiState = MutableStateFlow(EditUiState())
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -27,12 +27,12 @@ class ShowViewModel(
         _uiState.updateWith(
             target = getPasswordGroupUseCase.data,
             coroutineScope = viewModelScope,
-        ) { showUiState, state ->
-            showUiState.copy(
+        ) { editUiState, state ->
+            editUiState.copy(
                 titleState = state.mapBoth(
-                    success = { passwordGroup -> passwordGroup.title },
-                    failure = { ErrorShowUiState(it.message ?: "") }
-                )
+                    success = { it.title },
+                    failure = { ErrorEditUiState(it.message ?: "") }
+                ),
             )
         }
     }
@@ -41,16 +41,15 @@ class ShowViewModel(
         _uiState.updateWith(
             target = getAllPasswordUseCase.data,
             coroutineScope = viewModelScope,
-        ) { showUiState, state ->
-            showUiState.copy(
+        ) { editUiState, state ->
+            editUiState.copy(
                 passwordsState = state.mapBoth(
-                    success = { list -> list.map { it.toShowUiModel() } },
-                    failure = { ErrorShowUiState(it.message ?: "") },
-                ),
+                    success = { list -> list.map { it.toEditUiModel() } },
+                    failure = { ErrorEditUiState(it.message ?: "") },
+                )
             )
         }
     }
-
 
     fun fetch(passwordGroupId: String) {
         fetchTitle(passwordGroupId)
@@ -69,12 +68,11 @@ class ShowViewModel(
         }
     }
 
+    fun updateName(passwordId: String, newName: String) {
+        println("passwordId: $passwordId, newName: $newName")
+    }
 
-    fun changePasswordState(passwordId: String) =
-        viewModelScope.launch {
-            val newPasswordsState = _uiState.value.passwordsState.map { list ->
-                list.map { if (it.id == passwordId) it.copy(showPassword = !it.showPassword) else it }
-            }
-            _uiState.emit(_uiState.value.copy(passwordsState = newPasswordsState))
-        }
+    fun updatePassword(passwordId: String, newPassword: String) {
+        println("passwordId: $passwordId, newPassword: $newPassword")
+    }
 }
