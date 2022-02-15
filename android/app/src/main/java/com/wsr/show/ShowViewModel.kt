@@ -3,19 +3,39 @@ package com.wsr.show
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.password.GetAllPasswordUseCase
+import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
 import com.wsr.state.map
 import com.wsr.state.mapBoth
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class ShowViewModel(
-    private val getAllPasswordUseCase: GetAllPasswordUseCase
+    private val getPasswordGroupUseCase: GetPasswordGroupUseCase,
+    private val getAllPasswordUseCase: GetAllPasswordUseCase,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(ShowUiState("Title"))
+    private val _uiState = MutableStateFlow(ShowUiState())
     val uiState = _uiState.asStateFlow()
 
     init {
+        setupTitle()
+        setupPasswords()
+    }
+
+    private fun setupTitle() {
+        getPasswordGroupUseCase.data.onEach { state ->
+            _uiState.update { showUiState ->
+                showUiState.copy(
+                    title = state.mapBoth(
+                        success = { passwordGroup -> passwordGroup.title },
+                        failure = { ErrorShowUiState(it.message ?: "") }
+                    )
+                )
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun setupPasswords() {
         getAllPasswordUseCase.data.onEach { state ->
             _uiState.update { showUiState ->
                 showUiState.copy(
@@ -28,11 +48,24 @@ class ShowViewModel(
         }.launchIn(viewModelScope)
     }
 
-    fun fetchPasswords(passwordGroupId: String) {
+
+    fun fetch(passwordGroupId: String) {
+        fetchTitle(passwordGroupId)
+        fetchPasswords(passwordGroupId)
+    }
+
+    private fun fetchTitle(passwordGroupId: String) {
+        viewModelScope.launch {
+            getPasswordGroupUseCase.getById(passwordGroupId)
+        }
+    }
+
+    private fun fetchPasswords(passwordGroupId: String) {
         viewModelScope.launch {
             getAllPasswordUseCase.getAllByPasswordGroupId(passwordGroupId)
         }
     }
+
 
     fun changePasswordState(id: String) =
         viewModelScope.launch {

@@ -14,7 +14,7 @@ class ShowEpoxyController(
             showPasswordRow {
                 id(password.id)
                 name(password.name)
-                password(if (password.showPassword) password.password else "非表示")
+                password(password.password)
                 showPassword(password.showPassword)
                 onClickShowPassword { _, _, _, _ ->
                     this@ShowEpoxyController.onClickShowPassword(password)

@@ -4,16 +4,16 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.wsr.R
 import com.wsr.databinding.FragmentShowBinding
-import com.wsr.state.State
+import com.wsr.state.consume
 import com.wsr.utils.launchInLifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -34,14 +34,20 @@ class ShowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
+
         _binding = FragmentShowBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.show_menu, menu)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        showViewModel.fetchPasswords(passwordGroupId)
+        showViewModel.fetch(passwordGroupId)
 
         showEpoxyController = ShowEpoxyController(
             onClickShowPassword = { showViewModel.changePasswordState(it.id) },
@@ -55,19 +61,34 @@ class ShowFragment : Fragment() {
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             showViewModel.uiState.collect { showUiState ->
-                when (showUiState.passwordsState) {
-                    is State.Loading -> {}
-                    is State.Success -> {
-                        showEpoxyController.setData(showUiState.passwordsState.value)
-                    }
-                    is State.Failure -> {
+
+                showUiState.title.consume(
+                    onSuccess = {
+                        (requireActivity() as AppCompatActivity).supportActionBar?.title = it
+                    },
+                    onFailure = {
                         Toast.makeText(
                             context,
-                            showUiState.passwordsState.value.message,
+                            it.message,
                             Toast.LENGTH_LONG,
                         ).show()
-                    }
-                }
+                    },
+                    onLoading = {},
+                )
+
+                showUiState.passwordsState.consume(
+                    onSuccess = {
+                        showEpoxyController.setData(it)
+                    },
+                    onFailure = {
+                        Toast.makeText(
+                            context,
+                            it.message,
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    },
+                    onLoading = {},
+                )
             }
         }
     }

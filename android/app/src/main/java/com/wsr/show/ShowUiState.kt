@@ -16,6 +16,6 @@ fun PasswordUseCaseModel.toShowUiModel() =
     PasswordShowUiState(this.id, this.name, this.password, false)
 
 data class ShowUiState(
-    val title: String,
+    val title: State<String, ErrorShowUiState> = State.Loading,
     val passwordsState: State<List<PasswordShowUiState>, ErrorShowUiState> = State.Loading,
 )

@@ -9,7 +9,7 @@ android {
     compileSdk = 31
     defaultConfig {
         applicationId = "com.passon"
-        minSdk = 24
+        minSdk = 28
         targetSdk = 31
         versionCode = 1
         versionName = "1.0"
