@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="title"
             type="String" />
@@ -25,10 +26,10 @@
             android:id="@+id/model_edit_password_row_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:enabled="@{true}"
-            app:text="@{title}"
             app:afterTextChanged="@{afterTitleChanged}"
+            app:enabled="@{true}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:text="@{title}"
             tools:text="Hello" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

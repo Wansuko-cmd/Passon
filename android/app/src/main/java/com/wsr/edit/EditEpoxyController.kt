@@ -1,43 +1,57 @@
 package com.wsr.edit
 
-import com.airbnb.epoxy.Typed2EpoxyController
 import com.airbnb.epoxy.TypedEpoxyController
 import com.wsr.editPasswordRow
 import com.wsr.editTitleRow
 import com.wsr.layout.AfterTextChanged
+import com.wsr.state.consume
 
 class EditEpoxyController(
+    private val afterTitleChanged: (newTitle: String) -> Unit,
     private val afterNameChanged: (passwordId: String, newName: String) -> Unit,
     private val afterPasswordChanged: (passwordId: String, newPassword: String) -> Unit,
-) : TypedEpoxyController<List<PasswordEditUiState>>(){
+) : TypedEpoxyController<EditContentsUiState>() {
 
-    override fun buildModels(list: List<PasswordEditUiState>) {
+    override fun buildModels(contents: EditContentsUiState) {
 
-        editTitleRow {
-            id("Id")
-            title("Title")
-            afterTitleChanged(
-                AfterTextChanged {  }
-            )
-        }
-
-        list.forEach { password ->
-            editPasswordRow {
-                id(password.id)
-                name(password.name)
-                password(password.password)
-                afterNameChanged(
-                    AfterTextChanged(
-                        lift(this@EditEpoxyController.afterNameChanged)(password.id)
+        contents.title.consume(
+            success = {
+                editTitleRow {
+                    id("KEY")
+                    title(it)
+                    afterTitleChanged(
+                        AfterTextChanged(this@EditEpoxyController.afterTitleChanged)
                     )
-                )
-                afterPasswordChanged(
-                    AfterTextChanged(
-                        lift(this@EditEpoxyController.afterPasswordChanged)(password.id)
-                    )
-                )
-            }
-        }
+                }
+            },
+            failure = {},
+            loading = {},
+        )
+
+
+        contents.passwords.consume(
+            success = { list ->
+                list.forEach { password ->
+                    editPasswordRow {
+                        id(password.id)
+                        name(password.name)
+                        password(password.password)
+                        afterNameChanged(
+                            AfterTextChanged(
+                                lift(this@EditEpoxyController.afterNameChanged)(password.id)
+                            )
+                        )
+                        afterPasswordChanged(
+                            AfterTextChanged(
+                                lift(this@EditEpoxyController.afterPasswordChanged)(password.id)
+                            )
+                        )
+                    }
+                }
+            },
+            failure = {},
+            loading = {},
+        )
     }
 }
 

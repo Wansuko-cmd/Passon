@@ -7,7 +7,9 @@ import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
 import com.wsr.state.State
 import com.wsr.state.mapBoth
 import com.wsr.utils.updateWith
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class EditViewModel(
@@ -28,11 +30,18 @@ class EditViewModel(
             target = getPasswordGroupUseCase.data,
             coroutineScope = viewModelScope,
         ) { editUiState, state ->
+
             editUiState.copy(
                 titleState = state.mapBoth(
                     success = { it.title },
-                    failure = { ErrorEditUiState(it.message ?: "") }
+                    failure = { ErrorEditUiState(it.message ?: "") },
                 ),
+                contents = editUiState.contents.copy(
+                    title = state.mapBoth(
+                        success = { it.title },
+                        failure = { ErrorEditUiState(it.message ?: "") },
+                    )
+                )
             )
         }
     }
@@ -42,10 +51,13 @@ class EditViewModel(
             target = getAllPasswordUseCase.data,
             coroutineScope = viewModelScope,
         ) { editUiState, state ->
+
             editUiState.copy(
-                passwordsState = state.mapBoth(
-                    success = { list -> list.map { it.toEditUiModel() } },
-                    failure = { ErrorEditUiState(it.message ?: "") },
+                contents = editUiState.contents.copy(
+                    passwords = state.mapBoth(
+                        success = { list -> list.map { it.toEditUiState() } },
+                        failure = { ErrorEditUiState(it.message ?: "") }
+                    )
                 )
             )
         }
@@ -65,6 +77,18 @@ class EditViewModel(
     private fun fetchPasswords(passwordGroupId: String) {
         viewModelScope.launch {
             getAllPasswordUseCase.getAllByPasswordGroupId(passwordGroupId)
+        }
+    }
+
+    fun updateTitle(newTitle: String) {
+        viewModelScope.launch {
+            _uiState.update { editUiState ->
+                editUiState.copy(
+                    contents = editUiState.contents.copy(
+                        title = State.Success(newTitle)
+                    )
+                )
+            }
         }
     }
 

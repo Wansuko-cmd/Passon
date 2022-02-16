@@ -9,12 +9,17 @@ data class PasswordEditUiState(
     val password: String,
 )
 
-fun PasswordUseCaseModel.toEditUiModel() =
+fun PasswordUseCaseModel.toEditUiState() =
     PasswordEditUiState(id, name, password)
 
 data class ErrorEditUiState(val message: String)
 
+data class EditContentsUiState(
+    val title: State<String, ErrorEditUiState> = State.Loading,
+    val passwords: State<List<PasswordEditUiState>, ErrorEditUiState> = State.Loading,
+)
+
 data class EditUiState(
     val titleState: State<String, ErrorEditUiState> = State.Loading,
-    val passwordsState: State<List<PasswordEditUiState>, ErrorEditUiState> = State.Loading
+    val contents: EditContentsUiState = EditContentsUiState(),
 )

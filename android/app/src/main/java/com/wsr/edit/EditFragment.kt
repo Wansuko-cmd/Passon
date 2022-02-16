@@ -46,7 +46,11 @@ class EditFragment : Fragment() {
 
         editViewModel.fetch(passwordGroupId)
 
-        editEpoxyController = EditEpoxyController(editViewModel::updateName, editViewModel::updatePassword)
+        editEpoxyController = EditEpoxyController(
+            afterTitleChanged = editViewModel::updateTitle,
+            afterNameChanged = editViewModel::updateName,
+            afterPasswordChanged = editViewModel::updatePassword,
+        )
 
         editRecyclerView = binding.editFragmentRecyclerView.apply {
             setHasFixedSize(true)
@@ -57,7 +61,9 @@ class EditFragment : Fragment() {
             editViewModel.uiState.collect { editUiState ->
 
                 editUiState.titleState.consume(
-                    success = { (requireActivity() as AppCompatActivity).supportActionBar?.title = it },
+                    success = {
+                        (requireActivity() as AppCompatActivity).supportActionBar?.title = it
+                    },
                     failure = {
                         Toast.makeText(
                             context,
@@ -68,17 +74,7 @@ class EditFragment : Fragment() {
                     loading = {},
                 )
 
-                editUiState.passwordsState.consume(
-                    success = { editEpoxyController.setData(it) },
-                    failure = {
-                        Toast.makeText(
-                            context,
-                            it.message,
-                            Toast.LENGTH_LONG,
-                        ).show()
-                    },
-                    loading = {},
-                )
+                editEpoxyController.setData(editUiState.contents)
             }
         }
     }
