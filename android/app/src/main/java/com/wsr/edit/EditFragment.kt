@@ -64,18 +64,29 @@ class EditFragment : Fragment() {
                     success = {
                         (requireActivity() as AppCompatActivity).supportActionBar?.title = it
                     },
-                    failure = {
-                        Toast.makeText(
-                            context,
-                            it.message,
-                            Toast.LENGTH_LONG,
-                        ).show()
-                    },
+                    failure = this@EditFragment::showErrorMessage,
                     loading = {},
                 )
 
-                editEpoxyController.setData(editUiState.contents)
+                editUiState.contents.title.consume(
+                    success = editEpoxyController::setFirstData,
+                    failure = this@EditFragment::showErrorMessage,
+                    loading = {},
+                )
+
+                editUiState.contents.passwords.consume(
+                    success = editEpoxyController::setSecondData,
+                    failure = this@EditFragment::showErrorMessage,
+                    loading = {},
+                )
             }
         }
     }
+
+    private fun showErrorMessage(errorEditUiState: ErrorEditUiState) =
+        Toast.makeText(
+            context,
+            errorEditUiState.message,
+            Toast.LENGTH_LONG,
+        ).show()
 }

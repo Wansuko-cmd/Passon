@@ -1,58 +1,59 @@
 package com.wsr.edit
 
-import com.airbnb.epoxy.TypedEpoxyController
+import com.airbnb.epoxy.Typed2EpoxyController
 import com.wsr.editPasswordRow
 import com.wsr.editTitleRow
 import com.wsr.layout.AfterTextChanged
-import com.wsr.state.consume
 
 class EditEpoxyController(
     private val afterTitleChanged: (newTitle: String) -> Unit,
     private val afterNameChanged: (passwordId: String, newName: String) -> Unit,
     private val afterPasswordChanged: (passwordId: String, newPassword: String) -> Unit,
-) : TypedEpoxyController<EditContentsUiState>() {
+) : MyTyped2EpoxyController<String, List<PasswordEditUiState>>() {
 
-    override fun buildModels(contents: EditContentsUiState) {
+    override fun buildModels(title: String, list: List<PasswordEditUiState>) {
 
-        contents.title.consume(
-            success = {
-                editTitleRow {
-                    id("KEY")
-                    title(it)
-                    afterTitleChanged(
-                        AfterTextChanged(this@EditEpoxyController.afterTitleChanged)
+        editTitleRow {
+            id("KEY")
+            title(title)
+            afterTitleChanged(
+                AfterTextChanged(this@EditEpoxyController.afterTitleChanged)
+            )
+        }
+
+        list.forEach { password ->
+            editPasswordRow {
+                id(password.id)
+                name(password.name)
+                password(password.password)
+                afterNameChanged(
+                    AfterTextChanged(
+                        curry(this@EditEpoxyController.afterNameChanged)(password.id)
                     )
-                }
-            },
-            failure = {},
-            loading = {},
-        )
-
-
-        contents.passwords.consume(
-            success = { list ->
-                list.forEach { password ->
-                    editPasswordRow {
-                        id(password.id)
-                        name(password.name)
-                        password(password.password)
-                        afterNameChanged(
-                            AfterTextChanged(
-                                curry(this@EditEpoxyController.afterNameChanged)(password.id)
-                            )
-                        )
-                        afterPasswordChanged(
-                            AfterTextChanged(
-                                curry(this@EditEpoxyController.afterPasswordChanged)(password.id)
-                            )
-                        )
-                    }
-                }
-            },
-            failure = {},
-            loading = {},
-        )
+                )
+                afterPasswordChanged(
+                    AfterTextChanged(
+                        curry(this@EditEpoxyController.afterPasswordChanged)(password.id)
+                    )
+                )
+            }
+        }
     }
 }
 
 fun <T, U, V> curry(f: (T, U) -> V): (T) -> (U) -> V = { t -> { u -> f(t, u) } }
+
+abstract class MyTyped2EpoxyController<T, U> : Typed2EpoxyController<T, U>() {
+    private var data1: T? = null
+    private var data2: U? = null
+
+    fun setFirstData(newData: T) {
+        data1 = newData
+        if (data2 != null) setData(data1, data2)
+    }
+
+    fun setSecondData(newData: U) {
+        data2 = newData
+        if (data1 != null) setData(data1, data2)
+    }
+}
