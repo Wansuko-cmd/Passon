@@ -18,8 +18,7 @@
         android:id="@+id/model_edit_password_row_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:elevation="4dp"
+        android:layout_margin="8dp"
         android:orientation="vertical">
 
         <com.wsr.layout.LayoutTextFieldWithIcon
@@ -27,7 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:afterTextChanged="@{afterTitleChanged}"
-            app:enabled="@{true}"
             app:layout_constraintTop_toTopOf="parent"
             app:text="@{title}"
             tools:text="Hello" />

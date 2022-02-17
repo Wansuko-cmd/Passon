@@ -38,12 +38,12 @@ class EditEpoxyController(
                         password(password.password)
                         afterNameChanged(
                             AfterTextChanged(
-                                lift(this@EditEpoxyController.afterNameChanged)(password.id)
+                                curry(this@EditEpoxyController.afterNameChanged)(password.id)
                             )
                         )
                         afterPasswordChanged(
                             AfterTextChanged(
-                                lift(this@EditEpoxyController.afterPasswordChanged)(password.id)
+                                curry(this@EditEpoxyController.afterPasswordChanged)(password.id)
                             )
                         )
                     }
@@ -55,4 +55,4 @@ class EditEpoxyController(
     }
 }
 
-fun <T, U, V> lift(f: (T, U) -> V): (T) -> (U) -> V = { t -> { u -> f(t, u) } }
+fun <T, U, V> curry(f: (T, U) -> V): (T) -> (U) -> V = { t -> { u -> f(t, u) } }
