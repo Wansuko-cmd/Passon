@@ -69,13 +69,13 @@ class EditFragment : Fragment() {
                 )
 
                 editUiState.contents.title.consume(
-                    success = editEpoxyController::setFirstData,
+                    success = editEpoxyController::initializeFirstData,
                     failure = this@EditFragment::showErrorMessage,
                     loading = {},
                 )
 
                 editUiState.contents.passwords.consume(
-                    success = editEpoxyController::setSecondData,
+                    success = editEpoxyController::initializeSecondData,
                     failure = this@EditFragment::showErrorMessage,
                     loading = {},
                 )
