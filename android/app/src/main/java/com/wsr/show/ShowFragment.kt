@@ -48,6 +48,8 @@ class ShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.showFragmentFab.setOnClickListener { navigateToEdit(passwordGroupId) }
+
         showViewModel.fetch(passwordGroupId)
 
         showEpoxyController = ShowEpoxyController(
@@ -59,8 +61,6 @@ class ShowFragment : Fragment() {
             setHasFixedSize(true)
             adapter = showEpoxyController.adapter
         }
-
-        binding.showFragmentFab.setOnClickListener { navigateToEdit(passwordGroupId) }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             showViewModel.uiState.collect { showUiState ->

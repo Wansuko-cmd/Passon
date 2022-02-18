@@ -1,6 +1,7 @@
-package com.wsr.password
+package com.wsr.password.getall
 
 import com.wsr.exceptions.GetAllDataFailedException
+import com.wsr.password.PasswordUseCaseModel
 import com.wsr.state.State
 import kotlinx.coroutines.flow.StateFlow
 

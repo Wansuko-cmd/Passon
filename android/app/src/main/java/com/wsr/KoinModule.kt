@@ -2,16 +2,20 @@ package com.wsr
 
 import com.wsr.edit.EditViewModel
 import com.wsr.index.IndexViewModel
-import com.wsr.password.GetAllPasswordUseCase
-import com.wsr.password.GetAllPasswordUseCaseImpl
 import com.wsr.password.PasswordRepository
 import com.wsr.password.TestPasswordRepositoryImpl
+import com.wsr.password.getall.GetAllPasswordUseCase
+import com.wsr.password.getall.GetAllPasswordUseCaseImpl
+import com.wsr.password.updateall.UpdateAllPasswordUseCase
+import com.wsr.password.updateall.UpdateAllPasswordUseCaseImpl
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.TestPasswordGroupRepositoryImpl
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCaseImpl
 import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCase
 import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCaseImpl
+import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCase
+import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCaseImpl
 import com.wsr.show.ShowViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -21,15 +25,17 @@ val module = module {
     /*** View Model ***/
     viewModel { IndexViewModel(get()) }
     viewModel { ShowViewModel(get(), get()) }
-    viewModel { EditViewModel(get(), get()) }
+    viewModel { EditViewModel(get(), get(), get(), get()) }
 
     /*** UseCase ***/
     // Password Group
     single<GetAllPasswordGroupUseCase> { GetAllPasswordGroupUseCaseImpl(get()) }
     single<GetPasswordGroupUseCase> { GetPasswordGroupUseCaseImpl(get()) }
+    single<UpdatePasswordGroupUseCase> { UpdatePasswordGroupUseCaseImpl(get()) }
 
     // Password
     single<GetAllPasswordUseCase> { GetAllPasswordUseCaseImpl(get()) }
+    single<UpdateAllPasswordUseCase> { UpdateAllPasswordUseCaseImpl(get()) }
 
     /*** Repository ***/
     single<PasswordGroupRepository> { TestPasswordGroupRepositoryImpl() }

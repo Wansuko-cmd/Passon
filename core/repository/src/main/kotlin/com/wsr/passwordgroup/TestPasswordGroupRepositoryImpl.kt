@@ -52,10 +52,16 @@ class TestPasswordGroupRepositoryImpl : PasswordGroupRepository {
         data.add(passwordGroup)
     }
 
-    override suspend fun update(id: UniqueId, title: String, remark: String) {
-        val oldPasswordGroup = data.first { it.id == id }
-        data.removeIf { it == oldPasswordGroup }
-        data.add(PasswordGroup(id, oldPasswordGroup.email, title, remark))
+    override suspend fun update(id: UniqueId, title: String?, remark: String?) {
+        data.first { it.id == id }.let { oldPasswordGroup ->
+            data.removeIf { it == oldPasswordGroup }
+            data.add(
+                oldPasswordGroup.copy(
+                    title = title ?: oldPasswordGroup.title,
+                    remark = remark ?: oldPasswordGroup.remark
+                )
+            )
+        }
     }
 
     override suspend fun delete(id: UniqueId) {

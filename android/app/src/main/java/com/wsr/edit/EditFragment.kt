@@ -44,6 +44,8 @@ class EditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.editFragmentFab.setOnClickListener { editViewModel.notifyDataChanged(passwordGroupId) }
+
         editViewModel.fetch(passwordGroupId)
 
         editEpoxyController = EditEpoxyController(

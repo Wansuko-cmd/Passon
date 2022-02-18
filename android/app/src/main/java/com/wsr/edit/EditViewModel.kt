@@ -2,9 +2,12 @@ package com.wsr.edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wsr.password.GetAllPasswordUseCase
+import com.wsr.password.getall.GetAllPasswordUseCase
+import com.wsr.password.updateall.UpdateAllPasswordUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
+import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCase
 import com.wsr.state.State
+import com.wsr.state.consume
 import com.wsr.state.map
 import com.wsr.state.mapBoth
 import com.wsr.utils.updateWith
@@ -16,6 +19,8 @@ import kotlinx.coroutines.launch
 class EditViewModel(
     private val getPasswordGroupUseCase: GetPasswordGroupUseCase,
     private val getAllPasswordUseCase: GetAllPasswordUseCase,
+    private val updatePasswordGroupUseCase: UpdatePasswordGroupUseCase,
+    private val updateAllPasswordUseCase: UpdateAllPasswordUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(EditUiState())
@@ -131,5 +136,27 @@ class EditViewModel(
             }
         }
         println("passwordId: $passwordId, newPassword: $newPassword")
+    }
+
+    fun notifyDataChanged(passwordGroupId: String) {
+        viewModelScope.launch {
+            _uiState.value.contents.title.consume(
+                success = { title ->
+                    updatePasswordGroupUseCase.update(
+                        id = passwordGroupId,
+                        title = title,
+                    )
+                },
+                failure = {},
+                loading = {},
+            )
+            _uiState.value.contents.passwords.consume(
+                success = { list ->
+                    updateAllPasswordUseCase.updateAll(list.map { it.toUseCaseModel(passwordGroupId) })
+                },
+                failure = {},
+                loading = {},
+            )
+        }
     }
 }

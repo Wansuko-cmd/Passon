@@ -12,6 +12,9 @@ data class PasswordEditUiState(
 fun PasswordUseCaseModel.toEditUiState() =
     PasswordEditUiState(id, name, password)
 
+fun PasswordEditUiState.toUseCaseModel(passwordGroupId: String) =
+    PasswordUseCaseModel(id, passwordGroupId, name, password)
+
 data class ErrorEditUiState(val message: String)
 
 data class EditContentsUiState(

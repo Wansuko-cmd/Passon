@@ -1,5 +1,7 @@
 package com.wsr.password
 
+import com.wsr.utils.UniqueId
+
 data class PasswordUseCaseModel(
     val id: String,
     val passwordGroupId: String,
@@ -11,5 +13,12 @@ fun Password.toUseCaseModel() = PasswordUseCaseModel(
     this.id.value,
     this.passwordGroupId.value,
     this.name,
-    this.password
+    this.password,
+)
+
+fun PasswordUseCaseModel.toPassword() = Password(
+    UniqueId(id),
+    UniqueId((passwordGroupId)),
+    name,
+    password,
 )
