@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.wsr.password.GetAllPasswordUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
 import com.wsr.state.State
+import com.wsr.state.map
 import com.wsr.state.mapBoth
 import com.wsr.utils.updateWith
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -93,10 +94,42 @@ class EditViewModel(
     }
 
     fun updateName(passwordId: String, newName: String) {
+        val newPasswords = _uiState.value
+            .contents
+            .passwords
+            .map { list ->
+                list.map { if (it.id == passwordId) it.copy(name = newName) else it }
+            }
+
+        viewModelScope.launch {
+            _uiState.update { editUiState ->
+                editUiState.copy(
+                    contents = editUiState.contents.copy(
+                        passwords = newPasswords
+                    )
+                )
+            }
+        }
         println("passwordId: $passwordId, newName: $newName")
     }
 
     fun updatePassword(passwordId: String, newPassword: String) {
+        val newPasswords = _uiState.value
+            .contents
+            .passwords
+            .map { list ->
+                list.map { if (it.id == passwordId) it.copy(password = newPassword) else it }
+            }
+
+        viewModelScope.launch {
+            _uiState.update { editUiState ->
+                editUiState.copy(
+                    contents = editUiState.contents.copy(
+                        passwords = newPasswords
+                    )
+                )
+            }
+        }
         println("passwordId: $passwordId, newPassword: $newPassword")
     }
 }

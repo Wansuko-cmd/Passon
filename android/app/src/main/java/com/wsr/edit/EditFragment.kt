@@ -64,19 +64,19 @@ class EditFragment : Fragment() {
                     success = {
                         (requireActivity() as AppCompatActivity).supportActionBar?.title = it
                     },
-                    failure = this@EditFragment::showErrorMessage,
+                    failure = ::showErrorMessage,
                     loading = {},
                 )
 
                 editUiState.contents.title.consume(
                     success = editEpoxyController::initializeFirstData,
-                    failure = this@EditFragment::showErrorMessage,
+                    failure = ::showErrorMessage,
                     loading = {},
                 )
 
                 editUiState.contents.passwords.consume(
                     success = editEpoxyController::initializeSecondData,
-                    failure = this@EditFragment::showErrorMessage,
+                    failure = ::showErrorMessage,
                     loading = {},
                 )
             }

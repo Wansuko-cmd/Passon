@@ -52,14 +52,8 @@ class IndexFragment : Fragment() {
             indexViewModel.uiState.collect { indexUiState ->
 
                 indexUiState.passwordGroupsState.consume(
-                    success = { indexEpoxyController.setData(it) },
-                    failure = {
-                        Toast.makeText(
-                            context,
-                            it.message,
-                            Toast.LENGTH_LONG,
-                        ).show()
-                    },
+                    success = indexEpoxyController::setData,
+                    failure = ::showErrorMessage,
                     loading = {},
                 )
             }
@@ -70,5 +64,12 @@ class IndexFragment : Fragment() {
         val action = IndexFragmentDirections.actionIndexFragmentToShowFragment(passwordGroupId)
         findNavController().navigate(action)
     }
+
+    private fun showErrorMessage(errorIndexUiState: ErrorIndexUiState) =
+        Toast.makeText(
+            context,
+            errorIndexUiState.message,
+            Toast.LENGTH_LONG,
+        ).show()
 }
 

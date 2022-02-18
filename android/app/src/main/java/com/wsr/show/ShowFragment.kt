@@ -69,25 +69,13 @@ class ShowFragment : Fragment() {
                     success = {
                         (requireActivity() as AppCompatActivity).supportActionBar?.title = it
                     },
-                    failure = {
-                        Toast.makeText(
-                            context,
-                            it.message,
-                            Toast.LENGTH_LONG,
-                        ).show()
-                    },
+                    failure = ::showErrorMessage,
                     loading = {},
                 )
 
                 showUiState.passwordsState.consume(
-                    success = { showEpoxyController.setData(it) },
-                    failure = {
-                        Toast.makeText(
-                            context,
-                            it.message,
-                            Toast.LENGTH_LONG,
-                        ).show()
-                    },
+                    success = showEpoxyController::setData,
+                    failure = ::showErrorMessage,
                     loading = {},
                 )
             }
@@ -111,4 +99,11 @@ class ShowFragment : Fragment() {
         val action = ShowFragmentDirections.actionShowFragmentToEditFragment(passwordGroupId)
         findNavController().navigate(action)
     }
+
+    private fun showErrorMessage(errorShowUiState: ErrorShowUiState) =
+        Toast.makeText(
+            context,
+            errorShowUiState.message,
+            Toast.LENGTH_LONG,
+        ).show()
 }
