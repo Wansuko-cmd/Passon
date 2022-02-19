@@ -52,22 +52,22 @@ class IndexFragment : Fragment() {
             indexViewModel.uiState.collect { indexUiState ->
 
                 indexUiState.passwordGroupsState.consume(
-                    onSuccess = { indexEpoxyController.setData(it) },
-                    onFailure = {
+                    success = { indexEpoxyController.setData(it) },
+                    failure = {
                         Toast.makeText(
                             context,
                             it.message,
                             Toast.LENGTH_LONG,
                         ).show()
                     },
-                    onLoading = {},
+                    loading = {},
                 )
             }
         }
     }
 
-    private fun navigateToShow(id: String) {
-        val action = IndexFragmentDirections.actionIndexFragmentToShowFragment(id)
+    private fun navigateToShow(passwordGroupId: String) {
+        val action = IndexFragmentDirections.actionIndexFragmentToShowFragment(passwordGroupId)
         findNavController().navigate(action)
     }
 }
