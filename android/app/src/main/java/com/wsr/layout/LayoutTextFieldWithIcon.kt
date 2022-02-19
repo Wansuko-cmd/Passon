@@ -53,17 +53,10 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
         @JvmStatic
         fun setText(view: LayoutTextFieldWithIcon, text: String) = view.setText(text)
 
-        private var oldTextValue: String = ""
-
         @BindingAdapter("afterTextChanged")
         @JvmStatic
         fun setOnTextChanged(view: LayoutTextFieldWithIcon, afterTextChanged: AfterTextChanged) =
-            view.textInputEditText.addTextChangedListener {
-                if (oldTextValue != it.toString()) {
-                    oldTextValue = it.toString()
-                    afterTextChanged.block(oldTextValue)
-                }
-            }
+            view.textInputEditText.addTextChangedListener { afterTextChanged.block(it.toString()) }
 
         @BindingAdapter("enabled")
         @JvmStatic

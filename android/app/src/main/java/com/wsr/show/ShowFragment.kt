@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wsr.R
 import com.wsr.databinding.FragmentShowBinding
 import com.wsr.state.consume
-import com.wsr.utils.launchInLifecycleScope
+import com.wsr.ext.launchInLifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ShowFragment : Fragment() {

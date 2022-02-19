@@ -1,6 +1,6 @@
 package com.wsr.password
 
-import com.wsr.utils.UniqueId
+import com.wsr.ext.UniqueId
 
 data class PasswordUseCaseModel(
     val id: String,

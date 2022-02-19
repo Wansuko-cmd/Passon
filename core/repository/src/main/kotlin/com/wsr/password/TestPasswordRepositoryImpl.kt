@@ -1,7 +1,7 @@
 package com.wsr.password
 
 import com.wsr.passwordgroup.TestPasswordGroupRepositoryImpl
-import com.wsr.utils.UniqueId
+import com.wsr.ext.UniqueId
 
 class TestPasswordRepositoryImpl : PasswordRepository {
 
@@ -44,7 +44,8 @@ class TestPasswordRepositoryImpl : PasswordRepository {
     }
 
     override suspend fun update(password: Password) {
-        TODO("Not yet implemented")
+        val index = data.indexOfFirst { it.id == password.id }
+        data[index] = password
     }
 
     override suspend fun delete(id: UniqueId) {

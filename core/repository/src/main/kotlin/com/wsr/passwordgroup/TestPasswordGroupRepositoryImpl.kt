@@ -2,7 +2,7 @@ package com.wsr.passwordgroup
 
 import com.wsr.user.Email
 import com.wsr.user.TestUserRepositoryImpl
-import com.wsr.utils.UniqueId
+import com.wsr.ext.UniqueId
 
 class TestPasswordGroupRepositoryImpl : PasswordGroupRepository {
 

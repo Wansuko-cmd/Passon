@@ -1,7 +1,7 @@
 package com.wsr.passwordgroup
 
 import com.wsr.user.Email
-import com.wsr.utils.UniqueId
+import com.wsr.ext.UniqueId
 
 interface PasswordGroupRepository {
     suspend fun getAllByEmail(email: Email): List<PasswordGroup>

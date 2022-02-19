@@ -2,7 +2,7 @@ package com.wsr.passwordgroup.update
 
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.state.State
-import com.wsr.utils.UniqueId
+import com.wsr.ext.UniqueId
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
