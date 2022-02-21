@@ -1,8 +1,11 @@
 package com.wsr.passwordgroup
 
+import com.wsr.exceptions.GetAllDataFailedException
+import com.wsr.exceptions.GetDataFailedException
+import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.user.Email
 import com.wsr.user.TestUserRepositoryImpl
-import com.wsr.ext.UniqueId
+import com.wsr.utils.UniqueId
 
 class TestPasswordGroupRepositoryImpl : PasswordGroupRepository {
 
@@ -42,9 +45,11 @@ class TestPasswordGroupRepositoryImpl : PasswordGroupRepository {
         )
     }
 
+    @Throws(GetAllDataFailedException::class)
     override suspend fun getAllByEmail(email: Email): List<PasswordGroup> =
         data.filter { it.email == email }
 
+    @Throws(GetDataFailedException::class)
     override suspend fun getById(id: UniqueId): PasswordGroup =
         data.first { it.id == id }
 
@@ -52,13 +57,14 @@ class TestPasswordGroupRepositoryImpl : PasswordGroupRepository {
         data.add(passwordGroup)
     }
 
+    @Throws(UpdateDataFailedException::class)
     override suspend fun update(id: UniqueId, title: String?, remark: String?) {
         data.first { it.id == id }.let { oldPasswordGroup ->
             data.removeIf { it == oldPasswordGroup }
             data.add(
                 oldPasswordGroup.copy(
                     title = title ?: oldPasswordGroup.title,
-                    remark = remark ?: oldPasswordGroup.remark
+                    remark = remark ?: oldPasswordGroup.remark,
                 )
             )
         }

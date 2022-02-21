@@ -1,5 +1,6 @@
 package com.wsr.password.updateall
 
+import com.wsr.exceptions.GetDataFailedException
 import com.wsr.password.PasswordRepository
 import com.wsr.password.PasswordUseCaseModel
 import com.wsr.password.toPassword
@@ -12,7 +13,7 @@ class UpdateAllPasswordUseCaseImpl(
     private val passwordRepository: PasswordRepository
 ) : UpdateAllPasswordUseCase {
 
-    private val _data = MutableStateFlow<State<Boolean, Throwable>>(State.Loading)
+    private val _data = MutableStateFlow<State<Boolean, GetDataFailedException>>(State.Loading)
     override val data: StateFlow<State<Boolean, Throwable>> get() = _data.asStateFlow()
 
     override suspend fun updateAll(passwords: List<PasswordUseCaseModel>) {
@@ -20,7 +21,7 @@ class UpdateAllPasswordUseCaseImpl(
             passwords.forEach { passwordRepository.update(it.toPassword()) }
 
             _data.emit(State.Success(true))
-        } catch (e: Throwable) {
+        } catch (e: GetDataFailedException) {
             _data.emit(State.Failure(e))
         }
     }

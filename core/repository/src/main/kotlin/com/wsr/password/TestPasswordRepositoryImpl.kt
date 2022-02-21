@@ -1,7 +1,7 @@
 package com.wsr.password
 
 import com.wsr.passwordgroup.TestPasswordGroupRepositoryImpl
-import com.wsr.ext.UniqueId
+import com.wsr.utils.UniqueId
 
 class TestPasswordRepositoryImpl : PasswordRepository {
 

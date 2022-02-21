@@ -5,7 +5,7 @@ import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.PasswordGroupUseCaseModel
 import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
-import com.wsr.ext.UniqueId
+import com.wsr.utils.UniqueId
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 

@@ -2,7 +2,7 @@ package com.wsr.user
 
 import com.wsr.image.Base64
 import com.wsr.image.Image
-import com.wsr.ext.UniqueId
+import com.wsr.utils.UniqueId
 
 class TestUserRepositoryImpl : UserRepository {
 

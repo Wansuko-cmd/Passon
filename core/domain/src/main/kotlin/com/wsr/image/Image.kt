@@ -1,6 +1,6 @@
 package com.wsr.image
 
-import com.wsr.ext.UniqueId
+import com.wsr.utils.UniqueId
 
 data class Image(
     val id: UniqueId,

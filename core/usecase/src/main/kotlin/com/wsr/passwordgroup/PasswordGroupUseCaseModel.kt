@@ -1,7 +1,7 @@
 package com.wsr.passwordgroup
 
 import com.wsr.user.Email
-import com.wsr.ext.UniqueId
+import com.wsr.utils.UniqueId
 
 data class PasswordGroupUseCaseModel(
     val id: String,

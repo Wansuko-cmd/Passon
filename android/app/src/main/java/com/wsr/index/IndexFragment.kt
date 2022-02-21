@@ -9,8 +9,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.R
 import com.wsr.databinding.FragmentIndexBinding
-import com.wsr.state.consume
 import com.wsr.ext.launchInLifecycleScope
+import com.wsr.state.consume
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class IndexFragment : Fragment() {

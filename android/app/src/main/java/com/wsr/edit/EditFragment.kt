@@ -10,8 +10,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.R
 import com.wsr.databinding.FragmentEditBinding
-import com.wsr.state.consume
 import com.wsr.ext.launchInLifecycleScope
+import com.wsr.state.consume
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditFragment : Fragment() {
@@ -44,7 +44,11 @@ class EditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.editFragmentFab.setOnClickListener { editViewModel.notifyDataChanged(passwordGroupId) }
+        binding.editFragmentFab.setOnClickListener {
+            editViewModel.notifyDataChangedToUseCase(
+                passwordGroupId
+            )
+        }
 
         editViewModel.fetch(passwordGroupId)
 

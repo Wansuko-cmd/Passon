@@ -5,7 +5,7 @@ import com.wsr.password.PasswordRepository
 import com.wsr.password.PasswordUseCaseModel
 import com.wsr.password.toUseCaseModel
 import com.wsr.state.State
-import com.wsr.ext.UniqueId
+import com.wsr.utils.UniqueId
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
