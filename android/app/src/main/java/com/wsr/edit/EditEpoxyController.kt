@@ -48,11 +48,11 @@ abstract class MyTyped2EpoxyController<T, U> : Typed2EpoxyController<T, U>() {
     private var data2: U? = null
 
     fun initializeFirstData(init: T) {
-        if(data1 == null) setFirstData(init)
+        if (data1 == null) setFirstData(init)
     }
 
     fun initializeSecondData(init: U) {
-        if(data2 == null) setSecondData(init)
+        if (data2 == null) setSecondData(init)
     }
 
     private fun setFirstData(newData: T) {

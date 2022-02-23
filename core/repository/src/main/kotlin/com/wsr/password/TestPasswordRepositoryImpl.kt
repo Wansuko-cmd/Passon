@@ -44,7 +44,8 @@ class TestPasswordRepositoryImpl : PasswordRepository {
     }
 
     override suspend fun update(password: Password) {
-        TODO("Not yet implemented")
+        val index = data.indexOfFirst { it.id == password.id }
+        data[index] = password
     }
 
     override suspend fun delete(id: UniqueId) {

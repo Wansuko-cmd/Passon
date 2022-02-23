@@ -14,8 +14,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.R
 import com.wsr.databinding.FragmentShowBinding
+import com.wsr.ext.launchInLifecycleScope
 import com.wsr.state.consume
-import com.wsr.utils.launchInLifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ShowFragment : Fragment() {
@@ -48,6 +48,8 @@ class ShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.showFragmentFab.setOnClickListener { navigateToEdit(passwordGroupId) }
+
         showViewModel.fetch(passwordGroupId)
 
         showEpoxyController = ShowEpoxyController(
@@ -60,8 +62,6 @@ class ShowFragment : Fragment() {
             adapter = showEpoxyController.adapter
         }
 
-        binding.showFragmentFab.setOnClickListener { navigateToEdit(passwordGroupId) }
-
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             showViewModel.uiState.collect { showUiState ->
 
@@ -69,25 +69,13 @@ class ShowFragment : Fragment() {
                     success = {
                         (requireActivity() as AppCompatActivity).supportActionBar?.title = it
                     },
-                    failure = {
-                        Toast.makeText(
-                            context,
-                            it.message,
-                            Toast.LENGTH_LONG,
-                        ).show()
-                    },
+                    failure = ::showErrorMessage,
                     loading = {},
                 )
 
                 showUiState.passwordsState.consume(
-                    success = { showEpoxyController.setData(it) },
-                    failure = {
-                        Toast.makeText(
-                            context,
-                            it.message,
-                            Toast.LENGTH_LONG,
-                        ).show()
-                    },
+                    success = showEpoxyController::setData,
+                    failure = ::showErrorMessage,
                     loading = {},
                 )
             }
@@ -111,4 +99,11 @@ class ShowFragment : Fragment() {
         val action = ShowFragmentDirections.actionShowFragmentToEditFragment(passwordGroupId)
         findNavController().navigate(action)
     }
+
+    private fun showErrorMessage(errorShowUiState: ErrorShowUiState) =
+        Toast.makeText(
+            context,
+            errorShowUiState.message,
+            Toast.LENGTH_LONG,
+        ).show()
 }

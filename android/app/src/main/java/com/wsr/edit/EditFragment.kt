@@ -10,8 +10,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.wsr.R
 import com.wsr.databinding.FragmentEditBinding
+import com.wsr.ext.launchInLifecycleScope
 import com.wsr.state.consume
-import com.wsr.utils.launchInLifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditFragment : Fragment() {
@@ -44,6 +44,12 @@ class EditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.editFragmentFab.setOnClickListener {
+            editViewModel.save(
+                passwordGroupId
+            )
+        }
+
         editViewModel.fetch(passwordGroupId)
 
         editEpoxyController = EditEpoxyController(
@@ -64,19 +70,19 @@ class EditFragment : Fragment() {
                     success = {
                         (requireActivity() as AppCompatActivity).supportActionBar?.title = it
                     },
-                    failure = this@EditFragment::showErrorMessage,
+                    failure = ::showErrorMessage,
                     loading = {},
                 )
 
                 editUiState.contents.title.consume(
                     success = editEpoxyController::initializeFirstData,
-                    failure = this@EditFragment::showErrorMessage,
+                    failure = ::showErrorMessage,
                     loading = {},
                 )
 
                 editUiState.contents.passwords.consume(
                     success = editEpoxyController::initializeSecondData,
-                    failure = this@EditFragment::showErrorMessage,
+                    failure = ::showErrorMessage,
                     loading = {},
                 )
             }

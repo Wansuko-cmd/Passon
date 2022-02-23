@@ -1,4 +1,4 @@
-package com.wsr.utils
+package com.wsr.ext
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
