@@ -39,12 +39,14 @@ class EditViewModel(
             coroutineScope = viewModelScope,
         ) { editUiState, state ->
 
-            editUiState.mapTitle {
-                state.mapBoth(
-                    success = { it.title },
-                    failure = { ErrorEditUiState(it.message ?: "") },
-                )
-            }.mapContents { contents ->
+            editUiState.apply {
+                titleState.map {
+                    state.mapBoth(
+                        success = { it.title },
+                        failure = { ErrorEditUiState(it.message ?: "") },
+                    )
+                }
+
                 contents.replaceTitle(
                     title = state.mapBoth(
                         success = { it.title },
@@ -61,7 +63,7 @@ class EditViewModel(
             coroutineScope = viewModelScope,
         ) { editUiState, state ->
 
-            editUiState.mapContents { contents ->
+            editUiState.apply {
                 contents.replacePasswords(
                     passwords = state.mapBoth(
                         success = { list -> list.map { it.toEditUiState() } },
@@ -92,7 +94,7 @@ class EditViewModel(
     fun updateTitle(newTitle: String) {
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.mapContents { contents ->
+                editUiState.apply {
                     contents.replaceTitle(State.Success(newTitle))
                 }
             }
@@ -104,14 +106,16 @@ class EditViewModel(
             .contents
             .passwords
             .map { list ->
-                list.map { passwordEditUiState ->
-                    passwordEditUiState.mapIfSameId(passwordId) { it.replaceName(newName) }
+                list.map {
+                    if (it.id == passwordId) it.replaceName(newName) else it
                 }
             }
 
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.mapContents { contents -> contents.replacePasswords(newPasswords) }
+                editUiState.apply {
+                    contents.replacePasswords(newPasswords)
+                }
             }
         }
         println("passwordId: $passwordId, newName: $newName")
@@ -122,20 +126,22 @@ class EditViewModel(
             .contents
             .passwords
             .map { list ->
-                list.map { passwordEditUiState ->
-                    passwordEditUiState.mapIfSameId(passwordId) { it.replacePassword(newPassword) }
+                list.map {
+                    if (it.id == passwordId) it.replacePassword(newPassword) else it
                 }
             }
 
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.mapContents { contents -> contents.replacePasswords(newPasswords) }
+                editUiState.apply {
+                    contents.replacePasswords(newPasswords)
+                }
             }
         }
         println("passwordId: $passwordId, newPassword: $newPassword")
     }
 
-    fun notifyDataChangedToUseCase(passwordGroupId: String) {
+    fun save(passwordGroupId: String) {
         viewModelScope.launch {
             _uiState.value.contents.title.consume(
                 success = { title ->

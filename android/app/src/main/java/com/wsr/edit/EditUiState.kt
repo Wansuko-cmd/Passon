@@ -10,8 +10,6 @@ data class PasswordEditUiState(
 ) {
     fun replaceName(name: String) = this.copy(name = name)
     fun replacePassword(password: String) = this.copy(password = password)
-    fun mapIfSameId(id: String, block: (PasswordEditUiState) -> PasswordEditUiState) =
-        if (this.id == id) block(this) else this
 
     companion object {
         fun PasswordUseCaseModel.toEditUiState() = PasswordEditUiState(id, name, password)
@@ -20,9 +18,6 @@ data class PasswordEditUiState(
             PasswordUseCaseModel(id, passwordGroupId, name, password)
     }
 }
-
-
-data class ErrorEditUiState(val message: String)
 
 
 data class EditContentsUiState(
@@ -35,13 +30,10 @@ data class EditContentsUiState(
 }
 
 
+data class ErrorEditUiState(val message: String)
+
+
 data class EditUiState(
     val titleState: State<String, ErrorEditUiState> = State.Loading,
     val contents: EditContentsUiState = EditContentsUiState(),
-) {
-    fun mapTitle(block: (titleState: State<String, ErrorEditUiState>) -> State<String, ErrorEditUiState>) =
-        this.copy(titleState = block(this.titleState))
-
-    fun mapContents(block: (contents: EditContentsUiState) -> EditContentsUiState) =
-        this.copy(contents = block(this.contents))
-}
+)

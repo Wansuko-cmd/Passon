@@ -45,7 +45,7 @@ class EditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.editFragmentFab.setOnClickListener {
-            editViewModel.notifyDataChangedToUseCase(
+            editViewModel.save(
                 passwordGroupId
             )
         }
