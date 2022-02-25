@@ -42,11 +42,12 @@ class EditViewModel(
             coroutineScope = viewModelScope,
         ) { editUiState, state ->
 
-            editUiState.copy(
+            editUiState.replaceTitleState(
                 titleState = state.mapBoth(
                     success = { it.title },
                     failure = { ErrorEditUiState(it.message ?: "") },
                 ),
+            ).replaceContents(
                 contents = editUiState.contents.replacePasswordGroup(
                     passwordGroup = state.mapBoth(
                         success = { it.toEditUiState() },
@@ -63,7 +64,7 @@ class EditViewModel(
             coroutineScope = viewModelScope,
         ) { editUiState, state ->
 
-            editUiState.copy(
+            editUiState.replaceContents(
                 contents = editUiState.contents.replacePasswords(
                     passwords = state.mapBoth(
                         success = { list -> list.map { it.toEditUiState() } },
@@ -94,7 +95,7 @@ class EditViewModel(
     fun updateTitle(newTitle: String) {
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.copy(
+                editUiState.replaceContents(
                     contents = editUiState.contents.replacePasswordGroup(
                         editUiState.contents.passwordGroup.mapBoth(
                             success = { it.replaceTitle(newTitle) },
@@ -109,7 +110,7 @@ class EditViewModel(
     fun updateRemark(newRemark: String) {
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.copy(
+                editUiState.replaceContents(
                     contents = editUiState.contents.replacePasswordGroup(
                         editUiState.contents.passwordGroup.mapBoth(
                             success = { it.replaceRemark(newRemark) },
@@ -133,7 +134,7 @@ class EditViewModel(
 
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.copy(
+                editUiState.replaceContents(
                     contents = editUiState.contents.replacePasswords(newPasswords)
                 )
             }
@@ -152,7 +153,7 @@ class EditViewModel(
 
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.copy(
+                editUiState.replaceContents(
                     contents = editUiState.contents.replacePasswords(newPasswords)
                 )
             }
@@ -168,7 +169,7 @@ class EditViewModel(
                     }
 
                 _uiState.update { editUiState ->
-                    editUiState.copy(
+                    editUiState.replaceContents(
                         contents = editUiState.contents.replacePasswords(newPasswords)
                     )
                 }

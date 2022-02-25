@@ -52,4 +52,8 @@ data class ErrorEditUiState(val message: String)
 data class EditUiState(
     var titleState: State<String, ErrorEditUiState> = State.Loading,
     var contents: EditContentsUiState = EditContentsUiState(),
-)
+) {
+    fun replaceTitleState(titleState: State<String, ErrorEditUiState>) = this.copy(titleState = titleState)
+
+    fun replaceContents(contents: EditContentsUiState) = this.copy(contents = contents)
+}
