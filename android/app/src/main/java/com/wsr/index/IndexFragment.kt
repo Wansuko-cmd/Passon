@@ -48,6 +48,8 @@ class IndexFragment : Fragment() {
             adapter = indexEpoxyController.adapter
         }
 
+        binding.indexFragmentFab.setOnClickListener { indexViewModel.create("example1@gmail.com", "Hello") }
+
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             indexViewModel.uiState.collect { indexUiState ->
 

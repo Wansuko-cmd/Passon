@@ -9,10 +9,7 @@ import com.wsr.password.getall.GetAllPasswordUseCase
 import com.wsr.password.updateall.UpdateAllPasswordUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
 import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCase
-import com.wsr.state.State
-import com.wsr.state.consume
-import com.wsr.state.map
-import com.wsr.state.mapBoth
+import com.wsr.state.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -39,21 +36,18 @@ class EditViewModel(
             coroutineScope = viewModelScope,
         ) { editUiState, state ->
 
-            editUiState.apply {
-                titleState.map {
-                    state.mapBoth(
-                        success = { it.title },
-                        failure = { ErrorEditUiState(it.message ?: "") },
-                    )
-                }
-
-                contents.replaceTitle(
+            editUiState.copy(
+                titleState = state.mapBoth(
+                    success = { it.title },
+                    failure = { ErrorEditUiState(it.message ?: "") },
+                ),
+                contents = editUiState.contents.replaceTitle(
                     title = state.mapBoth(
                         success = { it.title },
                         failure = { ErrorEditUiState(it.message ?: "") },
                     )
                 )
-            }
+            )
         }
     }
 
@@ -63,14 +57,14 @@ class EditViewModel(
             coroutineScope = viewModelScope,
         ) { editUiState, state ->
 
-            editUiState.apply {
-                contents.replacePasswords(
+            editUiState.copy(
+                contents = editUiState.contents.replacePasswords(
                     passwords = state.mapBoth(
                         success = { list -> list.map { it.toEditUiState() } },
                         failure = { ErrorEditUiState(it.message ?: "") }
                     )
                 )
-            }
+            )
         }
     }
 
@@ -94,9 +88,9 @@ class EditViewModel(
     fun updateTitle(newTitle: String) {
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.apply {
-                    contents.replaceTitle(State.Success(newTitle))
-                }
+                editUiState.copy(
+                    contents = editUiState.contents.replaceTitle(State.Success(newTitle))
+                )
             }
         }
     }
@@ -113,9 +107,9 @@ class EditViewModel(
 
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.apply {
-                    contents.replacePasswords(newPasswords)
-                }
+                editUiState.copy(
+                    contents = editUiState.contents.replacePasswords(newPasswords)
+                )
             }
         }
         println("passwordId: $passwordId, newName: $newName")
@@ -133,9 +127,9 @@ class EditViewModel(
 
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.apply {
-                    contents.replacePasswords(newPasswords)
-                }
+                editUiState.copy(
+                    contents = editUiState.contents.replacePasswords(newPasswords)
+                )
             }
         }
         println("passwordId: $passwordId, newPassword: $newPassword")

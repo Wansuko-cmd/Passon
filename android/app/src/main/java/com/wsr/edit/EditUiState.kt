@@ -34,6 +34,6 @@ data class ErrorEditUiState(val message: String)
 
 
 data class EditUiState(
-    val titleState: State<String, ErrorEditUiState> = State.Loading,
-    val contents: EditContentsUiState = EditContentsUiState(),
+    var titleState: State<String, ErrorEditUiState> = State.Loading,
+    var contents: EditContentsUiState = EditContentsUiState(),
 )
