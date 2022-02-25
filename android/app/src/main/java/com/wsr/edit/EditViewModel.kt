@@ -6,6 +6,7 @@ import com.wsr.edit.PasswordEditUiState.Companion.toEditUiState
 import com.wsr.edit.PasswordEditUiState.Companion.toUseCaseModel
 import com.wsr.edit.PasswordGroupEditUiState.Companion.toEditUiState
 import com.wsr.ext.updateWith
+import com.wsr.password.create.CreatePasswordUseCase
 import com.wsr.password.getall.GetAllPasswordUseCase
 import com.wsr.password.updateall.UpdateAllPasswordUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
@@ -22,6 +23,7 @@ import kotlinx.coroutines.launch
 class EditViewModel(
     private val getPasswordGroupUseCase: GetPasswordGroupUseCase,
     private val getAllPasswordUseCase: GetAllPasswordUseCase,
+    private val createPasswordUseCase: CreatePasswordUseCase,
     private val updatePasswordGroupUseCase: UpdatePasswordGroupUseCase,
     private val updateAllPasswordUseCase: UpdateAllPasswordUseCase,
 ) : ViewModel() {
@@ -155,6 +157,25 @@ class EditViewModel(
                 )
             }
         }
+    }
+
+    suspend fun createPassword(passwordGroupId: String) = viewModelScope.launch(Dispatchers.IO) {
+        createPasswordUseCase.create(passwordGroupId).consume(
+            success = { newPassword ->
+                val newPasswords = _uiState.value.contents.passwords
+                    .map { list ->
+                        list + newPassword.toEditUiState()
+                    }
+
+                _uiState.update { editUiState ->
+                    editUiState.copy(
+                        contents = editUiState.contents.replacePasswords(newPasswords)
+                    )
+                }
+            },
+            failure = {},
+            loading = {},
+        )
     }
 
     suspend fun save(passwordGroupId: String) = viewModelScope.launch(Dispatchers.IO) {

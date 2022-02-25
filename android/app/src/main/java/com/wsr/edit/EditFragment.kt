@@ -12,6 +12,7 @@ import com.wsr.R
 import com.wsr.databinding.FragmentEditBinding
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.state.consume
+import com.wsr.state.map
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditFragment : Fragment() {
@@ -51,6 +52,12 @@ class EditFragment : Fragment() {
             afterRemarkChanged = editViewModel::updateRemark,
             afterNameChanged = editViewModel::updateName,
             afterPasswordChanged = editViewModel::updatePassword,
+            onClickPasswordAddButton = {
+                launchInLifecycleScope(Lifecycle.State.STARTED) {
+                    editViewModel.createPassword(passwordGroupId)
+                    editViewModel.uiState.value.contents.passwords.map { editEpoxyController.setSecondData(it) }
+                }
+            }
         )
 
         editRecyclerView = binding.editFragmentRecyclerView.apply {
