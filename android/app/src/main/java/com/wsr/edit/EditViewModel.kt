@@ -115,7 +115,6 @@ class EditViewModel(
                 )
             }
         }
-        println("passwordId: $passwordId, newName: $newName")
     }
 
     fun updatePassword(passwordId: String, newPassword: String) {
@@ -135,7 +134,6 @@ class EditViewModel(
                 )
             }
         }
-        println("passwordId: $passwordId, newPassword: $newPassword")
     }
 
     fun save(passwordGroupId: String) {

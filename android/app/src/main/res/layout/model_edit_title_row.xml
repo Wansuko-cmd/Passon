@@ -27,10 +27,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:afterTextChanged="@{afterTitleChanged}"
-            app:hint="@{@string/edit_password_row_title}"
+            app:hint="@{@string/edit_title_row}"
             app:layout_constraintTop_toTopOf="parent"
             app:text="@{title}"
-            tools:text="Title" />
+            tools:text="Title"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

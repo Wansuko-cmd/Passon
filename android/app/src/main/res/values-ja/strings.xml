@@ -7,13 +7,18 @@
 
     <!-- 一覧画面 -->
     <string name="index_no_password_group_message">右下のボタンからパスワードグループを作成できます</string>
+    <string name="index_create_password_group_dialog_title">タイトル</string>
+    <string name="index_create_password_group_dialog_positive_button">作成</string>
+    <string name="index_create_password_group_dialog_negative_button">キャンセル</string>
+    <string name="index_create_password_group_dialog_hint">タイトル</string>
 
     <!-- 詳細画面 -->
     <string name="show_show_password_checkbox_text">表示する</string>
     <string name="show_no_password_message">右下のボタンからパスワードを登録できます</string>
 
     <!-- 編集画面 -->
-    <string name="edit_password_row_title">タイトル</string>
+    <string name="edit_title_row">タイトル</string>
     <string name="edit_password_row_name">名前</string>
     <string name="edit_password_row_password">パスワード</string>
+    <string name="edit_remark_row">備考</string>
 </resources>

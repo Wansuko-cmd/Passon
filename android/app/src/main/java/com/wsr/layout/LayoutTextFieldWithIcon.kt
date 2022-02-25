@@ -59,6 +59,12 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
             view.textInputEditText.hint = hint
         }
 
+        @BindingAdapter("maxLines")
+        @JvmStatic
+        fun setMaxLines(view: LayoutTextFieldWithIcon, maxLines: Int) {
+            view.textInputEditText.maxLines = maxLines
+        }
+
         @BindingAdapter("afterTextChanged")
         @JvmStatic
         fun setOnTextChanged(view: LayoutTextFieldWithIcon, afterTextChanged: AfterTextChanged) =
@@ -95,7 +101,6 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
             view: LayoutTextFieldWithIcon,
             listener: OnClickListener
         ) = view.setEndIconOnClickListener(listener)
-
     }
 }
 

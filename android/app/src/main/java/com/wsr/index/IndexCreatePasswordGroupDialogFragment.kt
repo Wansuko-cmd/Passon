@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
+import com.wsr.R
 
 class IndexCreatePasswordGroupDialogFragment(
     private val onPositive: (title: String) -> Unit,
@@ -14,18 +15,16 @@ class IndexCreatePasswordGroupDialogFragment(
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         val editText = EditText(context).apply {
-            hint = "タイトル"
+            hint = getString(R.string.index_create_password_group_dialog_hint)
         }
 
         return activity?.let {
             AlertDialog.Builder(it).apply {
-                setTitle("新規作成")
-                setMessage("タイトル")
+                setTitle(R.string.index_create_password_group_dialog_title)
                 setView(editText)
-                setPositiveButton("作成") { _, _ -> onPositive(editText.text.toString()) }
-                setNegativeButton("キャンセル") { _, _ -> onNegative() }
-
+                setPositiveButton(R.string.index_create_password_group_dialog_positive_button) { _, _ -> onPositive(editText.text.toString()) }
+                setNegativeButton(R.string.index_create_password_group_dialog_negative_button) { _, _ -> onNegative() }
             }.create()
-        } ?: throw Exception()
+        } ?: throw IllegalAccessError("No Activity")
     }
 }

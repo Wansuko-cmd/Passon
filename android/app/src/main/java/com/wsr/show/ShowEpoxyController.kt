@@ -3,6 +3,7 @@ package com.wsr.show
 import com.airbnb.epoxy.TypedEpoxyController
 import com.wsr.messageRow
 import com.wsr.showPasswordRow
+import com.wsr.showRemarkRow
 import java.util.*
 
 class ShowEpoxyController(
@@ -27,6 +28,10 @@ class ShowEpoxyController(
                         this@ShowEpoxyController.onClickPasswordCopy(password)
                     }
                 }
+            }
+            showRemarkRow {
+                id(UUID.randomUUID().toString())
+                remark("REMARK")
             }
         } else {
             val noPasswordMessage = noPasswordMessage

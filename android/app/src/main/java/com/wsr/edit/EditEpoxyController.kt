@@ -3,6 +3,7 @@ package com.wsr.edit
 import com.airbnb.epoxy.Typed2EpoxyController
 import com.wsr.editAddPasswordButton
 import com.wsr.editPasswordRow
+import com.wsr.editRemarkRow
 import com.wsr.editTitleRow
 import com.wsr.layout.AfterTextChanged
 import java.util.*
@@ -45,6 +46,14 @@ class EditEpoxyController(
             id(UUID.randomUUID().toString())
             onClickButton { _, _, _, _ -> }
         }
+
+        editRemarkRow {
+            id(UUID.randomUUID().toString())
+            remark("REMARK")
+            afterTitleChanged(
+                AfterTextChanged {  }
+            )
+        }
     }
 }
 
@@ -55,12 +64,10 @@ abstract class MyTyped2EpoxyController<T, U> : Typed2EpoxyController<T, U>() {
     private var data2: U? = null
 
     fun initializeFirstData(init: T) {
-        println("HERE DATA 1 $init")
         if (data1 == null) setFirstData(init)
     }
 
     fun initializeSecondData(init: U) {
-        println("HERE DATA 2 $init")
         if (data2 == null) setSecondData(init)
     }
 
