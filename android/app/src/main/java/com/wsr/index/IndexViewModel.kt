@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.wsr.passwordgroup.create.CreatePasswordGroupUseCase
 import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCase
 import com.wsr.state.mapBoth
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -24,15 +25,15 @@ class IndexViewModel(
             )
         }
 
-    fun fetchPasswordGroups(email: String) {
-        viewModelScope.launch {
+    fun fetch(email: String) = fetchPasswordGroups(email)
+
+    private fun fetchPasswordGroups(email: String) {
+        viewModelScope.launch(Dispatchers.IO) {
             getAllPasswordGroupUseCase.getAllByEmail(email)
         }
     }
 
-    fun create(email: String, title: String) {
-        viewModelScope.launch {
-            createPasswordGroupUseCase.create(email, title)
-        }
+    suspend fun create(email: String, title: String) = viewModelScope.launch(Dispatchers.IO) {
+        createPasswordGroupUseCase.create(email, title)
     }
 }

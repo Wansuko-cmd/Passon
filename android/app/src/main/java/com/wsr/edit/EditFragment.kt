@@ -44,17 +44,6 @@ class EditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.editFragmentFab.setOnClickListener {
-            editViewModel.save(
-                passwordGroupId
-            )
-            Toast.makeText(
-                context,
-                "セーブしました",
-                Toast.LENGTH_LONG,
-            ).show()
-        }
-
         editViewModel.fetch(passwordGroupId)
 
         editEpoxyController = EditEpoxyController(
@@ -67,6 +56,22 @@ class EditFragment : Fragment() {
         editRecyclerView = binding.editFragmentRecyclerView.apply {
             setHasFixedSize(true)
             adapter = editEpoxyController.adapter
+        }
+
+
+
+        binding.editFragmentFab.setOnClickListener {
+            launchInLifecycleScope(Lifecycle.State.STARTED) {
+                editViewModel.save(
+                    passwordGroupId
+                ).join()
+
+                Toast.makeText(
+                    context,
+                    getString(R.string.edit_toast_on_save_message),
+                    Toast.LENGTH_LONG,
+                ).show()
+            }
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {

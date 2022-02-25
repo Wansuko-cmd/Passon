@@ -22,6 +22,8 @@ class IndexFragment : Fragment() {
     private lateinit var indexRecyclerView: RecyclerView
     private val indexViewModel: IndexViewModel by viewModel()
 
+    private val email by lazy { "example1@gmail.com" }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,7 +41,7 @@ class IndexFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        indexViewModel.fetchPasswordGroups("example1@gmail.com")
+        indexViewModel.fetch(email)
 
         indexEpoxyController = IndexEpoxyController(
             onClick = ::navigateToShow,
@@ -51,13 +53,17 @@ class IndexFragment : Fragment() {
             adapter = indexEpoxyController.adapter
         }
 
-        binding.indexFragmentFab.setOnClickListener {
 
+
+
+        binding.indexFragmentFab.setOnClickListener {
             activity?.let {
                 IndexCreatePasswordGroupDialogFragment(
                     onPositive = { title ->
-                        indexViewModel.create("example1@gmail.com", title)
-                        indexViewModel.fetchPasswordGroups("example1@gmail.com")
+                        launchInLifecycleScope(Lifecycle.State.STARTED) {
+                            indexViewModel.create(email, title).join()
+                            indexViewModel.fetch(email)
+                        }
                     },
                     onNegative = {}
                 ).show(it.supportFragmentManager, tag)

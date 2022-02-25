@@ -15,10 +15,12 @@
     <!-- 詳細画面 -->
     <string name="show_show_password_checkbox_text">Show Password</string>
     <string name="show_no_password_message">Click right bottom button to register your password</string>
+    <string name="show_toast_on_copy_message">Copied</string>
 
     <!-- 編集画面 -->
     <string name="edit_title_row">Title</string>
     <string name="edit_password_row_name">Name</string>
     <string name="edit_password_row_password">Password</string>
     <string name="edit_remark_row">Remark</string>
+    <string name="edit_toast_on_save_message">Saved</string>
 </resources>

@@ -15,10 +15,12 @@
     <!-- 詳細画面 -->
     <string name="show_show_password_checkbox_text">表示する</string>
     <string name="show_no_password_message">右下のボタンからパスワードを登録できます</string>
+    <string name="show_toast_on_copy_message">コピーしました</string>
 
     <!-- 編集画面 -->
     <string name="edit_title_row">タイトル</string>
     <string name="edit_password_row_name">名前</string>
     <string name="edit_password_row_password">パスワード</string>
     <string name="edit_remark_row">備考</string>
+    <string name="edit_toast_on_save_message">セーブしました</string>
 </resources>

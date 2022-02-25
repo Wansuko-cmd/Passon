@@ -13,6 +13,7 @@ import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCase
 import com.wsr.state.consume
 import com.wsr.state.map
 import com.wsr.state.mapBoth
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -156,26 +157,24 @@ class EditViewModel(
         }
     }
 
-    fun save(passwordGroupId: String) {
-        viewModelScope.launch {
-            _uiState.value.contents.passwordGroup.consume(
-                success = { passwordGroup ->
-                    updatePasswordGroupUseCase.update(
-                        id = passwordGroupId,
-                        title = passwordGroup.title,
-                        remark = passwordGroup.remark,
-                    )
-                },
-                failure = {},
-                loading = {},
-            )
-            _uiState.value.contents.passwords.consume(
-                success = { list ->
-                    updateAllPasswordUseCase.updateAll(list.map { it.toUseCaseModel(passwordGroupId) })
-                },
-                failure = {},
-                loading = {},
-            )
-        }
+    suspend fun save(passwordGroupId: String) = viewModelScope.launch(Dispatchers.IO) {
+        _uiState.value.contents.passwordGroup.consume(
+            success = { passwordGroup ->
+                updatePasswordGroupUseCase.update(
+                    id = passwordGroupId,
+                    title = passwordGroup.title,
+                    remark = passwordGroup.remark,
+                )
+            },
+            failure = {},
+            loading = {},
+        )
+        _uiState.value.contents.passwords.consume(
+            success = { list ->
+                updateAllPasswordUseCase.updateAll(list.map { it.toUseCaseModel(passwordGroupId) })
+            },
+            failure = {},
+            loading = {},
+        )
     }
 }
