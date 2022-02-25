@@ -1,6 +1,5 @@
 package com.wsr.index
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast

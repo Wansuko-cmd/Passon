@@ -18,7 +18,7 @@
         android:id="@+id/model_edit_password_row_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="16dp"
         android:layout_marginBottom="24dp"
         android:orientation="vertical">
 
@@ -27,9 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:afterTextChanged="@{afterTitleChanged}"
+            app:hint="@{@string/edit_password_row_title}"
             app:layout_constraintTop_toTopOf="parent"
             app:text="@{title}"
-            app:hint="@{@string/edit_password_row_title}"
             tools:text="Title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.wsr.edit
 
 import com.airbnb.epoxy.Typed2EpoxyController
+import com.wsr.editAddPasswordButton
 import com.wsr.editPasswordRow
 import com.wsr.editTitleRow
 import com.wsr.layout.AfterTextChanged
@@ -37,6 +38,11 @@ class EditEpoxyController(
                     )
                 )
             }
+        }
+
+        editAddPasswordButton {
+            id("Button")
+            onClickButton { _, _, _, _ -> }
         }
     }
 }
