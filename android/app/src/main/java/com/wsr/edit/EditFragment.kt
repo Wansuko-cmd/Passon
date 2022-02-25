@@ -48,6 +48,11 @@ class EditFragment : Fragment() {
             editViewModel.save(
                 passwordGroupId
             )
+            Toast.makeText(
+                context,
+                "セーブしました",
+                Toast.LENGTH_LONG,
+            ).show()
         }
 
         editViewModel.fetch(passwordGroupId)

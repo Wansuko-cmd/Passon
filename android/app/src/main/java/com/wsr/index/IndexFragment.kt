@@ -41,7 +41,10 @@ class IndexFragment : Fragment() {
 
         indexViewModel.fetchPasswordGroups("example1@gmail.com")
 
-        indexEpoxyController = IndexEpoxyController(::navigateToShow)
+        indexEpoxyController = IndexEpoxyController(
+            onClick = ::navigateToShow,
+            noPasswordGroupMessage = getString(R.string.index_no_password_group_message)
+        )
 
         indexRecyclerView = binding.indexFragmentRecyclerView.apply {
             setHasFixedSize(true)

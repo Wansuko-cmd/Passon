@@ -5,8 +5,12 @@
     <string name="menu_title_edit">Edit</string>
     <string name="menu_title_setting">Setting</string>
 
+    <!-- 一覧画面 -->
+    <string name="index_no_password_group_message">Click right bottom button to create your password group</string>
+
     <!-- 詳細画面 -->
-    <string name="show_password_text">Show Password</string>
+    <string name="show_show_password_checkbox_text">Show Password</string>
+    <string name="show_no_password_message">Click right bottom button to register your password</string>
 
     <!-- 編集画面 -->
     <string name="edit_password_row_title">Title</string>

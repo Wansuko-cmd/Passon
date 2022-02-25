@@ -2,18 +2,31 @@ package com.wsr.index
 
 import com.airbnb.epoxy.TypedEpoxyController
 import com.wsr.indexPasswordGroupRow
+import com.wsr.messageRow
 
-class IndexEpoxyController(private val onClick: (String) -> Unit) :
+class IndexEpoxyController(
+    private val onClick: (String) -> Unit,
+    private val noPasswordGroupMessage: String,
+) :
     TypedEpoxyController<List<PasswordGroupIndexUiState>>() {
 
     override fun buildModels(list: List<PasswordGroupIndexUiState>) {
-        list.forEach { passwordGroup ->
-            indexPasswordGroupRow {
-                id(passwordGroup.id)
-                title(passwordGroup.title)
-                onClick { _, _, _, _ ->
-                    this@IndexEpoxyController.onClick(passwordGroup.id)
+        if(list.isNotEmpty()) {
+            list.forEach { passwordGroup ->
+                indexPasswordGroupRow {
+                    id(passwordGroup.id)
+                    title(passwordGroup.title)
+                    onClick { _, _, _, _ ->
+                        this@IndexEpoxyController.onClick(passwordGroup.id)
+                    }
                 }
+            }
+        }
+        else {
+            val noPasswordGroupMessage = noPasswordGroupMessage
+            messageRow {
+                id("message")
+                message(noPasswordGroupMessage)
             }
         }
     }

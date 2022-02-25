@@ -54,7 +54,8 @@ class ShowFragment : Fragment() {
 
         showEpoxyController = ShowEpoxyController(
             onClickShowPassword = { showViewModel.changePasswordState(it.id) },
-            onClickPasswordCopy = { writeToClipboard("password", it.password) }
+            onClickPasswordCopy = { writeToClipboard("password", it.password) },
+            noPasswordMessage = getString(R.string.show_no_password_message)
         )
 
         showRecyclerView = binding.showFragmentRecyclerView.apply {
