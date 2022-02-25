@@ -5,6 +5,7 @@ import com.wsr.editAddPasswordButton
 import com.wsr.editPasswordRow
 import com.wsr.editTitleRow
 import com.wsr.layout.AfterTextChanged
+import java.util.*
 
 class EditEpoxyController(
     private val afterTitleChanged: (newTitle: String) -> Unit,
@@ -15,7 +16,7 @@ class EditEpoxyController(
     override fun buildModels(title: String, list: List<PasswordEditUiState>) {
 
         editTitleRow {
-            id("KEY")
+            id(UUID.randomUUID().toString())
             title(title)
             afterTitleChanged(
                 AfterTextChanged(this@EditEpoxyController.afterTitleChanged)
@@ -41,7 +42,7 @@ class EditEpoxyController(
         }
 
         editAddPasswordButton {
-            id("Button")
+            id(UUID.randomUUID().toString())
             onClickButton { _, _, _, _ -> }
         }
     }
