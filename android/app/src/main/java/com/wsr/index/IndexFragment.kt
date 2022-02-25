@@ -1,5 +1,6 @@
 package com.wsr.index
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -48,7 +49,22 @@ class IndexFragment : Fragment() {
             adapter = indexEpoxyController.adapter
         }
 
-        binding.indexFragmentFab.setOnClickListener { indexViewModel.create("example1@gmail.com", "Hello") }
+        binding.indexFragmentFab.setOnClickListener {
+
+            activity?.let {
+                IndexCreatePasswordGroupDialogFragment(
+                    onPositive = { title ->
+                        indexViewModel.create("example1@gmail.com", title)
+                        indexViewModel.fetchPasswordGroups("example1@gmail.com")
+                    },
+                    onNegative = {}
+                ).show(it.supportFragmentManager, tag)
+            }
+
+
+
+
+        }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             indexViewModel.uiState.collect { indexUiState ->
