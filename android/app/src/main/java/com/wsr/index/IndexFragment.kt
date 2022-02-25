@@ -60,10 +60,6 @@ class IndexFragment : Fragment() {
                     onNegative = {}
                 ).show(it.supportFragmentManager, tag)
             }
-
-
-
-
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {

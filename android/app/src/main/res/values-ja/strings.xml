@@ -5,5 +5,11 @@
     <string name="menu_title_edit">編集</string>
     <string name="menu_title_setting">設定</string>
 
+    <!-- 詳細画面 -->
     <string name="show_password_text">表示する</string>
+
+    <!-- 編集画面 -->
+    <string name="edit_password_row_title">タイトル</string>
+    <string name="edit_password_row_name">名前</string>
+    <string name="edit_password_row_password">パスワード</string>
 </resources>

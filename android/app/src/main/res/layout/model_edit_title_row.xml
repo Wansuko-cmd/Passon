@@ -19,16 +19,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:layout_marginBottom="24dp"
         android:orientation="vertical">
 
-        <com.wsr.layout.LayoutTextFieldWithIcon
+        <com.wsr.layout.LayoutTextField
             android:id="@+id/model_edit_password_row_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:afterTextChanged="@{afterTitleChanged}"
             app:layout_constraintTop_toTopOf="parent"
             app:text="@{title}"
-            tools:text="Hello" />
+            app:hint="@{@string/edit_password_row_title}"
+            tools:text="Title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

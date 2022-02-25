@@ -3,38 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/layout_text_field_with_icon_constraint_layout"
+        android:id="@+id/layout_text_field_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:elevation="4dp"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/layout_text_field_with_icon_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="TODO"
-            app:layout_constraintBottom_toBottomOf="@id/layout_text_field_with_icon_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/layout_text_field_with_icon_text"
-            app:tint="@color/black"
-            tools:src="@drawable/ic_baseline_person_24" />
-
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout_text_field_with_icon_text"
+            android:id="@+id/layout_text_field_text"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:background="@android:color/white"
-            app:endIconMode="custom"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/layout_text_field_with_icon_icon"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/layout_text_field_with_icon_text_input"
+                android:id="@+id/layout_text_field_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"

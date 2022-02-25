@@ -5,5 +5,11 @@
     <string name="menu_title_edit">Edit</string>
     <string name="menu_title_setting">Setting</string>
 
+    <!-- 詳細画面 -->
     <string name="show_password_text">Show Password</string>
+
+    <!-- 編集画面 -->
+    <string name="edit_password_row_title">Title</string>
+    <string name="edit_password_row_name">Name</string>
+    <string name="edit_password_row_password">Password</string>
 </resources>
