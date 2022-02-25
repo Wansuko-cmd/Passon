@@ -2,12 +2,13 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="remark"
             type="String" />
 
         <variable
-            name="afterTitleChanged"
+            name="afterRemarkChanged"
             type="com.wsr.layout.AfterTextChanged" />
     </data>
 
@@ -21,10 +22,11 @@
             android:id="@+id/model_show_password_row_remark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:icon="@{@drawable/ic_outline_remark_24}"
+            app:afterTextChanged="@{afterRemarkChanged}"
             app:hint="@{@string/edit_remark_row}"
+            app:icon="@{@drawable/ic_outline_remark_24}"
             app:layout_constraintTop_toTopOf="parent"
-            app:text="@{remark}"/>
+            app:text="@{remark}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

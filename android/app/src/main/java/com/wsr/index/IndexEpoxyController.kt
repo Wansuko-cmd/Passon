@@ -23,10 +23,9 @@ class IndexEpoxyController(
                 }
             }
         } else {
-            val noPasswordGroupMessage = noPasswordGroupMessage
             messageRow {
                 id(UUID.randomUUID().toString())
-                message(noPasswordGroupMessage)
+                message(this@IndexEpoxyController.noPasswordGroupMessage)
             }
         }
     }

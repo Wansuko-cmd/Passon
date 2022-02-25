@@ -59,6 +59,7 @@ class EditFragment : Fragment() {
 
         editEpoxyController = EditEpoxyController(
             afterTitleChanged = editViewModel::updateTitle,
+            afterRemarkChanged = editViewModel::updateRemark,
             afterNameChanged = editViewModel::updateName,
             afterPasswordChanged = editViewModel::updatePassword,
         )
@@ -79,7 +80,7 @@ class EditFragment : Fragment() {
                     loading = {},
                 )
 
-                editUiState.contents.title.consume(
+                editUiState.contents.passwordGroup.consume(
                     success = editEpoxyController::initializeFirstData,
                     failure = ::showErrorMessage,
                     loading = {},

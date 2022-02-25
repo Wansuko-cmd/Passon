@@ -2,6 +2,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="remark"
             type="String" />
@@ -17,10 +18,10 @@
             android:id="@+id/model_show_password_row_remark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:enabled="@{false}"
             app:icon="@{@drawable/ic_outline_remark_24}"
             app:layout_constraintTop_toTopOf="parent"
-            app:enabled="@{false}"
-            app:text="@{remark}"/>
+            app:text="@{remark}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

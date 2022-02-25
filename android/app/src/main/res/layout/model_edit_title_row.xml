@@ -30,7 +30,7 @@
             app:hint="@{@string/edit_title_row}"
             app:layout_constraintTop_toTopOf="parent"
             app:text="@{title}"
-            tools:text="Title"/>
+            tools:text="Title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

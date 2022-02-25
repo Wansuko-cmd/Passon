@@ -1,24 +1,28 @@
 package com.wsr.edit
 
-import com.airbnb.epoxy.Typed2EpoxyController
 import com.wsr.editAddPasswordButton
 import com.wsr.editPasswordRow
 import com.wsr.editRemarkRow
 import com.wsr.editTitleRow
 import com.wsr.layout.AfterTextChanged
+import com.wsr.utils.MyTyped2EpoxyController
 import java.util.*
 
 class EditEpoxyController(
     private val afterTitleChanged: (newTitle: String) -> Unit,
+    private val afterRemarkChanged: (newRemark: String) -> Unit,
     private val afterNameChanged: (passwordId: String, newName: String) -> Unit,
     private val afterPasswordChanged: (passwordId: String, newPassword: String) -> Unit,
-) : MyTyped2EpoxyController<String, List<PasswordEditUiState>>() {
+) : MyTyped2EpoxyController<PasswordGroupEditUiState, List<PasswordEditUiState>>() {
 
-    override fun buildModels(title: String, list: List<PasswordEditUiState>) {
+    override fun buildModels(
+        passwordGroup: PasswordGroupEditUiState,
+        list: List<PasswordEditUiState>
+    ) {
 
         editTitleRow {
-            id(UUID.randomUUID().toString())
-            title(title)
+            id(passwordGroup.id)
+            title(passwordGroup.title)
             afterTitleChanged(
                 AfterTextChanged(this@EditEpoxyController.afterTitleChanged)
             )
@@ -48,36 +52,13 @@ class EditEpoxyController(
         }
 
         editRemarkRow {
-            id(UUID.randomUUID().toString())
-            remark("REMARK")
-            afterTitleChanged(
-                AfterTextChanged {  }
+            id(passwordGroup.id)
+            remark(passwordGroup.remark)
+            afterRemarkChanged(
+                AfterTextChanged(this@EditEpoxyController.afterRemarkChanged)
             )
         }
     }
 }
 
-fun <T, U, V> curry(f: (T, U) -> V): (T) -> (U) -> V = { t -> { u -> f(t, u) } }
-
-abstract class MyTyped2EpoxyController<T, U> : Typed2EpoxyController<T, U>() {
-    private var data1: T? = null
-    private var data2: U? = null
-
-    fun initializeFirstData(init: T) {
-        if (data1 == null) setFirstData(init)
-    }
-
-    fun initializeSecondData(init: U) {
-        if (data2 == null) setSecondData(init)
-    }
-
-    private fun setFirstData(newData: T) {
-        data1 = newData
-        if (data2 != null) setData(data1, data2)
-    }
-
-    private fun setSecondData(newData: U) {
-        data2 = newData
-        if (data1 != null) setData(data1, data2)
-    }
-}
+private fun <T, U, V> curry(f: (T, U) -> V): (T) -> (U) -> V = { t -> { u -> f(t, u) } }

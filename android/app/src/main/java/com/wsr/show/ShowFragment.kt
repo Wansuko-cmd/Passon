@@ -74,8 +74,14 @@ class ShowFragment : Fragment() {
                     loading = {},
                 )
 
-                showUiState.passwordsState.consume(
-                    success = showEpoxyController::setData,
+                showUiState.contents.passwordGroup.consume(
+                    success = showEpoxyController::setFirstData,
+                    failure = ::showErrorMessage,
+                    loading = {},
+                )
+
+                showUiState.contents.passwords.consume(
+                    success = showEpoxyController::setSecondData,
                     failure = ::showErrorMessage,
                     loading = {},
                 )

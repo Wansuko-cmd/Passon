@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.edit.PasswordEditUiState.Companion.toEditUiState
 import com.wsr.edit.PasswordEditUiState.Companion.toUseCaseModel
+import com.wsr.edit.PasswordGroupEditUiState.Companion.toEditUiState
 import com.wsr.ext.updateWith
 import com.wsr.password.getall.GetAllPasswordUseCase
 import com.wsr.password.updateall.UpdateAllPasswordUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
 import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCase
-import com.wsr.state.State
 import com.wsr.state.consume
 import com.wsr.state.map
 import com.wsr.state.mapBoth
@@ -44,9 +44,9 @@ class EditViewModel(
                     success = { it.title },
                     failure = { ErrorEditUiState(it.message ?: "") },
                 ),
-                contents = editUiState.contents.replaceTitle(
-                    title = state.mapBoth(
-                        success = { it.title },
+                contents = editUiState.contents.replacePasswordGroup(
+                    passwordGroup = state.mapBoth(
+                        success = { it.toEditUiState() },
                         failure = { ErrorEditUiState(it.message ?: "") },
                     )
                 )
@@ -72,11 +72,11 @@ class EditViewModel(
     }
 
     fun fetch(passwordGroupId: String) {
-        fetchTitle(passwordGroupId)
+        fetchPasswordGroup(passwordGroupId)
         fetchPasswords(passwordGroupId)
     }
 
-    private fun fetchTitle(passwordGroupId: String) {
+    private fun fetchPasswordGroup(passwordGroupId: String) {
         viewModelScope.launch {
             getPasswordGroupUseCase.getById(passwordGroupId)
         }
@@ -92,7 +92,27 @@ class EditViewModel(
         viewModelScope.launch {
             _uiState.update { editUiState ->
                 editUiState.copy(
-                    contents = editUiState.contents.replaceTitle(State.Success(newTitle))
+                    contents = editUiState.contents.replacePasswordGroup(
+                        editUiState.contents.passwordGroup.mapBoth(
+                            success = { it.replaceTitle(newTitle) },
+                            failure = { it },
+                        )
+                    )
+                )
+            }
+        }
+    }
+
+    fun updateRemark(newRemark: String) {
+        viewModelScope.launch {
+            _uiState.update { editUiState ->
+                editUiState.copy(
+                    contents = editUiState.contents.replacePasswordGroup(
+                        editUiState.contents.passwordGroup.mapBoth(
+                            success = { it.replaceRemark(newRemark) },
+                            failure = { it }
+                        )
+                    )
                 )
             }
         }
@@ -138,11 +158,12 @@ class EditViewModel(
 
     fun save(passwordGroupId: String) {
         viewModelScope.launch {
-            _uiState.value.contents.title.consume(
-                success = { title ->
+            _uiState.value.contents.passwordGroup.consume(
+                success = { passwordGroup ->
                     updatePasswordGroupUseCase.update(
                         id = passwordGroupId,
-                        title = title,
+                        title = passwordGroup.title,
+                        remark = passwordGroup.remark,
                     )
                 },
                 failure = {},

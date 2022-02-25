@@ -1,9 +1,9 @@
 package com.wsr.show
 
-import com.airbnb.epoxy.TypedEpoxyController
 import com.wsr.messageRow
 import com.wsr.showPasswordRow
 import com.wsr.showRemarkRow
+import com.wsr.utils.MyTyped2EpoxyController
 import java.util.*
 
 class ShowEpoxyController(
@@ -11,9 +11,12 @@ class ShowEpoxyController(
     private val onClickPasswordCopy: (PasswordShowUiState) -> Unit,
     private val noPasswordMessage: String,
 ) :
-    TypedEpoxyController<List<PasswordShowUiState>>() {
+    MyTyped2EpoxyController<PasswordGroupShowUiState, List<PasswordShowUiState>>() {
 
-    override fun buildModels(list: List<PasswordShowUiState>) {
+    override fun buildModels(
+        passwordGroup: PasswordGroupShowUiState,
+        list: List<PasswordShowUiState>
+    ) {
         if (list.isNotEmpty()) {
             list.forEach { password ->
                 showPasswordRow {
@@ -29,16 +32,16 @@ class ShowEpoxyController(
                     }
                 }
             }
-            showRemarkRow {
-                id(UUID.randomUUID().toString())
-                remark("REMARK")
-            }
         } else {
-            val noPasswordMessage = noPasswordMessage
             messageRow {
                 id(UUID.randomUUID().toString())
-                message(noPasswordMessage)
+                message(this@ShowEpoxyController.noPasswordMessage)
             }
+        }
+
+        showRemarkRow {
+            id(passwordGroup.id)
+            remark(passwordGroup.remark)
         }
     }
 }
