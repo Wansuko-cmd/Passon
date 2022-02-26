@@ -55,7 +55,11 @@ class EditFragment : Fragment() {
             onClickPasswordAddButton = {
                 launchInLifecycleScope(Lifecycle.State.STARTED) {
                     editViewModel.createPassword(passwordGroupId)
-                    editViewModel.uiState.value.contents.passwords.map { editEpoxyController.setSecondData(it) }
+                    editViewModel.uiState.value.contents.passwords.map {
+                        editEpoxyController.setSecondData(
+                            it
+                        )
+                    }
                 }
             }
         )

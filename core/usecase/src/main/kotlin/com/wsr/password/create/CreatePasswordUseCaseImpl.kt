@@ -12,19 +12,20 @@ class CreatePasswordUseCaseImpl(
     private val passwordRepository: PasswordRepository,
 ) : CreatePasswordUseCase {
 
-    override suspend fun create(passwordGroupId: String): State<PasswordUseCaseModel, CreateDataFailedException> = try {
-        val newPassword = Password(
-            id = UniqueId(),
-            passwordGroupId = UniqueId(passwordGroupId),
-            name = "",
-            password = "",
-        )
+    override suspend fun create(passwordGroupId: String): State<PasswordUseCaseModel, CreateDataFailedException> =
+        try {
+            val newPassword = Password(
+                id = UniqueId(),
+                passwordGroupId = UniqueId(passwordGroupId),
+                name = "",
+                password = "",
+            )
 
-        passwordRepository.create(newPassword)
+            passwordRepository.create(newPassword)
 
-        State.Success(newPassword.toUseCaseModel())
+            State.Success(newPassword.toUseCaseModel())
 
-    } catch (e: CreateDataFailedException) {
-        State.Failure(e)
-    }
+        } catch (e: CreateDataFailedException) {
+            State.Failure(e)
+        }
 }

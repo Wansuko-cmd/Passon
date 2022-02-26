@@ -49,7 +49,7 @@ class EditEpoxyController(
 
         editAddPasswordButton {
             id(UUID.randomUUID().toString())
-            onClickButton { _, _, _, _ -> this@EditEpoxyController.onClickPasswordAddButton()}
+            onClickButton { _, _, _, _ -> this@EditEpoxyController.onClickPasswordAddButton() }
         }
 
         editRemarkRow {
