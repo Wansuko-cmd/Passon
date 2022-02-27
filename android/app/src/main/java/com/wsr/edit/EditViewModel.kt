@@ -9,11 +9,10 @@ import com.wsr.password.getall.GetAllPasswordUseCase
 import com.wsr.password.upsert.UpsertPasswordUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
 import com.wsr.passwordgroup.upsert.UpdatePasswordGroupUseCase
-import com.wsr.state.consume
-import com.wsr.state.map
-import com.wsr.state.mapBoth
+import com.wsr.state.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class EditViewModel(
     private val getPasswordGroupUseCase: GetPasswordGroupUseCase,
@@ -178,21 +177,36 @@ class EditViewModel(
         }
     }
 
-    suspend fun save(passwordGroupId: String) = viewModelScope.launch {
-        _uiState.value.contents.passwordGroup.consume(
-            success = { passwordGroup ->
+    suspend fun save(passwordGroupId: String): State<Unit, ErrorEditUiState> =
+        withContext(viewModelScope.coroutineContext) {
+
+            val passwordGroup = savePasswordGroup(passwordGroupId)
+
+            val passwords = savePasswords(passwordGroupId)
+
+            passwordGroup.flatMap {
+                passwords.map { }
+            }
+        }
+
+    private suspend fun savePasswordGroup(passwordGroupId: String) =
+        withContext(viewModelScope.coroutineContext) {
+            _uiState.value.contents.passwordGroup.flatMap { passwordGroup ->
                 updatePasswordGroupUseCase.update(
                     id = passwordGroupId,
                     title = passwordGroup.title,
                     remark = passwordGroup.remark,
+                ).mapBoth(
+                    success = { },
+                    failure = { ErrorEditUiState(it.message ?: "") },
                 )
-            },
-            failure = {},
-            loading = {},
-        )
-        _uiState.value.contents.passwords.consume(
-            success = { list ->
-                list.forEach {
+            }
+        }
+
+    private suspend fun savePasswords(passwordGroupId: String) =
+        withContext(viewModelScope.coroutineContext) {
+            _uiState.value.contents.passwords.flatMap { list ->
+                list.map {
                     upsertPasswordUseCase.upsert(
                         id = it.id,
                         passwordGroupId = passwordGroupId,
@@ -200,9 +214,11 @@ class EditViewModel(
                         password = it.password
                     )
                 }
-            },
-            failure = {},
-            loading = {},
-        )
-    }
+                    .sequence()
+                    .mapBoth(
+                        success = { },
+                        failure = { ErrorEditUiState(it.message ?: "") },
+                    )
+            }
+        }
 }

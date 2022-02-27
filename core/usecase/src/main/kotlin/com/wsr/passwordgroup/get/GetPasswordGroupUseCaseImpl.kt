@@ -22,8 +22,6 @@ class GetPasswordGroupUseCaseImpl(
                 .getById(UniqueId(id))
                 .toUseCaseModel()
 
-            println("HERE: PasswordGroup: $passwordGroup")
-
             _data.emit(State.Success(passwordGroup))
         } catch (e: GetDataFailedException) {
             _data.emit(State.Failure(e))

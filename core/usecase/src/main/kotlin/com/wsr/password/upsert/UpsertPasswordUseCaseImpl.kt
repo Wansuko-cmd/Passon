@@ -1,5 +1,6 @@
 package com.wsr.password.upsert
 
+import com.wsr.exceptions.UpsertDataFailedException
 import com.wsr.password.Password
 import com.wsr.password.PasswordRepository
 import com.wsr.password.PasswordUseCaseModel
@@ -15,7 +16,7 @@ class UpsertPasswordUseCaseImpl(
         passwordGroupId: String,
         name: String,
         password: String
-    ): State<PasswordUseCaseModel, Throwable> = try {
+    ): State<PasswordUseCaseModel, UpsertDataFailedException> = try {
 
         Password(
             id = UniqueId(id),
@@ -26,7 +27,7 @@ class UpsertPasswordUseCaseImpl(
             .also { passwordRepository.upsert(it) }
             .let { State.Success(it.toUseCaseModel()) }
 
-    } catch (e: Exception) {
+    } catch (e: UpsertDataFailedException) {
         State.Failure(e)
     }
 }

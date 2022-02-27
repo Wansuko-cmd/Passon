@@ -6,7 +6,6 @@ import com.wsr.editRemarkRow
 import com.wsr.editTitleRow
 import com.wsr.layout.AfterTextChanged
 import com.wsr.utils.MyTyped2EpoxyController
-import java.util.*
 
 class EditEpoxyController(
     private val afterTitleChanged: (newTitle: String) -> Unit,
@@ -48,7 +47,7 @@ class EditEpoxyController(
         }
 
         editAddPasswordButton {
-            id(UUID.randomUUID().toString())
+            id(ADD_BUTTON_ID)
             onClickButton { _, _, _, _ -> this@EditEpoxyController.onClickPasswordAddButton() }
         }
 
@@ -59,6 +58,10 @@ class EditEpoxyController(
                 AfterTextChanged(this@EditEpoxyController.afterRemarkChanged)
             )
         }
+    }
+
+    companion object {
+        const val ADD_BUTTON_ID = "add_button_id"
     }
 }
 

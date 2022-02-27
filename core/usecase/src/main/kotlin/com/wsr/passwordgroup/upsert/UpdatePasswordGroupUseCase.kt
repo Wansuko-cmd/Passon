@@ -8,5 +8,5 @@ interface UpdatePasswordGroupUseCase {
         id: String,
         title: String? = null,
         remark: String? = null,
-    ): State<Boolean, UpdateDataFailedException>
+    ): State<Unit, UpdateDataFailedException>
 }

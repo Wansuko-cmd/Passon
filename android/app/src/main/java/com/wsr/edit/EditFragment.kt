@@ -63,15 +63,17 @@ class EditFragment : Fragment() {
 
         binding.editFragmentFab.setOnClickListener {
             launchInLifecycleScope(Lifecycle.State.STARTED) {
-                editViewModel.save(
-                    passwordGroupId
-                ).join()
-
-                Toast.makeText(
-                    context,
-                    getString(R.string.edit_toast_on_save_message),
-                    Toast.LENGTH_LONG,
-                ).show()
+                editViewModel.save(passwordGroupId).consume(
+                    success = {
+                        Toast.makeText(
+                            context,
+                            getString(R.string.edit_toast_on_save_message),
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    },
+                    failure = this@EditFragment::showErrorMessage,
+                    loading = {},
+                )
             }
         }
 
