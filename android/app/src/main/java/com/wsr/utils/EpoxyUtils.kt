@@ -14,6 +14,12 @@ abstract class MyTyped2EpoxyController<T, U> : Typed2EpoxyController<T, U>() {
         if (data2 == null) setSecondData(init)
     }
 
+    fun refresh(newData1: T? = null, newData2: U? = null) {
+        newData1?.let { this.data1 = it }
+        newData2?.let { this.data2 = it }
+        if (this.data1 != null && this.data2 != null) setData(this.data1, this.data2)
+    }
+
     fun setFirstData(newData: T) {
         data1 = newData
         if (data2 != null) setData(data1, data2)

@@ -18,17 +18,15 @@ class IndexCreatePasswordGroupDialogFragment(
             hint = getString(R.string.index_create_password_group_dialog_hint)
         }
 
-        return activity?.let {
-            AlertDialog.Builder(it).apply {
-                setTitle(R.string.index_create_password_group_dialog_title)
-                setView(editText)
-                setPositiveButton(R.string.index_create_password_group_dialog_positive_button) { _, _ ->
-                    onPositive(
-                        editText.text.toString()
-                    )
-                }
-                setNegativeButton(R.string.index_create_password_group_dialog_negative_button) { _, _ -> onNegative() }
-            }.create()
-        } ?: throw IllegalAccessError("No Activity")
+        return AlertDialog.Builder(requireActivity()).apply {
+            setTitle(R.string.index_create_password_group_dialog_title)
+            setView(editText)
+            setPositiveButton(R.string.index_create_password_group_dialog_positive_button) { _, _ ->
+                onPositive(
+                    editText.text.toString()
+                )
+            }
+            setNegativeButton(R.string.index_create_password_group_dialog_negative_button) { _, _ -> onNegative() }
+        }.create()
     }
 }

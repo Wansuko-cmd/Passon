@@ -4,7 +4,6 @@ import com.wsr.messageRow
 import com.wsr.showPasswordRow
 import com.wsr.showRemarkRow
 import com.wsr.utils.MyTyped2EpoxyController
-import java.util.*
 
 class ShowEpoxyController(
     private val onClickShowPassword: (PasswordShowUiState) -> Unit,
@@ -17,7 +16,13 @@ class ShowEpoxyController(
         passwordGroup: PasswordGroupShowUiState,
         list: List<PasswordShowUiState>
     ) {
-        if (list.isNotEmpty()) {
+        if (list.isEmpty()) {
+            messageRow {
+                id(MESSAGE_ID)
+                message(this@ShowEpoxyController.noPasswordMessage)
+            }
+        } else {
+
             list.forEach { password ->
                 showPasswordRow {
                     id(password.id)
@@ -32,16 +37,15 @@ class ShowEpoxyController(
                     }
                 }
             }
-        } else {
-            messageRow {
-                id(UUID.randomUUID().toString())
-                message(this@ShowEpoxyController.noPasswordMessage)
+
+            showRemarkRow {
+                id(passwordGroup.id)
+                remark(passwordGroup.remark)
             }
         }
+    }
 
-        showRemarkRow {
-            id(passwordGroup.id)
-            remark(passwordGroup.remark)
-        }
+    companion object {
+        const val MESSAGE_ID = "show_message_row_id"
     }
 }

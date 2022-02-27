@@ -55,7 +55,6 @@ class IndexFragment : Fragment() {
 
 
 
-
         binding.indexFragmentFab.setOnClickListener {
 
             val indexCreatePasswordGroupDialogFragment = IndexCreatePasswordGroupDialogFragment(
@@ -67,10 +66,12 @@ class IndexFragment : Fragment() {
                 },
                 onNegative = {}
             )
-            
-            activity?.let {
-                indexCreatePasswordGroupDialogFragment.show(it.supportFragmentManager, tag)
-            }
+
+            indexCreatePasswordGroupDialogFragment.show(
+                requireActivity().supportFragmentManager,
+                tag
+            )
+
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {

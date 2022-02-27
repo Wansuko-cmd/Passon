@@ -18,8 +18,8 @@ import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCaseImpl
 import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCase
 import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCaseImpl
-import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCase
-import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCaseImpl
+import com.wsr.passwordgroup.upsert.UpdatePasswordGroupUseCase
+import com.wsr.passwordgroup.upsert.UpdatePasswordGroupUseCaseImpl
 import com.wsr.show.ShowViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module

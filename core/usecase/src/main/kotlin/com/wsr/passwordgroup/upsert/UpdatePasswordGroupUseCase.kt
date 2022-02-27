@@ -1,4 +1,4 @@
-package com.wsr.passwordgroup.update
+package com.wsr.passwordgroup.upsert
 
 import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.state.State

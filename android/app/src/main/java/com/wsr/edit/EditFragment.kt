@@ -12,7 +12,6 @@ import com.wsr.R
 import com.wsr.databinding.FragmentEditBinding
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.state.consume
-import com.wsr.state.map
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditFragment : Fragment() {
@@ -55,11 +54,6 @@ class EditFragment : Fragment() {
             onClickPasswordAddButton = {
                 launchInLifecycleScope(Lifecycle.State.STARTED) {
                     editViewModel.createPassword(passwordGroupId)
-                    editViewModel.uiState.value.contents.passwords.map {
-                        editEpoxyController.setSecondData(
-                            it
-                        )
-                    }
                 }
             }
         )
@@ -107,6 +101,12 @@ class EditFragment : Fragment() {
                     failure = ::showErrorMessage,
                     loading = {},
                 )
+            }
+        }
+
+        launchInLifecycleScope(Lifecycle.State.STARTED) {
+            editViewModel.event.collect {
+                editEpoxyController.refresh(it.passwordGroup, it.passwords)
             }
         }
     }

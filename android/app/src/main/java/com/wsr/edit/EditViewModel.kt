@@ -10,14 +10,11 @@ import com.wsr.password.create.CreatePasswordUseCase
 import com.wsr.password.getall.GetAllPasswordUseCase
 import com.wsr.password.updateall.UpdateAllPasswordUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
-import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCase
+import com.wsr.passwordgroup.upsert.UpdatePasswordGroupUseCase
 import com.wsr.state.consume
 import com.wsr.state.map
 import com.wsr.state.mapBoth
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class EditViewModel(
@@ -31,6 +28,9 @@ class EditViewModel(
     private val _uiState = MutableStateFlow(EditUiState())
     val uiState = _uiState.asStateFlow()
 
+    private val _event = MutableSharedFlow<EditRefreshEvent>()
+    val event = _event.asSharedFlow()
+
     init {
         setupTitle()
         setupPasswords()
@@ -42,13 +42,13 @@ class EditViewModel(
             coroutineScope = viewModelScope,
         ) { editUiState, state ->
 
-            editUiState.replaceTitleState(
+            editUiState.copyWithTitle(
                 titleState = state.mapBoth(
                     success = { it.title },
                     failure = { ErrorEditUiState(it.message ?: "") },
                 ),
-            ).replaceContents(
-                contents = editUiState.contents.replacePasswordGroup(
+            ).copyWithContents(
+                contents = editUiState.contents.copyWithPasswordGroup(
                     passwordGroup = state.mapBoth(
                         success = { it.toEditUiState() },
                         failure = { ErrorEditUiState(it.message ?: "") },
@@ -64,8 +64,8 @@ class EditViewModel(
             coroutineScope = viewModelScope,
         ) { editUiState, state ->
 
-            editUiState.replaceContents(
-                contents = editUiState.contents.replacePasswords(
+            editUiState.copyWithContents(
+                contents = editUiState.contents.copyWithPasswords(
                     passwords = state.mapBoth(
                         success = { list -> list.map { it.toEditUiState() } },
                         failure = { ErrorEditUiState(it.message ?: "") }
@@ -95,8 +95,8 @@ class EditViewModel(
     fun updateTitle(newTitle: String) {
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.replaceContents(
-                    contents = editUiState.contents.replacePasswordGroup(
+                editUiState.copyWithContents(
+                    contents = editUiState.contents.copyWithPasswordGroup(
                         editUiState.contents.passwordGroup.mapBoth(
                             success = { it.replaceTitle(newTitle) },
                             failure = { it },
@@ -110,8 +110,8 @@ class EditViewModel(
     fun updateRemark(newRemark: String) {
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.replaceContents(
-                    contents = editUiState.contents.replacePasswordGroup(
+                editUiState.copyWithContents(
+                    contents = editUiState.contents.copyWithPasswordGroup(
                         editUiState.contents.passwordGroup.mapBoth(
                             success = { it.replaceRemark(newRemark) },
                             failure = { it }
@@ -134,8 +134,8 @@ class EditViewModel(
 
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.replaceContents(
-                    contents = editUiState.contents.replacePasswords(newPasswords)
+                editUiState.copyWithContents(
+                    contents = editUiState.contents.copyWithPasswords(newPasswords)
                 )
             }
         }
@@ -147,39 +147,50 @@ class EditViewModel(
             .passwords
             .map { list ->
                 list.map {
-                    if (it.id == passwordId) it.replacePassword(newPassword) else it
+                    if (it.id == passwordId) it.copyWithPassword(newPassword) else it
                 }
             }
 
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.replaceContents(
-                    contents = editUiState.contents.replacePasswords(newPasswords)
+                editUiState.copyWithContents(
+                    contents = editUiState.contents.copyWithPasswords(newPasswords)
                 )
             }
         }
     }
 
-    suspend fun createPassword(passwordGroupId: String) = viewModelScope.launch(Dispatchers.IO) {
-        createPasswordUseCase.create(passwordGroupId).consume(
-            success = { newPassword ->
-                val newPasswords = _uiState.value.contents.passwords
-                    .map { list ->
-                        list + newPassword.toEditUiState()
+    fun createPassword(passwordGroupId: String) {
+
+        viewModelScope.launch {
+            createPasswordUseCase.create(passwordGroupId).consume(
+                success = { newPassword ->
+                    val newPasswords = _uiState.value.contents.passwords
+                        .map { list ->
+                            list + newPassword.toEditUiState()
+                        }
+
+                    _uiState.update { editUiState ->
+                        editUiState.copyWithContents(
+                            contents = editUiState.contents.copyWithPasswords(newPasswords)
+                        )
                     }
 
-                _uiState.update { editUiState ->
-                    editUiState.replaceContents(
-                        contents = editUiState.contents.replacePasswords(newPasswords)
+                    newPasswords.consume(
+                        success = { _event.emit(EditRefreshEvent(passwords = it)) },
+                        failure = {},
+                        loading = {},
                     )
-                }
-            },
-            failure = {},
-            loading = {},
-        )
+
+
+                },
+                failure = {},
+                loading = {},
+            )
+        }
     }
 
-    suspend fun save(passwordGroupId: String) = viewModelScope.launch(Dispatchers.IO) {
+    suspend fun save(passwordGroupId: String) = viewModelScope.launch {
         _uiState.value.contents.passwordGroup.consume(
             success = { passwordGroup ->
                 updatePasswordGroupUseCase.update(

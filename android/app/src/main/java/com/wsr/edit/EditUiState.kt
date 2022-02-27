@@ -10,7 +10,7 @@ data class PasswordEditUiState(
     val password: String,
 ) {
     fun replaceName(name: String) = this.copy(name = name)
-    fun replacePassword(password: String) = this.copy(password = password)
+    fun copyWithPassword(password: String) = this.copy(password = password)
 
     companion object {
         fun PasswordUseCaseModel.toEditUiState() = PasswordEditUiState(id, name, password)
@@ -38,10 +38,10 @@ data class EditContentsUiState(
     val passwordGroup: State<PasswordGroupEditUiState, ErrorEditUiState> = State.Loading,
     val passwords: State<List<PasswordEditUiState>, ErrorEditUiState> = State.Loading,
 ) {
-    fun replacePasswordGroup(passwordGroup: State<PasswordGroupEditUiState, ErrorEditUiState>) =
+    fun copyWithPasswordGroup(passwordGroup: State<PasswordGroupEditUiState, ErrorEditUiState>) =
         this.copy(passwordGroup = passwordGroup)
 
-    fun replacePasswords(passwords: State<List<PasswordEditUiState>, ErrorEditUiState>) =
+    fun copyWithPasswords(passwords: State<List<PasswordEditUiState>, ErrorEditUiState>) =
         this.copy(passwords = passwords)
 }
 
@@ -53,8 +53,8 @@ data class EditUiState(
     val titleState: State<String, ErrorEditUiState> = State.Loading,
     val contents: EditContentsUiState = EditContentsUiState(),
 ) {
-    fun replaceTitleState(titleState: State<String, ErrorEditUiState>) =
+    fun copyWithTitle(titleState: State<String, ErrorEditUiState>) =
         this.copy(titleState = titleState)
 
-    fun replaceContents(contents: EditContentsUiState) = this.copy(contents = contents)
+    fun copyWithContents(contents: EditContentsUiState) = this.copy(contents = contents)
 }
