@@ -12,7 +12,7 @@ class EditEpoxyController(
     private val afterRemarkChanged: (newRemark: String) -> Unit,
     private val afterNameChanged: (passwordId: String, newName: String) -> Unit,
     private val afterPasswordChanged: (passwordId: String, newPassword: String) -> Unit,
-    private val onClickPasswordAddButton: () -> Unit,
+    private val onClickAddPasswordButton: () -> Unit,
 ) : MyTyped2EpoxyController<PasswordGroupEditUiState, List<PasswordEditUiState>>() {
 
     override fun buildModels(
@@ -47,8 +47,8 @@ class EditEpoxyController(
         }
 
         editAddPasswordButton {
-            id(ADD_BUTTON_ID)
-            onClickButton { _, _, _, _ -> this@EditEpoxyController.onClickPasswordAddButton() }
+            id(ADD_PASSWORD_BUTTON_ID)
+            onClickAddPasswordButton { _, _, _, _ -> this@EditEpoxyController.onClickAddPasswordButton() }
         }
 
         editRemarkRow {
@@ -61,7 +61,7 @@ class EditEpoxyController(
     }
 
     companion object {
-        const val ADD_BUTTON_ID = "add_button_id"
+        const val ADD_PASSWORD_BUTTON_ID = "add_password_button_id"
     }
 }
 

@@ -7,7 +7,6 @@ import com.wsr.passwordgroup.PasswordGroupUseCaseModel
 import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
 import com.wsr.user.Email
-import com.wsr.utils.UniqueId
 
 class CreatePasswordGroupUseCaseImpl(
     private val passwordGroupRepository: PasswordGroupRepository
@@ -19,10 +18,8 @@ class CreatePasswordGroupUseCaseImpl(
     ): State<PasswordGroupUseCaseModel, CreateDataFailedException> = try {
 
         val passwordGroup = PasswordGroup(
-            id = UniqueId(),
             email = Email(email),
             title = title,
-            remark = "",
         )
 
         passwordGroupRepository.create(passwordGroup)

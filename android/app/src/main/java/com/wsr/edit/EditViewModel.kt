@@ -8,7 +8,7 @@ import com.wsr.ext.updateWith
 import com.wsr.password.getall.GetAllPasswordUseCase
 import com.wsr.password.upsert.UpsertPasswordUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
-import com.wsr.passwordgroup.upsert.UpdatePasswordGroupUseCase
+import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCase
 import com.wsr.state.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -38,19 +38,21 @@ class EditViewModel(
             coroutineScope = viewModelScope,
         ) { editUiState, state ->
 
-            editUiState.copyWithTitle(
-                titleState = state.mapBoth(
-                    success = { it.title },
-                    failure = { ErrorEditUiState(it.message ?: "") },
-                ),
-            ).copyWithContents(
-                contents = editUiState.contents.copyWithPasswordGroup(
-                    passwordGroup = state.mapBoth(
-                        success = { it.toEditUiState() },
+            editUiState
+                .copyWithTitle(
+                    titleState = state.mapBoth(
+                        success = { it.title },
                         failure = { ErrorEditUiState(it.message ?: "") },
+                    ),
+                )
+                .copyWithContents(
+                    contents = editUiState.contents.copyWithPasswordGroup(
+                        passwordGroup = state.mapBoth(
+                            success = { it.toEditUiState() },
+                            failure = { ErrorEditUiState(it.message ?: "") },
+                        )
                     )
                 )
-            )
         }
     }
 
@@ -93,7 +95,7 @@ class EditViewModel(
             _uiState.update { editUiState ->
                 editUiState.copyWithContents(
                     contents = editUiState.contents.copyWithPasswordGroup(
-                        editUiState.contents.passwordGroup.mapBoth(
+                        passwordGroup = editUiState.contents.passwordGroup.mapBoth(
                             success = { it.replaceTitle(newTitle) },
                             failure = { it },
                         )
@@ -108,7 +110,7 @@ class EditViewModel(
             _uiState.update { editUiState ->
                 editUiState.copyWithContents(
                     contents = editUiState.contents.copyWithPasswordGroup(
-                        editUiState.contents.passwordGroup.mapBoth(
+                        passwordGroup = editUiState.contents.passwordGroup.mapBoth(
                             success = { it.replaceRemark(newRemark) },
                             failure = { it }
                         )

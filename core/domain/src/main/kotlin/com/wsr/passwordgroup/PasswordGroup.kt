@@ -5,8 +5,8 @@ import com.wsr.utils.UniqueId
 
 
 data class PasswordGroup(
-    val id: UniqueId,
+    val id: UniqueId = UniqueId(),
     val email: Email,
     val title: String,
-    val remark: String,
+    val remark: String = "",
 )
