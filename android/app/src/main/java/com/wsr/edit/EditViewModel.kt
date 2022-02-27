@@ -3,12 +3,10 @@ package com.wsr.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.edit.PasswordEditUiState.Companion.toEditUiState
-import com.wsr.edit.PasswordEditUiState.Companion.toUseCaseModel
 import com.wsr.edit.PasswordGroupEditUiState.Companion.toEditUiState
 import com.wsr.ext.updateWith
-import com.wsr.password.create.CreatePasswordUseCase
 import com.wsr.password.getall.GetAllPasswordUseCase
-import com.wsr.password.updateall.UpdateAllPasswordUseCase
+import com.wsr.password.upsert.UpsertPasswordUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
 import com.wsr.passwordgroup.upsert.UpdatePasswordGroupUseCase
 import com.wsr.state.consume
@@ -20,9 +18,8 @@ import kotlinx.coroutines.launch
 class EditViewModel(
     private val getPasswordGroupUseCase: GetPasswordGroupUseCase,
     private val getAllPasswordUseCase: GetAllPasswordUseCase,
-    private val createPasswordUseCase: CreatePasswordUseCase,
     private val updatePasswordGroupUseCase: UpdatePasswordGroupUseCase,
-    private val updateAllPasswordUseCase: UpdateAllPasswordUseCase,
+    private val upsertPasswordUseCase: UpsertPasswordUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(EditUiState())
@@ -160,30 +157,21 @@ class EditViewModel(
         }
     }
 
-    fun createPassword(passwordGroupId: String) {
-
+    fun createPassword() {
         viewModelScope.launch {
-            createPasswordUseCase.create(passwordGroupId).consume(
-                success = { newPassword ->
-                    val newPasswords = _uiState.value.contents.passwords
-                        .map { list ->
-                            list + newPassword.toEditUiState()
-                        }
+            val newPasswords = _uiState.value.contents.passwords
+                .map { list ->
+                    list + PasswordEditUiState.create()
+                }
 
-                    _uiState.update { editUiState ->
-                        editUiState.copyWithContents(
-                            contents = editUiState.contents.copyWithPasswords(newPasswords)
-                        )
-                    }
+            _uiState.update { editUiState ->
+                editUiState.copyWithContents(
+                    contents = editUiState.contents.copyWithPasswords(newPasswords)
+                )
+            }
 
-                    newPasswords.consume(
-                        success = { _event.emit(EditRefreshEvent(passwords = it)) },
-                        failure = {},
-                        loading = {},
-                    )
-
-
-                },
+            newPasswords.consume(
+                success = { _event.emit(EditRefreshEvent(passwords = it)) },
                 failure = {},
                 loading = {},
             )
@@ -204,7 +192,14 @@ class EditViewModel(
         )
         _uiState.value.contents.passwords.consume(
             success = { list ->
-                updateAllPasswordUseCase.updateAll(list.map { it.toUseCaseModel(passwordGroupId) })
+                list.forEach {
+                    upsertPasswordUseCase.upsert(
+                        id = it.id,
+                        passwordGroupId = passwordGroupId,
+                        name = it.name,
+                        password = it.password
+                    )
+                }
             },
             failure = {},
             loading = {},

@@ -8,7 +8,6 @@ import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
 import com.wsr.user.Email
 import com.wsr.utils.UniqueId
-import kotlinx.coroutines.runBlocking
 
 class CreatePasswordGroupUseCaseImpl(
     private val passwordGroupRepository: PasswordGroupRepository

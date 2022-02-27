@@ -3,6 +3,7 @@ package com.wsr.edit
 import com.wsr.password.PasswordUseCaseModel
 import com.wsr.passwordgroup.PasswordGroupUseCaseModel
 import com.wsr.state.State
+import java.util.*
 
 data class PasswordEditUiState(
     val id: String,
@@ -15,8 +16,8 @@ data class PasswordEditUiState(
     companion object {
         fun PasswordUseCaseModel.toEditUiState() = PasswordEditUiState(id, name, password)
 
-        fun PasswordEditUiState.toUseCaseModel(passwordGroupId: String) =
-            PasswordUseCaseModel(id, passwordGroupId, name, password)
+        fun create() =
+            PasswordEditUiState(id = UUID.randomUUID().toString(), name = "", password = "")
     }
 }
 

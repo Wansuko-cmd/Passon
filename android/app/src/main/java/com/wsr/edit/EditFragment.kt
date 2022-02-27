@@ -51,11 +51,7 @@ class EditFragment : Fragment() {
             afterRemarkChanged = editViewModel::updateRemark,
             afterNameChanged = editViewModel::updateName,
             afterPasswordChanged = editViewModel::updatePassword,
-            onClickPasswordAddButton = {
-                launchInLifecycleScope(Lifecycle.State.STARTED) {
-                    editViewModel.createPassword(passwordGroupId)
-                }
-            }
+            onClickPasswordAddButton = editViewModel::createPassword,
         )
 
         editRecyclerView = binding.editFragmentRecyclerView.apply {

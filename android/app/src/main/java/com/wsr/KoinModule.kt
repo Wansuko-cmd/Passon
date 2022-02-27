@@ -4,12 +4,10 @@ import com.wsr.edit.EditViewModel
 import com.wsr.index.IndexViewModel
 import com.wsr.password.PasswordRepository
 import com.wsr.password.TestPasswordRepositoryImpl
-import com.wsr.password.create.CreatePasswordUseCase
-import com.wsr.password.create.CreatePasswordUseCaseImpl
 import com.wsr.password.getall.GetAllPasswordUseCase
 import com.wsr.password.getall.GetAllPasswordUseCaseImpl
-import com.wsr.password.updateall.UpdateAllPasswordUseCase
-import com.wsr.password.updateall.UpdateAllPasswordUseCaseImpl
+import com.wsr.password.upsert.UpsertPasswordUseCase
+import com.wsr.password.upsert.UpsertPasswordUseCaseImpl
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.TestPasswordGroupRepositoryImpl
 import com.wsr.passwordgroup.create.CreatePasswordGroupUseCase
@@ -29,7 +27,7 @@ val module = module {
     /*** View Model ***/
     viewModel { IndexViewModel(get(), get()) }
     viewModel { ShowViewModel(get(), get()) }
-    viewModel { EditViewModel(get(), get(), get(), get(), get()) }
+    viewModel { EditViewModel(get(), get(), get(), get()) }
 
     /*** UseCase ***/
     // Password Group
@@ -40,8 +38,7 @@ val module = module {
 
     // Password
     single<GetAllPasswordUseCase> { GetAllPasswordUseCaseImpl(get()) }
-    single<CreatePasswordUseCase> { CreatePasswordUseCaseImpl(get()) }
-    single<UpdateAllPasswordUseCase> { UpdateAllPasswordUseCaseImpl(get()) }
+    single<UpsertPasswordUseCase> { UpsertPasswordUseCaseImpl(get()) }
 
     /*** Repository ***/
     single<PasswordGroupRepository> { TestPasswordGroupRepositoryImpl() }

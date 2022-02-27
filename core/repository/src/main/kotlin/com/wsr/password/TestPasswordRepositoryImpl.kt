@@ -39,6 +39,14 @@ class TestPasswordRepositoryImpl : PasswordRepository {
         data.filter { it.passwordGroupId == passwordGroupId }
 
 
+    override suspend fun upsert(password: Password) {
+        data.indexOfFirst { it.id == password.id }.let { index ->
+            if (index == -1) data.add(password)
+            else data[index] = password
+        }
+    }
+
+
     override suspend fun create(password: Password) {
         data.add(password)
     }
