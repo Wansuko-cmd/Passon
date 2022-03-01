@@ -13,7 +13,7 @@ class IndexEpoxyController(
     override fun buildModels(list: List<PasswordGroupIndexUiState>) {
         if (list.isEmpty()) {
             messageRow {
-                id(this@IndexEpoxyController.noPasswordGroupMessage.hashCode())
+                id(MESSAGE_ID)
                 message(this@IndexEpoxyController.noPasswordGroupMessage)
             }
         } else {
@@ -27,5 +27,9 @@ class IndexEpoxyController(
                 }
             }
         }
+    }
+
+    companion object {
+        const val MESSAGE_ID = "index_message_row_id"
     }
 }

@@ -17,15 +17,15 @@ class UpsertPasswordUseCaseImpl(
         name: String,
         password: String
     ): State<PasswordUseCaseModel, UpsertDataFailedException> = try {
-
-        Password(
+        val newPassword = Password(
             id = UniqueId(id),
             passwordGroupId = UniqueId(passwordGroupId),
             name = name,
             password = password
         )
-            .also { passwordRepository.upsert(it) }
-            .let { State.Success(it.toUseCaseModel()) }
+
+        passwordRepository.upsert(newPassword)
+        State.Success(newPassword.toUseCaseModel())
 
     } catch (e: UpsertDataFailedException) {
         State.Failure(e)

@@ -24,8 +24,8 @@ class EditViewModel(
     private val _uiState = MutableStateFlow(EditUiState())
     val uiState = _uiState.asStateFlow()
 
-    private val _event = MutableSharedFlow<EditRefreshEvent>()
-    val event = _event.asSharedFlow()
+    private val _editRefreshEvent = MutableSharedFlow<EditRefreshEvent>()
+    val editRefreshEvent = _editRefreshEvent.asSharedFlow()
 
     init {
         setupTitle()
@@ -95,10 +95,8 @@ class EditViewModel(
             _uiState.update { editUiState ->
                 editUiState.copyWithContents(
                     contents = editUiState.contents.copyWithPasswordGroup(
-                        passwordGroup = editUiState.contents.passwordGroup.mapBoth(
-                            success = { it.replaceTitle(newTitle) },
-                            failure = { it },
-                        )
+                        passwordGroup = editUiState.contents.passwordGroup
+                            .map { it.copyWithTitle(newTitle) }
                     )
                 )
             }
@@ -110,10 +108,8 @@ class EditViewModel(
             _uiState.update { editUiState ->
                 editUiState.copyWithContents(
                     contents = editUiState.contents.copyWithPasswordGroup(
-                        passwordGroup = editUiState.contents.passwordGroup.mapBoth(
-                            success = { it.replaceRemark(newRemark) },
-                            failure = { it }
-                        )
+                        passwordGroup = editUiState.contents.passwordGroup
+                            .map { it.copyWithRemark(newRemark) }
                     )
                 )
             }
@@ -126,7 +122,7 @@ class EditViewModel(
             .passwords
             .map { list ->
                 list.map {
-                    if (it.id == passwordId) it.replaceName(newName) else it
+                    if (it.id == passwordId) it.copyWithName(newName) else it
                 }
             }
 
@@ -172,7 +168,7 @@ class EditViewModel(
             }
 
             newPasswords.consume(
-                success = { _event.emit(EditRefreshEvent(passwords = it)) },
+                success = { _editRefreshEvent.emit(EditRefreshEvent(passwords = it)) },
                 failure = {},
                 loading = {},
             )
@@ -181,7 +177,6 @@ class EditViewModel(
 
     suspend fun save(passwordGroupId: String): State<Unit, ErrorEditUiState> =
         withContext(viewModelScope.coroutineContext) {
-
             val passwordGroup = savePasswordGroup(passwordGroupId)
 
             val passwords = savePasswords(passwordGroupId)

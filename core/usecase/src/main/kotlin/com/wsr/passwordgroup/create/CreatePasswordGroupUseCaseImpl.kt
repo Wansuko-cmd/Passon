@@ -16,7 +16,6 @@ class CreatePasswordGroupUseCaseImpl(
         email: String,
         title: String
     ): State<PasswordGroupUseCaseModel, CreateDataFailedException> = try {
-
         val passwordGroup = PasswordGroup(
             email = Email(email),
             title = title,

@@ -51,7 +51,7 @@ class EditFragment : Fragment() {
             afterRemarkChanged = editViewModel::updateRemark,
             afterNameChanged = editViewModel::updateName,
             afterPasswordChanged = editViewModel::updatePassword,
-            onClickPasswordAddButton = editViewModel::createPassword,
+            onClickAddPasswordButton = editViewModel::createPassword,
         )
 
         editRecyclerView = binding.editFragmentRecyclerView.apply {
@@ -103,7 +103,7 @@ class EditFragment : Fragment() {
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
-            editViewModel.event.collect {
+            editViewModel.editRefreshEvent.collect {
                 editEpoxyController.refresh(it.passwordGroup, it.passwords)
             }
         }

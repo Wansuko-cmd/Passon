@@ -29,65 +29,86 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
         )
     }
 
+    private fun setText(text: String) {
+        binding.layoutTextFieldWithIconTextInput.setText(text)
+    }
+
+    private fun setHint(hint: String) {
+        binding.layoutTextFieldWithIconTextInput.hint = hint
+    }
+
+    private fun setMaxLines(maxLines: Int) {
+        binding.layoutTextFieldWithIconTextInput.maxLines = maxLines
+    }
+
+    private fun setOnTextChanged(afterTextChanged: AfterTextChanged) {
+        binding.layoutTextFieldWithIconTextInput.addTextChangedListener { afterTextChanged.block(it.toString()) }
+    }
+
+    override fun setEnabled(enabled: Boolean) {
+        binding.layoutTextFieldWithIconTextInput.isEnabled = enabled
+    }
+
+    private fun setInputType(inputType: InputType) {
+        binding.layoutTextFieldWithIconTextInput.inputType = inputType.value
+    }
+
+    private fun setIcon(icon: Drawable?) {
+        binding.layoutTextFieldWithIconIcon.setImageDrawable(icon)
+    }
+
+    private fun setEndIconDrawable(icon: Drawable) {
+        binding.layoutTextFieldWithIconText.endIconDrawable = icon
+    }
+
+    private fun setEndIconOnClickListener(listener: OnClickListener)  {
+        binding.layoutTextFieldWithIconText.setEndIconOnClickListener(listener)
+    }
+
     companion object {
 
         @BindingAdapter("text")
         @JvmStatic
-        fun setText(view: LayoutTextFieldWithIcon, text: String) =
-            view.binding.layoutTextFieldWithIconTextInput.setText(text)
+        fun setText(view: LayoutTextFieldWithIcon, text: String) = view.setText(text)
 
         @BindingAdapter("hint")
         @JvmStatic
-        fun setHint(view: LayoutTextFieldWithIcon, hint: String) {
-            view.binding.layoutTextFieldWithIconTextInput.hint = hint
-        }
+        fun setHint(view: LayoutTextFieldWithIcon, hint: String) = view.setHint(hint)
 
         @BindingAdapter("maxLines")
         @JvmStatic
-        fun setMaxLines(view: LayoutTextFieldWithIcon, maxLines: Int) {
-            view.binding.layoutTextFieldWithIconTextInput.maxLines = maxLines
-        }
+        fun setMaxLines(view: LayoutTextFieldWithIcon, maxLines: Int) = view.setMaxLines(maxLines)
 
         @BindingAdapter("afterTextChanged")
         @JvmStatic
         fun setOnTextChanged(view: LayoutTextFieldWithIcon, afterTextChanged: AfterTextChanged) =
-            view.binding.layoutTextFieldWithIconTextInput.addTextChangedListener {
-                afterTextChanged.block(
-                    it.toString()
-                )
-            }
+            view.setOnTextChanged(afterTextChanged)
 
         @BindingAdapter("enabled")
         @JvmStatic
         fun setEnabled(view: LayoutTextFieldWithIcon, enabled: Boolean) {
             view.isEnabled = enabled
-            view.binding.layoutTextFieldWithIconTextInput.isEnabled = enabled
         }
 
         @BindingAdapter("inputType")
         @JvmStatic
-        fun setInputType(view: LayoutTextFieldWithIcon, inputType: InputType) {
-            view.binding.layoutTextFieldWithIconTextInput.inputType = inputType.value
-        }
+        fun setInputType(view: LayoutTextFieldWithIcon, inputType: InputType) = view.setInputType(inputType)
 
         @BindingAdapter("icon")
         @JvmStatic
-        fun setIcon(view: LayoutTextFieldWithIcon, icon: Drawable?) {
-            view.binding.layoutTextFieldWithIconIcon.setImageDrawable(icon)
-        }
+        fun setIcon(view: LayoutTextFieldWithIcon, icon: Drawable?) = view.setIcon(icon)
 
         @BindingAdapter("endIconDrawable")
         @JvmStatic
-        fun setEndIconDrawable(view: LayoutTextFieldWithIcon, icon: Drawable) {
-            view.binding.layoutTextFieldWithIconText.endIconDrawable = icon
-        }
+        fun setEndIconDrawable(view: LayoutTextFieldWithIcon, icon: Drawable) =
+            view.setEndIconDrawable(icon)
 
         @BindingAdapter("setEndIconOnClickListener")
         @JvmStatic
         fun setEndIconOnClickListener(
             view: LayoutTextFieldWithIcon,
             listener: OnClickListener
-        ) = view.binding.layoutTextFieldWithIconText.setEndIconOnClickListener(listener)
+        ) = view.setEndIconOnClickListener(listener)
     }
 }
 

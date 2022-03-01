@@ -22,7 +22,6 @@ class ShowEpoxyController(
                 message(this@ShowEpoxyController.noPasswordMessage)
             }
         } else {
-
             list.forEach { password ->
                 showPasswordRow {
                     id(password.id)

@@ -10,7 +10,7 @@ data class PasswordEditUiState(
     val name: String,
     val password: String,
 ) {
-    fun replaceName(name: String) = this.copy(name = name)
+    fun copyWithName(name: String) = this.copy(name = name)
     fun copyWithPassword(password: String) = this.copy(password = password)
 
     companion object {
@@ -26,8 +26,8 @@ data class PasswordGroupEditUiState(
     val title: String,
     val remark: String,
 ) {
-    fun replaceTitle(title: String) = this.copy(title = title)
-    fun replaceRemark(remark: String) = this.copy(remark = remark)
+    fun copyWithTitle(title: String) = this.copy(title = title)
+    fun copyWithRemark(remark: String) = this.copy(remark = remark)
 
     companion object {
         fun PasswordGroupUseCaseModel.toEditUiState() = PasswordGroupEditUiState(id, title, remark)
