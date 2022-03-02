@@ -15,9 +15,6 @@ data class PasswordEditUiState(
 
     companion object {
         fun PasswordUseCaseModel.toEditUiState() = PasswordEditUiState(id, name, password)
-
-        fun create() =
-            PasswordEditUiState(id = UUID.randomUUID().toString(), name = "", password = "")
     }
 }
 

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.wsr.edit.PasswordEditUiState.Companion.toEditUiState
 import com.wsr.edit.PasswordGroupEditUiState.Companion.toEditUiState
 import com.wsr.ext.updateWith
+import com.wsr.password.create.CreatePasswordUseCase
 import com.wsr.password.getall.GetAllPasswordUseCase
 import com.wsr.password.upsert.UpsertPasswordUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
@@ -19,6 +20,7 @@ class EditViewModel(
     private val getAllPasswordUseCase: GetAllPasswordUseCase,
     private val updatePasswordGroupUseCase: UpdatePasswordGroupUseCase,
     private val upsertPasswordUseCase: UpsertPasswordUseCase,
+    private val createPasswordUseCase: CreatePasswordUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(EditUiState())
@@ -154,11 +156,11 @@ class EditViewModel(
         }
     }
 
-    fun createPassword() {
+    fun createPassword(passwordGroupId: String) {
         viewModelScope.launch {
             val newPasswords = _uiState.value.contents.passwords
                 .map { list ->
-                    list + PasswordEditUiState.create()
+                    list + createPasswordUseCase.createInstance(passwordGroupId).toEditUiState()
                 }
 
             _uiState.update { editUiState ->

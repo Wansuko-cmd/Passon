@@ -5,6 +5,6 @@ import com.wsr.utils.UniqueId
 data class Password(
     val id: UniqueId = UniqueId(),
     val passwordGroupId: UniqueId,
-    val name: String,
-    val password: String,
+    val name: String = "",
+    val password: String = "",
 )
