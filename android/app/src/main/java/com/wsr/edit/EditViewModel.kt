@@ -181,29 +181,35 @@ class EditViewModel(
 
             val passwords = savePasswords(passwordGroupId)
 
-            passwordGroup.flatMap {
-                passwords.map { }
+            when (passwordGroup) {
+                is State.Success -> when (passwords) {
+                    is State.Success -> State.Success(Unit)
+                    else -> passwords
+                }
+                else -> passwordGroup
             }
         }
 
-    private suspend fun savePasswordGroup(passwordGroupId: String) =
+    private suspend fun savePasswordGroup(passwordGroupId: String): State<Unit, ErrorEditUiState> =
         withContext(viewModelScope.coroutineContext) {
-            _uiState.value.contents.passwordGroup.flatMap { passwordGroup ->
-                updatePasswordGroupUseCase.update(
+            when (val passwordGroup = _uiState.value.contents.passwordGroup) {
+                is State.Success -> updatePasswordGroupUseCase.update(
                     id = passwordGroupId,
-                    title = passwordGroup.title,
-                    remark = passwordGroup.remark,
+                    title = passwordGroup.value.title,
+                    remark = passwordGroup.value.remark,
                 ).mapBoth(
                     success = { },
                     failure = { ErrorEditUiState(it.message ?: "") },
                 )
+                is State.Failure -> passwordGroup
+                is State.Loading -> passwordGroup
             }
         }
 
-    private suspend fun savePasswords(passwordGroupId: String) =
+    private suspend fun savePasswords(passwordGroupId: String): State<Unit, ErrorEditUiState> =
         withContext(viewModelScope.coroutineContext) {
-            _uiState.value.contents.passwords.flatMap { list ->
-                list.map {
+            when (val passwords = _uiState.value.contents.passwords) {
+                is State.Success -> passwords.value.map {
                     upsertPasswordUseCase.upsert(
                         id = it.id,
                         passwordGroupId = passwordGroupId,
@@ -216,6 +222,8 @@ class EditViewModel(
                         success = { },
                         failure = { ErrorEditUiState(it.message ?: "") },
                     )
+                is State.Failure -> passwords
+                is State.Loading -> passwords
             }
         }
 }

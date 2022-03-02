@@ -61,7 +61,7 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
         binding.layoutTextFieldWithIconText.endIconDrawable = icon
     }
 
-    private fun setEndIconOnClickListener(listener: OnClickListener)  {
+    private fun setEndIconOnClickListener(listener: OnClickListener) {
         binding.layoutTextFieldWithIconText.setEndIconOnClickListener(listener)
     }
 
@@ -92,7 +92,8 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
 
         @BindingAdapter("inputType")
         @JvmStatic
-        fun setInputType(view: LayoutTextFieldWithIcon, inputType: InputType) = view.setInputType(inputType)
+        fun setInputType(view: LayoutTextFieldWithIcon, inputType: InputType) =
+            view.setInputType(inputType)
 
         @BindingAdapter("icon")
         @JvmStatic
