@@ -44,23 +44,37 @@ class EditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.editFragmentFab.setOnClickListener {
-            editViewModel.save(
-                passwordGroupId
-            )
-        }
-
         editViewModel.fetch(passwordGroupId)
 
         editEpoxyController = EditEpoxyController(
             afterTitleChanged = editViewModel::updateTitle,
+            afterRemarkChanged = editViewModel::updateRemark,
             afterNameChanged = editViewModel::updateName,
             afterPasswordChanged = editViewModel::updatePassword,
+            onClickAddPasswordButton = { editViewModel.createPassword(passwordGroupId) },
         )
 
         editRecyclerView = binding.editFragmentRecyclerView.apply {
             setHasFixedSize(true)
             adapter = editEpoxyController.adapter
+        }
+
+
+
+        binding.editFragmentFab.setOnClickListener {
+            launchInLifecycleScope(Lifecycle.State.STARTED) {
+                editViewModel.save(passwordGroupId).consume(
+                    success = {
+                        Toast.makeText(
+                            context,
+                            getString(R.string.edit_toast_on_save_message),
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    },
+                    failure = this@EditFragment::showErrorMessage,
+                    loading = {},
+                )
+            }
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
@@ -74,7 +88,7 @@ class EditFragment : Fragment() {
                     loading = {},
                 )
 
-                editUiState.contents.title.consume(
+                editUiState.contents.passwordGroup.consume(
                     success = editEpoxyController::initializeFirstData,
                     failure = ::showErrorMessage,
                     loading = {},
@@ -85,6 +99,12 @@ class EditFragment : Fragment() {
                     failure = ::showErrorMessage,
                     loading = {},
                 )
+            }
+        }
+
+        launchInLifecycleScope(Lifecycle.State.STARTED) {
+            editViewModel.editRefreshEvent.collect {
+                editEpoxyController.refresh(it.passwordGroup, it.passwords)
             }
         }
     }

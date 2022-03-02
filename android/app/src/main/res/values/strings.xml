@@ -5,5 +5,22 @@
     <string name="menu_title_edit">Edit</string>
     <string name="menu_title_setting">Setting</string>
 
-    <string name="show_password_text">Show Password</string>
+    <!-- 一覧画面 -->
+    <string name="index_no_password_group_message">Click right bottom button to create your password group</string>
+    <string name="index_create_password_group_dialog_title">Title</string>
+    <string name="index_create_password_group_dialog_positive_button">Create</string>
+    <string name="index_create_password_group_dialog_negative_button">Cancel</string>
+    <string name="index_create_password_group_dialog_hint">Title</string>
+
+    <!-- 詳細画面 -->
+    <string name="show_show_password_checkbox_text">Show Password</string>
+    <string name="show_no_password_message">Click right bottom button to register your password</string>
+    <string name="show_toast_on_copy_message">Copied</string>
+
+    <!-- 編集画面 -->
+    <string name="edit_title_row">Title</string>
+    <string name="edit_password_row_name">Name</string>
+    <string name="edit_password_row_password">Password</string>
+    <string name="edit_remark_row">Remark</string>
+    <string name="edit_toast_on_save_message">Saved</string>
 </resources>

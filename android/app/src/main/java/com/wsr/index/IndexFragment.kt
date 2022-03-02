@@ -22,6 +22,8 @@ class IndexFragment : Fragment() {
     private lateinit var indexRecyclerView: RecyclerView
     private val indexViewModel: IndexViewModel by viewModel()
 
+    private val email by lazy { "example1@gmail.com" }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,13 +41,37 @@ class IndexFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        indexViewModel.fetchPasswordGroups("example1@gmail.com")
+        indexViewModel.fetch(email)
 
-        indexEpoxyController = IndexEpoxyController(::navigateToShow)
+        indexEpoxyController = IndexEpoxyController(
+            onClick = ::navigateToShow,
+            noPasswordGroupMessage = getString(R.string.index_no_password_group_message)
+        )
 
         indexRecyclerView = binding.indexFragmentRecyclerView.apply {
             setHasFixedSize(true)
             adapter = indexEpoxyController.adapter
+        }
+
+
+
+        binding.indexFragmentFab.setOnClickListener {
+
+            val indexCreatePasswordGroupDialogFragment = IndexCreatePasswordGroupDialogFragment(
+                onSubmit = { title ->
+                    launchInLifecycleScope(Lifecycle.State.STARTED) {
+                        indexViewModel.create(email, title).join()
+                        indexViewModel.fetch(email)
+                    }
+                },
+                onCancel = {}
+            )
+
+            indexCreatePasswordGroupDialogFragment.show(
+                requireActivity().supportFragmentManager,
+                tag
+            )
+
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {

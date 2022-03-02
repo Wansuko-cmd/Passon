@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.wsr.ext.updateWith
 import com.wsr.password.getall.GetAllPasswordUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
+import com.wsr.show.PasswordGroupShowUiState.Companion.toShowUiModel
+import com.wsr.show.PasswordShowUiState.Companion.toShowUiModel
 import com.wsr.state.map
 import com.wsr.state.mapBoth
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,6 +35,12 @@ class ShowViewModel(
                 titleState = state.mapBoth(
                     success = { passwordGroup -> passwordGroup.title },
                     failure = { ErrorShowUiState(it.message ?: "") }
+                ),
+                contents = showUiState.contents.replacePasswordGroup(
+                    passwordGroup = state.mapBoth(
+                        success = { it.toShowUiModel() },
+                        failure = { ErrorShowUiState(it.message ?: "") },
+                    )
                 )
             )
         }
@@ -44,10 +52,12 @@ class ShowViewModel(
             coroutineScope = viewModelScope,
         ) { showUiState, state ->
             showUiState.copy(
-                passwordsState = state.mapBoth(
-                    success = { list -> list.map { it.toShowUiModel() } },
-                    failure = { ErrorShowUiState(it.message ?: "") },
-                ),
+                contents = showUiState.contents.replacePasswords(
+                    passwords = state.mapBoth(
+                        success = { list -> list.map { it.toShowUiModel() } },
+                        failure = { ErrorShowUiState(it.message ?: "") }
+                    )
+                )
             )
         }
     }
@@ -73,9 +83,22 @@ class ShowViewModel(
 
     fun changePasswordState(passwordId: String) =
         viewModelScope.launch {
-            val newPasswordsState = _uiState.value.passwordsState.map { list ->
-                list.map { if (it.id == passwordId) it.copy(showPassword = !it.showPassword) else it }
-            }
-            _uiState.emit(_uiState.value.copy(passwordsState = newPasswordsState))
+
+            val newPasswordsState = _uiState.value
+                .contents
+                .passwords
+                .map { list ->
+                    list.map {
+                        if (it.id == passwordId) it.replaceShowPassword(!it.showPassword) else it
+                    }
+                }
+
+            val newUiState = _uiState.value.copy(
+                contents = _uiState.value.contents.replacePasswords(
+                    passwords = newPasswordsState
+                )
+            )
+
+            _uiState.emit(newUiState)
         }
 }

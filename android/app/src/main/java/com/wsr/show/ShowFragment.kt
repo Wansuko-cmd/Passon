@@ -48,19 +48,22 @@ class ShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.showFragmentFab.setOnClickListener { navigateToEdit(passwordGroupId) }
-
         showViewModel.fetch(passwordGroupId)
 
         showEpoxyController = ShowEpoxyController(
             onClickShowPassword = { showViewModel.changePasswordState(it.id) },
-            onClickPasswordCopy = { writeToClipboard("password", it.password) }
+            onClickPasswordCopy = { writeToClipboard("password", it.password) },
+            noPasswordMessage = getString(R.string.show_no_password_message)
         )
 
         showRecyclerView = binding.showFragmentRecyclerView.apply {
             setHasFixedSize(true)
             adapter = showEpoxyController.adapter
         }
+
+
+
+        binding.showFragmentFab.setOnClickListener { navigateToEdit(passwordGroupId) }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             showViewModel.uiState.collect { showUiState ->
@@ -73,8 +76,14 @@ class ShowFragment : Fragment() {
                     loading = {},
                 )
 
-                showUiState.passwordsState.consume(
-                    success = showEpoxyController::setData,
+                showUiState.contents.passwordGroup.consume(
+                    success = showEpoxyController::setFirstData,
+                    failure = ::showErrorMessage,
+                    loading = {},
+                )
+
+                showUiState.contents.passwords.consume(
+                    success = showEpoxyController::setSecondData,
                     failure = ::showErrorMessage,
                     loading = {},
                 )
@@ -90,7 +99,7 @@ class ShowFragment : Fragment() {
 
         Toast.makeText(
             context,
-            "コピーしました",
+            getString(R.string.show_toast_on_copy_message),
             Toast.LENGTH_LONG,
         ).show()
     }

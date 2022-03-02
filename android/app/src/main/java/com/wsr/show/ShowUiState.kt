@@ -1,6 +1,7 @@
 package com.wsr.show
 
 import com.wsr.password.PasswordUseCaseModel
+import com.wsr.passwordgroup.PasswordGroupUseCaseModel
 import com.wsr.state.State
 
 data class PasswordShowUiState(
@@ -8,14 +9,40 @@ data class PasswordShowUiState(
     val name: String,
     val password: String,
     val showPassword: Boolean,
-)
+) {
+    fun replaceShowPassword(showPassword: Boolean) = this.copy(showPassword = showPassword)
+
+    companion object {
+        fun PasswordUseCaseModel.toShowUiModel() =
+            PasswordShowUiState(id, name, password, false)
+    }
+}
+
+data class PasswordGroupShowUiState(
+    val id: String,
+    val remark: String,
+) {
+    companion object {
+        fun PasswordGroupUseCaseModel.toShowUiModel() =
+            PasswordGroupShowUiState(id, remark)
+    }
+}
 
 data class ErrorShowUiState(val message: String)
 
-fun PasswordUseCaseModel.toShowUiModel() =
-    PasswordShowUiState(id, name, password, false)
+
+data class ShowContentsUiState(
+    val passwordGroup: State<PasswordGroupShowUiState, ErrorShowUiState> = State.Loading,
+    val passwords: State<List<PasswordShowUiState>, ErrorShowUiState> = State.Loading,
+) {
+    fun replacePasswordGroup(passwordGroup: State<PasswordGroupShowUiState, ErrorShowUiState>) =
+        this.copy(passwordGroup = passwordGroup)
+
+    fun replacePasswords(passwords: State<List<PasswordShowUiState>, ErrorShowUiState>) =
+        this.copy(passwords = passwords)
+}
 
 data class ShowUiState(
     val titleState: State<String, ErrorShowUiState> = State.Loading,
-    val passwordsState: State<List<PasswordShowUiState>, ErrorShowUiState> = State.Loading,
+    val contents: ShowContentsUiState = ShowContentsUiState(),
 )
