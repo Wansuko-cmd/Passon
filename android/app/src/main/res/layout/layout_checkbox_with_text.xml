@@ -11,7 +11,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/moss_green"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:checked="true" />
 
@@ -23,7 +23,7 @@
             android:paddingStart="16dp"
             android:paddingEnd="0dp"
             app:layout_constraintBottom_toBottomOf="@id/layout_checkbox_with_text_checkbox"
-            app:layout_constraintLeft_toRightOf="@id/layout_checkbox_with_text_checkbox"
+            app:layout_constraintStart_toEndOf="@id/layout_checkbox_with_text_checkbox"
             app:layout_constraintTop_toTopOf="@id/layout_checkbox_with_text_checkbox"
             tools:text="text"/>
 
