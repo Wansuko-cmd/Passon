@@ -57,7 +57,7 @@ class IndexFragment : Fragment() {
 
         binding.indexFragmentFab.setOnClickListener {
 
-            val indexCreatePasswordGroupDialogFragment = IndexCreatePasswordGroupDialogFragment(
+            IndexCreatePasswordGroupDialogFragment.create(
                 onSubmit = { title ->
                     launchInLifecycleScope(Lifecycle.State.STARTED) {
                         indexViewModel.create(email, title).join()
@@ -65,12 +65,7 @@ class IndexFragment : Fragment() {
                     }
                 },
                 onCancel = {}
-            )
-
-            indexCreatePasswordGroupDialogFragment.show(
-                requireActivity().supportFragmentManager,
-                tag
-            )
+            ).show(requireActivity().supportFragmentManager, tag)
 
         }
 
