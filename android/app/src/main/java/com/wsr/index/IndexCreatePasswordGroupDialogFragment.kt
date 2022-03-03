@@ -13,10 +13,13 @@ class IndexCreatePasswordGroupDialogFragment(
     private val onCancel: () -> Unit,
 ) : DialogFragment() {
 
+    private lateinit var _binding: DialogIndexCreatePasswordGroupBinding
+    private val binding get() = _binding
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val inflater = requireActivity().layoutInflater
+        _binding = DialogIndexCreatePasswordGroupBinding.inflate(inflater, null, true)
         return AlertDialog.Builder(requireActivity()).apply {
-            val inflater = requireActivity().layoutInflater
-            val binding = DialogIndexCreatePasswordGroupBinding.inflate(inflater, null, true)
             setView(binding.root)
         }.create()
     }
