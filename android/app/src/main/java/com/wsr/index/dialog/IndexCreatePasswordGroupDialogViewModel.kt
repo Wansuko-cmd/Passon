@@ -12,7 +12,9 @@ class IndexCreatePasswordGroupDialogViewModel : ViewModel() {
     val title get() = _uiState.value.title
     val goToEdit get() = _uiState.value.goToEdit
 
-    fun updateTitle(title: String) = viewModelScope.launch { _uiState.emit(_uiState.value.copyWithTitle(title)) }
+    fun updateTitle(title: String) =
+        viewModelScope.launch { _uiState.emit(_uiState.value.copyWithTitle(title)) }
+
     fun changeChecked() = viewModelScope.launch { _uiState.emit(_uiState.value.changeChecked()) }
 }
 

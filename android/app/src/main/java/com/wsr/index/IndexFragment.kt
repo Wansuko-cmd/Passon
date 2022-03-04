@@ -63,7 +63,7 @@ class IndexFragment : Fragment() {
                 onSubmit = { title, goToEdit ->
                     launchInLifecycleScope(Lifecycle.State.STARTED) {
                         val passwordGroup = indexViewModel.create(email, title)
-                        if(goToEdit && passwordGroup is State.Success) navigateToEdit(passwordGroup.value.id)
+                        if (goToEdit && passwordGroup is State.Success) navigateToEdit(passwordGroup.value.id)
                         indexViewModel.fetch(email)
                     }
                 },

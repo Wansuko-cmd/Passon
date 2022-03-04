@@ -20,21 +20,24 @@ class IndexCreatePasswordGroupDialogFragment : DialogFragment() {
         val onSubmit = arguments.getOnSubmitInstance()
         val onCancel = arguments.getOnCancelInstance()
 
-        val binding = DialogIndexCreatePasswordGroupBinding.inflate(requireActivity().layoutInflater).apply {
-            afterTitleChanged = AfterTextChanged(indexCreatePasswordGroupDialogViewModel::updateTitle)
-            onSubmitButton = View.OnClickListener {
-                onSubmit.block(
-                    indexCreatePasswordGroupDialogViewModel.title,
-                    indexCreatePasswordGroupDialogViewModel.goToEdit,
-                )
-                dismiss()
+        val binding =
+            DialogIndexCreatePasswordGroupBinding.inflate(requireActivity().layoutInflater).apply {
+                afterTitleChanged =
+                    AfterTextChanged(indexCreatePasswordGroupDialogViewModel::updateTitle)
+                onSubmitButton = View.OnClickListener {
+                    onSubmit.block(
+                        indexCreatePasswordGroupDialogViewModel.title,
+                        indexCreatePasswordGroupDialogViewModel.goToEdit,
+                    )
+                    dismiss()
+                }
+                onCancelButton = View.OnClickListener { onCancel.block(); dismiss() }
+                onCheckbox =
+                    View.OnClickListener { indexCreatePasswordGroupDialogViewModel.changeChecked() }
+                checked = indexCreatePasswordGroupDialogViewModel.goToEdit
             }
-            onCancelButton = View.OnClickListener { onCancel.block(); dismiss()}
-            onCheckbox = View.OnClickListener { indexCreatePasswordGroupDialogViewModel.changeChecked() }
-            checked = indexCreatePasswordGroupDialogViewModel.goToEdit
-        }
 
-        return AlertDialog.Builder(requireActivity()).apply{ setView(binding.root) }.create()
+        return AlertDialog.Builder(requireActivity()).apply { setView(binding.root) }.create()
     }
 
     companion object {
@@ -52,14 +55,15 @@ class IndexCreatePasswordGroupDialogFragment : DialogFragment() {
     }
 }
 
-private class OnSubmit(val block: (title: String, goToEdit: Boolean) -> Unit = { _, _ ->}): Serializable {
+private class OnSubmit(val block: (title: String, goToEdit: Boolean) -> Unit = { _, _ -> }) :
+    Serializable {
     companion object {
         const val key = "onSubmit"
         fun Bundle?.getOnSubmitInstance() = (this?.getSerializable(key) ?: OnSubmit()) as OnSubmit
     }
 }
 
-private class OnCancel(val block: () -> Unit = {}): Serializable {
+private class OnCancel(val block: () -> Unit = {}) : Serializable {
     companion object {
         const val key = "onCancel"
         fun Bundle?.getOnCancelInstance() = (this?.getSerializable(key) ?: OnCancel) as OnCancel

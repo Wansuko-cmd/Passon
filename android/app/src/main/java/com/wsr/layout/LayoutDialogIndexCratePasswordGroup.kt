@@ -42,28 +42,43 @@ class LayoutDialogIndexCratePasswordGroup @JvmOverloads constructor(
     }
 
     private fun setOnCheckbox(onClickListener: OnClickListener) {
-        LayoutCheckboxWithText.setOnClick(binding.layoutDialogIndexCreatePasswordGroupCheckBox, onClickListener)
+        LayoutCheckboxWithText.setOnClick(
+            binding.layoutDialogIndexCreatePasswordGroupCheckBox,
+            onClickListener
+        )
     }
 
     private fun setChecked(checked: Boolean) {
-        LayoutCheckboxWithText.setChecked(binding.layoutDialogIndexCreatePasswordGroupCheckBox, checked)
+        LayoutCheckboxWithText.setChecked(
+            binding.layoutDialogIndexCreatePasswordGroupCheckBox,
+            checked
+        )
     }
 
     companion object {
 
         @BindingAdapter("afterTextChanged")
         @JvmStatic
-        fun setOnTextChanged(view: LayoutDialogIndexCratePasswordGroup, afterTextChanged: AfterTextChanged) =
+        fun setOnTextChanged(
+            view: LayoutDialogIndexCratePasswordGroup,
+            afterTextChanged: AfterTextChanged
+        ) =
             view.setOnTextChanged(afterTextChanged)
 
         @BindingAdapter("onSubmitButton")
         @JvmStatic
-        fun setOnSubmitButton(view: LayoutDialogIndexCratePasswordGroup, listener: OnClickListener) =
+        fun setOnSubmitButton(
+            view: LayoutDialogIndexCratePasswordGroup,
+            listener: OnClickListener
+        ) =
             view.setOnSubmitButton(listener)
 
         @BindingAdapter("onCancelButton")
         @JvmStatic
-        fun setOnCancelButton(view: LayoutDialogIndexCratePasswordGroup, listener: OnClickListener) =
+        fun setOnCancelButton(
+            view: LayoutDialogIndexCratePasswordGroup,
+            listener: OnClickListener
+        ) =
             view.setOnCancelButton(listener)
 
         @BindingAdapter("onCheckbox")
@@ -73,6 +88,7 @@ class LayoutDialogIndexCratePasswordGroup @JvmOverloads constructor(
 
         @BindingAdapter("checked")
         @JvmStatic
-        fun setChecked(view: LayoutDialogIndexCratePasswordGroup, checked: Boolean) = view.setChecked(checked)
+        fun setChecked(view: LayoutDialogIndexCratePasswordGroup, checked: Boolean) =
+            view.setChecked(checked)
     }
 }

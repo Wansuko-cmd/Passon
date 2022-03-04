@@ -19,13 +19,13 @@
             android:id="@+id/layout_checkbox_with_text_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:paddingStart="16dp"
             android:paddingEnd="0dp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@id/layout_checkbox_with_text_checkbox"
             app:layout_constraintStart_toEndOf="@id/layout_checkbox_with_text_checkbox"
             app:layout_constraintTop_toTopOf="@id/layout_checkbox_with_text_checkbox"
-            tools:text="text"/>
+            tools:text="text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
