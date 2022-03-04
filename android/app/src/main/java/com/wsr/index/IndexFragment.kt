@@ -60,12 +60,9 @@ class IndexFragment : Fragment() {
         binding.indexFragmentFab.setOnClickListener {
 
             IndexCreatePasswordGroupDialogFragment.create(
-                onSubmit = { title, goToEdit ->
-                    launchInLifecycleScope(Lifecycle.State.STARTED) {
-                        val passwordGroup = indexViewModel.create(email, title)
-                        if (goToEdit && passwordGroup is State.Success) navigateToEdit(passwordGroup.value.id)
-                        indexViewModel.fetch(email)
-                    }
+                onSubmit = { title, shouldNavigateToEdit ->
+                    indexViewModel.createPasswordGroup(email, title, shouldNavigateToEdit)
+                    indexViewModel.fetch(email)
                 },
                 onCancel = {}
             ).show(requireActivity().supportFragmentManager, tag)
@@ -81,6 +78,10 @@ class IndexFragment : Fragment() {
                     loading = {},
                 )
             }
+        }
+
+        launchInLifecycleScope(Lifecycle.State.STARTED) {
+            indexViewModel.navigateToEditEvent.collect { navigateToEdit(it.passwordGroupId) }
         }
     }
 

@@ -7,21 +7,8 @@ import kotlinx.coroutines.launch
 
 class IndexCreatePasswordGroupDialogViewModel : ViewModel() {
 
+    private val _shouldNavigateToEdit = MutableStateFlow(false)
+    val shouldNavigateToEdit get() = _shouldNavigateToEdit
 
-    private val _uiState = MutableStateFlow(IndexCreatePasswordGroupDialogUiState())
-    val title get() = _uiState.value.title
-    val goToEdit get() = _uiState.value.goToEdit
-
-    fun updateTitle(title: String) =
-        viewModelScope.launch { _uiState.emit(_uiState.value.copyWithTitle(title)) }
-
-    fun changeChecked() = viewModelScope.launch { _uiState.emit(_uiState.value.changeChecked()) }
-}
-
-data class IndexCreatePasswordGroupDialogUiState(
-    val title: String = "",
-    val goToEdit: Boolean = true,
-) {
-    fun copyWithTitle(title: String) = this.copy(title = title)
-    fun changeChecked() = this.copy(goToEdit = !goToEdit)
+    fun changeChecked() = viewModelScope.launch { _shouldNavigateToEdit.emit(!_shouldNavigateToEdit.value) }
 }

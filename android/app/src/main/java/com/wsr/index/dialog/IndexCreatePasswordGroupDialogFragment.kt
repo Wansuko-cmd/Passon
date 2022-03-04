@@ -5,39 +5,52 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Lifecycle
 import com.wsr.databinding.DialogIndexCreatePasswordGroupBinding
+import com.wsr.ext.launchInLifecycleScope
 import com.wsr.index.dialog.OnCancel.Companion.getOnCancelInstance
 import com.wsr.index.dialog.OnSubmit.Companion.getOnSubmitInstance
-import com.wsr.layout.AfterTextChanged
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
 
 class IndexCreatePasswordGroupDialogFragment : DialogFragment() {
 
     private val indexCreatePasswordGroupDialogViewModel by viewModel<IndexCreatePasswordGroupDialogViewModel>()
+    private lateinit var binding: DialogIndexCreatePasswordGroupBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val onSubmit = arguments.getOnSubmitInstance()
         val onCancel = arguments.getOnCancelInstance()
 
-        val binding =
+        binding =
             DialogIndexCreatePasswordGroupBinding.inflate(requireActivity().layoutInflater).apply {
-                afterTitleChanged =
-                    AfterTextChanged(indexCreatePasswordGroupDialogViewModel::updateTitle)
-                onSubmitButton = View.OnClickListener {
+                dialogIndexCreatePasswordGroupSubmitButton.setOnClickListener {
                     onSubmit.block(
-                        indexCreatePasswordGroupDialogViewModel.title,
-                        indexCreatePasswordGroupDialogViewModel.goToEdit,
+                        dialogIndexCreatePasswordGroupEditText.text.toString(),
+                        indexCreatePasswordGroupDialogViewModel.shouldNavigateToEdit.value,
                     )
                     dismiss()
                 }
-                onCancelButton = View.OnClickListener { onCancel.block(); dismiss() }
-                onCheckbox =
-                    View.OnClickListener { indexCreatePasswordGroupDialogViewModel.changeChecked() }
-                checked = indexCreatePasswordGroupDialogViewModel.goToEdit
+                dialogIndexCreatePasswordGroupCancelButton.setOnClickListener {
+                    onCancel.block()
+                    dismiss()
+                }
+                onClickCheckbox = View.OnClickListener {
+                    indexCreatePasswordGroupDialogViewModel.changeChecked()
+                }
             }
 
         return AlertDialog.Builder(requireActivity()).apply { setView(binding.root) }.create()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        launchInLifecycleScope(Lifecycle.State.STARTED) {
+            indexCreatePasswordGroupDialogViewModel.shouldNavigateToEdit.collect {
+                binding.checked = it
+            }
+        }
     }
 
     companion object {

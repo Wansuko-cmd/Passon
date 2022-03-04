@@ -17,10 +17,10 @@
 
         <TextView
             android:id="@+id/layout_checkbox_with_text_text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="0dp"
+            android:paddingHorizontal="16dp"
+            android:maxLines="1"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@id/layout_checkbox_with_text_checkbox"
             app:layout_constraintStart_toEndOf="@id/layout_checkbox_with_text_checkbox"

@@ -4,11 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.passwordgroup.create.CreatePasswordGroupUseCase
 import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCase
+import com.wsr.state.consume
 import com.wsr.state.mapBoth
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class IndexViewModel(
     private val getAllPasswordGroupUseCase: GetAllPasswordGroupUseCase,
@@ -25,6 +24,9 @@ class IndexViewModel(
             )
         }
 
+    private val _navigateToEditEvent = MutableSharedFlow<NavigateToEditEvent>()
+    val navigateToEditEvent = _navigateToEditEvent.asSharedFlow()
+
     fun fetch(email: String) = fetchPasswordGroups(email)
 
     private fun fetchPasswordGroups(email: String) {
@@ -33,8 +35,13 @@ class IndexViewModel(
         }
     }
 
-    suspend fun create(email: String, title: String) =
-        withContext(viewModelScope.coroutineContext) {
-            createPasswordGroupUseCase.create(email, title)
+    fun createPasswordGroup(email: String, title: String, shouldNavigateToEdit: Boolean) {
+        viewModelScope.launch {
+            createPasswordGroupUseCase.create(email, title).consume(
+                success = { if(shouldNavigateToEdit) _navigateToEditEvent.emit(NavigateToEditEvent(it.id))},
+                failure = {},
+                loading = {},
+            )
         }
+    }
 }
