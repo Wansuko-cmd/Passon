@@ -58,7 +58,6 @@ class IndexFragment : Fragment() {
 
 
         binding.indexFragmentFab.setOnClickListener {
-
             showDialogIfNotDrew(tag) {
                 IndexCreatePasswordGroupDialogFragment.create(
                     onSubmit = { title, shouldNavigateToEdit ->
@@ -82,7 +81,7 @@ class IndexFragment : Fragment() {
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             indexViewModel.indexRefreshEvent.collect {
-                when(it.navigateToEditEvent) {
+                when (it.navigateToEditEvent) {
                     is NavigateToEditEvent.True -> navigateToEdit(it.navigateToEditEvent.passwordGroupId)
                     is NavigateToEditEvent.False -> indexViewModel.fetch(email)
                 }
@@ -107,9 +106,13 @@ class IndexFragment : Fragment() {
             Toast.LENGTH_LONG,
         ).show()
 
-    private fun showDialogIfNotDrew(tag: String?, builder: () -> DialogFragment){
-        if(notDrewDialogWithThisTag(tag)) builder().showNow(requireActivity().supportFragmentManager, tag)
+    private fun showDialogIfNotDrew(tag: String?, builder: () -> DialogFragment) {
+        if (notDrewDialogWithThisTag(tag)) builder().showNow(
+            requireActivity().supportFragmentManager,
+            tag
+        )
     }
+
     private fun notDrewDialogWithThisTag(tag: String?) =
         (requireActivity().supportFragmentManager.findFragmentByTag(tag) as? DialogFragment)?.dialog == null
 }

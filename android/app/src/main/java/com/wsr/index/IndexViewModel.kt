@@ -6,7 +6,10 @@ import com.wsr.passwordgroup.create.CreatePasswordGroupUseCase
 import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCase
 import com.wsr.state.consume
 import com.wsr.state.mapBoth
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
 class IndexViewModel(
@@ -40,7 +43,7 @@ class IndexViewModel(
             createPasswordGroupUseCase.create(email, title).consume(
                 success = {
                     val navigateToEditEvent =
-                        if(shouldNavigateToEdit) NavigateToEditEvent.True(it.id)
+                        if (shouldNavigateToEdit) NavigateToEditEvent.True(it.id)
                         else NavigateToEditEvent.False
                     _indexRefreshEvent.emit(IndexRefreshEvent(navigateToEditEvent))
                 },

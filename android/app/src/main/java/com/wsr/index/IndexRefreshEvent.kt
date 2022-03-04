@@ -5,6 +5,6 @@ data class IndexRefreshEvent(
 )
 
 sealed class NavigateToEditEvent {
-    class True(val passwordGroupId: String): NavigateToEditEvent()
-    object False: NavigateToEditEvent()
+    class True(val passwordGroupId: String) : NavigateToEditEvent()
+    object False : NavigateToEditEvent()
 }
