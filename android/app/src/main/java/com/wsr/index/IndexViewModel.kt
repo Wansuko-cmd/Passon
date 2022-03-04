@@ -24,8 +24,8 @@ class IndexViewModel(
             )
         }
 
-    private val _navigateToEditEvent = MutableSharedFlow<NavigateToEditEvent>()
-    val navigateToEditEvent = _navigateToEditEvent.asSharedFlow()
+    private val _indexRefreshEvent = MutableSharedFlow<IndexRefreshEvent>()
+    val indexRefreshEvent = _indexRefreshEvent.asSharedFlow()
 
     fun fetch(email: String) = fetchPasswordGroups(email)
 
@@ -38,7 +38,12 @@ class IndexViewModel(
     fun createPasswordGroup(email: String, title: String, shouldNavigateToEdit: Boolean) {
         viewModelScope.launch {
             createPasswordGroupUseCase.create(email, title).consume(
-                success = { if(shouldNavigateToEdit) _navigateToEditEvent.emit(NavigateToEditEvent(it.id))},
+                success = {
+                    val navigateToEditEvent =
+                        if(shouldNavigateToEdit) NavigateToEditEvent.True(it.id)
+                        else NavigateToEditEvent.False
+                    _indexRefreshEvent.emit(IndexRefreshEvent(navigateToEditEvent))
+                },
                 failure = {},
                 loading = {},
             )

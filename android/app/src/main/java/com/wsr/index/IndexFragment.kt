@@ -11,7 +11,6 @@ import com.wsr.R
 import com.wsr.databinding.FragmentIndexBinding
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.index.dialog.IndexCreatePasswordGroupDialogFragment
-import com.wsr.state.State
 import com.wsr.state.consume
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -62,7 +61,6 @@ class IndexFragment : Fragment() {
             IndexCreatePasswordGroupDialogFragment.create(
                 onSubmit = { title, shouldNavigateToEdit ->
                     indexViewModel.createPasswordGroup(email, title, shouldNavigateToEdit)
-                    indexViewModel.fetch(email)
                 },
                 onCancel = {}
             ).show(requireActivity().supportFragmentManager, tag)
@@ -81,7 +79,12 @@ class IndexFragment : Fragment() {
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
-            indexViewModel.navigateToEditEvent.collect { navigateToEdit(it.passwordGroupId) }
+            indexViewModel.indexRefreshEvent.collect {
+                when(it.navigateToEditEvent) {
+                    is NavigateToEditEvent.True -> navigateToEdit(it.navigateToEditEvent.passwordGroupId)
+                    is NavigateToEditEvent.False -> indexViewModel.fetch(email)
+                }
+            }
         }
     }
 
