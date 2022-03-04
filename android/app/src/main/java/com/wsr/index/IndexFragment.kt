@@ -3,6 +3,7 @@ package com.wsr.index
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
@@ -58,13 +59,14 @@ class IndexFragment : Fragment() {
 
         binding.indexFragmentFab.setOnClickListener {
 
-            IndexCreatePasswordGroupDialogFragment.create(
-                onSubmit = { title, shouldNavigateToEdit ->
-                    indexViewModel.createPasswordGroup(email, title, shouldNavigateToEdit)
-                },
-                onCancel = {}
-            ).show(requireActivity().supportFragmentManager, tag)
-
+            showDialogIfNotDrew(tag) {
+                IndexCreatePasswordGroupDialogFragment.create(
+                    onSubmit = { title, shouldNavigateToEdit ->
+                        indexViewModel.createPasswordGroup(email, title, shouldNavigateToEdit)
+                    },
+                    onCancel = {}
+                )
+            }
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
@@ -104,5 +106,11 @@ class IndexFragment : Fragment() {
             errorIndexUiState.message,
             Toast.LENGTH_LONG,
         ).show()
+
+    private fun showDialogIfNotDrew(tag: String?, builder: () -> DialogFragment){
+        if(notDrewDialogWithThisTag(tag)) builder().showNow(requireActivity().supportFragmentManager, tag)
+    }
+    private fun notDrewDialogWithThisTag(tag: String?) =
+        (requireActivity().supportFragmentManager.findFragmentByTag(tag) as? DialogFragment)?.dialog == null
 }
 
