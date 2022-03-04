@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wsr.R
 import com.wsr.databinding.FragmentIndexBinding
 import com.wsr.ext.launchInLifecycleScope
+import com.wsr.index.dialog.IndexCreatePasswordGroupDialogFragment
+import com.wsr.state.State
 import com.wsr.state.consume
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -58,9 +60,10 @@ class IndexFragment : Fragment() {
         binding.indexFragmentFab.setOnClickListener {
 
             IndexCreatePasswordGroupDialogFragment.create(
-                onSubmit = { title ->
+                onSubmit = { title, goToEdit ->
                     launchInLifecycleScope(Lifecycle.State.STARTED) {
-                        indexViewModel.create(email, title).join()
+                        val passwordGroup = indexViewModel.create(email, title)
+                        if(goToEdit && passwordGroup is State.Success) navigateToEdit(passwordGroup.value.id)
                         indexViewModel.fetch(email)
                     }
                 },
@@ -83,6 +86,11 @@ class IndexFragment : Fragment() {
 
     private fun navigateToShow(passwordGroupId: String) {
         val action = IndexFragmentDirections.actionIndexFragmentToShowFragment(passwordGroupId)
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToEdit(passwordGroupId: String) {
+        val action = IndexFragmentDirections.actionIndexFragmentToEditFragment(passwordGroupId)
         findNavController().navigate(action)
     }
 

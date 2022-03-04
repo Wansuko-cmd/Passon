@@ -8,6 +8,7 @@ import com.wsr.state.mapBoth
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class IndexViewModel(
     private val getAllPasswordGroupUseCase: GetAllPasswordGroupUseCase,
@@ -32,7 +33,8 @@ class IndexViewModel(
         }
     }
 
-    suspend fun create(email: String, title: String) = viewModelScope.launch {
-        createPasswordGroupUseCase.create(email, title)
-    }
+    suspend fun create(email: String, title: String) =
+        withContext(viewModelScope.coroutineContext) {
+            createPasswordGroupUseCase.create(email, title)
+        }
 }

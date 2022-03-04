@@ -2,6 +2,7 @@ package com.wsr
 
 import com.wsr.edit.EditViewModel
 import com.wsr.index.IndexViewModel
+import com.wsr.index.dialog.IndexCreatePasswordGroupDialogViewModel
 import com.wsr.password.PasswordRepository
 import com.wsr.password.TestPasswordRepositoryImpl
 import com.wsr.password.create.CreatePasswordUseCase
@@ -28,6 +29,7 @@ val module = module {
 
     /*** View Model ***/
     viewModel { IndexViewModel(get(), get()) }
+    viewModel { IndexCreatePasswordGroupDialogViewModel() }
     viewModel { ShowViewModel(get(), get()) }
     viewModel { EditViewModel(get(), get(), get(), get(), get()) }
 
