@@ -8,9 +8,10 @@
     <!-- 一覧画面 -->
     <string name="index_no_password_group_message">右下のボタンからパスワードグループを作成できます</string>
     <string name="index_create_password_group_dialog_title">タイトル</string>
-    <string name="index_create_password_group_dialog_positive_button">作成</string>
-    <string name="index_create_password_group_dialog_negative_button">キャンセル</string>
+    <string name="index_create_password_group_dialog_submit_button">作成</string>
+    <string name="index_create_password_group_dialog_cancel_button">キャンセル</string>
     <string name="index_create_password_group_dialog_hint">タイトル</string>
+    <string name="index_create_password_group_dialog_checkbox_text">編集画面に移動する</string>
 
     <!-- 詳細画面 -->
     <string name="show_show_password_checkbox_text">表示する</string>

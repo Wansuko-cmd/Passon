@@ -20,4 +20,9 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:iconTint">@color/white</item>
     </style>
+
+    <style name="EditTextStyle">
+        <item name="colorControlActivated">@color/moss_green</item>
+
+    </style>
 </resources>
