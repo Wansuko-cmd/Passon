@@ -6,7 +6,8 @@ import com.wsr.password.Password
 import com.wsr.password.PasswordRepository
 import com.wsr.utils.UniqueId
 
-class RoomPasswordRepositoryImpl(private val passwordEntityDao: PasswordEntityDao) : PasswordRepository {
+class RoomPasswordRepositoryImpl(private val passwordEntityDao: PasswordEntityDao) :
+    PasswordRepository {
     override suspend fun getAllByPasswordGroupId(passwordGroupId: UniqueId): List<Password> =
         passwordEntityDao.getAllByPasswordGroupId(passwordGroupId.value).map { it.toPassword() }
 

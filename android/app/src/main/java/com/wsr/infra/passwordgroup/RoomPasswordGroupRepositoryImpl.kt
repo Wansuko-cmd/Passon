@@ -7,7 +7,8 @@ import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.user.Email
 import com.wsr.utils.UniqueId
 
-class RoomPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: PasswordGroupEntityDao) : PasswordGroupRepository {
+class RoomPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: PasswordGroupEntityDao) :
+    PasswordGroupRepository {
     override suspend fun getAllByEmail(email: Email): List<PasswordGroup> =
         passwordGroupEntityDao.getAllByEmail(email.value).map { it.toPasswordGroup() }
 

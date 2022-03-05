@@ -20,8 +20,8 @@ abstract class PassonDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: PassonDatabase? = null
 
-        fun getDatabase(context: Context) : PassonDatabase {
-            if(INSTANCE != null) return INSTANCE as PassonDatabase
+        fun getDatabase(context: Context): PassonDatabase {
+            if (INSTANCE != null) return INSTANCE as PassonDatabase
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

@@ -25,7 +25,7 @@ data class PasswordEntity(
             id = id.value,
             passwordGroupId = passwordGroupId.value,
             name = name,
-            password =password,
+            password = password,
         )
     }
 }
