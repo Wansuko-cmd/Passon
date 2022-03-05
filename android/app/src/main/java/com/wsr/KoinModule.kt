@@ -3,6 +3,11 @@ package com.wsr
 import com.wsr.edit.EditViewModel
 import com.wsr.index.IndexViewModel
 import com.wsr.index.dialog.IndexCreatePasswordGroupDialogViewModel
+import com.wsr.infra.PassonDatabase
+import com.wsr.infra.password.PasswordEntityDao
+import com.wsr.infra.password.RoomPasswordRepositoryImpl
+import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
+import com.wsr.infra.passwordgroup.RoomPasswordGroupRepositoryImpl
 import com.wsr.password.PasswordRepository
 import com.wsr.password.TestPasswordRepositoryImpl
 import com.wsr.password.create.CreatePasswordUseCase
@@ -22,6 +27,7 @@ import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCaseImpl
 import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCase
 import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCaseImpl
 import com.wsr.show.ShowViewModel
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -46,6 +52,10 @@ val module = module {
     single<CreatePasswordUseCase> { CreatePasswordUseCaseImpl() }
 
     /*** Repository ***/
-    single<PasswordGroupRepository> { TestPasswordGroupRepositoryImpl() }
-    single<PasswordRepository> { TestPasswordRepositoryImpl() }
+    single<PasswordGroupRepository> { RoomPasswordGroupRepositoryImpl(get()) }
+    single<PasswordRepository> { RoomPasswordRepositoryImpl(get()) }
+
+    /*** DAO ***/
+    single<PasswordEntityDao> { PassonDatabase.getDatabase(androidApplication()).passwordEntityDao() }
+    single<PasswordGroupEntityDao> { PassonDatabase.getDatabase(androidApplication()).passwordGroupEntityDao() }
 }
