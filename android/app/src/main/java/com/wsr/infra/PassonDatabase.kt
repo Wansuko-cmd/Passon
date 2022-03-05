@@ -16,6 +16,7 @@ abstract class PassonDatabase : RoomDatabase() {
     abstract fun passwordGroupEntityDao(): PasswordGroupEntityDao
 
     companion object {
+
         @Volatile
         private var INSTANCE: PassonDatabase? = null
 

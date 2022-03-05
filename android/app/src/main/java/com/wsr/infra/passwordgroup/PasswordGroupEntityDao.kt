@@ -14,8 +14,8 @@ interface PasswordGroupEntityDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(passwordGroupEntity: PasswordGroupEntity)
 
-    @Update
-    suspend fun update(passwordGroupEntity: PasswordGroupEntity)
+    @Query("UPDATE password_groups SET title = :title, remark = :remark WHERE id = :id")
+    suspend fun update(id: String, title: String, remark: String)
 
     @Query("DELETE FROM password_groups WHERE id=:id")
     suspend fun delete(id: String)

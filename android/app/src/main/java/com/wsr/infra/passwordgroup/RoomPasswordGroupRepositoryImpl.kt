@@ -18,8 +18,8 @@ class RoomPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: Passwo
         passwordGroupEntityDao.insert(passwordGroup.toEntity())
     }
 
-    override suspend fun update(id: UniqueId, title: String?, remark: String?) {
-        passwordGroupEntityDao.update(PasswordGroupEntity(id.value, "example1@gmail.com" , title!!, remark!!))
+    override suspend fun update(id: UniqueId, title: String, remark: String) {
+        passwordGroupEntityDao.update(id.value, title, remark)
     }
 
     override suspend fun delete(id: UniqueId) {
