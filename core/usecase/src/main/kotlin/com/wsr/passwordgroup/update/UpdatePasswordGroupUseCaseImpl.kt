@@ -11,8 +11,8 @@ class UpdatePasswordGroupUseCaseImpl(
 
     override suspend fun update(
         id: String,
-        title: String?,
-        remark: String?,
+        title: String,
+        remark: String,
     ): State<Unit, UpdateDataFailedException> = try {
         passwordGroupRepository.update(UniqueId(id), title, remark)
         State.Success(Unit)

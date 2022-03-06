@@ -6,18 +6,18 @@ import com.wsr.passwordgroup.PasswordGroupUseCaseModel
 import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
 import com.wsr.utils.UniqueId
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 
 class GetPasswordGroupUseCaseImpl(
     private val passwordGroupRepository: PasswordGroupRepository
 ) : GetPasswordGroupUseCase {
     private val _data =
-        MutableStateFlow<State<PasswordGroupUseCaseModel, GetDataFailedException>>(State.Loading)
-    override val data get() = _data.asStateFlow()
+        MutableSharedFlow<State<PasswordGroupUseCaseModel, GetDataFailedException>>(replay = 0)
+    override val data get() = _data.asSharedFlow().distinctUntilChanged()
 
     override suspend fun getById(id: String) {
         try {
+            _data.emit(State.Loading)
             val passwordGroup = passwordGroupRepository
                 .getById(UniqueId(id))
                 .toUseCaseModel()

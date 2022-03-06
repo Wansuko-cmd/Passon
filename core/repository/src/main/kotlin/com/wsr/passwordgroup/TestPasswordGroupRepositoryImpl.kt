@@ -58,7 +58,7 @@ class TestPasswordGroupRepositoryImpl : PasswordGroupRepository {
     }
 
     @Throws(UpdateDataFailedException::class)
-    override suspend fun update(id: UniqueId, title: String?, remark: String?) {
+    override suspend fun update(id: UniqueId, title: String, remark: String) {
         data.first { it.id == id }.let { oldPasswordGroup ->
             data.removeIf { it == oldPasswordGroup }
             data.add(

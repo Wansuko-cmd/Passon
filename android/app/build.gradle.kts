@@ -15,6 +15,12 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments(mapOf("room.schemaLocation" to "$projectDir/schemas"))
+            }
+        }
     }
 
     buildTypes {
@@ -58,17 +64,13 @@ dependencies {
     implementation(project(":core:domain"))
 
     //Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.4.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.4.0")
-
-    //SafeArgs
-//    implementation("android.arch.navigation:navigation-fragment:1.0.0")
-//    implementation("android.arch.navigation:navigation-ui:1.0.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.4.1")
+    implementation("androidx.navigation:navigation-ui-ktx:2.4.1")
 
     //Coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha01")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha03")
 
     //Epoxy
     val epoxyVersion = "4.6.3"
@@ -83,5 +85,13 @@ dependencies {
     implementation("io.insert-koin:koin-android:$koinVersion")
 
     //Material UI
-    implementation("com.google.android.material:material:1.6.0-alpha02")
+    implementation("com.google.android.material:material:1.6.0-alpha03")
+
+    //Room Database
+    val roomVersion = "2.4.1"
+
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
 }
