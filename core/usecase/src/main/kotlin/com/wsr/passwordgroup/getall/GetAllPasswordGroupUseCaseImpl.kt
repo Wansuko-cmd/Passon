@@ -6,19 +6,19 @@ import com.wsr.passwordgroup.PasswordGroupUseCaseModel
 import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
 import com.wsr.user.Email
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 
 class GetAllPasswordGroupUseCaseImpl(
     private val passwordGroupRepository: PasswordGroupRepository
 ) : GetAllPasswordGroupUseCase {
 
     private val _data =
-        MutableStateFlow<State<List<PasswordGroupUseCaseModel>, GetAllDataFailedException>>(State.Loading)
-    override val data get() = _data.asStateFlow()
+        MutableSharedFlow<State<List<PasswordGroupUseCaseModel>, GetAllDataFailedException>>(replay = 0)
+    override val data get() = _data.asSharedFlow().distinctUntilChanged()
 
     override suspend fun getAllByEmail(email: String) {
         try {
+            _data.emit(State.Loading)
             val passwordGroups = passwordGroupRepository
                 .getAllByEmail(Email(email))
                 .map { it.toUseCaseModel() }
