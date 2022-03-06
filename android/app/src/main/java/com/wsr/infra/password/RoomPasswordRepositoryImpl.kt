@@ -1,7 +1,5 @@
 package com.wsr.infra.password
 
-import com.wsr.infra.password.PasswordEntity.Companion.toEntity
-import com.wsr.infra.password.PasswordEntity.Companion.toPassword
 import com.wsr.password.Password
 import com.wsr.password.PasswordRepository
 import com.wsr.utils.UniqueId

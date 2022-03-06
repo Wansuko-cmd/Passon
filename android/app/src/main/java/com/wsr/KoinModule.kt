@@ -1,5 +1,6 @@
 package com.wsr
 
+import androidx.room.Room
 import com.wsr.edit.EditViewModel
 import com.wsr.index.IndexViewModel
 import com.wsr.index.dialog.IndexCreatePasswordGroupDialogViewModel
@@ -53,11 +54,21 @@ val module = module {
     single<PasswordGroupRepository> { RoomPasswordGroupRepositoryImpl(get()) }
     single<PasswordRepository> { RoomPasswordRepositoryImpl(get()) }
 
+    single<PassonDatabase> {
+        Room.databaseBuilder(
+            androidApplication(),
+            PassonDatabase::class.java,
+            "passon_database"
+        ).build()
+    }
+
     /*** DAO ***/
     single<PasswordEntityDao> {
-        PassonDatabase.getDatabase(androidApplication()).passwordEntityDao()
+        val database by inject<PassonDatabase>()
+        database.passwordEntityDao()
     }
     single<PasswordGroupEntityDao> {
-        PassonDatabase.getDatabase(androidApplication()).passwordGroupEntityDao()
+        val database by inject<PassonDatabase>()
+        database.passwordGroupEntityDao()
     }
 }

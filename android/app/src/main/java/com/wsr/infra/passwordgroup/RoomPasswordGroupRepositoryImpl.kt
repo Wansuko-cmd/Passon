@@ -1,7 +1,5 @@
 package com.wsr.infra.passwordgroup
 
-import com.wsr.infra.passwordgroup.PasswordGroupEntity.Companion.toEntity
-import com.wsr.infra.passwordgroup.PasswordGroupEntity.Companion.toPasswordGroup
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.user.Email

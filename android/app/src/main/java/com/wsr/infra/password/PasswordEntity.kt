@@ -13,19 +13,18 @@ data class PasswordEntity(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "password") val password: String,
 ) {
-    companion object {
-        fun PasswordEntity.toPassword() = Password(
-            id = UniqueId(id),
-            passwordGroupId = UniqueId(passwordGroupId),
-            name = name,
-            password = password,
-        )
 
-        fun Password.toEntity() = PasswordEntity(
-            id = id.value,
-            passwordGroupId = passwordGroupId.value,
-            name = name,
-            password = password,
-        )
-    }
+    fun toPassword() = Password(
+        id = UniqueId(id),
+        passwordGroupId = UniqueId(passwordGroupId),
+        name = name,
+        password = password,
+    )
 }
+
+fun Password.toEntity() = PasswordEntity(
+    id = id.value,
+    passwordGroupId = passwordGroupId.value,
+    name = name,
+    password = password,
+)

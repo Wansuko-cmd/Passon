@@ -14,19 +14,17 @@ data class PasswordGroupEntity(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "remark") val remark: String,
 ) {
-    companion object {
-        fun PasswordGroupEntity.toPasswordGroup() = PasswordGroup(
-            id = UniqueId(id),
-            email = Email(email),
-            title = title,
-            remark = remark,
-        )
-
-        fun PasswordGroup.toEntity() = PasswordGroupEntity(
-            id = id.value,
-            email = email.value,
-            title = title,
-            remark = remark,
-        )
-    }
+    fun toPasswordGroup() = PasswordGroup(
+        id = UniqueId(id),
+        email = Email(email),
+        title = title,
+        remark = remark,
+    )
 }
+
+fun PasswordGroup.toEntity() = PasswordGroupEntity(
+    id = id.value,
+    email = email.value,
+    title = title,
+    remark = remark,
+)
