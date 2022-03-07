@@ -38,5 +38,9 @@ subprojects {
         //Koin
         implementation("io.insert-koin:koin-ktor:$koinVersion")
         implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
+
+        testImplementation(kotlin("test"))
+        testImplementation("org.mockito:mockito-inline:3.9.0")
+        testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
     }
 }
