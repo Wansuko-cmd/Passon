@@ -29,7 +29,7 @@ class GetAllPasswordUseCaseImplTest {
     private val getAllPasswordUseCaseImpl = GetAllPasswordUseCaseImpl(passwordRepository)
 
     @Test
-    fun getAllByPasswordGroupIdにパスワードを渡すことでPasswordデータを取得() = runBlocking {
+    fun getAllByPasswordGroupIdにPasswordGroupIdを渡すことでPasswordデータを取得() = runBlocking {
         getAllPasswordUseCaseImpl.data.test {
             getAllPasswordUseCaseImpl.getAllByPasswordGroupId(passwordGroupId)
             assertEquals(State.Loading, awaitItem())
