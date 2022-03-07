@@ -9,23 +9,27 @@ import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
 import com.wsr.user.Email
 import com.wsr.utils.UniqueId
-import kotlinx.coroutines.runBlocking
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.mock
+import io.mockk.coEvery
+import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetAllPasswordGroupUseCaseImplTest {
-    private val testPasswordGroup = PasswordGroup(UniqueId(), Email("example@gmail.com"), "", "")
 
-    private val passwordGroupRepository: PasswordGroupRepository = mock {
-        onBlocking { getAllByEmail(testPasswordGroup.email) } doReturn listOf(testPasswordGroup)
-    }
-
-    private val getAllPasswordGroupUseCaseImpl = GetAllPasswordGroupUseCaseImpl(passwordGroupRepository)
-
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun getAllByEmailで特定のEmailの全てのPasswordGroupを取得() = runBlocking {
+    fun getAllByEmailで特定のEmailの全てのPasswordGroupを取得() = runTest {
+
+        val testPasswordGroup = PasswordGroup(UniqueId(), Email("example@gmail.com"), "", "")
+        val passwordGroupRepository = mockk<PasswordGroupRepository>()
+        coEvery { passwordGroupRepository.getAllByEmail(testPasswordGroup.email) } returns listOf(
+            testPasswordGroup
+        )
+        val getAllPasswordGroupUseCaseImpl = GetAllPasswordGroupUseCaseImpl(passwordGroupRepository)
+
+
         getAllPasswordGroupUseCaseImpl.data.test {
             getAllPasswordGroupUseCaseImpl.getAllByEmail(testPasswordGroup.email.value)
             assertEquals(State.Loading, awaitItem())

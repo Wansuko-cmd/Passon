@@ -7,24 +7,24 @@ import com.wsr.password.PasswordRepository
 import com.wsr.password.PasswordUseCaseModel
 import com.wsr.state.State
 import com.wsr.utils.UniqueId
-import kotlinx.coroutines.runBlocking
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.mock
+import io.mockk.coEvery
+import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class UpsertPasswordUseCaseImplTest {
 
-    private val testPassword = Password(UniqueId(), UniqueId(), "", "")
-
-    private val passwordRepository: PasswordRepository = mock {
-        onBlocking { upsert(testPassword) } doReturn Unit
-    }
-
-    private val upsertPasswordUseCaseImpl = UpsertPasswordUseCaseImpl(passwordRepository)
-
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun upsertでPasswordの登録or更新を行う(): Unit = runBlocking {
+    fun upsertでPasswordの登録or更新を行う(): Unit = runTest {
+
+        val testPassword =
+            Password(UniqueId(), UniqueId("newPasswordGroupId"), "newName", "newPassword")
+        val passwordRepository = mockk<PasswordRepository>()
+        coEvery { passwordRepository.upsert(testPassword) } returns Unit
+        val upsertPasswordUseCaseImpl = UpsertPasswordUseCaseImpl(passwordRepository)
 
         val result = upsertPasswordUseCaseImpl.upsert(
             testPassword.id.value,

@@ -40,8 +40,8 @@ subprojects {
         implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
 
         testImplementation(kotlin("test"))
+        testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
         testImplementation("app.cash.turbine:turbine:0.7.0")
-        testImplementation("org.mockito:mockito-inline:3.9.0")
-        testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
+        testImplementation("io.mockk:mockk:1.12.3")
     }
 }

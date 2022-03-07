@@ -8,28 +8,29 @@ import com.wsr.password.PasswordRepository
 import com.wsr.password.toUseCaseModel
 import com.wsr.state.State
 import com.wsr.utils.UniqueId
-import kotlinx.coroutines.runBlocking
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.mock
+import io.mockk.coEvery
+import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetAllPasswordUseCaseImplTest {
 
-    private val passwordGroupId = "PasswordGroupId"
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun getAllByPasswordGroupIdにPasswordGroupIdを渡すことでPasswordデータを取得() = runTest {
 
-    private val testPassword = Password(UniqueId(), UniqueId(passwordGroupId), "", "")
+        val passwordGroupId = "PasswordGroupId"
+        val testPassword = Password(UniqueId(), UniqueId(passwordGroupId), "", "")
 
-    private val passwordRepository: PasswordRepository = mock {
-        onBlocking { getAllByPasswordGroupId(UniqueId(passwordGroupId)) } doReturn listOf(
+        val passwordRepository = mockk<PasswordRepository>()
+        coEvery { passwordRepository.getAllByPasswordGroupId(UniqueId(passwordGroupId)) } returns listOf(
             testPassword
         )
-    }
 
-    private val getAllPasswordUseCaseImpl = GetAllPasswordUseCaseImpl(passwordRepository)
+        val getAllPasswordUseCaseImpl = GetAllPasswordUseCaseImpl(passwordRepository)
 
-    @Test
-    fun getAllByPasswordGroupIdにPasswordGroupIdを渡すことでPasswordデータを取得() = runBlocking {
         getAllPasswordUseCaseImpl.data.test {
             getAllPasswordUseCaseImpl.getAllByPasswordGroupId(passwordGroupId)
             assertEquals(State.Loading, awaitItem())
