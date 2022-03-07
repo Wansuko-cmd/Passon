@@ -2,8 +2,24 @@ package com.wsr.state
 
 sealed class State<out T, out E> {
     object Loading : State<Nothing, Nothing>()
-    class Success<T>(val value: T) : State<T, Nothing>()
-    class Failure<E>(val value: E) : State<Nothing, E>()
+    class Success<T>(val value: T) : State<T, Nothing>() {
+        override fun equals(other: Any?): Boolean {
+            return if(other is Success<*>) value == other.value else false
+        }
+
+        override fun hashCode(): Int {
+            return value?.hashCode() ?: 0
+        }
+    }
+    class Failure<E>(val value: E) : State<Nothing, E>() {
+        override fun equals(other: Any?): Boolean {
+            return if(other is Failure<*>) value == other.value else false
+        }
+
+        override fun hashCode(): Int {
+            return value?.hashCode() ?: 0
+        }
+    }
 }
 
 inline fun <T, E, NT, NE> State<T, E>.mapBoth(
