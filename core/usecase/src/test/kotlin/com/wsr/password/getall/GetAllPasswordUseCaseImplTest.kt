@@ -3,16 +3,11 @@
 package com.wsr.password.getall
 
 import app.cash.turbine.test
-import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.password.Password
 import com.wsr.password.PasswordRepository
-import com.wsr.password.PasswordUseCaseModel
 import com.wsr.password.toUseCaseModel
 import com.wsr.state.State
 import com.wsr.utils.UniqueId
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
@@ -26,7 +21,9 @@ class GetAllPasswordUseCaseImplTest {
     private val testPassword = Password(UniqueId(), UniqueId(passwordGroupId), "", "")
 
     private val passwordRepository: PasswordRepository = mock {
-        onBlocking { getAllByPasswordGroupId(UniqueId(passwordGroupId)) } doReturn listOf(testPassword)
+        onBlocking { getAllByPasswordGroupId(UniqueId(passwordGroupId)) } doReturn listOf(
+            testPassword
+        )
     }
 
     private val getAllPasswordUseCaseImpl = GetAllPasswordUseCaseImpl(passwordRepository)

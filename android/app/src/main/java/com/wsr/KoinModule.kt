@@ -1,7 +1,6 @@
 package com.wsr
 
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.wsr.edit.EditViewModel
 import com.wsr.index.IndexViewModel
 import com.wsr.index.dialog.IndexCreatePasswordGroupDialogViewModel
