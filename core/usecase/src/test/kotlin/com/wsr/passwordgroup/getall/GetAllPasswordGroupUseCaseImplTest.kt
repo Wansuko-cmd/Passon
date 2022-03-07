@@ -25,7 +25,7 @@ class GetAllPasswordGroupUseCaseImplTest {
     private val getAllPasswordGroupUseCaseImpl = GetAllPasswordGroupUseCaseImpl(passwordGroupRepository)
 
     @Test
-    fun getByIdで特定のPasswordGroupを取得() = runBlocking {
+    fun getAllByEmailで特定のEmailの全てのPasswordGroupを取得() = runBlocking {
         getAllPasswordGroupUseCaseImpl.data.test {
             getAllPasswordGroupUseCaseImpl.getAllByEmail(testPasswordGroup.email.value)
             assertEquals(State.Loading, awaitItem())
