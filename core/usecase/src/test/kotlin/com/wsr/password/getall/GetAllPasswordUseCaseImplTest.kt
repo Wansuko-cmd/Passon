@@ -9,13 +9,15 @@ import com.wsr.password.PasswordRepository
 import com.wsr.password.toUseCaseModel
 import com.wsr.state.State
 import com.wsr.utils.UniqueId
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.confirmVerified
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GetAllPasswordUseCaseImplTest {
@@ -30,9 +32,9 @@ class GetAllPasswordUseCaseImplTest {
         target = GetAllPasswordUseCaseImpl(passwordRepository)
     }
 
+    /*** getAllByPasswordGroupId関数 ***/
     @Test
-    fun getAllByPasswordGroupIdにPasswordGroupIdを渡すことでPasswordデータを取得() = runTest {
-
+    fun PasswordGroupIdを渡すと所属する全てのPasswordを返す() = runTest {
         val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
         val mockedPasswords = List(5) { index ->
             Password(
@@ -42,8 +44,8 @@ class GetAllPasswordUseCaseImplTest {
                 password = "password$index"
             )
         }
-
         coEvery { passwordRepository.getAllByPasswordGroupId(mockedPasswordGroupId) } returns mockedPasswords
+
 
         target.data.test {
             target.getAllByPasswordGroupId(mockedPasswordGroupId.value)

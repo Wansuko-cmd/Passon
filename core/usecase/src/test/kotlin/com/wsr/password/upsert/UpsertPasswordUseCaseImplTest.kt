@@ -5,7 +5,6 @@ package com.wsr.password.upsert
 import com.google.common.truth.Truth.assertThat
 import com.wsr.password.Password
 import com.wsr.password.PasswordRepository
-import com.wsr.password.PasswordUseCaseModel
 import com.wsr.password.toUseCaseModel
 import com.wsr.state.State
 import com.wsr.utils.UniqueId
@@ -32,14 +31,15 @@ class UpsertPasswordUseCaseImplTest {
         target = UpsertPasswordUseCaseImpl(passwordRepository)
     }
 
+    /*** upsert関数 ***/
     @Test
-    fun upsertでPasswordの登録or更新を行う(): Unit = runTest {
-
+    fun 新しいPasswordの情報を渡すとPasswordの登録or更新を行い返す(): Unit = runTest {
         val mockedPasswordId = UniqueId("mockedPasswordId")
         val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
         val mockedName = "mockedName"
         val mockedPassword = "mockedPassword"
-        val expectedPassword = Password(mockedPasswordId, mockedPasswordGroupId, mockedName, mockedPassword)
+        val expectedPassword =
+            Password(mockedPasswordId, mockedPasswordGroupId, mockedName, mockedPassword)
 
         coEvery { passwordRepository.upsert(any()) } returns Unit
 
@@ -50,7 +50,6 @@ class UpsertPasswordUseCaseImplTest {
             name = mockedName,
             password = mockedPassword,
         )
-
         val expected = State.Success(expectedPassword.toUseCaseModel())
 
         assertThat(actual).isEqualTo(expected)

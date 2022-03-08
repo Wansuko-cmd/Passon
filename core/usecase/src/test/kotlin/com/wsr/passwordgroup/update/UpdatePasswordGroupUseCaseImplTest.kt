@@ -4,19 +4,18 @@
 package com.wsr.passwordgroup.update
 
 import com.google.common.truth.Truth.assertThat
-import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupRepository
-import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
-import com.wsr.user.Email
 import com.wsr.utils.UniqueId
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.confirmVerified
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class UpdatePasswordGroupUseCaseImplTest {
@@ -31,14 +30,15 @@ class UpdatePasswordGroupUseCaseImplTest {
         target = UpdatePasswordGroupUseCaseImpl(passwordGroupRepository)
     }
 
+    /*** update関数 ***/
     @Test
-    fun updateで特定のPasswordGroupの更新をする() = runTest {
-
+    fun 新しいPasswordGroupの情報を渡すと指定されたPasswordGroupの更新を行う() = runTest {
         val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
         val mockedTitle = "mockedTitle"
         val mockedRemark = "mockedRemark"
 
         coEvery { passwordGroupRepository.update(any(), any(), any()) } returns Unit
+
 
         val actual = target.update(
             id = mockedPasswordGroupId.value,

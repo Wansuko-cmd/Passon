@@ -22,7 +22,7 @@ class CreatePasswordUseCaseImplTest {
 
     /*** createInstance関数 ***/
     @Test
-    fun passwordGroupIdを渡すとPasswordUseCaseModelのインスタンスを作成して返す() {
+    fun passwordGroupIdを渡すと新しいPasswordUseCaseModelを作成して返す() {
         val uuid = "5af48f3b-468b-4ae0-a065-7d7ac70b37a8"
         every { UUID.randomUUID().toString() } returns uuid
 

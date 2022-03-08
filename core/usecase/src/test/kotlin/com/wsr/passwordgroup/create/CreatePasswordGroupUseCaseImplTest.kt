@@ -5,7 +5,6 @@ package com.wsr.passwordgroup.create
 import com.google.common.truth.Truth.assertThat
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupRepository
-import com.wsr.passwordgroup.PasswordGroupUseCaseModel
 import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
 import com.wsr.user.Email
@@ -17,7 +16,6 @@ import kotlinx.coroutines.test.runTest
 import java.util.*
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CreatePasswordGroupUseCaseImplTest {
@@ -33,8 +31,9 @@ class CreatePasswordGroupUseCaseImplTest {
         target = CreatePasswordGroupUseCaseImpl(passwordGroupRepository)
     }
 
+    /*** create関数 ***/
     @Test
-    fun createでPasswordGroupを新規登録(): Unit = runTest {
+    fun 新しいPasswordGroupの情報を渡すと新しいPasswordGroupを作成して登録し返す(): Unit = runTest {
         val uuid = "5af48f3b-468b-4ae0-a065-7d7ac70b37a8"
         every { UUID.randomUUID().toString() } returns uuid
 
@@ -43,11 +42,11 @@ class CreatePasswordGroupUseCaseImplTest {
 
         coEvery { passwordGroupRepository.create(any()) } returns Unit
 
+
         val actual = target.create(
             email = mockedEmail.value,
             title = mockedTitle,
         )
-
         val expected = State.Success(
             PasswordGroup(
                 id = UniqueId(uuid),

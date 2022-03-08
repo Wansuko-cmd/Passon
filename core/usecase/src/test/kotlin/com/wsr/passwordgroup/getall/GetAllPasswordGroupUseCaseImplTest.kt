@@ -10,13 +10,15 @@ import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
 import com.wsr.user.Email
 import com.wsr.utils.UniqueId
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.confirmVerified
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GetAllPasswordGroupUseCaseImplTest {
@@ -31,9 +33,9 @@ class GetAllPasswordGroupUseCaseImplTest {
         target = GetAllPasswordGroupUseCaseImpl(passwordGroupRepository)
     }
 
+    /*** getAllByEmail関数 ***/
     @Test
-    fun getAllByEmailで特定のEmailの全てのPasswordGroupを取得() = runTest {
-
+    fun emailを渡すと所属する全てのPasswordGroupを返す() = runTest {
         val mockedEmail = Email("mockedEmail")
         val mockedPasswordGroups = List(5) { index ->
             PasswordGroup(
@@ -43,7 +45,6 @@ class GetAllPasswordGroupUseCaseImplTest {
                 remark = "mockedRemark$index"
             )
         }
-
 
         coEvery { passwordGroupRepository.getAllByEmail(mockedEmail) } returns mockedPasswordGroups
 
