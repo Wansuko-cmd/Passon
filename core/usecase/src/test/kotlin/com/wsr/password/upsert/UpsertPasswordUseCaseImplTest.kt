@@ -2,46 +2,60 @@
 
 package com.wsr.password.upsert
 
+import com.google.common.truth.Truth.assertThat
 import com.wsr.password.Password
 import com.wsr.password.PasswordRepository
 import com.wsr.password.PasswordUseCaseModel
+import com.wsr.password.toUseCaseModel
 import com.wsr.state.State
 import com.wsr.utils.UniqueId
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.mockk
+import io.mockk.coVerify
+import io.mockk.confirmVerified
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class UpsertPasswordUseCaseImplTest {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @MockK
+    private lateinit var passwordRepository: PasswordRepository
+    private lateinit var target: UpsertPasswordUseCaseImpl
+
+    @BeforeTest
+    fun setup() {
+        MockKAnnotations.init(this)
+        target = UpsertPasswordUseCaseImpl(passwordRepository)
+    }
+
     @Test
     fun upsertでPasswordの登録or更新を行う(): Unit = runTest {
 
-        val testPassword =
-            Password(UniqueId(), UniqueId("newPasswordGroupId"), "newName", "newPassword")
-        val passwordRepository = mockk<PasswordRepository>()
-        coEvery { passwordRepository.upsert(testPassword) } returns Unit
-        val upsertPasswordUseCaseImpl = UpsertPasswordUseCaseImpl(passwordRepository)
+        val mockedPasswordId = UniqueId("mockedPasswordId")
+        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+        val mockedName = "mockedName"
+        val mockedPassword = "mockedPassword"
+        val expectedPassword = Password(mockedPasswordId, mockedPasswordGroupId, mockedName, mockedPassword)
 
-        val result = upsertPasswordUseCaseImpl.upsert(
-            testPassword.id.value,
-            "newPasswordGroupId",
-            "newName",
-            "newPassword",
+        coEvery { passwordRepository.upsert(any()) } returns Unit
+
+
+        val actual = target.upsert(
+            id = mockedPasswordId.value,
+            passwordGroupId = mockedPasswordGroupId.value,
+            name = mockedName,
+            password = mockedPassword,
         )
-        assertEquals(
-            expected = State.Success(
-                PasswordUseCaseModel(
-                    testPassword.id.value,
-                    "newPasswordGroupId",
-                    "newName",
-                    "newPassword",
-                )
-            ),
-            actual = result,
-        )
+
+        val expected = State.Success(expectedPassword.toUseCaseModel())
+
+        assertThat(actual).isEqualTo(expected)
+
+        coVerify(exactly = 1) { passwordRepository.upsert(expectedPassword) }
+        confirmVerified(passwordRepository)
     }
 }

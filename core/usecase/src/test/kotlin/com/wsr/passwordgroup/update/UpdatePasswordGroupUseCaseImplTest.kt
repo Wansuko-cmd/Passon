@@ -3,41 +3,54 @@
 
 package com.wsr.passwordgroup.update
 
+import com.google.common.truth.Truth.assertThat
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupRepository
+import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
 import com.wsr.user.Email
 import com.wsr.utils.UniqueId
-import io.mockk.coEvery
-import io.mockk.mockk
+import io.mockk.*
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class UpdatePasswordGroupUseCaseImplTest {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @MockK
+    private lateinit var passwordGroupRepository: PasswordGroupRepository
+    private lateinit var target: UpdatePasswordGroupUseCaseImpl
+
+    @BeforeTest
+    fun setup() {
+        MockKAnnotations.init(this)
+        target = UpdatePasswordGroupUseCaseImpl(passwordGroupRepository)
+    }
+
     @Test
     fun updateで特定のPasswordGroupの更新をする() = runTest {
 
-        val testPasswordGroup = PasswordGroup(UniqueId(), Email("example@gmail.com"), "", "")
+        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+        val mockedTitle = "mockedTitle"
+        val mockedRemark = "mockedRemark"
 
-        val passwordGroupRepository = mockk<PasswordGroupRepository>()
-        coEvery {
-            passwordGroupRepository.update(
-                testPasswordGroup.id,
-                "newTitle",
-                "newRemark"
-            )
-        } returns Unit
-        val updatePasswordGroupUseCaseImpl = UpdatePasswordGroupUseCaseImpl(passwordGroupRepository)
+        coEvery { passwordGroupRepository.update(any(), any(), any()) } returns Unit
 
-        val result = updatePasswordGroupUseCaseImpl.update(
-            testPasswordGroup.id.value,
-            "newTitle",
-            "newRemark"
+        val actual = target.update(
+            id = mockedPasswordGroupId.value,
+            title = mockedTitle,
+            remark = mockedRemark,
         )
-        assertEquals(State.Success(Unit), result)
+        val expected = State.Success(Unit)
+
+        assertThat(actual).isEqualTo(expected)
+
+
+        coVerify(exactly = 1) { passwordGroupRepository.update(any(), any(), any()) }
+        confirmVerified(passwordGroupRepository)
     }
 }

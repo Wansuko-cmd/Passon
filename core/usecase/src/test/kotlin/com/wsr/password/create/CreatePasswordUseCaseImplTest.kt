@@ -2,29 +2,36 @@
 
 package com.wsr.password.create
 
+import com.google.common.truth.Truth.assertThat
 import com.wsr.password.PasswordUseCaseModel
 import io.mockk.every
 import io.mockk.mockkStatic
 import java.util.*
+import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class CreatePasswordUseCaseImplTest {
-    private val createPasswordUseCase = CreatePasswordUseCaseImpl()
 
+    private lateinit var target: CreatePasswordUseCaseImpl
+
+    @BeforeTest
+    fun setup() {
+        mockkStatic(UUID::class)
+        target = CreatePasswordUseCaseImpl()
+    }
 
     /*** createInstance関数 ***/
     @Test
     fun passwordGroupIdを渡すとPasswordUseCaseModelのインスタンスを作成して返す() {
-
         val uuid = "5af48f3b-468b-4ae0-a065-7d7ac70b37a8"
-        mockkStatic(UUID::class)
         every { UUID.randomUUID().toString() } returns uuid
 
-        val passwordGroupId = "PasswordGroupId"
-        assertEquals(
-            expected = PasswordUseCaseModel(uuid, passwordGroupId, "", ""),
-            actual = createPasswordUseCase.createInstance(passwordGroupId)
-        )
+        val mockedPasswordGroupId = "mockedPasswordGroupId"
+
+
+        val actual = target.createInstance(mockedPasswordGroupId)
+        val expected = PasswordUseCaseModel(uuid, mockedPasswordGroupId, "", "")
+
+        assertThat(actual).isEqualTo(expected)
     }
 }
