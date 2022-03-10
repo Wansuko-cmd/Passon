@@ -4,6 +4,7 @@ package com.wsr.passwordgroup.get
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import com.wsr.exceptions.GetDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.toUseCaseModel
@@ -50,7 +51,30 @@ class GetPasswordGroupUseCaseImplTest {
             target.getById(mockedPasswordGroupId.value)
 
             assertThat(awaitItem()).isEqualTo(State.Loading)
-            assertThat(awaitItem()).isEqualTo(State.Success(mockedPasswordGroup.toUseCaseModel()))
+
+            val expected = mockedPasswordGroup.toUseCaseModel()
+            assertThat(awaitItem()).isEqualTo(State.Success(expected))
+
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        coVerify(exactly = 1) { passwordGroupRepository.getById(mockedPasswordGroupId) }
+        confirmVerified(passwordGroupRepository)
+    }
+
+    @Test
+    fun 取得するときにエラーが起きればその内容を返す() = runTest {
+        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+
+        coEvery { passwordGroupRepository.getById(mockedPasswordGroupId) } throws GetDataFailedException.DatabaseException()
+
+        target.data.test {
+            target.getById(mockedPasswordGroupId.value)
+
+            assertThat(awaitItem()).isEqualTo(State.Loading)
+
+            val expected = GetDataFailedException.DatabaseException()
+            assertThat(awaitItem()).isEqualTo(State.Failure(expected))
 
             cancelAndIgnoreRemainingEvents()
         }

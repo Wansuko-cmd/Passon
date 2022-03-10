@@ -4,6 +4,7 @@ package com.wsr.password.getall
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.password.Password
 import com.wsr.password.PasswordRepository
 import com.wsr.password.toUseCaseModel
@@ -53,6 +54,26 @@ class GetAllPasswordUseCaseImplTest {
 
             val expected = mockedPasswords.map { it.toUseCaseModel() }
             assertThat(awaitItem()).isEqualTo(State.Success(expected))
+
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        coVerify(exactly = 1) { passwordRepository.getAllByPasswordGroupId(mockedPasswordGroupId) }
+        confirmVerified(passwordRepository)
+    }
+
+    @Test
+    fun 取得するときにエラーが起きればその内容を返す() = runTest {
+        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+        coEvery { passwordRepository.getAllByPasswordGroupId(mockedPasswordGroupId) } throws GetAllDataFailedException.DatabaseException()
+
+        target.data.test {
+            target.getAllByPasswordGroupId(mockedPasswordGroupId.value)
+
+            assertThat(awaitItem()).isEqualTo(State.Loading)
+
+            val expected = GetAllDataFailedException.DatabaseException()
+            assertThat(awaitItem()).isEqualTo(State.Failure(expected))
 
             cancelAndIgnoreRemainingEvents()
         }

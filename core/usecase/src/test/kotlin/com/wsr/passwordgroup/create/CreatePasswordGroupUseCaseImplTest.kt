@@ -3,6 +3,7 @@
 package com.wsr.passwordgroup.create
 
 import com.google.common.truth.Truth.assertThat
+import com.wsr.exceptions.CreateDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.toUseCaseModel
@@ -55,6 +56,25 @@ class CreatePasswordGroupUseCaseImplTest {
                 remark = "",
             ).toUseCaseModel()
         )
+
+        assertThat(actual).isEqualTo(expected)
+
+        coVerify(exactly = 1) { passwordGroupRepository.create(any()) }
+        confirmVerified(passwordGroupRepository)
+    }
+
+    @Test
+    fun 作成するときにエラーが起きればその内容を返す() = runTest {
+        val mockedEmail = Email("mockedEmail")
+        val mockedTitle = "mockTitle"
+
+        coEvery { passwordGroupRepository.create(any()) } throws CreateDataFailedException.DatabaseException()
+
+        val actual = target.create(
+            email = mockedEmail.value,
+            title = mockedTitle,
+        )
+        val expected = State.Failure(CreateDataFailedException.DatabaseException())
 
         assertThat(actual).isEqualTo(expected)
 

@@ -4,6 +4,7 @@
 package com.wsr.passwordgroup.update
 
 import com.google.common.truth.Truth.assertThat
+import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.state.State
 import com.wsr.utils.UniqueId
@@ -39,7 +40,6 @@ class UpdatePasswordGroupUseCaseImplTest {
 
         coEvery { passwordGroupRepository.update(any(), any(), any()) } returns Unit
 
-
         val actual = target.update(
             id = mockedPasswordGroupId.value,
             title = mockedTitle,
@@ -49,6 +49,26 @@ class UpdatePasswordGroupUseCaseImplTest {
 
         assertThat(actual).isEqualTo(expected)
 
+        coVerify(exactly = 1) { passwordGroupRepository.update(any(), any(), any()) }
+        confirmVerified(passwordGroupRepository)
+    }
+
+    @Test
+    fun 更新するときにエラーが起きればその内容を返す() = runTest {
+        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+        val mockedTitle = "mockedTitle"
+        val mockedRemark = "mockedRemark"
+
+        coEvery { passwordGroupRepository.update(any(), any(), any()) } throws UpdateDataFailedException.DatabaseException()
+
+        val actual = target.update(
+            id = mockedPasswordGroupId.value,
+            title = mockedTitle,
+            remark = mockedRemark,
+        )
+        val expected = State.Failure(UpdateDataFailedException.DatabaseException())
+
+        assertThat(actual).isEqualTo(expected)
 
         coVerify(exactly = 1) { passwordGroupRepository.update(any(), any(), any()) }
         confirmVerified(passwordGroupRepository)

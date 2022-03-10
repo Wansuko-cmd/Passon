@@ -3,6 +3,8 @@
 package com.wsr.password.upsert
 
 import com.google.common.truth.Truth.assertThat
+import com.wsr.exceptions.UpdateDataFailedException
+import com.wsr.exceptions.UpsertDataFailedException
 import com.wsr.password.Password
 import com.wsr.password.PasswordRepository
 import com.wsr.password.toUseCaseModel
@@ -41,7 +43,7 @@ class UpsertPasswordUseCaseImplTest {
         val expectedPassword =
             Password(mockedPasswordId, mockedPasswordGroupId, mockedName, mockedPassword)
 
-        coEvery { passwordRepository.upsert(any()) } returns Unit
+        coEvery { passwordRepository.upsert(expectedPassword) } returns Unit
 
 
         val actual = target.upsert(
@@ -55,6 +57,29 @@ class UpsertPasswordUseCaseImplTest {
         assertThat(actual).isEqualTo(expected)
 
         coVerify(exactly = 1) { passwordRepository.upsert(expectedPassword) }
+        confirmVerified(passwordRepository)
+    }
+
+    @Test
+    fun 登録or更新するときにエラーが起きればその内容を返す() = runTest {
+        val mockedPasswordId = UniqueId("mockedPasswordId")
+        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+        val mockedName = "mockedName"
+        val mockedPassword = "mockedPassword"
+
+        coEvery { passwordRepository.upsert(any()) } throws UpsertDataFailedException.DatabaseException()
+
+        val actual = target.upsert(
+            id = mockedPasswordId.value,
+            passwordGroupId = mockedPasswordGroupId.value,
+            name = mockedName,
+            password = mockedPassword,
+        )
+        val expected = State.Failure(UpsertDataFailedException.DatabaseException())
+
+        assertThat(actual).isEqualTo(expected)
+
+        coVerify(exactly = 1) { passwordRepository.upsert(any()) }
         confirmVerified(passwordRepository)
     }
 }

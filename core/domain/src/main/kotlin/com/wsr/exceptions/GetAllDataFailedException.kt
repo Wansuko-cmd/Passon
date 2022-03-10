@@ -1,5 +1,5 @@
 package com.wsr.exceptions
 
 sealed class GetAllDataFailedException : Throwable() {
-    class DatabaseException : GetAllDataFailedException()
+    data class DatabaseException(override val message: String = "") : GetAllDataFailedException()
 }
