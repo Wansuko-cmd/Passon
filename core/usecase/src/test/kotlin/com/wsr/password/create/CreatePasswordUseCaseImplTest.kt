@@ -28,7 +28,6 @@ class CreatePasswordUseCaseImplTest {
 
         val mockedPasswordGroupId = "mockedPasswordGroupId"
 
-
         val actual = target.createInstance(mockedPasswordGroupId)
         val expected = PasswordUseCaseModel(uuid, mockedPasswordGroupId, "", "")
 

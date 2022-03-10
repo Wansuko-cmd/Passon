@@ -46,12 +46,13 @@ class GetAllPasswordUseCaseImplTest {
         }
         coEvery { passwordRepository.getAllByPasswordGroupId(mockedPasswordGroupId) } returns mockedPasswords
 
-
         target.data.test {
             target.getAllByPasswordGroupId(mockedPasswordGroupId.value)
 
             assertThat(awaitItem()).isEqualTo(State.Loading)
-            assertThat(awaitItem()).isEqualTo(State.Success(mockedPasswords.map { it.toUseCaseModel() }))
+
+            val expected = mockedPasswords.map { it.toUseCaseModel() }
+            assertThat(awaitItem()).isEqualTo(State.Success(expected))
 
             cancelAndIgnoreRemainingEvents()
         }
