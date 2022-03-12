@@ -34,7 +34,7 @@ class RoomPasswordRepositoryTest {
     }
 
     @AfterTest
-    fun closeDb() {
+    fun closeDB() {
         db.close()
     }
 
