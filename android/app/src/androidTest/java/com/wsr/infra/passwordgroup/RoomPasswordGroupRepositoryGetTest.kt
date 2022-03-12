@@ -7,6 +7,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
+import com.wsr.exceptions.GetDataFailedException
 import com.wsr.infra.PassonDatabase
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.user.Email
@@ -17,6 +18,7 @@ import org.junit.runner.RunWith
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -57,6 +59,7 @@ class RoomPasswordGroupRepositoryGetTest {
         assertThat(actual).isEqualTo(mockedPasswordGroups)
     }
 
+
     /*** getById関数 ***/
     @Test
     fun passwordGroupIdを渡せば対応するPasswordGroupを返す() = runTest {
@@ -71,5 +74,14 @@ class RoomPasswordGroupRepositoryGetTest {
 
         val actual = target.getById(mockedPasswordGroupId)
         assertThat(actual).isEqualTo(mockedPasswordGroup)
+    }
+
+    @Test
+    fun 存在しないpasswordGroupIdを渡せばNoSuchElementExceptionが投げられる() = runTest {
+        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+
+        assertFailsWith<GetDataFailedException.NoSuchElementException> {
+            target.getById(mockedPasswordGroupId)
+        }
     }
 }

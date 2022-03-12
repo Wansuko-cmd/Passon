@@ -56,9 +56,7 @@ class RoomPasswordGroupRepositoryDeleteTest {
         target.delete(mockedPasswordGroupId)
 
         assertFailsWith<GetDataFailedException.NoSuchElementException> {
-            target.getById(
-                mockedPasswordGroupId
-            )
+            target.getById(mockedPasswordGroupId)
         }
     }
 }
