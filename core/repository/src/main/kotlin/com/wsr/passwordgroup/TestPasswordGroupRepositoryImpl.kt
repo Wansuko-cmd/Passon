@@ -63,8 +63,8 @@ class TestPasswordGroupRepositoryImpl : PasswordGroupRepository {
             data.removeIf { it == oldPasswordGroup }
             data.add(
                 oldPasswordGroup.copy(
-                    title = title ?: oldPasswordGroup.title,
-                    remark = remark ?: oldPasswordGroup.remark,
+                    title = title,
+                    remark = remark,
                 )
             )
         }
