@@ -21,7 +21,7 @@ class UpsertPasswordUseCaseImpl(
             id = UniqueId(id),
             passwordGroupId = UniqueId(passwordGroupId),
             name = name,
-            password = password
+            password = password,
         )
 
         passwordRepository.upsert(newPassword)

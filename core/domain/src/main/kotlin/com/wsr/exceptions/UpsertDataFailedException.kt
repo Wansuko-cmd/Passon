@@ -1,5 +1,5 @@
 package com.wsr.exceptions
 
-sealed class UpsertDataFailedException : Exception() {
-    class DatabaseException : UpdateDataFailedException()
+sealed class UpsertDataFailedException : Throwable() {
+    data class DatabaseException(override val message: String = "") : UpsertDataFailedException()
 }

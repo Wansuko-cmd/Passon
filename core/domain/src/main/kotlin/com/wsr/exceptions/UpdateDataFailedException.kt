@@ -1,6 +1,6 @@
 package com.wsr.exceptions
 
 sealed class UpdateDataFailedException : Throwable() {
-    class DatabaseException : UpdateDataFailedException()
-    class NoSuchElementException : UpdateDataFailedException()
+    data class DatabaseException(override val message: String = "") : UpdateDataFailedException()
+    data class NoSuchElementException(override val message: String = "") : UpdateDataFailedException()
 }

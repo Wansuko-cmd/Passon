@@ -2,8 +2,8 @@ package com.wsr.state
 
 sealed class State<out T, out E> {
     object Loading : State<Nothing, Nothing>()
-    class Success<T>(val value: T) : State<T, Nothing>()
-    class Failure<E>(val value: E) : State<Nothing, E>()
+    data class Success<T>(val value: T) : State<T, Nothing>()
+    data class Failure<E>(val value: E) : State<Nothing, E>()
 }
 
 inline fun <T, E, NT, NE> State<T, E>.mapBoth(
