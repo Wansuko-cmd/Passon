@@ -9,6 +9,7 @@ import com.wsr.infra.password.PasswordEntityDao
 import com.wsr.infra.password.RoomPasswordRepositoryImpl
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passwordgroup.RoomPasswordGroupRepositoryImpl
+import com.wsr.login.LoginViewModel
 import com.wsr.password.PasswordRepository
 import com.wsr.password.create.CreatePasswordUseCase
 import com.wsr.password.create.CreatePasswordUseCaseImpl
@@ -33,6 +34,7 @@ import org.koin.dsl.module
 val module = module {
 
     /*** View Model ***/
+    viewModel { LoginViewModel() }
     viewModel { IndexViewModel(get(), get()) }
     viewModel { IndexCreatePasswordGroupDialogViewModel() }
     viewModel { ShowViewModel(get(), get()) }
