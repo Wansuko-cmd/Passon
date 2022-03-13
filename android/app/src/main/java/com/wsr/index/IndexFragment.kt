@@ -3,6 +3,7 @@ package com.wsr.index
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -33,7 +34,10 @@ class IndexFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
-        (requireActivity() as AppCompatActivity).supportActionBar?.show()
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            show()
+            setDisplayHomeAsUpEnabled(false)
+        }
         _binding = FragmentIndexBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -44,6 +48,10 @@ class IndexFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            requireActivity().finish()
+        }
 
         indexViewModel.fetch(email)
 
