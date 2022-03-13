@@ -22,7 +22,11 @@ class LoginViewModel : ViewModel() {
 
     fun checkPassword() {
         viewModelScope.launch {
-            if(_enteredPassword.value == "Password") _checkPasswordEvent.emit(CheckPasswordEvent(true))
+            if (_enteredPassword.value == "Password") _checkPasswordEvent.emit(
+                CheckPasswordEvent(
+                    true
+                )
+            )
             else _checkPasswordEvent.emit(CheckPasswordEvent(false))
         }
     }
