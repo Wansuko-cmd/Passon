@@ -95,6 +95,8 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
 
+    implementation("androidx.biometric:biometric:1.1.0")
+
 
     androidTestImplementation(kotlin("test"))
     androidTestImplementation("androidx.test:runner:1.4.0")

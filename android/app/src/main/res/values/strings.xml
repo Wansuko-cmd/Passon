@@ -5,6 +5,12 @@
     <string name="menu_title_edit">Edit</string>
     <string name="menu_title_setting">Setting</string>
 
+    <!-- ログイン画面 -->
+    <string name="login_biometric_success_message">Success</string>
+    <string name="login_biometric_failure_message">Failure</string>
+    <string name="login_biometric_title">Login</string>
+    <string name="login_biometric_negative">Cancel</string>
+
     <!-- 一覧画面 -->
     <string name="index_no_password_group_message">Click right bottom button to create your password group</string>
     <string name="index_create_password_group_dialog_title">Title</string>
