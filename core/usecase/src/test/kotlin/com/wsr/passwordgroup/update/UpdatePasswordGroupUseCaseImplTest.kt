@@ -59,7 +59,13 @@ class UpdatePasswordGroupUseCaseImplTest {
         val mockedTitle = "mockedTitle"
         val mockedRemark = "mockedRemark"
 
-        coEvery { passwordGroupRepository.update(any(), any(), any()) } throws UpdateDataFailedException.DatabaseException()
+        coEvery {
+            passwordGroupRepository.update(
+                any(),
+                any(),
+                any()
+            )
+        } throws UpdateDataFailedException.DatabaseException()
 
         val actual = target.update(
             id = mockedPasswordGroupId.value,

@@ -3,7 +3,6 @@
 package com.wsr.password.upsert
 
 import com.google.common.truth.Truth.assertThat
-import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.exceptions.UpsertDataFailedException
 import com.wsr.password.Password
 import com.wsr.password.PasswordRepository
