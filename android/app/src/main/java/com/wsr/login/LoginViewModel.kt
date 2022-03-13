@@ -11,8 +11,11 @@ class LoginViewModel : ViewModel() {
 
     private val _enteredPassword = MutableStateFlow("")
 
-    private val _checkPasswordEvent = MutableSharedFlow<CheckPasswordEvent>(replay = 0)
+    private val _checkPasswordEvent = MutableSharedFlow<Boolean>(replay = 0)
     val checkPasswordEvent = _checkPasswordEvent.asSharedFlow()
+
+    private val _showErrorMessageEvent = MutableSharedFlow<Boolean>(replay = 0)
+    val showErrorMessageEvent = _showErrorMessageEvent.asSharedFlow()
 
     fun updateEnteredPassword(enteredPassword: String) {
         viewModelScope.launch {
@@ -22,12 +25,8 @@ class LoginViewModel : ViewModel() {
 
     fun checkPassword() {
         viewModelScope.launch {
-            if (_enteredPassword.value == "Password") _checkPasswordEvent.emit(
-                CheckPasswordEvent(
-                    true
-                )
-            )
-            else _checkPasswordEvent.emit(CheckPasswordEvent(false))
+            if (_enteredPassword.value == "Password") _checkPasswordEvent.emit(true)
+            else _showErrorMessageEvent.emit(true)
         }
     }
 }

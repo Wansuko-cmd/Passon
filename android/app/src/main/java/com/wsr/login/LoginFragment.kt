@@ -46,10 +46,14 @@ class LoginFragment : Fragment() {
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             loginViewModel.checkPasswordEvent.collect {
-                if (it.passed) {
-                    showMessage(getString(R.string.login_biometric_success_message))
-                    navigateToIndex()
-                } else showMessage(getString(R.string.login_password_wrong))
+                showMessage(getString(R.string.login_biometric_success_message))
+                navigateToIndex()
+            }
+        }
+
+        launchInLifecycleScope(Lifecycle.State.STARTED) {
+            loginViewModel.showErrorMessageEvent.collect {
+                showMessage(getString(R.string.login_password_wrong))
             }
         }
 
