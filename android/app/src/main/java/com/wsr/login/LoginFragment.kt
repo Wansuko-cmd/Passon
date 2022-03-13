@@ -49,7 +49,7 @@ class LoginFragment : Fragment() {
                 if (it.passed) {
                     showMessage(getString(R.string.login_biometric_success_message))
                     navigateToIndex()
-                } else showMessage("間違えています input=${binding.loginFragmentLoginText.text}")
+                } else showMessage(getString(R.string.login_password_wrong))
             }
         }
 
