@@ -49,10 +49,6 @@ class IndexFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-            requireActivity().finish()
-        }
-
         indexViewModel.fetch(email)
 
         indexEpoxyController = IndexEpoxyController(

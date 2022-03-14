@@ -44,6 +44,7 @@ class LoginFragment : Fragment() {
 
         binding.loginFragmentNextButton.setOnClickListener { loginViewModel.checkPassword() }
 
+
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             loginViewModel.checkPasswordEvent.collect {
                 showMessage(getString(R.string.login_biometric_success_message))
@@ -110,6 +111,7 @@ class LoginFragment : Fragment() {
         .show()
 
     private fun navigateToIndex() {
-        findNavController().navigate(R.id.index_fragment)
+        val action = LoginFragmentDirections.actionLoginFragmentToIndexFragment()
+        findNavController().navigate(action)
     }
 }

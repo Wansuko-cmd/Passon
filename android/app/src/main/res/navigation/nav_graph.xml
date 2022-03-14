@@ -13,7 +13,8 @@
             android:id="@+id/action_login_fragment_to_index_fragment"
             app:destination="@id/index_fragment"
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true"/>
     </fragment>
 
     <fragment
