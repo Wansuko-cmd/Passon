@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.wsr.layout.InputType" />
+
         <variable
             name="afterTextChanged"
             type="com.wsr.layout.AfterTextChanged" />
@@ -67,6 +69,7 @@
                 android:layout_margin="16dp"
                 app:afterTextChanged="@{afterTextChanged}"
                 app:hint="@{@string/login_password_hint}"
+                app:inputType="@{InputType.TextPassword}"
                 app:layout_constraintEnd_toStartOf="@id/login_fragment_finger_print_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
