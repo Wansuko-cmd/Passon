@@ -1,13 +1,9 @@
 package com.wsr.user
 
-import com.wsr.image.Image
+@JvmInline
+value class Email(val value: String) {
+    companion object {
+        fun of(value: String) = Email("email@example.com")
+    }
+}
 
-data class User(
-    val email: Email,
-    val displayName: DisplayName,
-    val authImage: Image,
-)
-
-data class Email(val value: String)
-
-data class DisplayName(val value: String)
