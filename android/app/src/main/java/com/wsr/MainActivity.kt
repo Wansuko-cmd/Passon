@@ -32,21 +32,24 @@ class MainActivity : AppCompatActivity() {
     //確実に動作させるためにdispatchTouchEventで実行
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if(event.action == MotionEvent.ACTION_DOWN) {
-            val view = currentFocus
-            if(view is EditText) {
-
-                //focusしているところの座標を取得
-                val rect = Rect().also { view.getGlobalVisibleRect(it) }
-
-                //focusしているところ以外がタップされたとき
-                if(!rect.contains(event.rawX.toInt(), event.rawX.toInt())) {
-                    view.clearFocus()
-                    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-                }
-            }
+            closeIfTapOutsideFocusedEditView(event.rawX.toInt(), event.rawY.toInt())
         }
         return super.dispatchTouchEvent(event)
+    }
+
+    private fun closeIfTapOutsideFocusedEditView(tappedX: Int, tappedY: Int) {
+
+        val view = currentFocus as? EditText ?: return
+
+        //focusしているところの座標を取得
+        val rect = Rect().also { view.getGlobalVisibleRect(it) }
+
+        //focusしているところ以外がタップされたとき
+        if(!rect.contains(tappedX, tappedY)) {
+            view.clearFocus()
+            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
