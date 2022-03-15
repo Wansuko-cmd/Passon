@@ -1,4 +1,4 @@
-package com.wsr.user
+package com.wsr.email
 
 @JvmInline
 value class Email private constructor(val value: String) {
@@ -6,4 +6,3 @@ value class Email private constructor(val value: String) {
         fun of(value: String) = Email(value)
     }
 }
-

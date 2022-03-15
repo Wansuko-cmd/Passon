@@ -1,7 +1,11 @@
 package com.wsr.edit
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -58,8 +62,6 @@ class EditFragment : Fragment() {
             setHasFixedSize(true)
             adapter = editEpoxyController.adapter
         }
-
-
 
         binding.editFragmentFab.setOnClickListener {
             launchInLifecycleScope(Lifecycle.State.STARTED) {

@@ -40,7 +40,6 @@ class LayoutCheckboxWithText @JvmOverloads constructor(
         binding.layoutCheckboxWithTextText.setOnClickListener(onClickListener)
     }
 
-
     companion object {
 
         @BindingAdapter("text")

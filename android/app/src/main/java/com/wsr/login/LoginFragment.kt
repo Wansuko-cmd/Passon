@@ -45,8 +45,6 @@ class LoginFragment : Fragment() {
         binding.loginFragmentPassword.onEnterClicked(loginViewModel::checkPassword)
         binding.loginFragmentNextButton.setOnClickListener { loginViewModel.checkPassword() }
 
-
-
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             loginViewModel.checkPasswordEvent.collect {
                 showMessage(getString(R.string.login_biometric_success_message))
@@ -83,28 +81,31 @@ class LoginFragment : Fragment() {
     ) {
         val executor = ContextCompat.getMainExecutor(requireContext())
         val biometricPrompt =
-            BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
-                    when (errorCode) {
-                        BiometricPrompt.ERROR_USER_CANCELED,
-                        BiometricPrompt.ERROR_CANCELED,
-                        BiometricPrompt.ERROR_NEGATIVE_BUTTON -> {
+            BiometricPrompt(
+                this, executor,
+                object : BiometricPrompt.AuthenticationCallback() {
+                    override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                        super.onAuthenticationError(errorCode, errString)
+                        when (errorCode) {
+                            BiometricPrompt.ERROR_USER_CANCELED,
+                            BiometricPrompt.ERROR_CANCELED,
+                            BiometricPrompt.ERROR_NEGATIVE_BUTTON -> {
+                            }
+                            else -> showMessage("Error $errorCode")
                         }
-                        else -> showMessage("Error $errorCode")
+                    }
+
+                    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                        super.onAuthenticationSucceeded(result)
+                        success()
+                    }
+
+                    override fun onAuthenticationFailed() {
+                        super.onAuthenticationFailed()
+                        failure()
                     }
                 }
-
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-                    success()
-                }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    failure()
-                }
-            })
+            )
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle(getString(R.string.login_biometric_title))

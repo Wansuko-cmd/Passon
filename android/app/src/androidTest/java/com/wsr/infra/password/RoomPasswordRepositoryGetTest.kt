@@ -38,7 +38,6 @@ class RoomPasswordRepositoryGetTest {
         db.close()
     }
 
-
     /*** getAllByPasswordGroupId関数 ***/
     @Test
     fun passwordGroupIdを渡すと所属する全てのPasswordGroupを返す() = runTest {

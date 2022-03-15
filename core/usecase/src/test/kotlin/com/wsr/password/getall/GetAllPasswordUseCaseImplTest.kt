@@ -36,10 +36,10 @@ class GetAllPasswordUseCaseImplTest {
     /*** getAllByPasswordGroupId関数 ***/
     @Test
     fun PasswordGroupIdを渡すと所属する全てのPasswordを返す() = runTest {
-        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
         val mockedPasswords = List(5) { index ->
-            Password(
-                id = UniqueId(value = "UniqueId$index"),
+            Password.of(
+                id = UniqueId.of(value = "UniqueId$index"),
                 passwordGroupId = mockedPasswordGroupId,
                 name = "name$index",
                 password = "password$index"
@@ -64,7 +64,7 @@ class GetAllPasswordUseCaseImplTest {
 
     @Test
     fun 取得するときにエラーが起きればその内容を返す() = runTest {
-        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
         coEvery { passwordRepository.getAllByPasswordGroupId(mockedPasswordGroupId) } throws GetAllDataFailedException.DatabaseException()
 
         target.data.test {

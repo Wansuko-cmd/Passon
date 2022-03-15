@@ -1,6 +1,5 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-
 package com.wsr.passwordgroup.update
 
 import com.google.common.truth.Truth.assertThat
@@ -34,7 +33,7 @@ class UpdatePasswordGroupUseCaseImplTest {
     /*** update関数 ***/
     @Test
     fun 新しいPasswordGroupの情報を渡すと指定されたPasswordGroupの更新を行う() = runTest {
-        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
         val mockedTitle = "mockedTitle"
         val mockedRemark = "mockedRemark"
 
@@ -55,7 +54,7 @@ class UpdatePasswordGroupUseCaseImplTest {
 
     @Test
     fun 更新するときにエラーが起きればその内容を返す() = runTest {
-        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
         val mockedTitle = "mockedTitle"
         val mockedRemark = "mockedRemark"
 

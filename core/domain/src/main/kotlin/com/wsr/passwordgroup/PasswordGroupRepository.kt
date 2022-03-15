@@ -1,7 +1,11 @@
 package com.wsr.passwordgroup
 
-import com.wsr.exceptions.*
-import com.wsr.user.Email
+import com.wsr.email.Email
+import com.wsr.exceptions.CreateDataFailedException
+import com.wsr.exceptions.DeleteDataFailedException
+import com.wsr.exceptions.GetAllDataFailedException
+import com.wsr.exceptions.GetDataFailedException
+import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.utils.UniqueId
 
 interface PasswordGroupRepository {

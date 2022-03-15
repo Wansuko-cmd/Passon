@@ -30,7 +30,6 @@ data class PasswordGroupEditUiState(
     }
 }
 
-
 data class EditContentsUiState(
     val passwordGroup: State<PasswordGroupEditUiState, ErrorEditUiState> = State.Loading,
     val passwords: State<List<PasswordEditUiState>, ErrorEditUiState> = State.Loading,
@@ -42,9 +41,7 @@ data class EditContentsUiState(
         this.copy(passwords = passwords)
 }
 
-
 data class ErrorEditUiState(val message: String)
-
 
 data class EditUiState(
     val titleState: State<String, ErrorEditUiState> = State.Loading,

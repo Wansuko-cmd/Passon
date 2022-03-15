@@ -39,7 +39,6 @@ class RoomPasswordRepositoryDeleteTest {
         db.close()
     }
 
-
     /*** delete関数 ***/
     @Test
     fun passwordIdを渡すと対応するPasswordを削除する() = runTest {

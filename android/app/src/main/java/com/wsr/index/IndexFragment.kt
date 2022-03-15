@@ -1,7 +1,11 @@
 package com.wsr.index
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -59,8 +63,6 @@ class IndexFragment : Fragment() {
             setHasFixedSize(true)
             adapter = indexEpoxyController.adapter
         }
-
-
 
         binding.indexFragmentFab.setOnClickListener {
             showDialogIfNotDrew(tag) {
@@ -120,4 +122,3 @@ class IndexFragment : Fragment() {
     private fun notDrewDialogWithThisTag(tag: String?) =
         (requireActivity().supportFragmentManager.findFragmentByTag(tag) as? DialogFragment)?.dialog == null
 }
-

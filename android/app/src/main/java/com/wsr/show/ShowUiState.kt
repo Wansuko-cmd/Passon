@@ -30,7 +30,6 @@ data class PasswordGroupShowUiState(
 
 data class ErrorShowUiState(val message: String)
 
-
 data class ShowContentsUiState(
     val passwordGroup: State<PasswordGroupShowUiState, ErrorShowUiState> = State.Loading,
     val passwords: State<List<PasswordShowUiState>, ErrorShowUiState> = State.Loading,

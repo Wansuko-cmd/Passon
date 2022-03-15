@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = getColor(R.color.moss_green).actionBarColorToStatusBarColor()
     }
 
-    //確実に動作させるためにdispatchTouchEventで実行
+    // 確実に動作させるためにdispatchTouchEventで実行
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             closeIfTapOutsideFocusedEditView(event.rawX.toInt(), event.rawY.toInt())
@@ -41,10 +41,10 @@ class MainActivity : AppCompatActivity() {
 
         val view = currentFocus as? EditText ?: return
 
-        //focusしているところの座標を取得
+        // focusしているところの座標を取得
         val rect = Rect().also { view.getGlobalVisibleRect(it) }
 
-        //focusしているところ以外がタップされたとき
+        // focusしているところ以外がタップされたとき
         if (!rect.contains(tappedX, tappedY)) {
             view.clearFocus()
             val inputMethodManager =

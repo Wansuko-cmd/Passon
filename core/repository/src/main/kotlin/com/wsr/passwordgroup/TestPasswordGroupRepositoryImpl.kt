@@ -1,13 +1,12 @@
 package com.wsr.passwordgroup
 
+import com.wsr.email.Email
 import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.exceptions.GetDataFailedException
 import com.wsr.exceptions.UpdateDataFailedException
-import com.wsr.user.Email
 import com.wsr.utils.UniqueId
 
 class TestPasswordGroupRepositoryImpl : PasswordGroupRepository {
-
 
     companion object {
         internal val data = mutableListOf(

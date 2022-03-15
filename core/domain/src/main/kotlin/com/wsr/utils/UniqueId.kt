@@ -1,6 +1,6 @@
 package com.wsr.utils
 
-import java.util.*
+import java.util.UUID
 
 @JvmInline
 value class UniqueId private constructor(val value: String) {

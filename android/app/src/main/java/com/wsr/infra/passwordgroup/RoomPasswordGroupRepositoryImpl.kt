@@ -1,9 +1,13 @@
 package com.wsr.infra.passwordgroup
 
-import com.wsr.exceptions.*
+import com.wsr.email.Email
+import com.wsr.exceptions.CreateDataFailedException
+import com.wsr.exceptions.DeleteDataFailedException
+import com.wsr.exceptions.GetAllDataFailedException
+import com.wsr.exceptions.GetDataFailedException
+import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupRepository
-import com.wsr.user.Email
 import com.wsr.utils.UniqueId
 
 class RoomPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: PasswordGroupEntityDao) :

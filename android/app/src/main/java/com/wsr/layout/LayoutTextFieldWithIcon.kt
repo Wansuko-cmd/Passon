@@ -112,5 +112,3 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
         ) = view.setEndIconOnClickListener(listener)
     }
 }
-
-

@@ -6,7 +6,7 @@ import com.google.common.truth.Truth.assertThat
 import com.wsr.password.PasswordUseCaseModel
 import io.mockk.every
 import io.mockk.mockkStatic
-import java.util.*
+import java.util.UUID
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 

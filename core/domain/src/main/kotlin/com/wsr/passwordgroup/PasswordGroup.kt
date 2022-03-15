@@ -1,8 +1,7 @@
 package com.wsr.passwordgroup
 
-import com.wsr.user.Email
+import com.wsr.email.Email
 import com.wsr.utils.UniqueId
-
 
 data class PasswordGroup private constructor(
     val id: UniqueId,

@@ -15,7 +15,6 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
-
 @OptIn(ExperimentalCoroutinesApi::class)
 class RoomPasswordRepositoryUpsertTest {
     private lateinit var passwordEntityDao: PasswordEntityDao
@@ -36,7 +35,6 @@ class RoomPasswordRepositoryUpsertTest {
         db.close()
     }
 
-
     /*** upsert関数 ***/
     @Test
     fun 存在しないpasswordIdを持つ新しいPasswordGroupの情報を渡せば新規作成する() = runTest {
@@ -52,7 +50,6 @@ class RoomPasswordRepositoryUpsertTest {
         val actual = target.getAllByPasswordGroupId(mockedPassword.passwordGroupId)
         assertThat(actual).contains(mockedPassword)
     }
-
 
     @Test
     fun 存在するpasswordIdを持つPasswordGroupの情報を渡せば更新を行う() = runTest {
@@ -75,7 +72,6 @@ class RoomPasswordRepositoryUpsertTest {
             password = "updatedMockedPassword",
         )
         target.upsert(updatedMockedPassword)
-
 
         val actual = target.getAllByPasswordGroupId(mockedPasswordGroupId)
         assertThat(actual).contains(updatedMockedPassword)

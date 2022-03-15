@@ -30,10 +30,8 @@ class TestPasswordRepositoryImpl : PasswordRepository {
         )
     }
 
-
     override suspend fun getAllByPasswordGroupId(passwordGroupId: UniqueId): List<Password> =
         data.filter { it.passwordGroupId == passwordGroupId }
-
 
     override suspend fun upsert(password: Password) {
         data.indexOfFirst { it.id == password.id }.let { index ->

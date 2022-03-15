@@ -4,12 +4,12 @@ package com.wsr.passwordgroup.getall
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import com.wsr.email.Email
 import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
-import com.wsr.user.Email
 import com.wsr.utils.UniqueId
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -48,7 +48,6 @@ class GetAllPasswordGroupUseCaseImplTest {
         }
 
         coEvery { passwordGroupRepository.getAllByEmail(mockedEmail) } returns mockedPasswordGroups
-
 
         target.data.test {
             target.getAllByEmail(mockedEmail.value)

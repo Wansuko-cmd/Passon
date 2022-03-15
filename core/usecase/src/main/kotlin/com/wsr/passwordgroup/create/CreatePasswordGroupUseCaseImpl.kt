@@ -1,12 +1,12 @@
 package com.wsr.passwordgroup.create
 
+import com.wsr.email.Email
 import com.wsr.exceptions.CreateDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.PasswordGroupUseCaseModel
 import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
-import com.wsr.user.Email
 
 class CreatePasswordGroupUseCaseImpl(
     private val passwordGroupRepository: PasswordGroupRepository
@@ -24,7 +24,6 @@ class CreatePasswordGroupUseCaseImpl(
         passwordGroupRepository.create(passwordGroup)
 
         State.Success(passwordGroup.toUseCaseModel())
-
     } catch (e: CreateDataFailedException) {
         State.Failure(e)
     }
