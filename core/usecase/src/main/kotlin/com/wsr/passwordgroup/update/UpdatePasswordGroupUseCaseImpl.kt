@@ -6,7 +6,7 @@ import com.wsr.state.State
 import com.wsr.utils.UniqueId
 
 class UpdatePasswordGroupUseCaseImpl(
-    private val passwordGroupRepository: PasswordGroupRepository
+    private val passwordGroupRepository: PasswordGroupRepository,
 ) : UpdatePasswordGroupUseCase {
 
     override suspend fun update(

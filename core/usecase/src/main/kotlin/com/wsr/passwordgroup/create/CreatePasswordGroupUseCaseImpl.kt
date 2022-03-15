@@ -9,7 +9,7 @@ import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
 
 class CreatePasswordGroupUseCaseImpl(
-    private val passwordGroupRepository: PasswordGroupRepository
+    private val passwordGroupRepository: PasswordGroupRepository,
 ) : CreatePasswordGroupUseCase {
 
     override suspend fun create(

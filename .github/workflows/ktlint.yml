@@ -1,7 +1,8 @@
 name: 'ktlintを実行'
 on:
-  - push
-  - pull_request
+  pull_request:
+    types:
+      - opened
 jobs:
   ktlint:
     runs-on: ubuntu-latest

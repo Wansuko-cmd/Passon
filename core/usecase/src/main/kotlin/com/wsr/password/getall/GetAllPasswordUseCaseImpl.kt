@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 class GetAllPasswordUseCaseImpl(
-    private val passwordRepository: PasswordRepository
+    private val passwordRepository: PasswordRepository,
 ) : GetAllPasswordUseCase {
 
     private val _data =

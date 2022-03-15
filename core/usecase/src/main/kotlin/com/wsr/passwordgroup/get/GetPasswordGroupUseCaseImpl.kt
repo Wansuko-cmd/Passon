@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 class GetPasswordGroupUseCaseImpl(
-    private val passwordGroupRepository: PasswordGroupRepository
+    private val passwordGroupRepository: PasswordGroupRepository,
 ) : GetPasswordGroupUseCase {
     private val _data =
         MutableSharedFlow<State<PasswordGroupUseCaseModel, GetDataFailedException>>(replay = 0)
