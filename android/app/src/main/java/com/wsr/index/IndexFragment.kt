@@ -3,7 +3,6 @@ package com.wsr.index
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -76,7 +75,6 @@ class IndexFragment : Fragment() {
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             indexViewModel.uiState.collect { indexUiState ->
-
                 indexUiState.passwordGroupsState.consume(
                     success = indexEpoxyController::setData,
                     failure = ::showErrorMessage,

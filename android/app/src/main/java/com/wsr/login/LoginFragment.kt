@@ -1,9 +1,11 @@
 package com.wsr.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
@@ -42,7 +44,9 @@ class LoginFragment : Fragment() {
 
         binding.afterTextChanged = AfterTextChanged(loginViewModel::updateEnteredPassword)
 
+        binding.loginFragmentPassword.onEnterClicked(loginViewModel::checkPassword)
         binding.loginFragmentNextButton.setOnClickListener { loginViewModel.checkPassword() }
+
 
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
@@ -84,7 +88,12 @@ class LoginFragment : Fragment() {
             BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
-                    showMessage("Error")
+                    when(errorCode) {
+                        BiometricPrompt.ERROR_USER_CANCELED,
+                        BiometricPrompt.ERROR_CANCELED,
+                        BiometricPrompt.ERROR_NEGATIVE_BUTTON -> {}
+                        else -> showMessage("Error $errorCode")
+                    }
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
