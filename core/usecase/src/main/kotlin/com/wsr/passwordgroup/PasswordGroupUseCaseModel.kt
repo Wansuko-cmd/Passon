@@ -8,8 +8,8 @@ data class PasswordGroupUseCaseModel(
 )
 
 fun PasswordGroup.toUseCaseModel() = PasswordGroupUseCaseModel(
-    this.id.value,
-    this.email.value,
-    this.title,
-    this.remark,
+    id = this.id.value,
+    email = this.email.value,
+    title = this.title,
+    remark = this.remark,
 )

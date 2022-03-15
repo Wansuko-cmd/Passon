@@ -42,7 +42,7 @@ class UpsertPasswordUseCaseImplTest {
         val expectedPassword =
             Password.of(mockedPasswordId, mockedPasswordGroupId, mockedName, mockedPassword)
 
-        coEvery { passwordRepository.upsert(expectedPassword) } returns Unit
+        coEvery { passwordRepository.upsert(expectedPassword) } returns expectedPassword
 
         val actual = target.upsert(
             id = mockedPasswordId.value,

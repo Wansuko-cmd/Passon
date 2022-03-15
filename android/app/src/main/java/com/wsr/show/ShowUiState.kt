@@ -14,7 +14,7 @@ data class PasswordShowUiState(
 
     companion object {
         fun PasswordUseCaseModel.toShowUiModel() =
-            PasswordShowUiState(id, name, password, false)
+            PasswordShowUiState(id = id, name = name, password = password, showPassword = false)
     }
 }
 
@@ -24,7 +24,7 @@ data class PasswordGroupShowUiState(
 ) {
     companion object {
         fun PasswordGroupUseCaseModel.toShowUiModel() =
-            PasswordGroupShowUiState(id, remark)
+            PasswordGroupShowUiState(id = id, remark = remark)
     }
 }
 

@@ -14,6 +14,9 @@ data class PasswordGroupEntity(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "remark") val remark: String,
 ) {
+    fun copyWithTitle(title: String) = this.copy(title = title)
+    fun copyWithRemark(remark: String) = this.copy(remark = remark)
+
     fun toPasswordGroup() = PasswordGroup.of(
         id = UniqueId.of(id),
         email = Email.of(email),

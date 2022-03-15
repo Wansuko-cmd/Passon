@@ -10,7 +10,7 @@ interface PasswordRepository {
     suspend fun getAllByPasswordGroupId(passwordGroupId: UniqueId): List<Password>
 
     @Throws(UpsertDataFailedException::class)
-    suspend fun upsert(password: Password)
+    suspend fun upsert(password: Password): Password
 
     @Throws(DeleteDataFailedException::class)
     suspend fun delete(id: UniqueId)

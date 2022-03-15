@@ -37,10 +37,10 @@ class GetAllPasswordGroupUseCaseImplTest {
     /*** getAllByEmail関数 ***/
     @Test
     fun emailを渡すと所属する全てのPasswordGroupを返す() = runTest {
-        val mockedEmail = Email("mockedEmail")
+        val mockedEmail = Email.of("mockedEmail")
         val mockedPasswordGroups = List(5) { index ->
-            PasswordGroup(
-                id = UniqueId("mockedPasswordGroupId$index"),
+            PasswordGroup.of(
+                id = UniqueId.of("mockedPasswordGroupId$index"),
                 email = mockedEmail,
                 title = "mockedTitle$index",
                 remark = "mockedRemark$index"
@@ -66,7 +66,7 @@ class GetAllPasswordGroupUseCaseImplTest {
 
     @Test
     fun 取得するときにエラーが起きればその内容を返す() = runTest {
-        val mockedEmail = Email("mockedEmail")
+        val mockedEmail = Email.of("mockedEmail")
 
         coEvery { passwordGroupRepository.getAllByEmail(mockedEmail) } throws GetAllDataFailedException.DatabaseException()
 

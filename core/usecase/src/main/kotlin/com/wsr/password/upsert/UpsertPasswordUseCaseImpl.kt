@@ -24,8 +24,7 @@ class UpsertPasswordUseCaseImpl(
             password = password,
         )
 
-        passwordRepository.upsert(newPassword)
-        State.Success(newPassword.toUseCaseModel())
+        State.Success(passwordRepository.upsert(newPassword).toUseCaseModel())
     } catch (e: UpsertDataFailedException) {
         State.Failure(e)
     }

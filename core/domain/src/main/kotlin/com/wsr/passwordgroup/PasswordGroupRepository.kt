@@ -16,10 +16,10 @@ interface PasswordGroupRepository {
     suspend fun getById(id: UniqueId): PasswordGroup
 
     @Throws(CreateDataFailedException::class)
-    suspend fun create(passwordGroup: PasswordGroup)
+    suspend fun create(passwordGroup: PasswordGroup): PasswordGroup
 
     @Throws(UpdateDataFailedException::class)
-    suspend fun update(id: UniqueId, title: String, remark: String)
+    suspend fun update(id: UniqueId, title: String, remark: String): PasswordGroup
 
     @Throws(DeleteDataFailedException::class)
     suspend fun delete(id: UniqueId)

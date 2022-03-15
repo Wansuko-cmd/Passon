@@ -2,6 +2,8 @@ package com.wsr.passwordgroup.update
 
 import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.passwordgroup.PasswordGroupRepository
+import com.wsr.passwordgroup.PasswordGroupUseCaseModel
+import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
 import com.wsr.utils.UniqueId
 
@@ -13,9 +15,8 @@ class UpdatePasswordGroupUseCaseImpl(
         id: String,
         title: String,
         remark: String,
-    ): State<Unit, UpdateDataFailedException> = try {
-        passwordGroupRepository.update(UniqueId.of(id), title, remark)
-        State.Success(Unit)
+    ): State<PasswordGroupUseCaseModel, UpdateDataFailedException> = try {
+        State.Success(passwordGroupRepository.update(UniqueId.of(id), title, remark).toUseCaseModel())
     } catch (e: UpdateDataFailedException) {
         State.Failure(e)
     }

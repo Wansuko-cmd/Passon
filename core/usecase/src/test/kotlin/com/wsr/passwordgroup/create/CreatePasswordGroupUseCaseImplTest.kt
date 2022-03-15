@@ -44,22 +44,21 @@ class CreatePasswordGroupUseCaseImplTest {
         every { UUID.randomUUID().toString() } returns uuid
 
         val mockedEmail = Email.of("mockedEmail")
-        val mockedTitle = "mockTitle"
+        val mockedTitle = "mockedTitle"
+        val mockedRemark = "mockedRemark"
+        val mockedPasswordGroup = PasswordGroup.of(
+            email = mockedEmail,
+            title = mockedTitle,
+            remark = mockedRemark,
+        )
 
-        coEvery { passwordGroupRepository.create(any()) } returns Unit
+        coEvery { passwordGroupRepository.create(any()) } returns mockedPasswordGroup
 
         val actual = target.create(
             email = mockedEmail.value,
             title = mockedTitle,
         )
-        val expected = State.Success(
-            PasswordGroup.of(
-                id = UniqueId.of(uuid),
-                email = mockedEmail,
-                title = mockedTitle,
-                remark = "",
-            ).toUseCaseModel()
-        )
+        val expected = State.Success(mockedPasswordGroup.toUseCaseModel())
 
         assertThat(actual).isEqualTo(expected)
 

@@ -1,6 +1,7 @@
 package com.wsr.passwordgroup.update
 
 import com.wsr.exceptions.UpdateDataFailedException
+import com.wsr.passwordgroup.PasswordGroupUseCaseModel
 import com.wsr.state.State
 
 interface UpdatePasswordGroupUseCase {
@@ -8,5 +9,5 @@ interface UpdatePasswordGroupUseCase {
         id: String,
         title: String,
         remark: String,
-    ): State<Unit, UpdateDataFailedException>
+    ): State<PasswordGroupUseCaseModel, UpdateDataFailedException>
 }

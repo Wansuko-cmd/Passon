@@ -17,6 +17,7 @@ class RoomPasswordRepositoryImpl(private val passwordEntityDao: PasswordEntityDa
 
     override suspend fun upsert(password: Password) = try {
         passwordEntityDao.upsert(password.toEntity())
+        password
     } catch (e: Exception) {
         throw UpdateDataFailedException.DatabaseException(e.message ?: "")
     }

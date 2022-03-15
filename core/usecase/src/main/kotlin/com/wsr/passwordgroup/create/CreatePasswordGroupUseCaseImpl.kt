@@ -21,9 +21,7 @@ class CreatePasswordGroupUseCaseImpl(
             title = title,
         )
 
-        passwordGroupRepository.create(passwordGroup)
-
-        State.Success(passwordGroup.toUseCaseModel())
+        State.Success(passwordGroupRepository.create(passwordGroup).toUseCaseModel())
     } catch (e: CreateDataFailedException) {
         State.Failure(e)
     }

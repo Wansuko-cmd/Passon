@@ -46,20 +46,21 @@ class TestPasswordGroupRepositoryImpl : PasswordGroupRepository {
     override suspend fun getById(id: UniqueId): PasswordGroup =
         data.first { it.id == id }
 
-    override suspend fun create(passwordGroup: PasswordGroup) {
+    override suspend fun create(passwordGroup: PasswordGroup): PasswordGroup {
         data.add(passwordGroup)
+        return passwordGroup
     }
 
     @Throws(UpdateDataFailedException::class)
-    override suspend fun update(id: UniqueId, title: String, remark: String) {
+    override suspend fun update(id: UniqueId, title: String, remark: String): PasswordGroup {
         data.first { it.id == id }.let { oldPasswordGroup ->
             data.removeIf { it == oldPasswordGroup }
-            data.add(
-                oldPasswordGroup.copy(
-                    title = title,
-                    remark = remark,
-                )
+            val newPasswordGroup = oldPasswordGroup.copy(
+                title = title,
+                remark = remark,
             )
+            data.add(newPasswordGroup)
+            return newPasswordGroup
         }
     }
 
