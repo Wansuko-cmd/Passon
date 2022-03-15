@@ -22,7 +22,7 @@ class GetAllPasswordUseCaseImpl(
         try {
             _data.emit(State.Loading)
             val passwords = passwordRepository
-                .getAllByPasswordGroupId(UniqueId(passwordGroupId))
+                .getAllByPasswordGroupId(UniqueId.of(passwordGroupId))
                 .map { it.toUseCaseModel() }
 
             _data.emit(State.Success(passwords))

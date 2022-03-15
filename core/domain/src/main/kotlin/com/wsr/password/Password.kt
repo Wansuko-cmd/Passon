@@ -2,7 +2,7 @@ package com.wsr.password
 
 import com.wsr.utils.UniqueId
 
-data class Password(
+data class Password private constructor(
     val id: UniqueId,
     val passwordGroupId: UniqueId,
     val name: String,
@@ -10,7 +10,7 @@ data class Password(
 ) {
     companion object {
         fun of(
-            id: UniqueId = UniqueId(),
+            id: UniqueId = UniqueId.of(),
             passwordGroupId: UniqueId,
             name: String = "",
             password: String = "",

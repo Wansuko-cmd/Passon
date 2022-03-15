@@ -4,7 +4,6 @@ import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.exceptions.GetDataFailedException
 import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.user.Email
-import com.wsr.user.TestUserRepositoryImpl
 import com.wsr.utils.UniqueId
 
 class TestPasswordGroupRepositoryImpl : PasswordGroupRepository {
@@ -12,35 +11,30 @@ class TestPasswordGroupRepositoryImpl : PasswordGroupRepository {
 
     companion object {
         internal val data = mutableListOf(
-            PasswordGroup(
-                UniqueId(),
-                TestUserRepositoryImpl.data.first().email,
-                "Title1-1",
-                "Remark1-1"
+            PasswordGroup.of(
+                email = Email.of("email@example.com"),
+                title = "Title1-1",
+                remark = "Remark1-1"
             ),
-            PasswordGroup(
-                UniqueId(),
-                TestUserRepositoryImpl.data.first().email,
-                "Title1-2",
-                "Remark1-2"
+            PasswordGroup.of(
+                email = Email.of("email@example.com"),
+                title = "Title1-2",
+                remark = "Remark1-2"
             ),
-            PasswordGroup(
-                UniqueId(),
-                TestUserRepositoryImpl.data.first().email,
-                "Title1-3",
-                "Remark1-3"
+            PasswordGroup.of(
+                email = Email.of("email@example.com"),
+                title = "Title1-3",
+                remark = "Remark1-3"
             ),
-            PasswordGroup(
-                UniqueId(),
-                TestUserRepositoryImpl.data[1].email,
-                "Title2-1",
-                "Remark2-1"
+            PasswordGroup.of(
+                email = Email.of("email@example.com"),
+                title = "Title2-1",
+                remark = "Remark2-1"
             ),
-            PasswordGroup(
-                UniqueId(),
-                TestUserRepositoryImpl.data[2].email,
-                "Title3-1",
-                "Remark3-1"
+            PasswordGroup.of(
+                email = Email.of("email@example.com"),
+                title = "Title3-1",
+                remark = "Remark3-1"
             ),
         )
     }

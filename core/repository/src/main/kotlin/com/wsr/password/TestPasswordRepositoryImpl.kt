@@ -7,29 +7,25 @@ class TestPasswordRepositoryImpl : PasswordRepository {
 
     companion object {
         internal val data = mutableListOf(
-            Password(
-                UniqueId(),
-                TestPasswordGroupRepositoryImpl.data.first().id,
-                "Name1-1",
-                "Password1-1",
+            Password.of(
+                passwordGroupId = TestPasswordGroupRepositoryImpl.data.first().id,
+                name = "Name1-1",
+                password = "Password1-1",
             ),
-            Password(
-                UniqueId(),
-                TestPasswordGroupRepositoryImpl.data.first().id,
-                "Name1-2",
-                "Password1-2",
+            Password.of(
+                passwordGroupId = TestPasswordGroupRepositoryImpl.data.first().id,
+                name = "Name1-2",
+                password = "Password1-2",
             ),
-            Password(
-                UniqueId(),
-                TestPasswordGroupRepositoryImpl.data[1].id,
-                "Name2-1",
-                "Password2-1",
+            Password.of(
+                passwordGroupId = TestPasswordGroupRepositoryImpl.data[1].id,
+                name = "Name2-1",
+                password = "Password2-1",
             ),
-            Password(
-                UniqueId(),
-                TestPasswordGroupRepositoryImpl.data[2].id,
-                "Name3-1",
-                "Password3-1",
+            Password.of(
+                passwordGroupId = TestPasswordGroupRepositoryImpl.data[2].id,
+                name = "Name3-1",
+                password = "Password3-1",
             ),
         )
     }

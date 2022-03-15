@@ -22,7 +22,7 @@ class GetAllPasswordGroupUseCaseImpl(
         try {
             _data.emit(State.Loading)
             val passwordGroups = passwordGroupRepository
-                .getAllByEmail(Email(email))
+                .getAllByEmail(Email.of(email))
                 .map { it.toUseCaseModel() }
 
             _data.emit(State.Success(passwordGroups))

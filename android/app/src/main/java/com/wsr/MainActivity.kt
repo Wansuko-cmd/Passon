@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     //確実に動作させるためにdispatchTouchEventで実行
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        if(event.action == MotionEvent.ACTION_DOWN) {
+        if (event.action == MotionEvent.ACTION_DOWN) {
             closeIfTapOutsideFocusedEditView(event.rawX.toInt(), event.rawY.toInt())
         }
         return super.dispatchTouchEvent(event)
@@ -45,9 +45,10 @@ class MainActivity : AppCompatActivity() {
         val rect = Rect().also { view.getGlobalVisibleRect(it) }
 
         //focusしているところ以外がタップされたとき
-        if(!rect.contains(tappedX, tappedY)) {
+        if (!rect.contains(tappedX, tappedY)) {
             view.clearFocus()
-            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }

@@ -1,9 +1,9 @@
 package com.wsr.user
 
 @JvmInline
-value class Email(val value: String) {
+value class Email private constructor(val value: String) {
     companion object {
-        fun of(value: String) = Email("email@example.com")
+        fun of(value: String) = Email(value)
     }
 }
 

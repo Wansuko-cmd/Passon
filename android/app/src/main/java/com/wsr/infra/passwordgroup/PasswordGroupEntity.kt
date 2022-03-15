@@ -14,9 +14,9 @@ data class PasswordGroupEntity(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "remark") val remark: String,
 ) {
-    fun toPasswordGroup() = PasswordGroup(
-        id = UniqueId(id),
-        email = Email(email),
+    fun toPasswordGroup() = PasswordGroup.of(
+        id = UniqueId.of(id),
+        email = Email.of(email),
         title = title,
         remark = remark,
     )

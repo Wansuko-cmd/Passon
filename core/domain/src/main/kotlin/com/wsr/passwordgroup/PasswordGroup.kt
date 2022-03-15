@@ -4,7 +4,7 @@ import com.wsr.user.Email
 import com.wsr.utils.UniqueId
 
 
-data class PasswordGroup(
+data class PasswordGroup private constructor(
     val id: UniqueId,
     val email: Email,
     val title: String,
@@ -12,7 +12,7 @@ data class PasswordGroup(
 ) {
     companion object {
         fun of(
-            id: UniqueId = UniqueId(),
+            id: UniqueId = UniqueId.of(),
             email: Email,
             title: String,
             remark: String = "",
