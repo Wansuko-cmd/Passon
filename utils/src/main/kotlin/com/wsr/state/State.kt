@@ -42,7 +42,14 @@ inline fun <T, E> State<T, E>.consume(
     }
 }
 
-fun <T, E> List<State<T, E>>.sequence(): State<List<T>, E> =
-    fold(State.Success(listOf())) { acc, state ->
-        acc.flatMap { list -> state.map { value -> list + value } }
+fun <T, E> List<State<T, E>>.sequence(): State<List<T>, E> {
+    val result = mutableListOf<T>()
+    for (element in this) {
+        when(element) {
+            is State.Success -> result.add(element.value)
+            is State.Failure -> return State.Failure(element.value)
+            is State.Loading -> return State.Loading
+        }
     }
+    return State.Success(result)
+}
