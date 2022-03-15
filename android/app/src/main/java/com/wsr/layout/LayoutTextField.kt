@@ -3,6 +3,7 @@ package com.wsr.layout
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
@@ -46,6 +47,15 @@ class LayoutTextField @JvmOverloads constructor(
 
     private fun setInputType(inputType: InputType) {
         binding.layoutTextFieldTextInput.inputType = inputType.value
+    }
+
+    fun onEnterClicked(block: () -> Unit) {
+        binding.layoutTextFieldTextInput.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_DONE) {
+                block()
+                true
+            } else false
+        }
     }
 
     companion object {

@@ -5,6 +5,15 @@
     <string name="menu_title_edit">編集</string>
     <string name="menu_title_setting">設定</string>
 
+    <!-- ログイン画面 -->
+    <string name="login_password_hint">パスワード</string>
+    <string name="login_password_wrong">間違えています</string>
+    <string name="login_biometric_success_message">成功しました</string>
+    <string name="login_biometric_failure_message">失敗しました</string>
+    <string name="login_biometric_title">ログイン</string>
+    <string name="login_biometric_negative">キャンセル</string>
+    <string name="login_next_button">次へ</string>
+
     <!-- 一覧画面 -->
     <string name="index_no_password_group_message">右下のボタンからパスワードグループを作成できます</string>
     <string name="index_create_password_group_dialog_title">タイトル</string>

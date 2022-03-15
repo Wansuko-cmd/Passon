@@ -3,6 +3,7 @@ package com.wsr.index
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -32,6 +33,10 @@ class IndexFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            show()
+            setDisplayHomeAsUpEnabled(false)
+        }
         _binding = FragmentIndexBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -70,7 +75,6 @@ class IndexFragment : Fragment() {
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             indexViewModel.uiState.collect { indexUiState ->
-
                 indexUiState.passwordGroupsState.consume(
                     success = indexEpoxyController::setData,
                     failure = ::showErrorMessage,
