@@ -6,9 +6,7 @@ on:
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
-
     steps:
       - name: 現ブランチからチェックアウト
         uses: actions/checkout@v2

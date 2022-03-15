@@ -1,0 +1,16 @@
+name: 'ktlintを実行'
+on:
+  - push
+  - pull_request
+jobs:
+  ktlint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 現ブランチからチェックアウト
+      uses: actions/checkout@v3
+
+    - name: ktlintを実行
+      uses: ScaCap/action-ktlint@master
+      with:
+        github_token: ${{ secrets.github_token }}
+        reporter: Wansuko-cmd
