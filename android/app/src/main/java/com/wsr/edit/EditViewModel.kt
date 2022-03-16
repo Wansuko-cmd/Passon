@@ -168,7 +168,7 @@ class EditViewModel(
         viewModelScope.launch {
             val newPasswords = _uiState.value.contents.passwords
                 .map { list ->
-                    list + createPasswordUseCase.createInstance(passwordGroupId).toEditUiState()
+                    list + createPasswordUseCase.createPasswordInstance(passwordGroupId).toEditUiState()
                 }
 
             _uiState.update { editUiState ->

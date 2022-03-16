@@ -4,6 +4,7 @@ package com.wsr.state
 
 import com.google.common.truth.Truth.assertThat
 import kotlin.test.Test
+import kotlin.test.assertTrue
 import kotlin.test.fail
 
 class StateConsumeTest {
@@ -34,7 +35,7 @@ class StateConsumeTest {
         mockedState.consume(
             success = { fail("successの方を実行") },
             failure = { fail("failureの方を実行") },
-            loading = { },
+            loading = { assertTrue(true) },
         )
     }
 }

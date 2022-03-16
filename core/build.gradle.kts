@@ -10,7 +10,6 @@ allprojects {
 
 subprojects {
     apply(plugin = "kotlin")
-    apply(plugin = "java")
 
     tasks.test {
         useJUnitPlatform()

@@ -3,7 +3,7 @@ package com.wsr.passwordgroup
 import com.wsr.email.Email
 import com.wsr.utils.UniqueId
 
-data class PasswordGroup private constructor(
+data class PasswordGroup(
     val id: UniqueId,
     val email: Email,
     val title: String,
