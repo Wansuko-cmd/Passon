@@ -11,27 +11,27 @@ class TestPasswordGroupRepositoryImpl : PasswordGroupRepository {
     companion object {
         internal val data = mutableListOf(
             PasswordGroup.of(
-                email = Email.of("email@example.com"),
+                email = Email.from("email@example.com"),
                 title = "Title1-1",
                 remark = "Remark1-1"
             ),
             PasswordGroup.of(
-                email = Email.of("email@example.com"),
+                email = Email.from("email@example.com"),
                 title = "Title1-2",
                 remark = "Remark1-2"
             ),
             PasswordGroup.of(
-                email = Email.of("email@example.com"),
+                email = Email.from("email@example.com"),
                 title = "Title1-3",
                 remark = "Remark1-3"
             ),
             PasswordGroup.of(
-                email = Email.of("email@example.com"),
+                email = Email.from("email@example.com"),
                 title = "Title2-1",
                 remark = "Remark2-1"
             ),
             PasswordGroup.of(
-                email = Email.of("email@example.com"),
+                email = Email.from("email@example.com"),
                 title = "Title3-1",
                 remark = "Remark3-1"
             ),

@@ -18,8 +18,8 @@ class UpsertPasswordUseCaseImpl(
         password: String
     ): State<PasswordUseCaseModel, UpsertDataFailedException> = try {
         val newPassword = Password.of(
-            id = UniqueId.of(id),
-            passwordGroupId = UniqueId.of(passwordGroupId),
+            id = UniqueId.from(id),
+            passwordGroupId = UniqueId.from(passwordGroupId),
             name = name,
             password = password,
         )

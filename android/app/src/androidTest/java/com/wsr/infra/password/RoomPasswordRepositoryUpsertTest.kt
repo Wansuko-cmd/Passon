@@ -40,8 +40,8 @@ class RoomPasswordRepositoryUpsertTest {
     fun 存在しないpasswordIdを持つ新しいPasswordGroupの情報を渡せば新規作成する() = runTest {
 
         val mockedPassword = Password.of(
-            id = UniqueId.of("mockedPasswordId"),
-            passwordGroupId = UniqueId.of("mockedPasswordGroupId"),
+            id = UniqueId.from("mockedPasswordId"),
+            passwordGroupId = UniqueId.from("mockedPasswordGroupId"),
             name = "mockedName",
             password = "mockedPassword"
         )
@@ -54,8 +54,8 @@ class RoomPasswordRepositoryUpsertTest {
     @Test
     fun 存在するpasswordIdを持つPasswordGroupの情報を渡せば更新を行う() = runTest {
 
-        val mockedPasswordId = UniqueId.of("mockedPasswordId")
-        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
+        val mockedPasswordId = UniqueId.from("mockedPasswordId")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
 
         val mockedPassword = Password.of(
             id = mockedPasswordId,

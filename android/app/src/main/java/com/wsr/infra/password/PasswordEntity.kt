@@ -15,8 +15,8 @@ data class PasswordEntity(
 ) {
 
     fun toPassword() = Password.of(
-        id = UniqueId.of(id),
-        passwordGroupId = UniqueId.of(passwordGroupId),
+        id = UniqueId.from(id),
+        passwordGroupId = UniqueId.from(passwordGroupId),
         name = name,
         password = password,
     )

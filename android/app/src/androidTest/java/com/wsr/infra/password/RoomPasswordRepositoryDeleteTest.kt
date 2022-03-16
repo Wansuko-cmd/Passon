@@ -43,8 +43,8 @@ class RoomPasswordRepositoryDeleteTest {
     @Test
     fun passwordIdを渡すと対応するPasswordを削除する() = runTest {
 
-        val mockedPasswordId = UniqueId.of("mockedPasswordId")
-        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
+        val mockedPasswordId = UniqueId.from("mockedPasswordId")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
         val mockedPassword = Password.of(
             id = mockedPasswordId,
             passwordGroupId = mockedPasswordGroupId,

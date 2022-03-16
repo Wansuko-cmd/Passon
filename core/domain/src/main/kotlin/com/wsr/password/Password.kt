@@ -10,7 +10,7 @@ data class Password(
 ) {
     companion object {
         fun of(
-            id: UniqueId = UniqueId.of(),
+            id: UniqueId = UniqueId.from(),
             passwordGroupId: UniqueId,
             name: String = "",
             password: String = "",

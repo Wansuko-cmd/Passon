@@ -37,8 +37,8 @@ class GetPasswordGroupUseCaseImplTest {
     /*** getById関数 ***/
     @Test
     fun PasswordGroupIdを渡すと対応するPasswordGroupを返す() = runTest {
-        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
-        val mockedEmail = Email.of("mockedEmail")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
+        val mockedEmail = Email.from("mockedEmail")
         val mockedTitle = "mockedTitle"
         val mockedRemark = "mockedRemark"
         val mockedPasswordGroup =
@@ -63,7 +63,7 @@ class GetPasswordGroupUseCaseImplTest {
 
     @Test
     fun 取得するときにエラーが起きればその内容を返す() = runTest {
-        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
 
         coEvery { passwordGroupRepository.getById(mockedPasswordGroupId) } throws GetDataFailedException.DatabaseException()
 

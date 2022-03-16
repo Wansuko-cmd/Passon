@@ -12,8 +12,8 @@ class PasswordGroupUseCaseModelTest {
     /*** toUseCaseModel ***/
     @Test
     fun PasswordGroupから実行すれば対応するUseCaseModelに変換して返す() {
-        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
-        val mockedEmail = Email.of("mockedEmail")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
+        val mockedEmail = Email.from("mockedEmail")
         val mockedTitle = "mockedTitle"
         val mockedRemark = "mockedRemark"
 

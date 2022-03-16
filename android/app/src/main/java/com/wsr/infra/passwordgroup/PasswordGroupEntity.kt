@@ -18,8 +18,8 @@ data class PasswordGroupEntity(
     fun copyWithRemark(remark: String) = this.copy(remark = remark)
 
     fun toPasswordGroup() = PasswordGroup.of(
-        id = UniqueId.of(id),
-        email = Email.of(email),
+        id = UniqueId.from(id),
+        email = Email.from(email),
         title = title,
         remark = remark,
     )

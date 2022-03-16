@@ -36,8 +36,8 @@ class UpdatePasswordGroupUseCaseImplTest {
     /*** update関数 ***/
     @Test
     fun 新しいPasswordGroupの情報を渡すと指定されたPasswordGroupの更新を行う() = runTest {
-        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
-        val mockedEmail = Email.of("mockedEmail")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
+        val mockedEmail = Email.from("mockedEmail")
         val mockedTitle = "mockedTitle"
         val mockedRemark = "mockedRemark"
         val mockedPasswordGroup = PasswordGroup.of(
@@ -76,7 +76,7 @@ class UpdatePasswordGroupUseCaseImplTest {
 
     @Test
     fun 更新するときにエラーが起きればその内容を返す() = runTest {
-        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
         val mockedTitle = "mockedTitle"
         val mockedRemark = "mockedRemark"
 

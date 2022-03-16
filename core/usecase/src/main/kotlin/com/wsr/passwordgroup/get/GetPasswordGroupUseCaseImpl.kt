@@ -21,7 +21,7 @@ class GetPasswordGroupUseCaseImpl(
         try {
             _data.emit(State.Loading)
             val passwordGroup = passwordGroupRepository
-                .getById(UniqueId.of(id))
+                .getById(UniqueId.from(id))
                 .toUseCaseModel()
 
             _data.emit(State.Success(passwordGroup))

@@ -42,7 +42,7 @@ class CreatePasswordGroupUseCaseImplTest {
         val uuid = "5af48f3b-468b-4ae0-a065-7d7ac70b37a8"
         every { UUID.randomUUID().toString() } returns uuid
 
-        val mockedEmail = Email.of("mockedEmail")
+        val mockedEmail = Email.from("mockedEmail")
         val mockedTitle = "mockedTitle"
         val mockedRemark = "mockedRemark"
         val mockedPasswordGroup = PasswordGroup.of(
@@ -67,7 +67,7 @@ class CreatePasswordGroupUseCaseImplTest {
 
     @Test
     fun 作成するときにエラーが起きればその内容を返す() = runTest {
-        val mockedEmail = Email.of("mockedEmail")
+        val mockedEmail = Email.from("mockedEmail")
         val mockedTitle = "mockTitle"
 
         coEvery { passwordGroupRepository.create(any()) } throws CreateDataFailedException.DatabaseException()

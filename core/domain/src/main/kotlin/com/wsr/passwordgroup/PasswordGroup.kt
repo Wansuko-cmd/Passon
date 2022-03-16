@@ -11,7 +11,7 @@ data class PasswordGroup(
 ) {
     companion object {
         fun of(
-            id: UniqueId = UniqueId.of(),
+            id: UniqueId = UniqueId.from(),
             email: Email,
             title: String,
             remark: String = "",

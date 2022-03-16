@@ -44,10 +44,10 @@ class RoomPasswordGroupRepositoryGetTest {
     /*** getAllByEmail関数 ***/
     @Test
     fun Emailを渡せば所属するPasswordGroupIdを返す() = runTest {
-        val mockedEmail = Email.of("mockedEmail")
+        val mockedEmail = Email.from("mockedEmail")
         val mockedPasswordGroups = List(5) { index ->
             PasswordGroup.of(
-                id = UniqueId.of("mockedPasswordGroupId$index"),
+                id = UniqueId.from("mockedPasswordGroupId$index"),
                 email = mockedEmail,
                 title = "mockedTitle$index",
                 remark = "mockedRemark$index",
@@ -56,8 +56,8 @@ class RoomPasswordGroupRepositoryGetTest {
         mockedPasswordGroups.forEach { target.create(it) }
         val notTargetMockedPasswordGroups = List(5) { index ->
             PasswordGroup.of(
-                id = UniqueId.of("notTargetMockedPasswordGroupId$index"),
-                email = Email.of("notTargetMockedEmail$index"),
+                id = UniqueId.from("notTargetMockedPasswordGroupId$index"),
+                email = Email.from("notTargetMockedEmail$index"),
                 title = "notTargetMockedTitle$index",
                 remark = "notTargetMockedRemark$index",
             )
@@ -71,18 +71,18 @@ class RoomPasswordGroupRepositoryGetTest {
     /*** getById関数 ***/
     @Test
     fun passwordGroupIdを渡せば対応するPasswordGroupを返す() = runTest {
-        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
         val mockedPasswordGroup = PasswordGroup.of(
             id = mockedPasswordGroupId,
-            email = Email.of("mockedEmail"),
+            email = Email.from("mockedEmail"),
             title = "mockedTitle",
             remark = "mockedRemark",
         )
         target.create(mockedPasswordGroup)
 
         val notTargetMockedPasswordGroup = PasswordGroup.of(
-            id = UniqueId.of("notTargetPasswordGroupId"),
-            email = Email.of("notTargetMockedEmail"),
+            id = UniqueId.from("notTargetPasswordGroupId"),
+            email = Email.from("notTargetMockedEmail"),
             title = "notTargetMockedTitle",
             remark = "notTargetMockedRemark",
         )
@@ -94,7 +94,7 @@ class RoomPasswordGroupRepositoryGetTest {
 
     @Test
     fun 存在しないpasswordGroupIdを渡せばNoSuchElementExceptionが投げられる() = runTest {
-        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
 
         assertFailsWith<GetDataFailedException.NoSuchElementException> {
             target.getById(mockedPasswordGroupId)

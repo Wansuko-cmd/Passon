@@ -26,14 +26,14 @@ class RoomPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: Passwo
         throw GetDataFailedException.DatabaseException(e.message ?: "")
     }
 
-    override suspend fun create(passwordGroup: PasswordGroup) = try {
+    override suspend fun create(passwordGroup: PasswordGroup): PasswordGroup = try {
         passwordGroupEntityDao.insert(passwordGroup.toEntity())
         passwordGroup
     } catch (e: Exception) {
         throw CreateDataFailedException.DatabaseException(e.message ?: "")
     }
 
-    override suspend fun update(id: UniqueId, title: String, remark: String) = try {
+    override suspend fun update(id: UniqueId, title: String, remark: String): PasswordGroup = try {
         val newPasswordGroup = passwordGroupEntityDao.getById(id.value)
             .copyWithTitle(title)
             .copyWithRemark(remark)

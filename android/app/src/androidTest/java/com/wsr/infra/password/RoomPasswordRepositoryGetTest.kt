@@ -41,10 +41,10 @@ class RoomPasswordRepositoryGetTest {
     /*** getAllByPasswordGroupId関数 ***/
     @Test
     fun passwordGroupIdを渡すと所属する全てのPasswordGroupを返す() = runTest {
-        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
         val mockedPasswords = List(5) { index ->
             Password.of(
-                id = UniqueId.of("mockedPasswordId$index"),
+                id = UniqueId.from("mockedPasswordId$index"),
                 passwordGroupId = mockedPasswordGroupId,
                 name = "mockedName$index",
                 password = "mockedPassword$index"
