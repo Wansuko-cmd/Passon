@@ -42,9 +42,9 @@ class RoomPasswordGroupRepositoryCreateTest {
     /*** create関数 ***/
     @Test
     fun 新しいPasswordGroupの情報を渡せば登録する() = runTest {
-        val mockedEmail = Email("mockedEmail")
-        val mockedPasswordGroup = PasswordGroup(
-            id = UniqueId("mockedPasswordGroupId"),
+        val mockedEmail = Email.of("mockedEmail")
+        val mockedPasswordGroup = PasswordGroup.of(
+            id = UniqueId.of("mockedPasswordGroupId"),
             email = mockedEmail,
             title = "mockedTitle",
             remark = "mockedRemark",

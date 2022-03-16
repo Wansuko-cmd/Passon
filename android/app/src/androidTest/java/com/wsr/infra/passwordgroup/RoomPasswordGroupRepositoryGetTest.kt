@@ -44,10 +44,10 @@ class RoomPasswordGroupRepositoryGetTest {
     /*** getAllByEmail関数 ***/
     @Test
     fun Emailを渡せば所属するPasswordGroupIdを返す() = runTest {
-        val mockedEmail = Email("mockedEmail")
+        val mockedEmail = Email.of("mockedEmail")
         val mockedPasswordGroups = List(5) { index ->
-            PasswordGroup(
-                id = UniqueId("mockedPasswordGroupId$index"),
+            PasswordGroup.of(
+                id = UniqueId.of("mockedPasswordGroupId$index"),
                 email = mockedEmail,
                 title = "mockedTitle$index",
                 remark = "mockedRemark$index",
@@ -62,10 +62,10 @@ class RoomPasswordGroupRepositoryGetTest {
     /*** getById関数 ***/
     @Test
     fun passwordGroupIdを渡せば対応するPasswordGroupを返す() = runTest {
-        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
-        val mockedPasswordGroup = PasswordGroup(
+        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
+        val mockedPasswordGroup = PasswordGroup.of(
             id = mockedPasswordGroupId,
-            email = Email("mockedEmail"),
+            email = Email.of("mockedEmail"),
             title = "mockedTitle",
             remark = "mockedRemark",
         )
@@ -77,7 +77,7 @@ class RoomPasswordGroupRepositoryGetTest {
 
     @Test
     fun 存在しないpasswordGroupIdを渡せばNoSuchElementExceptionが投げられる() = runTest {
-        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
 
         assertFailsWith<GetDataFailedException.NoSuchElementException> {
             target.getById(mockedPasswordGroupId)

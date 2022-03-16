@@ -42,10 +42,10 @@ class RoomPasswordGroupRepositoryUpdateTest {
     /*** update関数 ***/
     @Test
     fun 新しいPasswordGroupの情報を渡すと指定されたPasswordGroupの更新を行う() = runTest {
-        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
-        val mockedPasswordGroup = PasswordGroup(
+        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
+        val mockedPasswordGroup = PasswordGroup.of(
             id = mockedPasswordGroupId,
-            email = Email("mockedEmail"),
+            email = Email.of("mockedEmail"),
             title = "mockedTitle",
             remark = "mockedRemark",
         )

@@ -43,10 +43,10 @@ class RoomPasswordGroupRepositoryDeleteTest {
     /*** delete関数 ***/
     @Test
     fun passwordGroupIdを渡すと対応するPasswordGroupを削除する() = runTest {
-        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
-        val mockedPasswordGroup = PasswordGroup(
+        val mockedPasswordGroupId = UniqueId.of("mockedPasswordGroupId")
+        val mockedPasswordGroup = PasswordGroup.of(
             id = mockedPasswordGroupId,
-            email = Email("mockedEmail"),
+            email = Email.of("mockedEmail"),
             title = "mockedTitle",
             remark = "mockedRemark",
         )
