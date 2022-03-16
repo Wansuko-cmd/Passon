@@ -54,6 +54,15 @@ class RoomPasswordGroupRepositoryGetTest {
             )
         }
         mockedPasswordGroups.forEach { target.create(it) }
+        val notTargetMockedPasswordGroups = List(5) { index ->
+            PasswordGroup.of(
+                id = UniqueId.of("notTargetMockedPasswordGroupId$index"),
+                email = Email.of("notTargetMockedEmail$index"),
+                title = "notTargetMockedTitle$index",
+                remark = "notTargetMockedRemark$index",
+            )
+        }
+        notTargetMockedPasswordGroups.forEach { target.create(it) }
 
         val actual = target.getAllByEmail(mockedEmail)
         assertThat(actual).isEqualTo(mockedPasswordGroups)
@@ -70,6 +79,14 @@ class RoomPasswordGroupRepositoryGetTest {
             remark = "mockedRemark",
         )
         target.create(mockedPasswordGroup)
+
+        val notTargetMockedPasswordGroup = PasswordGroup.of(
+            id = UniqueId.of("notTargetPasswordGroupId"),
+            email = Email.of("notTargetMockedEmail"),
+            title = "notTargetMockedTitle",
+            remark = "notTargetMockedRemark",
+        )
+        target.create(notTargetMockedPasswordGroup)
 
         val actual = target.getById(mockedPasswordGroupId)
         assertThat(actual).isEqualTo(mockedPasswordGroup)
