@@ -74,7 +74,7 @@ class EditFragment : Fragment() {
                         ).show()
                     },
                     failure = this@EditFragment::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
             }
         }
@@ -87,19 +87,19 @@ class EditFragment : Fragment() {
                         (requireActivity() as AppCompatActivity).supportActionBar?.title = it
                     },
                     failure = ::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
 
                 editUiState.contents.passwordGroup.consume(
                     success = editEpoxyController::initializeFirstData,
                     failure = ::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
 
                 editUiState.contents.passwords.consume(
                     success = editEpoxyController::initializeSecondData,
                     failure = ::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
             }
         }

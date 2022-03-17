@@ -34,12 +34,11 @@ class TestPasswordRepositoryImpl : PasswordRepository {
         data.filter { it.passwordGroupId == passwordGroupId }
 
     override suspend fun upsert(password: Password): Password {
-        data.indexOfFirst { it.id == password.id }.let { index ->
-            if (index == -1) data.add(password)
-            else data[index] = password
+        val index = data.indexOfFirst { it.id == password.id }
+        if (index == -1) data.add(password)
+        else data[index] = password
 
-            return data[index]
-        }
+        return data[index]
     }
 
     override suspend fun delete(id: UniqueId) {

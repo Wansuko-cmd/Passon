@@ -179,8 +179,8 @@ class EditViewModel(
 
             newPasswords.consume(
                 success = { _editRefreshEvent.emit(EditRefreshEvent(passwords = it)) },
-                failure = {},
-                loading = {},
+                failure = { /* do nothing */ },
+                loading = { /* do nothing */ },
             )
         }
     }
@@ -208,7 +208,7 @@ class EditViewModel(
                     title = passwordGroup.value.title,
                     remark = passwordGroup.value.remark,
                 ).mapBoth(
-                    success = { },
+                    success = { /* do nothing */ },
                     failure = { ErrorEditUiState(it.message ?: "") },
                 )
                 is State.Failure -> passwordGroup
@@ -229,7 +229,7 @@ class EditViewModel(
                 }
                     .sequence()
                     .mapBoth(
-                        success = { },
+                        success = { /* do nothing */ },
                         failure = { ErrorEditUiState(it.message ?: "") },
                     )
                 is State.Failure -> passwords

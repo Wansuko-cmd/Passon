@@ -70,7 +70,7 @@ class IndexFragment : Fragment() {
                     onSubmit = { title, shouldNavigateToEdit ->
                         indexViewModel.createPasswordGroup(email, title, shouldNavigateToEdit)
                     },
-                    onCancel = {}
+                    onCancel = { /* do nothing */ }
                 )
             }
         }
@@ -80,7 +80,7 @@ class IndexFragment : Fragment() {
                 indexUiState.passwordGroupsState.consume(
                     success = indexEpoxyController::setData,
                     failure = ::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
             }
         }

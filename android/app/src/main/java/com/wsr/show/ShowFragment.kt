@@ -75,19 +75,19 @@ class ShowFragment : Fragment() {
                         (requireActivity() as AppCompatActivity).supportActionBar?.title = it
                     },
                     failure = ::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
 
                 showUiState.contents.passwordGroup.consume(
                     success = showEpoxyController::setFirstData,
                     failure = ::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
 
                 showUiState.contents.passwords.consume(
                     success = showEpoxyController::setSecondData,
                     failure = ::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
             }
         }
