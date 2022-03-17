@@ -62,7 +62,7 @@ class LoginFragment : Fragment() {
         when (BiometricManager.from(requireContext()).canAuthenticate(BIOMETRIC_STRONG)) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 binding.loginFragmentFingerPrintButton.setOnClickListener {
-                    biometricAuthentication(
+                    showBiometricAuthenticationDialog(
                         success = {
                             showMessage(getString(R.string.login_biometric_success_message))
                             navigateToIndex()
@@ -75,7 +75,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun biometricAuthentication(
+    private fun showBiometricAuthenticationDialog(
         success: () -> Unit,
         failure: () -> Unit,
     ) {

@@ -113,12 +113,12 @@ class IndexFragment : Fragment() {
         ).show()
 
     private fun showDialogIfNotDrew(tag: String?, builder: () -> DialogFragment) {
-        if (notDrewDialogWithThisTag(tag)) builder().showNow(
+        if (isNotDrewDialogWithThisTag(tag)) builder().showNow(
             requireActivity().supportFragmentManager,
             tag
         )
     }
 
-    private fun notDrewDialogWithThisTag(tag: String?) =
+    private fun isNotDrewDialogWithThisTag(tag: String?) =
         (requireActivity().supportFragmentManager.findFragmentByTag(tag) as? DialogFragment)?.dialog == null
 }
