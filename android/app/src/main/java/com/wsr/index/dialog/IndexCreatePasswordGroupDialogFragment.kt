@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Lifecycle
+import com.wsr.R
 import com.wsr.databinding.DialogIndexCreatePasswordGroupBinding
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.index.dialog.OnCancel.Companion.getOnCancelInstance

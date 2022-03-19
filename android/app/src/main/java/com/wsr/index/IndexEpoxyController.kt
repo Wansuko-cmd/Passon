@@ -1,20 +1,21 @@
 package com.wsr.index
 
+import android.content.res.Resources
 import com.airbnb.epoxy.TypedEpoxyController
+import com.wsr.R
 import com.wsr.indexPasswordGroupRow
 import com.wsr.messageRow
 
 class IndexEpoxyController(
     private val onClick: (String) -> Unit,
-    private val noPasswordGroupMessage: String,
-) :
-    TypedEpoxyController<List<PasswordGroupIndexUiState>>() {
+    private val resources: Resources,
+) : TypedEpoxyController<List<PasswordGroupIndexUiState>>() {
 
     override fun buildModels(list: List<PasswordGroupIndexUiState>) {
         if (list.isEmpty()) {
             messageRow {
                 id(MESSAGE_ID)
-                message(this@IndexEpoxyController.noPasswordGroupMessage)
+                message(this@IndexEpoxyController.resources.getString(R.string.index_no_password_group_message))
             }
         } else {
             list.forEach { passwordGroup ->

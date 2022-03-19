@@ -1,9 +1,7 @@
 package com.wsr.login
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
@@ -19,24 +17,14 @@ import com.wsr.ext.launchInLifecycleScope
 import com.wsr.layout.AfterTextChanged
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginFragment : Fragment() {
-
-    private lateinit var _binding: FragmentLoginBinding
-    private val binding get() = _binding
+class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val loginViewModel by viewModel<LoginViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val binding = FragmentLoginBinding.bind(view)
 
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 

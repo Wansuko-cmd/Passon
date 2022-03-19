@@ -1,11 +1,9 @@
 package com.wsr.index
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -20,10 +18,7 @@ import com.wsr.index.dialog.IndexCreatePasswordGroupDialogFragment
 import com.wsr.state.consume
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class IndexFragment : Fragment() {
-
-    private lateinit var _binding: FragmentIndexBinding
-    private val binding get() = _binding
+class IndexFragment : Fragment(R.layout.fragment_index) {
 
     private lateinit var indexEpoxyController: IndexEpoxyController
     private lateinit var indexRecyclerView: RecyclerView
@@ -31,32 +26,25 @@ class IndexFragment : Fragment() {
 
     private val email by lazy { "example1@gmail.com" }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        setHasOptionsMenu(true)
-        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
-            show()
-            setDisplayHomeAsUpEnabled(false)
-        }
-        _binding = FragmentIndexBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.index_menu, menu)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentIndexBinding.bind(view)
+
+        setHasOptionsMenu(true)
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            show()
+            setDisplayHomeAsUpEnabled(false)
+        }
 
         indexViewModel.fetch(email)
 
         indexEpoxyController = IndexEpoxyController(
             onClick = ::navigateToShow,
-            noPasswordGroupMessage = getString(R.string.index_no_password_group_message)
+            resources = resources,
         )
 
         indexRecyclerView = binding.indexFragmentRecyclerView.apply {
@@ -86,12 +74,10 @@ class IndexFragment : Fragment() {
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
-            indexViewModel.indexRefreshEvent.collect {
-                when (it.navigateToEditEvent) {
-                    is NavigateToEditEvent.True -> navigateToEdit(it.navigateToEditEvent.passwordGroupId)
-                    is NavigateToEditEvent.False -> indexViewModel.fetch(email)
-                }
-            }
+            indexViewModel.indexRefreshEvent.collect { indexViewModel.fetch(email) }
+        }
+        launchInLifecycleScope(Lifecycle.State.STARTED) {
+            indexViewModel.navigateToEditEvent.collect { navigateToEdit(it) }
         }
     }
 

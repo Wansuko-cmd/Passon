@@ -1,11 +1,9 @@
 package com.wsr.edit
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -18,10 +16,7 @@ import com.wsr.ext.launchInLifecycleScope
 import com.wsr.state.consume
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class EditFragment : Fragment() {
-
-    private lateinit var _binding: FragmentEditBinding
-    private val binding get() = _binding
+class EditFragment : Fragment(R.layout.fragment_edit) {
 
     private lateinit var editEpoxyController: EditEpoxyController
     private lateinit var editRecyclerView: RecyclerView
@@ -30,23 +25,13 @@ class EditFragment : Fragment() {
     private val args: EditFragmentArgs by navArgs()
     private val passwordGroupId by lazy { args.passwordGroupId }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        setHasOptionsMenu(true)
-
-        _binding = FragmentEditBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.edit_menu, menu)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentEditBinding.bind(view)
 
         editViewModel.fetch(passwordGroupId)
 

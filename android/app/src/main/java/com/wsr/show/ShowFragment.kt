@@ -22,10 +22,7 @@ import com.wsr.ext.launchInLifecycleScope
 import com.wsr.state.consume
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ShowFragment : Fragment() {
-
-    private lateinit var _binding: FragmentShowBinding
-    private val binding get() = _binding
+class ShowFragment : Fragment(R.layout.fragment_show) {
 
     private lateinit var showEpoxyController: ShowEpoxyController
     private lateinit var showRecyclerView: RecyclerView
@@ -34,23 +31,13 @@ class ShowFragment : Fragment() {
     private val args: ShowFragmentArgs by navArgs()
     private val passwordGroupId by lazy { args.passwordGroupId }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        setHasOptionsMenu(true)
-
-        _binding = FragmentShowBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.show_menu, menu)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentShowBinding.bind(view)
 
         showViewModel.fetch(passwordGroupId)
 
