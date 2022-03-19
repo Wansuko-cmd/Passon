@@ -34,10 +34,10 @@ data class ShowContentsUiState(
     val passwordGroup: State<PasswordGroupShowUiState, ErrorShowUiState> = State.Loading,
     val passwords: State<List<PasswordShowUiState>, ErrorShowUiState> = State.Loading,
 ) {
-    fun replacePasswordGroup(passwordGroup: State<PasswordGroupShowUiState, ErrorShowUiState>) =
+    fun copyWithPasswordGroup(passwordGroup: State<PasswordGroupShowUiState, ErrorShowUiState>) =
         this.copy(passwordGroup = passwordGroup)
 
-    fun replacePasswords(passwords: State<List<PasswordShowUiState>, ErrorShowUiState>) =
+    fun copyWithPasswords(passwords: State<List<PasswordShowUiState>, ErrorShowUiState>) =
         this.copy(passwords = passwords)
 }
 
