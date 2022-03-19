@@ -5,6 +5,6 @@ import com.wsr.password.toUseCaseModel
 import com.wsr.utils.UniqueId
 
 class CreatePasswordUseCaseImpl : CreatePasswordUseCase {
-    override fun createInstance(passwordGroupId: String) =
-        Password(passwordGroupId = UniqueId(passwordGroupId)).toUseCaseModel()
+    override fun createPasswordInstance(passwordGroupId: String) =
+        Password.of(passwordGroupId = UniqueId.from(passwordGroupId)).toUseCaseModel()
 }

@@ -15,7 +15,6 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
-
 @OptIn(ExperimentalCoroutinesApi::class)
 class RoomPasswordRepositoryUpsertTest {
     private lateinit var passwordEntityDao: PasswordEntityDao
@@ -36,14 +35,13 @@ class RoomPasswordRepositoryUpsertTest {
         db.close()
     }
 
-
     /*** upsert関数 ***/
     @Test
     fun 存在しないpasswordIdを持つ新しいPasswordGroupの情報を渡せば新規作成する() = runTest {
 
-        val mockedPassword = Password(
-            id = UniqueId("mockedPasswordId"),
-            passwordGroupId = UniqueId("mockedPasswordGroupId"),
+        val mockedPassword = Password.of(
+            id = UniqueId.from("mockedPasswordId"),
+            passwordGroupId = UniqueId.from("mockedPasswordGroupId"),
             name = "mockedName",
             password = "mockedPassword"
         )
@@ -53,14 +51,13 @@ class RoomPasswordRepositoryUpsertTest {
         assertThat(actual).contains(mockedPassword)
     }
 
-
     @Test
     fun 存在するpasswordIdを持つPasswordGroupの情報を渡せば更新を行う() = runTest {
 
-        val mockedPasswordId = UniqueId("mockedPasswordId")
-        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+        val mockedPasswordId = UniqueId.from("mockedPasswordId")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
 
-        val mockedPassword = Password(
+        val mockedPassword = Password.of(
             id = mockedPasswordId,
             passwordGroupId = mockedPasswordGroupId,
             name = "mockedName",
@@ -68,14 +65,13 @@ class RoomPasswordRepositoryUpsertTest {
         )
         target.upsert(mockedPassword)
 
-        val updatedMockedPassword = Password(
+        val updatedMockedPassword = Password.of(
             id = mockedPasswordId,
             passwordGroupId = mockedPasswordGroupId,
             name = "updatedMockedName",
             password = "updatedMockedPassword",
         )
         target.upsert(updatedMockedPassword)
-
 
         val actual = target.getAllByPasswordGroupId(mockedPasswordGroupId)
         assertThat(actual).contains(updatedMockedPassword)

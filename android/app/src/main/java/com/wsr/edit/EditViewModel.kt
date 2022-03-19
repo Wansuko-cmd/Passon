@@ -10,8 +10,16 @@ import com.wsr.password.getall.GetAllPasswordUseCase
 import com.wsr.password.upsert.UpsertPasswordUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
 import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCase
-import com.wsr.state.*
-import kotlinx.coroutines.flow.*
+import com.wsr.state.State
+import com.wsr.state.consume
+import com.wsr.state.map
+import com.wsr.state.mapBoth
+import com.wsr.state.sequence
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -160,7 +168,7 @@ class EditViewModel(
         viewModelScope.launch {
             val newPasswords = _uiState.value.contents.passwords
                 .map { list ->
-                    list + createPasswordUseCase.createInstance(passwordGroupId).toEditUiState()
+                    list + createPasswordUseCase.createPasswordInstance(passwordGroupId).toEditUiState()
                 }
 
             _uiState.update { editUiState ->
@@ -171,8 +179,8 @@ class EditViewModel(
 
             newPasswords.consume(
                 success = { _editRefreshEvent.emit(EditRefreshEvent(passwords = it)) },
-                failure = {},
-                loading = {},
+                failure = { /* do nothing */ },
+                loading = { /* do nothing */ },
             )
         }
     }
@@ -200,7 +208,7 @@ class EditViewModel(
                     title = passwordGroup.value.title,
                     remark = passwordGroup.value.remark,
                 ).mapBoth(
-                    success = { },
+                    success = { /* do nothing */ },
                     failure = { ErrorEditUiState(it.message ?: "") },
                 )
                 is State.Failure -> passwordGroup
@@ -221,7 +229,7 @@ class EditViewModel(
                 }
                     .sequence()
                     .mapBoth(
-                        success = { },
+                        success = { /* do nothing */ },
                         failure = { ErrorEditUiState(it.message ?: "") },
                     )
                 is State.Failure -> passwords

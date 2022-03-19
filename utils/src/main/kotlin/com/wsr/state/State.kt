@@ -23,13 +23,6 @@ inline fun <T, E, NT> State<T, E>.map(block: (T) -> NT): State<NT, E> =
         is State.Failure -> this
     }
 
-inline fun <T, E, NT> State<T, E>.flatMap(block: (T) -> State<NT, E>): State<NT, E> =
-    when (this) {
-        is State.Success -> block(value)
-        is State.Loading -> this
-        is State.Failure -> this
-    }
-
 inline fun <T, E> State<T, E>.consume(
     success: (T) -> Unit,
     failure: (E) -> Unit,
@@ -42,7 +35,14 @@ inline fun <T, E> State<T, E>.consume(
     }
 }
 
-fun <T, E> List<State<T, E>>.sequence(): State<List<T>, E> =
-    fold(State.Success(listOf())) { acc, state ->
-        acc.flatMap { list -> state.map { value -> list + value } }
+fun <T, E> List<State<T, E>>.sequence(): State<List<T>, E> {
+    val result = mutableListOf<T>()
+    for (element in this) {
+        when (element) {
+            is State.Success -> result.add(element.value)
+            is State.Failure -> return State.Failure(element.value)
+            is State.Loading -> return State.Loading
+        }
     }
+    return State.Success(result)
+}

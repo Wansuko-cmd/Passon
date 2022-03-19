@@ -35,15 +35,14 @@ class UpsertPasswordUseCaseImplTest {
     /*** upsert関数 ***/
     @Test
     fun 新しいPasswordの情報を渡すとPasswordの登録or更新を行い返す(): Unit = runTest {
-        val mockedPasswordId = UniqueId("mockedPasswordId")
-        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+        val mockedPasswordId = UniqueId.from("mockedPasswordId")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
         val mockedName = "mockedName"
         val mockedPassword = "mockedPassword"
         val expectedPassword =
-            Password(mockedPasswordId, mockedPasswordGroupId, mockedName, mockedPassword)
+            Password.of(mockedPasswordId, mockedPasswordGroupId, mockedName, mockedPassword)
 
-        coEvery { passwordRepository.upsert(expectedPassword) } returns Unit
-
+        coEvery { passwordRepository.upsert(expectedPassword) } returns expectedPassword
 
         val actual = target.upsert(
             id = mockedPasswordId.value,
@@ -61,8 +60,8 @@ class UpsertPasswordUseCaseImplTest {
 
     @Test
     fun 登録or更新するときにエラーが起きればその内容を返す() = runTest {
-        val mockedPasswordId = UniqueId("mockedPasswordId")
-        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+        val mockedPasswordId = UniqueId.from("mockedPasswordId")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
         val mockedName = "mockedName"
         val mockedPassword = "mockedPassword"
 

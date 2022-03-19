@@ -51,10 +51,10 @@ class LayoutTextField @JvmOverloads constructor(
 
     fun onEnterClicked(block: () -> Unit) {
         binding.layoutTextFieldTextInput.setOnEditorActionListener { _, actionId, _ ->
-            if(actionId == EditorInfo.IME_ACTION_DONE) {
-                block()
-                true
-            } else false
+            val isDone = actionId == EditorInfo.IME_ACTION_DONE
+            if (isDone) block()
+
+            isDone
         }
     }
 

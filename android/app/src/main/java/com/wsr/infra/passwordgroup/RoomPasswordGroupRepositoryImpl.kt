@@ -1,9 +1,13 @@
 package com.wsr.infra.passwordgroup
 
-import com.wsr.exceptions.*
+import com.wsr.email.Email
+import com.wsr.exceptions.CreateDataFailedException
+import com.wsr.exceptions.DeleteDataFailedException
+import com.wsr.exceptions.GetAllDataFailedException
+import com.wsr.exceptions.GetDataFailedException
+import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupRepository
-import com.wsr.user.Email
 import com.wsr.utils.UniqueId
 
 class RoomPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: PasswordGroupEntityDao) :
@@ -22,14 +26,19 @@ class RoomPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: Passwo
         throw GetDataFailedException.DatabaseException(e.message ?: "")
     }
 
-    override suspend fun create(passwordGroup: PasswordGroup) = try {
+    override suspend fun create(passwordGroup: PasswordGroup): PasswordGroup = try {
         passwordGroupEntityDao.insert(passwordGroup.toEntity())
+        passwordGroup
     } catch (e: Exception) {
         throw CreateDataFailedException.DatabaseException(e.message ?: "")
     }
 
-    override suspend fun update(id: UniqueId, title: String, remark: String) = try {
-        passwordGroupEntityDao.update(id.value, title, remark)
+    override suspend fun update(id: UniqueId, title: String, remark: String): PasswordGroup = try {
+        val newPasswordGroup = passwordGroupEntityDao.getById(id.value)
+            .copyWithTitle(title)
+            .copyWithRemark(remark)
+        passwordGroupEntityDao.update(newPasswordGroup)
+        newPasswordGroup.toPasswordGroup()
     } catch (e: Exception) {
         throw UpdateDataFailedException.DatabaseException(e.message ?: "")
     }

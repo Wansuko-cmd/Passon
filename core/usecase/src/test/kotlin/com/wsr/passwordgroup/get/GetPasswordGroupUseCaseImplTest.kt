@@ -4,12 +4,12 @@ package com.wsr.passwordgroup.get
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import com.wsr.email.Email
 import com.wsr.exceptions.GetDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
-import com.wsr.user.Email
 import com.wsr.utils.UniqueId
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -37,15 +37,14 @@ class GetPasswordGroupUseCaseImplTest {
     /*** getById関数 ***/
     @Test
     fun PasswordGroupIdを渡すと対応するPasswordGroupを返す() = runTest {
-        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
-        val mockedEmail = Email("mockedEmail")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
+        val mockedEmail = Email.from("mockedEmail")
         val mockedTitle = "mockedTitle"
         val mockedRemark = "mockedRemark"
         val mockedPasswordGroup =
-            PasswordGroup(mockedPasswordGroupId, mockedEmail, mockedTitle, mockedRemark)
+            PasswordGroup.of(mockedPasswordGroupId, mockedEmail, mockedTitle, mockedRemark)
 
         coEvery { passwordGroupRepository.getById(mockedPasswordGroupId) } returns mockedPasswordGroup
-
 
         target.data.test {
             target.getById(mockedPasswordGroupId.value)
@@ -64,7 +63,7 @@ class GetPasswordGroupUseCaseImplTest {
 
     @Test
     fun 取得するときにエラーが起きればその内容を返す() = runTest {
-        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
 
         coEvery { passwordGroupRepository.getById(mockedPasswordGroupId) } throws GetDataFailedException.DatabaseException()
 

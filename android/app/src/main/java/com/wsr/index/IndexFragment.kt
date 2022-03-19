@@ -1,7 +1,11 @@
 package com.wsr.index
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -60,15 +64,13 @@ class IndexFragment : Fragment() {
             adapter = indexEpoxyController.adapter
         }
 
-
-
         binding.indexFragmentFab.setOnClickListener {
             showDialogIfNotDrew(tag) {
                 IndexCreatePasswordGroupDialogFragment.create(
                     onSubmit = { title, shouldNavigateToEdit ->
                         indexViewModel.createPasswordGroup(email, title, shouldNavigateToEdit)
                     },
-                    onCancel = {}
+                    onCancel = { /* do nothing */ }
                 )
             }
         }
@@ -78,7 +80,7 @@ class IndexFragment : Fragment() {
                 indexUiState.passwordGroupsState.consume(
                     success = indexEpoxyController::setData,
                     failure = ::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
             }
         }
@@ -111,13 +113,12 @@ class IndexFragment : Fragment() {
         ).show()
 
     private fun showDialogIfNotDrew(tag: String?, builder: () -> DialogFragment) {
-        if (notDrewDialogWithThisTag(tag)) builder().showNow(
+        if (isNotDrewDialogWithThisTag(tag)) builder().showNow(
             requireActivity().supportFragmentManager,
             tag
         )
     }
 
-    private fun notDrewDialogWithThisTag(tag: String?) =
+    private fun isNotDrewDialogWithThisTag(tag: String?) =
         (requireActivity().supportFragmentManager.findFragmentByTag(tag) as? DialogFragment)?.dialog == null
 }
-

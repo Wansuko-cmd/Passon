@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 class GetAllPasswordUseCaseImpl(
-    private val passwordRepository: PasswordRepository
+    private val passwordRepository: PasswordRepository,
 ) : GetAllPasswordUseCase {
 
     private val _data =
@@ -22,7 +22,7 @@ class GetAllPasswordUseCaseImpl(
         try {
             _data.emit(State.Loading)
             val passwords = passwordRepository
-                .getAllByPasswordGroupId(UniqueId(passwordGroupId))
+                .getAllByPasswordGroupId(UniqueId.from(passwordGroupId))
                 .map { it.toUseCaseModel() }
 
             _data.emit(State.Success(passwords))

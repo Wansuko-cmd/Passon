@@ -4,7 +4,11 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -61,8 +65,6 @@ class ShowFragment : Fragment() {
             adapter = showEpoxyController.adapter
         }
 
-
-
         binding.showFragmentFab.setOnClickListener { navigateToEdit(passwordGroupId) }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
@@ -73,19 +75,19 @@ class ShowFragment : Fragment() {
                         (requireActivity() as AppCompatActivity).supportActionBar?.title = it
                     },
                     failure = ::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
 
                 showUiState.contents.passwordGroup.consume(
                     success = showEpoxyController::setFirstData,
                     failure = ::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
 
                 showUiState.contents.passwords.consume(
                     success = showEpoxyController::setSecondData,
                     failure = ::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
             }
         }

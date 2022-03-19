@@ -7,9 +7,9 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
+import com.wsr.email.Email
 import com.wsr.infra.PassonDatabase
 import com.wsr.passwordgroup.PasswordGroup
-import com.wsr.user.Email
 import com.wsr.utils.UniqueId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -39,14 +39,13 @@ class RoomPasswordGroupRepositoryUpdateTest {
         db.close()
     }
 
-
     /*** update関数 ***/
     @Test
     fun 新しいPasswordGroupの情報を渡すと指定されたPasswordGroupの更新を行う() = runTest {
-        val mockedPasswordGroupId = UniqueId("mockedPasswordGroupId")
-        val mockedPasswordGroup = PasswordGroup(
+        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
+        val mockedPasswordGroup = PasswordGroup.of(
             id = mockedPasswordGroupId,
-            email = Email("mockedEmail"),
+            email = Email.from("mockedEmail"),
             title = "mockedTitle",
             remark = "mockedRemark",
         )

@@ -13,7 +13,8 @@ data class PasswordEditUiState(
     fun copyWithPassword(password: String) = this.copy(password = password)
 
     companion object {
-        fun PasswordUseCaseModel.toEditUiState() = PasswordEditUiState(id, name, password)
+        fun PasswordUseCaseModel.toEditUiState() =
+            PasswordEditUiState(id = id, name = name, password = password)
     }
 }
 
@@ -26,10 +27,10 @@ data class PasswordGroupEditUiState(
     fun copyWithRemark(remark: String) = this.copy(remark = remark)
 
     companion object {
-        fun PasswordGroupUseCaseModel.toEditUiState() = PasswordGroupEditUiState(id, title, remark)
+        fun PasswordGroupUseCaseModel.toEditUiState() =
+            PasswordGroupEditUiState(id = id, title = title, remark = remark)
     }
 }
-
 
 data class EditContentsUiState(
     val passwordGroup: State<PasswordGroupEditUiState, ErrorEditUiState> = State.Loading,
@@ -42,9 +43,7 @@ data class EditContentsUiState(
         this.copy(passwords = passwords)
 }
 
-
 data class ErrorEditUiState(val message: String)
-
 
 data class EditUiState(
     val titleState: State<String, ErrorEditUiState> = State.Loading,

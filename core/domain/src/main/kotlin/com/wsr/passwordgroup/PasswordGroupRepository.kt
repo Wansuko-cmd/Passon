@@ -1,7 +1,11 @@
 package com.wsr.passwordgroup
 
-import com.wsr.exceptions.*
-import com.wsr.user.Email
+import com.wsr.email.Email
+import com.wsr.exceptions.CreateDataFailedException
+import com.wsr.exceptions.DeleteDataFailedException
+import com.wsr.exceptions.GetAllDataFailedException
+import com.wsr.exceptions.GetDataFailedException
+import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.utils.UniqueId
 
 interface PasswordGroupRepository {
@@ -12,10 +16,10 @@ interface PasswordGroupRepository {
     suspend fun getById(id: UniqueId): PasswordGroup
 
     @Throws(CreateDataFailedException::class)
-    suspend fun create(passwordGroup: PasswordGroup)
+    suspend fun create(passwordGroup: PasswordGroup): PasswordGroup
 
     @Throws(UpdateDataFailedException::class)
-    suspend fun update(id: UniqueId, title: String, remark: String)
+    suspend fun update(id: UniqueId, title: String, remark: String): PasswordGroup
 
     @Throws(DeleteDataFailedException::class)
     suspend fun delete(id: UniqueId)

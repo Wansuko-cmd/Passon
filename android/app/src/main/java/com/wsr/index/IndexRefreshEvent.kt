@@ -1,7 +1,7 @@
 package com.wsr.index
 
 data class IndexRefreshEvent(
-    val navigateToEditEvent: NavigateToEditEvent
+    val navigateToEditEvent: NavigateToEditEvent,
 )
 
 sealed class NavigateToEditEvent {

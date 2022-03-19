@@ -62,7 +62,6 @@ class ShowViewModel(
         }
     }
 
-
     fun fetch(passwordGroupId: String) {
         fetchTitle(passwordGroupId)
         fetchPasswords(passwordGroupId)
@@ -79,7 +78,6 @@ class ShowViewModel(
             getAllPasswordUseCase.getAllByPasswordGroupId(passwordGroupId)
         }
     }
-
 
     fun changePasswordState(passwordId: String) =
         viewModelScope.launch {

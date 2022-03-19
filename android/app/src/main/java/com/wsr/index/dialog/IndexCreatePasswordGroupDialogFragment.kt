@@ -76,7 +76,7 @@ private class OnSubmit(val block: (title: String, goToEdit: Boolean) -> Unit = {
     }
 }
 
-private class OnCancel(val block: () -> Unit = {}) : Serializable {
+private class OnCancel(val block: () -> Unit = { /* do nothing */ }) : Serializable {
     companion object {
         const val key = "onCancel"
         fun Bundle?.getOnCancelInstance() = (this?.getSerializable(key) ?: OnCancel) as OnCancel

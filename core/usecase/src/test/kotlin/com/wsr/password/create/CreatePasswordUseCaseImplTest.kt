@@ -6,7 +6,7 @@ import com.google.common.truth.Truth.assertThat
 import com.wsr.password.PasswordUseCaseModel
 import io.mockk.every
 import io.mockk.mockkStatic
-import java.util.*
+import java.util.UUID
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -28,7 +28,7 @@ class CreatePasswordUseCaseImplTest {
 
         val mockedPasswordGroupId = "mockedPasswordGroupId"
 
-        val actual = target.createInstance(mockedPasswordGroupId)
+        val actual = target.createPasswordInstance(mockedPasswordGroupId)
         val expected = PasswordUseCaseModel(uuid, mockedPasswordGroupId, "", "")
 
         assertThat(actual).isEqualTo(expected)

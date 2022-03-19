@@ -47,8 +47,8 @@ class IndexViewModel(
                         else NavigateToEditEvent.False
                     _indexRefreshEvent.emit(IndexRefreshEvent(navigateToEditEvent))
                 },
-                failure = {},
-                loading = {},
+                failure = { /* do nothing */ },
+                loading = { /* do nothing */ },
             )
         }
     }

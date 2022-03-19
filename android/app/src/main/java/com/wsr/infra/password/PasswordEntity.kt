@@ -14,9 +14,9 @@ data class PasswordEntity(
     @ColumnInfo(name = "password") val password: String,
 ) {
 
-    fun toPassword() = Password(
-        id = UniqueId(id),
-        passwordGroupId = UniqueId(passwordGroupId),
+    fun toPassword() = Password.of(
+        id = UniqueId.from(id),
+        passwordGroupId = UniqueId.from(passwordGroupId),
         name = name,
         password = password,
     )

@@ -3,8 +3,8 @@ package com.wsr.infra.passwordgroup
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.wsr.email.Email
 import com.wsr.passwordgroup.PasswordGroup
-import com.wsr.user.Email
 import com.wsr.utils.UniqueId
 
 @Entity(tableName = "password_groups")
@@ -14,9 +14,12 @@ data class PasswordGroupEntity(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "remark") val remark: String,
 ) {
-    fun toPasswordGroup() = PasswordGroup(
-        id = UniqueId(id),
-        email = Email(email),
+    fun copyWithTitle(title: String) = this.copy(title = title)
+    fun copyWithRemark(remark: String) = this.copy(remark = remark)
+
+    fun toPasswordGroup() = PasswordGroup.of(
+        id = UniqueId.from(id),
+        email = Email.from(email),
         title = title,
         remark = remark,
     )

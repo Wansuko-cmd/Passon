@@ -1,7 +1,11 @@
 package com.wsr.edit
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -59,8 +63,6 @@ class EditFragment : Fragment() {
             adapter = editEpoxyController.adapter
         }
 
-
-
         binding.editFragmentFab.setOnClickListener {
             launchInLifecycleScope(Lifecycle.State.STARTED) {
                 editViewModel.save(passwordGroupId).consume(
@@ -72,7 +74,7 @@ class EditFragment : Fragment() {
                         ).show()
                     },
                     failure = this@EditFragment::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
             }
         }
@@ -85,19 +87,19 @@ class EditFragment : Fragment() {
                         (requireActivity() as AppCompatActivity).supportActionBar?.title = it
                     },
                     failure = ::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
 
                 editUiState.contents.passwordGroup.consume(
                     success = editEpoxyController::initializeFirstData,
                     failure = ::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
 
                 editUiState.contents.passwords.consume(
                     success = editEpoxyController::initializeSecondData,
                     failure = ::showErrorMessage,
-                    loading = {},
+                    loading = { /* do nothing */ },
                 )
             }
         }
