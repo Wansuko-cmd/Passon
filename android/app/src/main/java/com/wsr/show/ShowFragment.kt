@@ -4,11 +4,9 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -44,7 +42,7 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
         showEpoxyController = ShowEpoxyController(
             onClickShowPassword = { showViewModel.changePasswordState(it.id) },
             onClickPasswordCopy = { writeToClipboard("password", it.password) },
-            noPasswordMessage = getString(R.string.show_no_password_message)
+            resources = resources,
         )
 
         showRecyclerView = binding.showFragmentRecyclerView.apply {

@@ -10,6 +10,6 @@ class IndexCreatePasswordGroupDialogViewModel : ViewModel() {
     private val _shouldNavigateToEdit = MutableStateFlow(false)
     val shouldNavigateToEdit get() = _shouldNavigateToEdit
 
-    fun changeChecked() =
+    fun switchChecked() =
         viewModelScope.launch { _shouldNavigateToEdit.emit(!_shouldNavigateToEdit.value) }
 }

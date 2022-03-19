@@ -54,12 +54,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
 
         binding.indexFragmentFab.setOnClickListener {
             showDialogIfNotDrew(tag) {
-                IndexCreatePasswordGroupDialogFragment.create(
-                    onSubmit = { title, shouldNavigateToEdit ->
-                        indexViewModel.createPasswordGroup(email, title, shouldNavigateToEdit)
-                    },
-                    onCancel = { /* do nothing */ }
-                )
+                IndexCreatePasswordGroupDialogFragment.create(indexViewModel, email)
             }
         }
 
