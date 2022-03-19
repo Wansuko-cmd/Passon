@@ -27,7 +27,7 @@ class IndexViewModel(
             )
         }
 
-    private val _indexRefreshEvent = MutableSharedFlow<IndexRefreshEvent>()
+    private val _indexRefreshEvent = MutableSharedFlow<IndexRefreshEvent>(replay = 0)
     val indexRefreshEvent = _indexRefreshEvent.asSharedFlow()
 
     fun fetch(email: String) = fetchPasswordGroups(email)
