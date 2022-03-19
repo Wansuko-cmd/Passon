@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
 import com.wsr.R
 import com.wsr.databinding.FragmentEditBinding
 import com.wsr.ext.launchInLifecycleScope
@@ -18,8 +17,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditFragment : Fragment(R.layout.fragment_edit) {
 
-    private lateinit var editEpoxyController: EditEpoxyController
-    private lateinit var editRecyclerView: RecyclerView
     private val editViewModel: EditViewModel by viewModel()
 
     private val args: EditFragmentArgs by navArgs()
@@ -35,7 +32,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
         editViewModel.fetch(passwordGroupId)
 
-        editEpoxyController = EditEpoxyController(
+        val editEpoxyController = EditEpoxyController(
             afterTitleChanged = editViewModel::updateTitle,
             afterRemarkChanged = editViewModel::updateRemark,
             afterNameChanged = editViewModel::updateName,
@@ -43,7 +40,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             onClickAddPasswordButton = { editViewModel.createPassword(passwordGroupId) },
         )
 
-        editRecyclerView = binding.editFragmentRecyclerView.apply {
+        binding.editFragmentRecyclerView.apply {
             setHasFixedSize(true)
             adapter = editEpoxyController.adapter
         }

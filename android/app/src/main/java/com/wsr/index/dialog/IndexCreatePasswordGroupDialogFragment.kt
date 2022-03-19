@@ -11,13 +11,14 @@ import com.wsr.ext.launchInLifecycleScope
 import com.wsr.index.IndexViewModel
 import com.wsr.index.dialog.BundleHandler.Companion.getValue
 import com.wsr.index.dialog.BundleHandler.Companion.putValue
+import com.wsr.utils.autoCleared
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
 
 class IndexCreatePasswordGroupDialogFragment : DialogFragment() {
 
     private val indexCreatePasswordGroupDialogViewModel by viewModel<IndexCreatePasswordGroupDialogViewModel>()
-    private lateinit var binding: DialogIndexCreatePasswordGroupBinding
+    private var binding: DialogIndexCreatePasswordGroupBinding by autoCleared()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 

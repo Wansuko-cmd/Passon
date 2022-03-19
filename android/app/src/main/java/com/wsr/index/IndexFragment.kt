@@ -10,7 +10,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.wsr.R
 import com.wsr.databinding.FragmentIndexBinding
 import com.wsr.ext.launchInLifecycleScope
@@ -20,8 +19,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class IndexFragment : Fragment(R.layout.fragment_index) {
 
-    private lateinit var indexEpoxyController: IndexEpoxyController
-    private lateinit var indexRecyclerView: RecyclerView
     private val indexViewModel: IndexViewModel by viewModel()
 
     private val email by lazy { "example1@gmail.com" }
@@ -42,12 +39,12 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
 
         indexViewModel.fetch(email)
 
-        indexEpoxyController = IndexEpoxyController(
+        val indexEpoxyController = IndexEpoxyController(
             onClick = ::navigateToShow,
             resources = resources,
         )
 
-        indexRecyclerView = binding.indexFragmentRecyclerView.apply {
+        binding.indexFragmentRecyclerView.apply {
             setHasFixedSize(true)
             adapter = indexEpoxyController.adapter
         }

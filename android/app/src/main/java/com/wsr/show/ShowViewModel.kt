@@ -87,7 +87,7 @@ class ShowViewModel(
                 .passwords
                 .map { list ->
                     list.map {
-                        if (it.id == passwordId) it.replaceShowPassword(!it.showPassword) else it
+                        if (it.id == passwordId) it.copyWithShowPassword(!it.showPassword) else it
                     }
                 }
 

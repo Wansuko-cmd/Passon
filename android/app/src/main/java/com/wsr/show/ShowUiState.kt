@@ -10,7 +10,7 @@ data class PasswordShowUiState(
     val password: String,
     val showPassword: Boolean,
 ) {
-    fun replaceShowPassword(showPassword: Boolean) = this.copy(showPassword = showPassword)
+    fun copyWithShowPassword(showPassword: Boolean) = this.copy(showPassword = showPassword)
 
     companion object {
         fun PasswordUseCaseModel.toShowUiModel() =

@@ -9,7 +9,6 @@ import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 
 @Database(entities = [PasswordEntity::class, PasswordGroupEntity::class], version = 1)
 abstract class PassonDatabase : RoomDatabase() {
-
     abstract fun passwordEntityDao(): PasswordEntityDao
     abstract fun passwordGroupEntityDao(): PasswordGroupEntityDao
 }

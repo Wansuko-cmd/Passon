@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
 import com.wsr.R
 import com.wsr.databinding.FragmentShowBinding
 import com.wsr.ext.launchInLifecycleScope
@@ -22,8 +21,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ShowFragment : Fragment(R.layout.fragment_show) {
 
-    private lateinit var showEpoxyController: ShowEpoxyController
-    private lateinit var showRecyclerView: RecyclerView
     private val showViewModel: ShowViewModel by viewModel()
 
     private val args: ShowFragmentArgs by navArgs()
@@ -39,13 +36,13 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
 
         showViewModel.fetch(passwordGroupId)
 
-        showEpoxyController = ShowEpoxyController(
+        val showEpoxyController = ShowEpoxyController(
             onClickShowPassword = { showViewModel.changePasswordState(it.id) },
             onClickPasswordCopy = { writeToClipboard("password", it.password) },
             resources = resources,
         )
 
-        showRecyclerView = binding.showFragmentRecyclerView.apply {
+        binding.showFragmentRecyclerView.apply {
             setHasFixedSize(true)
             adapter = showEpoxyController.adapter
         }
@@ -81,7 +78,7 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
     private fun writeToClipboard(tag: String, text: String) {
         val clip = ClipData.newPlainText(tag, text)
         val clipBoardManager =
-            context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         clipBoardManager.setPrimaryClip(clip)
 
         Toast.makeText(
