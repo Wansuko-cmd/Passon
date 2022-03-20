@@ -13,13 +13,14 @@ import androidx.navigation.fragment.findNavController
 import com.wsr.R
 import com.wsr.databinding.FragmentIndexBinding
 import com.wsr.ext.launchInLifecycleScope
+import com.wsr.ext.sharedViewModel
 import com.wsr.index.dialog.IndexCreatePasswordGroupDialogFragment
 import com.wsr.state.consume
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ViewModelOwner.Companion.from
 
 class IndexFragment : Fragment(R.layout.fragment_index) {
 
-    private val indexViewModel: IndexViewModel by sharedViewModel()
+    private val indexViewModel: IndexViewModel by sharedViewModel(owner = { from(this) })
 
     private val email by lazy { "example1@gmail.com" }
 
@@ -92,7 +93,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
 
     private fun showDialogIfNotDrew(tag: String?, builder: () -> DialogFragment) {
         if (isNotDrewDialogWithThisTag(tag)) builder().showNow(
-            requireActivity().supportFragmentManager,
+            childFragmentManager,
             tag
         )
     }
