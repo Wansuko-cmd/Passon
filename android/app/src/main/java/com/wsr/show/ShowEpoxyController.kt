@@ -8,23 +8,23 @@ import com.wsr.showRemarkRow
 import com.wsr.utils.MyTyped2EpoxyController
 
 class ShowEpoxyController(
-    private val onClickShowPassword: (PasswordShowUiState) -> Unit,
-    private val onClickPasswordCopy: (PasswordShowUiState) -> Unit,
+    private val onClickShowPassword: (PasswordPairShowUiState) -> Unit,
+    private val onClickPasswordCopy: (PasswordPairShowUiState) -> Unit,
     private val resources: Resources,
 ) :
-    MyTyped2EpoxyController<PasswordGroupShowUiState, List<PasswordShowUiState>>() {
+    MyTyped2EpoxyController<PasswordGroupShowUiState, List<PasswordPairShowUiState>>() {
 
     override fun buildModels(
         passwordGroup: PasswordGroupShowUiState,
-        list: List<PasswordShowUiState>,
+        passwordPairs: List<PasswordPairShowUiState>,
     ) {
-        if (list.isEmpty()) {
+        if (passwordPairs.isEmpty()) {
             messageRow {
                 id(MESSAGE_ID)
                 message(this@ShowEpoxyController.resources.getString(R.string.show_no_password_message))
             }
         } else {
-            list.forEach { password ->
+            passwordPairs.forEach { password ->
                 showPasswordRow {
                     id(password.id)
                     name(password.name)

@@ -8,7 +8,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import com.wsr.infra.PassonDatabase
-import com.wsr.password.Password
+import com.wsr.passwordpair.PasswordPair
 import com.wsr.utils.UniqueId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -21,9 +21,9 @@ import kotlin.test.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 
 class RoomPasswordRepositoryDeleteTest {
-    private lateinit var passwordEntityDao: PasswordEntityDao
+    private lateinit var passwordEntityDao: PasswordPairEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: RoomPasswordRepositoryImpl
+    private lateinit var target: RoomPasswordPairRepositoryImpl
 
     @BeforeTest
     fun setup() {
@@ -31,7 +31,7 @@ class RoomPasswordRepositoryDeleteTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordEntityDao = db.passwordEntityDao()
 
-        target = RoomPasswordRepositoryImpl(passwordEntityDao)
+        target = RoomPasswordPairRepositoryImpl(passwordEntityDao)
     }
 
     @AfterTest
@@ -45,7 +45,7 @@ class RoomPasswordRepositoryDeleteTest {
 
         val mockedPasswordId = UniqueId.from("mockedPasswordId")
         val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
-        val mockedPassword = Password.of(
+        val mockedPassword = PasswordPair.of(
             id = mockedPasswordId,
             passwordGroupId = mockedPasswordGroupId,
             name = "mockedName",

@@ -1,20 +1,20 @@
-package com.wsr.password.getall
+package com.wsr.passwordpair.getall
 
 import com.wsr.exceptions.GetAllDataFailedException
-import com.wsr.password.PasswordRepository
-import com.wsr.password.PasswordUseCaseModel
-import com.wsr.password.toUseCaseModel
 import com.wsr.passwordgroup.PasswordGroupId
+import com.wsr.passwordpair.PasswordPairRepository
+import com.wsr.passwordpair.PasswordPairUseCaseModel
+import com.wsr.passwordpair.toUseCaseModel
 import com.wsr.state.State
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class GetAllPasswordUseCaseImpl(
-    private val passwordRepository: PasswordRepository,
-) : GetAllPasswordUseCase {
+class GetAllPasswordPairUseCaseImpl(
+    private val passwordRepository: PasswordPairRepository,
+) : GetAllPasswordPairUseCase {
 
     private val _data =
-        MutableStateFlow<State<List<PasswordUseCaseModel>, GetAllDataFailedException>>(State.Loading)
+        MutableStateFlow<State<List<PasswordPairUseCaseModel>, GetAllDataFailedException>>(State.Loading)
     override val data get() = _data.asStateFlow()
 
     override suspend fun getAllByPasswordGroupId(passwordGroupId: String) {

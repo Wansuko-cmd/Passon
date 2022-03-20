@@ -1,6 +1,6 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.password
+package com.wsr.passwordpair
 
 import com.google.common.truth.Truth.assertThat
 import com.wsr.utils.UniqueId
@@ -16,13 +16,13 @@ class PasswordUseCaseModelTest {
         val mockedName = "mockedName"
         val mockedPassword = "mockedPassword"
 
-        val actual = Password.of(
+        val actual = PasswordPair.of(
             id = mockedPasswordId,
             passwordGroupId = mockedPasswordGroupId,
             name = mockedName,
             password = mockedPassword,
         ).toUseCaseModel()
-        val expected = PasswordUseCaseModel(
+        val expected = PasswordPairUseCaseModel(
             id = mockedPasswordId.value,
             passwordGroupId = mockedPasswordGroupId.value,
             name = mockedName,

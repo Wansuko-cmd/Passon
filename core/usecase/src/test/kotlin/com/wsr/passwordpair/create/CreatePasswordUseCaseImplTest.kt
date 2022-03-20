@@ -1,9 +1,9 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.password.create
+package com.wsr.passwordpair.create
 
 import com.google.common.truth.Truth.assertThat
-import com.wsr.password.PasswordUseCaseModel
+import com.wsr.passwordpair.PasswordPairUseCaseModel
 import io.mockk.every
 import io.mockk.mockkStatic
 import java.util.UUID
@@ -12,12 +12,12 @@ import kotlin.test.Test
 
 class CreatePasswordUseCaseImplTest {
 
-    private lateinit var target: CreatePasswordUseCaseImpl
+    private lateinit var target: CreatePasswordPairUseCaseImpl
 
     @BeforeTest
     fun setup() {
         mockkStatic(UUID::class)
-        target = CreatePasswordUseCaseImpl()
+        target = CreatePasswordPairUseCaseImpl()
     }
 
     /*** createInstance関数 ***/
@@ -29,7 +29,7 @@ class CreatePasswordUseCaseImplTest {
         val mockedPasswordGroupId = "mockedPasswordGroupId"
 
         val actual = target.createPasswordInstance(mockedPasswordGroupId)
-        val expected = PasswordUseCaseModel(uuid, mockedPasswordGroupId, "", "")
+        val expected = PasswordPairUseCaseModel(uuid, mockedPasswordGroupId, "", "")
 
         assertThat(actual).isEqualTo(expected)
     }

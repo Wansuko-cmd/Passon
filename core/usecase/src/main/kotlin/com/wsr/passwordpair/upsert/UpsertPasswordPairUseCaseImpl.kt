@@ -1,28 +1,28 @@
-package com.wsr.password.upsert
+package com.wsr.passwordpair.upsert
 
 import com.wsr.exceptions.UpsertDataFailedException
-import com.wsr.password.PasswordFactory
-import com.wsr.password.PasswordId
-import com.wsr.password.PasswordRepository
-import com.wsr.password.PasswordUseCaseModel
-import com.wsr.password.toUseCaseModel
 import com.wsr.passwordgroup.PasswordGroupId
+import com.wsr.passwordpair.PasswordPairFactory
+import com.wsr.passwordpair.PasswordPairId
+import com.wsr.passwordpair.PasswordPairRepository
+import com.wsr.passwordpair.PasswordPairUseCaseModel
+import com.wsr.passwordpair.toUseCaseModel
 import com.wsr.state.State
 
-class UpsertPasswordUseCaseImpl(
-    private val passwordRepository: PasswordRepository,
-) : UpsertPasswordUseCase {
+class UpsertPasswordPairUseCaseImpl(
+    private val passwordRepository: PasswordPairRepository,
+) : UpsertPasswordPairUseCase {
 
-    private val passwordFactory = PasswordFactory()
+    private val passwordFactory = PasswordPairFactory()
 
     override suspend fun upsert(
         id: String,
         passwordGroupId: String,
         name: String,
         password: String,
-    ): State<PasswordUseCaseModel, UpsertDataFailedException> = try {
+    ): State<PasswordPairUseCaseModel, UpsertDataFailedException> = try {
         val newPassword = passwordFactory.create(
-            passwordId = PasswordId(id),
+            passwordId = PasswordPairId(id),
             passwordGroupId = PasswordGroupId(passwordGroupId),
             name = name,
             password = password,

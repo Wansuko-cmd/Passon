@@ -1,10 +1,10 @@
 package com.wsr.show
 
-import com.wsr.password.PasswordUseCaseModel
 import com.wsr.passwordgroup.PasswordGroupUseCaseModel
+import com.wsr.passwordpair.PasswordPairUseCaseModel
 import com.wsr.state.State
 
-data class PasswordShowUiState(
+data class PasswordPairShowUiState(
     val id: String,
     val name: String,
     val password: String,
@@ -13,8 +13,8 @@ data class PasswordShowUiState(
     fun copyWithShowPassword(showPassword: Boolean) = this.copy(showPassword = showPassword)
 
     companion object {
-        fun PasswordUseCaseModel.toShowUiModel() =
-            PasswordShowUiState(id = id, name = name, password = password, showPassword = false)
+        fun PasswordPairUseCaseModel.toShowUiModel() =
+            PasswordPairShowUiState(id = id, name = name, password = password, showPassword = false)
     }
 }
 
@@ -32,13 +32,13 @@ data class ErrorShowUiState(val message: String)
 
 data class ShowContentsUiState(
     val passwordGroup: State<PasswordGroupShowUiState, ErrorShowUiState> = State.Loading,
-    val passwords: State<List<PasswordShowUiState>, ErrorShowUiState> = State.Loading,
+    val passwordPairs: State<List<PasswordPairShowUiState>, ErrorShowUiState> = State.Loading,
 ) {
     fun copyWithPasswordGroup(passwordGroup: State<PasswordGroupShowUiState, ErrorShowUiState>) =
         this.copy(passwordGroup = passwordGroup)
 
-    fun copyWithPasswords(passwords: State<List<PasswordShowUiState>, ErrorShowUiState>) =
-        this.copy(passwords = passwords)
+    fun copyWithPasswordPairs(passwords: State<List<PasswordPairShowUiState>, ErrorShowUiState>) =
+        this.copy(passwordPairs = passwords)
 }
 
 data class ShowUiState(

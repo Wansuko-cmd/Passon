@@ -7,7 +7,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
 import com.wsr.infra.PassonDatabase
-import com.wsr.password.Password
+import com.wsr.passwordpair.PasswordPair
 import com.wsr.utils.UniqueId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -17,9 +17,9 @@ import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class RoomPasswordRepositoryUpsertTest {
-    private lateinit var passwordEntityDao: PasswordEntityDao
+    private lateinit var passwordEntityDao: PasswordPairEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: RoomPasswordRepositoryImpl
+    private lateinit var target: RoomPasswordPairRepositoryImpl
 
     @BeforeTest
     fun setup() {
@@ -27,7 +27,7 @@ class RoomPasswordRepositoryUpsertTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordEntityDao = db.passwordEntityDao()
 
-        target = RoomPasswordRepositoryImpl(passwordEntityDao)
+        target = RoomPasswordPairRepositoryImpl(passwordEntityDao)
     }
 
     @AfterTest
@@ -39,7 +39,7 @@ class RoomPasswordRepositoryUpsertTest {
     @Test
     fun 存在しないpasswordIdを持つ新しいPasswordGroupの情報を渡せば新規作成する() = runTest {
 
-        val mockedPassword = Password.of(
+        val mockedPassword = PasswordPair.of(
             id = UniqueId.from("mockedPasswordId"),
             passwordGroupId = UniqueId.from("mockedPasswordGroupId"),
             name = "mockedName",
@@ -57,7 +57,7 @@ class RoomPasswordRepositoryUpsertTest {
         val mockedPasswordId = UniqueId.from("mockedPasswordId")
         val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
 
-        val mockedPassword = Password.of(
+        val mockedPassword = PasswordPair.of(
             id = mockedPasswordId,
             passwordGroupId = mockedPasswordGroupId,
             name = "mockedName",
@@ -65,7 +65,7 @@ class RoomPasswordRepositoryUpsertTest {
         )
         target.upsert(mockedPassword)
 
-        val updatedMockedPassword = Password.of(
+        val updatedMockedPassword = PasswordPair.of(
             id = mockedPasswordId,
             passwordGroupId = mockedPasswordGroupId,
             name = "updatedMockedName",

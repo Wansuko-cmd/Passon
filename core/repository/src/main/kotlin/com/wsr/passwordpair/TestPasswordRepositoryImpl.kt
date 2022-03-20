@@ -1,4 +1,4 @@
-package com.wsr.password
+package com.wsr.passwordpair
 
 // class TestPasswordRepositoryImpl : PasswordRepository {
 //

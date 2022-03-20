@@ -1,14 +1,13 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.password.getall
+package com.wsr.passwordpair.getall
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.wsr.exceptions.GetAllDataFailedException
-import com.wsr.password.Password
-import com.wsr.password.PasswordRepository
-import com.wsr.password.toUseCaseModel
 import com.wsr.passwordgroup.PasswordGroupId
+import com.wsr.passwordpair.PasswordPair
+import com.wsr.passwordpair.PasswordPairRepository
 import com.wsr.state.State
 import com.wsr.utils.UniqueId
 import io.mockk.MockKAnnotations
@@ -25,13 +24,13 @@ import kotlin.test.Test
 class GetAllPasswordUseCaseImplTest {
 
     @MockK
-    private lateinit var passwordRepository: PasswordRepository
-    private lateinit var target: GetAllPasswordUseCaseImpl
+    private lateinit var passwordRepository: PasswordPairRepository
+    private lateinit var target: GetAllPasswordPairUseCaseImpl
 
     @BeforeTest
     fun setup() {
         MockKAnnotations.init(this)
-        target = GetAllPasswordUseCaseImpl(passwordRepository)
+        target = GetAllPasswordPairUseCaseImpl(passwordRepository)
     }
 
     /*** getAllByPasswordGroupId関数 ***/
@@ -39,7 +38,7 @@ class GetAllPasswordUseCaseImplTest {
     fun PasswordGroupIdを渡すと所属する全てのPasswordを返す() = runTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
         val mockedPasswords = List(5) { index ->
-            Password.of(
+            PasswordPair.of(
                 id = UniqueId.from(value = "UniqueId$index"),
                 passwordGroupId = mockedPasswordGroupId,
                 name = "name$index",

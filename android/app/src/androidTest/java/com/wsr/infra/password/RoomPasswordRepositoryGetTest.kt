@@ -8,7 +8,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import com.wsr.infra.PassonDatabase
-import com.wsr.password.Password
+import com.wsr.passwordpair.PasswordPair
 import com.wsr.utils.UniqueId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -20,9 +20,9 @@ import kotlin.test.Test
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
 class RoomPasswordRepositoryGetTest {
-    private lateinit var passwordEntityDao: PasswordEntityDao
+    private lateinit var passwordEntityDao: PasswordPairEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: RoomPasswordRepositoryImpl
+    private lateinit var target: RoomPasswordPairRepositoryImpl
 
     @BeforeTest
     fun setup() {
@@ -30,7 +30,7 @@ class RoomPasswordRepositoryGetTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordEntityDao = db.passwordEntityDao()
 
-        target = RoomPasswordRepositoryImpl(passwordEntityDao)
+        target = RoomPasswordPairRepositoryImpl(passwordEntityDao)
     }
 
     @AfterTest
@@ -43,7 +43,7 @@ class RoomPasswordRepositoryGetTest {
     fun passwordGroupIdを渡すと所属する全てのPasswordGroupを返す() = runTest {
         val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
         val mockedPasswords = List(5) { index ->
-            Password.of(
+            PasswordPair.of(
                 id = UniqueId.from("mockedPasswordId$index"),
                 passwordGroupId = mockedPasswordGroupId,
                 name = "mockedName$index",

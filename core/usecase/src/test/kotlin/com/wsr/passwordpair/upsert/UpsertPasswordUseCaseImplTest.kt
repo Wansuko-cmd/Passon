@@ -1,12 +1,11 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.password.upsert
+package com.wsr.passwordpair.upsert
 
 import com.google.common.truth.Truth.assertThat
 import com.wsr.exceptions.UpsertDataFailedException
-import com.wsr.password.Password
-import com.wsr.password.PasswordRepository
-import com.wsr.password.toUseCaseModel
+import com.wsr.passwordpair.PasswordPair
+import com.wsr.passwordpair.PasswordPairRepository
 import com.wsr.state.State
 import com.wsr.utils.UniqueId
 import io.mockk.MockKAnnotations
@@ -23,13 +22,13 @@ import kotlin.test.Test
 class UpsertPasswordUseCaseImplTest {
 
     @MockK
-    private lateinit var passwordRepository: PasswordRepository
-    private lateinit var target: UpsertPasswordUseCaseImpl
+    private lateinit var passwordRepository: PasswordPairRepository
+    private lateinit var target: UpsertPasswordPairUseCaseImpl
 
     @BeforeTest
     fun setup() {
         MockKAnnotations.init(this)
-        target = UpsertPasswordUseCaseImpl(passwordRepository)
+        target = UpsertPasswordPairUseCaseImpl(passwordRepository)
     }
 
     /*** upsert関数 ***/
@@ -40,7 +39,7 @@ class UpsertPasswordUseCaseImplTest {
         val mockedName = "mockedName"
         val mockedPassword = "mockedPassword"
         val expectedPassword =
-            Password.of(mockedPasswordId, mockedPasswordGroupId, mockedName, mockedPassword)
+            PasswordPair.of(mockedPasswordId, mockedPasswordGroupId, mockedName, mockedPassword)
 
         coEvery { passwordRepository.upsert(expectedPassword) } returns expectedPassword
 
