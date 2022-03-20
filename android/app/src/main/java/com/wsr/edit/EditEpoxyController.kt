@@ -10,14 +10,14 @@ import com.wsr.utils.MyTyped2EpoxyController
 class EditEpoxyController(
     private val afterTitleChanged: (newTitle: String) -> Unit,
     private val afterRemarkChanged: (newRemark: String) -> Unit,
-    private val afterNameChanged: (passwordPairId: String, newName: String) -> Unit,
-    private val afterPasswordChanged: (passwordPairId: String, newPassword: String) -> Unit,
+    private val afterNameChanged: (passwordItemId: String, newName: String) -> Unit,
+    private val afterPasswordChanged: (passwordItemId: String, newPassword: String) -> Unit,
     private val onClickAddPasswordButton: () -> Unit,
-) : MyTyped2EpoxyController<PasswordGroupEditUiState, List<PasswordPairEditUiState>>() {
+) : MyTyped2EpoxyController<PasswordGroupEditUiState, List<PasswordItemEditUiState>>() {
 
     override fun buildModels(
         passwordGroup: PasswordGroupEditUiState,
-        passwordPairs: List<PasswordPairEditUiState>,
+        passwordItems: List<PasswordItemEditUiState>,
     ) {
 
         editTitleRow {
@@ -28,19 +28,19 @@ class EditEpoxyController(
             )
         }
 
-        passwordPairs.forEach { passwordPair ->
+        passwordItems.forEach { passwordItem ->
             editPasswordRow {
-                id(passwordPair.id)
-                name(passwordPair.name)
-                password(passwordPair.password)
+                id(passwordItem.id)
+                name(passwordItem.name)
+                password(passwordItem.password)
                 afterNameChanged(
                     AfterTextChanged(
-                        curry(this@EditEpoxyController.afterNameChanged)(passwordPair.id)
+                        curry(this@EditEpoxyController.afterNameChanged)(passwordItem.id)
                     )
                 )
                 afterPasswordChanged(
                     AfterTextChanged(
-                        curry(this@EditEpoxyController.afterPasswordChanged)(passwordPair.id)
+                        curry(this@EditEpoxyController.afterPasswordChanged)(passwordItem.id)
                     )
                 )
             }

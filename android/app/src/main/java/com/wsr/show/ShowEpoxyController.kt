@@ -8,33 +8,33 @@ import com.wsr.showRemarkRow
 import com.wsr.utils.MyTyped2EpoxyController
 
 class ShowEpoxyController(
-    private val onClickShowPassword: (PasswordPairShowUiState) -> Unit,
-    private val onClickPasswordCopy: (PasswordPairShowUiState) -> Unit,
+    private val onClickShowPassword: (PasswordItemShowUiState) -> Unit,
+    private val onClickPasswordCopy: (PasswordItemShowUiState) -> Unit,
     private val resources: Resources,
 ) :
-    MyTyped2EpoxyController<PasswordGroupShowUiState, List<PasswordPairShowUiState>>() {
+    MyTyped2EpoxyController<PasswordGroupShowUiState, List<PasswordItemShowUiState>>() {
 
     override fun buildModels(
         passwordGroup: PasswordGroupShowUiState,
-        passwordPairs: List<PasswordPairShowUiState>,
+        passwordItems: List<PasswordItemShowUiState>,
     ) {
-        if (passwordPairs.isEmpty()) {
+        if (passwordItems.isEmpty()) {
             messageRow {
                 id(MESSAGE_ID)
                 message(this@ShowEpoxyController.resources.getString(R.string.show_no_password_message))
             }
         } else {
-            passwordPairs.forEach { passwordPair ->
+            passwordItems.forEach { passwordItem ->
                 showPasswordRow {
-                    id(passwordPair.id)
-                    name(passwordPair.name)
-                    password(passwordPair.password)
-                    showPassword(passwordPair.showPassword)
+                    id(passwordItem.id)
+                    name(passwordItem.name)
+                    password(passwordItem.password)
+                    showPassword(passwordItem.showPassword)
                     onClickShowPassword { _, _, _, _ ->
-                        this@ShowEpoxyController.onClickShowPassword(passwordPair)
+                        this@ShowEpoxyController.onClickShowPassword(passwordItem)
                     }
                     onClickPasswordCopy { _, _, _, _ ->
-                        this@ShowEpoxyController.onClickPasswordCopy(passwordPair)
+                        this@ShowEpoxyController.onClickPasswordCopy(passwordItem)
                     }
                 }
             }

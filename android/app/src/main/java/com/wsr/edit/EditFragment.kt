@@ -37,7 +37,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             afterRemarkChanged = editViewModel::updateRemark,
             afterNameChanged = editViewModel::updateName,
             afterPasswordChanged = editViewModel::updatePassword,
-            onClickAddPasswordButton = { editViewModel.createPasswordPair(passwordGroupId) },
+            onClickAddPasswordButton = { editViewModel.createPasswordItem(passwordGroupId) },
         )
 
         binding.editFragmentRecyclerView.apply {
@@ -78,7 +78,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
                     loading = { /* do nothing */ },
                 )
 
-                editUiState.contents.passwordPairs.consume(
+                editUiState.contents.passwordItems.consume(
                     success = editEpoxyController::initializeSecondData,
                     failure = ::showErrorMessage,
                     loading = { /* do nothing */ },
@@ -88,7 +88,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             editViewModel.editRefreshEvent.collect {
-                editEpoxyController.refresh(it.passwordGroup, it.passwordPairs)
+                editEpoxyController.refresh(it.passwordGroup, it.passwordItems)
             }
         }
     }

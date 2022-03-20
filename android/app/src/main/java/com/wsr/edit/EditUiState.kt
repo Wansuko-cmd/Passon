@@ -1,10 +1,10 @@
 package com.wsr.edit
 
 import com.wsr.passwordgroup.PasswordGroupUseCaseModel
-import com.wsr.passwordpair.PasswordPairUseCaseModel
+import com.wsr.passworditem.PasswordItemUseCaseModel
 import com.wsr.state.State
 
-data class PasswordPairEditUiState(
+data class PasswordItemEditUiState(
     val id: String,
     val name: String,
     val password: String,
@@ -13,8 +13,8 @@ data class PasswordPairEditUiState(
     fun copyWithPassword(password: String) = this.copy(password = password)
 
     companion object {
-        fun PasswordPairUseCaseModel.toEditUiState() =
-            PasswordPairEditUiState(id = id, name = name, password = password)
+        fun PasswordItemUseCaseModel.toEditUiState() =
+            PasswordItemEditUiState(id = id, name = name, password = password)
     }
 }
 
@@ -34,13 +34,13 @@ data class PasswordGroupEditUiState(
 
 data class EditContentsUiState(
     val passwordGroup: State<PasswordGroupEditUiState, ErrorEditUiState> = State.Loading,
-    val passwordPairs: State<List<PasswordPairEditUiState>, ErrorEditUiState> = State.Loading,
+    val passwordItems: State<List<PasswordItemEditUiState>, ErrorEditUiState> = State.Loading,
 ) {
     fun copyWithPasswordGroup(passwordGroup: State<PasswordGroupEditUiState, ErrorEditUiState>) =
         this.copy(passwordGroup = passwordGroup)
 
-    fun copyWithPasswordPairs(passwordPairs: State<List<PasswordPairEditUiState>, ErrorEditUiState>) =
-        this.copy(passwordPairs = passwordPairs)
+    fun copyWithPasswordItems(passwordItems: State<List<PasswordItemEditUiState>, ErrorEditUiState>) =
+        this.copy(passwordItems = passwordItems)
 }
 
 data class ErrorEditUiState(val message: String)

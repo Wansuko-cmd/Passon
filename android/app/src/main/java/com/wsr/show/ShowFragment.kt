@@ -66,7 +66,7 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
                     loading = { /* do nothing */ },
                 )
 
-                showUiState.contents.passwordPairs.consume(
+                showUiState.contents.passwordItems.consume(
                     success = showEpoxyController::setSecondData,
                     failure = ::showErrorMessage,
                     loading = { /* do nothing */ },

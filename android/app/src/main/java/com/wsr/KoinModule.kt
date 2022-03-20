@@ -5,10 +5,10 @@ import com.wsr.edit.EditViewModel
 import com.wsr.index.IndexViewModel
 import com.wsr.index.dialog.IndexCreatePasswordGroupDialogViewModel
 import com.wsr.infra.PassonDatabase
-import com.wsr.infra.password.PasswordPairEntityDao
-import com.wsr.infra.password.RoomPasswordPairRepositoryImpl
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passwordgroup.RoomPasswordGroupRepositoryImpl
+import com.wsr.infra.passworditem.PasswordItemEntityDao
+import com.wsr.infra.passworditem.RoomPasswordItemRepositoryImpl
 import com.wsr.login.LoginViewModel
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.create.CreatePasswordGroupUseCase
@@ -19,13 +19,13 @@ import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCase
 import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCaseImpl
 import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCase
 import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCaseImpl
-import com.wsr.passwordpair.PasswordPairRepository
-import com.wsr.passwordpair.create.CreatePasswordPairUseCase
-import com.wsr.passwordpair.create.CreatePasswordPairUseCaseImpl
-import com.wsr.passwordpair.getall.GetAllPasswordPairUseCase
-import com.wsr.passwordpair.getall.GetAllPasswordPairUseCaseImpl
-import com.wsr.passwordpair.upsert.UpsertPasswordPairUseCase
-import com.wsr.passwordpair.upsert.UpsertPasswordPairUseCaseImpl
+import com.wsr.passworditem.PasswordItemRepository
+import com.wsr.passworditem.create.CreatePasswordItemUseCase
+import com.wsr.passworditem.create.CreatePasswordItemUseCaseImpl
+import com.wsr.passworditem.getall.GetAllPasswordItemUseCase
+import com.wsr.passworditem.getall.GetAllPasswordItemUseCaseImpl
+import com.wsr.passworditem.upsert.UpsertPasswordItemUseCase
+import com.wsr.passworditem.upsert.UpsertPasswordItemUseCaseImpl
 import com.wsr.show.ShowViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -53,13 +53,13 @@ val module = module {
     single<UpdatePasswordGroupUseCase> { UpdatePasswordGroupUseCaseImpl(get()) }
 
     // Password
-    factory<GetAllPasswordPairUseCase> { GetAllPasswordPairUseCaseImpl(get()) }
-    single<UpsertPasswordPairUseCase> { UpsertPasswordPairUseCaseImpl(get()) }
-    single<CreatePasswordPairUseCase> { CreatePasswordPairUseCaseImpl() }
+    factory<GetAllPasswordItemUseCase> { GetAllPasswordItemUseCaseImpl(get()) }
+    single<UpsertPasswordItemUseCase> { UpsertPasswordItemUseCaseImpl(get()) }
+    single<CreatePasswordItemUseCase> { CreatePasswordItemUseCaseImpl() }
 
     /*** Repository ***/
     single<PasswordGroupRepository> { RoomPasswordGroupRepositoryImpl(get()) }
-    single<PasswordPairRepository> { RoomPasswordPairRepositoryImpl(get()) }
+    single<PasswordItemRepository> { RoomPasswordItemRepositoryImpl(get()) }
 
     single<PassonDatabase> {
         Room.databaseBuilder(
@@ -70,7 +70,7 @@ val module = module {
     }
 
     /*** DAO ***/
-    single<PasswordPairEntityDao> {
+    single<PasswordItemEntityDao> {
         val database by inject<PassonDatabase>()
         database.passwordEntityDao()
     }
