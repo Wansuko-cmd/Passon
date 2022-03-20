@@ -12,11 +12,4 @@ class PasswordGroupFactory {
         val id = PasswordGroupId(UUID.randomUUID().toString())
         return PasswordGroup(id, email, title, remark)
     }
-
-    fun create(
-        passwordGroupId: PasswordGroupId,
-        email: Email,
-        title: Title,
-        remark: Remark,
-    ): PasswordGroup = PasswordGroup(passwordGroupId, email, title, remark)
 }
