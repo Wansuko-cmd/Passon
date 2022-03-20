@@ -14,9 +14,9 @@ class PasswordPairFactory {
     }
 
     fun create(
-        passwordId: PasswordPairId,
+        passwordPairId: PasswordPairId,
         passwordGroupId: PasswordGroupId,
         name: Name,
         password: Password,
-    ): PasswordPair = PasswordPair(passwordId, passwordGroupId, name, password)
+    ): PasswordPair = PasswordPair(passwordPairId, passwordGroupId, name, password)
 }

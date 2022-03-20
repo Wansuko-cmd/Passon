@@ -126,13 +126,13 @@ class EditViewModel(
         }
     }
 
-    fun updateName(passwordId: String, newName: String) {
+    fun updateName(passwordPairId: String, newName: String) {
         val newPasswords = _uiState.value
             .contents
             .passwordPairs
             .map { list ->
                 list.map {
-                    if (it.id == passwordId) it.copyWithName(newName) else it
+                    if (it.id == passwordPairId) it.copyWithName(newName) else it
                 }
             }
 
@@ -145,13 +145,13 @@ class EditViewModel(
         }
     }
 
-    fun updatePassword(passwordId: String, newPassword: String) {
+    fun updatePassword(passwordPairId: String, newPassword: String) {
         val newPasswords = _uiState.value
             .contents
             .passwordPairs
             .map { list ->
                 list.map {
-                    if (it.id == passwordId) it.copyWithPassword(newPassword) else it
+                    if (it.id == passwordPairId) it.copyWithPassword(newPassword) else it
                 }
             }
 

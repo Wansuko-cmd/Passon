@@ -24,7 +24,7 @@ class UpsertPasswordPairUseCaseImpl(
         password: String,
     ): State<PasswordPairUseCaseModel, UpsertDataFailedException> = try {
         val newPassword = passwordFactory.create(
-            passwordId = PasswordPairId(id),
+            passwordPairId = PasswordPairId(id),
             passwordGroupId = PasswordGroupId(passwordGroupId),
             name = Name(name),
             password = Password(password),

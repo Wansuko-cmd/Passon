@@ -38,7 +38,7 @@ class UpsertPasswordUseCaseImplTest {
     /*** upsert関数 ***/
     @Test
     fun 新しいPasswordの情報を渡すとPasswordの登録or更新を行い返す(): Unit = runTest {
-        val mockedPasswordPairId = PasswordPairId("mockedPasswordId")
+        val mockedPasswordPairId = PasswordPairId("mockedPasswordPairId")
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
         val mockedName = Name("mockedName")
         val mockedPassword = Password("mockedPassword")
@@ -63,7 +63,7 @@ class UpsertPasswordUseCaseImplTest {
 
     @Test
     fun 登録or更新するときにエラーが起きればその内容を返す() = runTest {
-        val mockedPasswordPairId = PasswordPairId("mockedPasswordId")
+        val mockedPasswordPairId = PasswordPairId("mockedPasswordPairId")
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
         val mockedName = "mockedName"
         val mockedPassword = "mockedPassword"

@@ -9,7 +9,8 @@ data class PasswordGroup(
     val remark: Remark,
 )
 
-data class PasswordGroupId(val value: String)
+@JvmInline
+value class PasswordGroupId(val value: String)
 
 @JvmInline
 value class Title(val value: String)

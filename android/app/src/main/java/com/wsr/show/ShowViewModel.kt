@@ -79,7 +79,7 @@ class ShowViewModel(
         }
     }
 
-    fun changePasswordState(passwordId: String) =
+    fun changePasswordState(passwordPairId: String) =
         viewModelScope.launch {
 
             val newPasswordPairsState = _uiState.value
@@ -87,7 +87,7 @@ class ShowViewModel(
                 .passwordPairs
                 .map { list ->
                     list.map {
-                        if (it.id == passwordId) it.copyWithShowPassword(!it.showPassword) else it
+                        if (it.id == passwordPairId) it.copyWithShowPassword(!it.showPassword) else it
                     }
                 }
 

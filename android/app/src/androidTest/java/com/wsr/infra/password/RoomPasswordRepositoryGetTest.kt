@@ -47,7 +47,7 @@ class RoomPasswordRepositoryGetTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
         val mockedPasswordPairs = List(5) { index ->
             PasswordPair(
-                id = PasswordPairId("mockedPasswordId$index"),
+                id = PasswordPairId("mockedpasswordPairId$index"),
                 passwordGroupId = mockedPasswordGroupId,
                 name = Name("mockedName$index"),
                 password = Password("mockedPassword$index"),

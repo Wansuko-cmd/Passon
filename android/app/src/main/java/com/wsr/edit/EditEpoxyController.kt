@@ -10,8 +10,8 @@ import com.wsr.utils.MyTyped2EpoxyController
 class EditEpoxyController(
     private val afterTitleChanged: (newTitle: String) -> Unit,
     private val afterRemarkChanged: (newRemark: String) -> Unit,
-    private val afterNameChanged: (passwordId: String, newName: String) -> Unit,
-    private val afterPasswordChanged: (passwordId: String, newPassword: String) -> Unit,
+    private val afterNameChanged: (passwordPairId: String, newName: String) -> Unit,
+    private val afterPasswordChanged: (passwordPairId: String, newPassword: String) -> Unit,
     private val onClickAddPasswordButton: () -> Unit,
 ) : MyTyped2EpoxyController<PasswordGroupEditUiState, List<PasswordPairEditUiState>>() {
 
