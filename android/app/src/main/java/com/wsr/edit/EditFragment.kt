@@ -1,45 +1,26 @@
 package com.wsr.edit
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
 import com.wsr.R
 import com.wsr.databinding.FragmentEditBinding
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.state.consume
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class EditFragment : Fragment() {
+class EditFragment : Fragment(R.layout.fragment_edit) {
 
-    private lateinit var _binding: FragmentEditBinding
-    private val binding get() = _binding
-
-    private lateinit var editEpoxyController: EditEpoxyController
-    private lateinit var editRecyclerView: RecyclerView
     private val editViewModel: EditViewModel by viewModel()
 
     private val args: EditFragmentArgs by navArgs()
     private val passwordGroupId by lazy { args.passwordGroupId }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        setHasOptionsMenu(true)
-
-        _binding = FragmentEditBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.edit_menu, menu)
@@ -47,10 +28,11 @@ class EditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentEditBinding.bind(view)
 
         editViewModel.fetch(passwordGroupId)
 
-        editEpoxyController = EditEpoxyController(
+        val editEpoxyController = EditEpoxyController(
             afterTitleChanged = editViewModel::updateTitle,
             afterRemarkChanged = editViewModel::updateRemark,
             afterNameChanged = editViewModel::updateName,
@@ -58,7 +40,7 @@ class EditFragment : Fragment() {
             onClickAddPasswordButton = { editViewModel.createPassword(passwordGroupId) },
         )
 
-        editRecyclerView = binding.editFragmentRecyclerView.apply {
+        binding.editFragmentRecyclerView.apply {
             setHasFixedSize(true)
             adapter = editEpoxyController.adapter
         }

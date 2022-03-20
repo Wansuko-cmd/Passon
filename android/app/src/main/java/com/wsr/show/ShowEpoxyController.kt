@@ -1,5 +1,7 @@
 package com.wsr.show
 
+import android.content.res.Resources
+import com.wsr.R
 import com.wsr.messageRow
 import com.wsr.showPasswordRow
 import com.wsr.showRemarkRow
@@ -8,7 +10,7 @@ import com.wsr.utils.MyTyped2EpoxyController
 class ShowEpoxyController(
     private val onClickShowPassword: (PasswordShowUiState) -> Unit,
     private val onClickPasswordCopy: (PasswordShowUiState) -> Unit,
-    private val noPasswordMessage: String,
+    private val resources: Resources,
 ) :
     MyTyped2EpoxyController<PasswordGroupShowUiState, List<PasswordShowUiState>>() {
 
@@ -19,7 +21,7 @@ class ShowEpoxyController(
         if (list.isEmpty()) {
             messageRow {
                 id(MESSAGE_ID)
-                message(this@ShowEpoxyController.noPasswordMessage)
+                message(this@ShowEpoxyController.resources.getString(R.string.show_no_password_message))
             }
         } else {
             list.forEach { password ->

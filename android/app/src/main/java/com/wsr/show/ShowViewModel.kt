@@ -36,7 +36,7 @@ class ShowViewModel(
                     success = { passwordGroup -> passwordGroup.title },
                     failure = { ErrorShowUiState(it.message ?: "") }
                 ),
-                contents = showUiState.contents.replacePasswordGroup(
+                contents = showUiState.contents.copyWithPasswordGroup(
                     passwordGroup = state.mapBoth(
                         success = { it.toShowUiModel() },
                         failure = { ErrorShowUiState(it.message ?: "") },
@@ -52,7 +52,7 @@ class ShowViewModel(
             coroutineScope = viewModelScope,
         ) { showUiState, state ->
             showUiState.copy(
-                contents = showUiState.contents.replacePasswords(
+                contents = showUiState.contents.copyWithPasswords(
                     passwords = state.mapBoth(
                         success = { list -> list.map { it.toShowUiModel() } },
                         failure = { ErrorShowUiState(it.message ?: "") }
@@ -87,12 +87,12 @@ class ShowViewModel(
                 .passwords
                 .map { list ->
                     list.map {
-                        if (it.id == passwordId) it.replaceShowPassword(!it.showPassword) else it
+                        if (it.id == passwordId) it.copyWithShowPassword(!it.showPassword) else it
                     }
                 }
 
             val newUiState = _uiState.value.copy(
-                contents = _uiState.value.contents.replacePasswords(
+                contents = _uiState.value.contents.copyWithPasswords(
                     passwords = newPasswordsState
                 )
             )

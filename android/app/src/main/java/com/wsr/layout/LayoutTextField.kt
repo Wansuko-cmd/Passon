@@ -41,10 +41,6 @@ class LayoutTextField @JvmOverloads constructor(
         binding.layoutTextFieldTextInput.addTextChangedListener { afterTextChanged.block(it.toString()) }
     }
 
-    override fun setEnabled(enabled: Boolean) {
-        binding.layoutTextFieldTextInput.isEnabled = enabled
-    }
-
     private fun setInputType(inputType: InputType) {
         binding.layoutTextFieldTextInput.inputType = inputType.value
     }
@@ -72,12 +68,6 @@ class LayoutTextField @JvmOverloads constructor(
         @JvmStatic
         fun setOnTextChanged(view: LayoutTextField, afterTextChanged: AfterTextChanged) =
             view.setOnTextChanged(afterTextChanged)
-
-        @BindingAdapter("enabled")
-        @JvmStatic
-        fun setEnabled(view: LayoutTextField, enabled: Boolean) {
-            view.isEnabled = enabled
-        }
 
         @BindingAdapter("inputType")
         @JvmStatic

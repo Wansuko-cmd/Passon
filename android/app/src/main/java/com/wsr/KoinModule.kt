@@ -40,15 +40,20 @@ val module = module {
     viewModel { ShowViewModel(get(), get()) }
     viewModel { EditViewModel(get(), get(), get(), get(), get()) }
 
-    /*** UseCase ***/
+    /**
+     * UseCase
+     *
+     * StateFlowを持つUseCase -> factory
+     * StateFlowを持たないUseCase -> single
+     */
     // Password Group
-    single<GetAllPasswordGroupUseCase> { GetAllPasswordGroupUseCaseImpl(get()) }
-    single<GetPasswordGroupUseCase> { GetPasswordGroupUseCaseImpl(get()) }
+    factory<GetAllPasswordGroupUseCase> { GetAllPasswordGroupUseCaseImpl(get()) }
+    factory<GetPasswordGroupUseCase> { GetPasswordGroupUseCaseImpl(get()) }
     single<CreatePasswordGroupUseCase> { CreatePasswordGroupUseCaseImpl(get()) }
     single<UpdatePasswordGroupUseCase> { UpdatePasswordGroupUseCaseImpl(get()) }
 
     // Password
-    single<GetAllPasswordUseCase> { GetAllPasswordUseCaseImpl(get()) }
+    factory<GetAllPasswordUseCase> { GetAllPasswordUseCaseImpl(get()) }
     single<UpsertPasswordUseCase> { UpsertPasswordUseCaseImpl(get()) }
     single<CreatePasswordUseCase> { CreatePasswordUseCaseImpl() }
 

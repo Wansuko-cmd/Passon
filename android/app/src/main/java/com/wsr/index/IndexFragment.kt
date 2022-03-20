@@ -1,49 +1,28 @@
 package com.wsr.index
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.wsr.R
 import com.wsr.databinding.FragmentIndexBinding
 import com.wsr.ext.launchInLifecycleScope
+import com.wsr.ext.sharedViewModel
 import com.wsr.index.dialog.IndexCreatePasswordGroupDialogFragment
 import com.wsr.state.consume
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ViewModelOwner.Companion.from
 
-class IndexFragment : Fragment() {
+class IndexFragment : Fragment(R.layout.fragment_index) {
 
-    private lateinit var _binding: FragmentIndexBinding
-    private val binding get() = _binding
-
-    private lateinit var indexEpoxyController: IndexEpoxyController
-    private lateinit var indexRecyclerView: RecyclerView
-    private val indexViewModel: IndexViewModel by viewModel()
+    private val indexViewModel: IndexViewModel by sharedViewModel(owner = { from(this) })
 
     private val email by lazy { "example1@gmail.com" }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        setHasOptionsMenu(true)
-        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
-            show()
-            setDisplayHomeAsUpEnabled(false)
-        }
-        _binding = FragmentIndexBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.index_menu, menu)
@@ -51,27 +30,29 @@ class IndexFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentIndexBinding.bind(view)
+
+        setHasOptionsMenu(true)
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            show()
+            setDisplayHomeAsUpEnabled(false)
+        }
 
         indexViewModel.fetch(email)
 
-        indexEpoxyController = IndexEpoxyController(
+        val indexEpoxyController = IndexEpoxyController(
             onClick = ::navigateToShow,
-            noPasswordGroupMessage = getString(R.string.index_no_password_group_message)
+            resources = resources,
         )
 
-        indexRecyclerView = binding.indexFragmentRecyclerView.apply {
+        binding.indexFragmentRecyclerView.apply {
             setHasFixedSize(true)
             adapter = indexEpoxyController.adapter
         }
 
         binding.indexFragmentFab.setOnClickListener {
             showDialogIfNotDrew(tag) {
-                IndexCreatePasswordGroupDialogFragment.create(
-                    onSubmit = { title, shouldNavigateToEdit ->
-                        indexViewModel.createPasswordGroup(email, title, shouldNavigateToEdit)
-                    },
-                    onCancel = { /* do nothing */ }
-                )
+                IndexCreatePasswordGroupDialogFragment.create(email)
             }
         }
 
@@ -86,12 +67,10 @@ class IndexFragment : Fragment() {
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
-            indexViewModel.indexRefreshEvent.collect {
-                when (it.navigateToEditEvent) {
-                    is NavigateToEditEvent.True -> navigateToEdit(it.navigateToEditEvent.passwordGroupId)
-                    is NavigateToEditEvent.False -> indexViewModel.fetch(email)
-                }
-            }
+            indexViewModel.indexRefreshEvent.collect { indexViewModel.fetch(email) }
+        }
+        launchInLifecycleScope(Lifecycle.State.STARTED) {
+            indexViewModel.navigateToEditEvent.collect { navigateToEdit(it) }
         }
     }
 
@@ -114,7 +93,7 @@ class IndexFragment : Fragment() {
 
     private fun showDialogIfNotDrew(tag: String?, builder: () -> DialogFragment) {
         if (isNotDrewDialogWithThisTag(tag)) builder().showNow(
-            requireActivity().supportFragmentManager,
+            childFragmentManager,
             tag
         )
     }

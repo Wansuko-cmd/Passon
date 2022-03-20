@@ -8,35 +8,38 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Lifecycle
 import com.wsr.databinding.DialogIndexCreatePasswordGroupBinding
 import com.wsr.ext.launchInLifecycleScope
-import com.wsr.index.dialog.OnCancel.Companion.getOnCancelInstance
-import com.wsr.index.dialog.OnSubmit.Companion.getOnSubmitInstance
+import com.wsr.ext.sharedViewModel
+import com.wsr.index.IndexViewModel
+import com.wsr.utils.autoCleared
+import org.koin.androidx.viewmodel.ViewModelOwner.Companion.from
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.Serializable
 
 class IndexCreatePasswordGroupDialogFragment : DialogFragment() {
 
     private val indexCreatePasswordGroupDialogViewModel by viewModel<IndexCreatePasswordGroupDialogViewModel>()
-    private lateinit var binding: DialogIndexCreatePasswordGroupBinding
+    private var binding: DialogIndexCreatePasswordGroupBinding by autoCleared()
+    private val indexViewModel by sharedViewModel<IndexViewModel>(owner = { from(requireParentFragment()) })
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val onSubmit = arguments.getOnSubmitInstance()
-        val onCancel = arguments.getOnCancelInstance()
+
+        val email = arguments?.getString("email")
+            ?: throw NoSuchElementException("email does not exist in bundle at IndexCreatePasswordGroupDialogFragment")
 
         binding =
             DialogIndexCreatePasswordGroupBinding.inflate(requireActivity().layoutInflater).apply {
                 dialogIndexCreatePasswordGroupSubmitButton.setOnClickListener {
-                    onSubmit.block(
+                    indexViewModel.createPasswordGroup(
+                        email,
                         dialogIndexCreatePasswordGroupEditText.text.toString(),
                         indexCreatePasswordGroupDialogViewModel.shouldNavigateToEdit.value,
                     )
                     dismiss()
                 }
                 dialogIndexCreatePasswordGroupCancelButton.setOnClickListener {
-                    onCancel.block()
                     dismiss()
                 }
                 onClickCheckbox = View.OnClickListener {
-                    indexCreatePasswordGroupDialogViewModel.changeChecked()
+                    indexCreatePasswordGroupDialogViewModel.switchChecked()
                 }
             }
 
@@ -54,31 +57,12 @@ class IndexCreatePasswordGroupDialogFragment : DialogFragment() {
     }
 
     companion object {
-        fun create(
-            onSubmit: (title: String, goToEdit: Boolean) -> Unit,
-            onCancel: () -> Unit,
-        ): IndexCreatePasswordGroupDialogFragment {
+        fun create(email: String): IndexCreatePasswordGroupDialogFragment {
             return IndexCreatePasswordGroupDialogFragment().apply {
                 val bundle = Bundle()
-                bundle.putSerializable(OnSubmit.key, OnSubmit(onSubmit))
-                bundle.putSerializable(OnCancel.key, OnCancel(onCancel))
+                bundle.putString("email", email)
                 arguments = bundle
             }
         }
-    }
-}
-
-private class OnSubmit(val block: (title: String, goToEdit: Boolean) -> Unit = { _, _ -> }) :
-    Serializable {
-    companion object {
-        const val key = "onSubmit"
-        fun Bundle?.getOnSubmitInstance() = (this?.getSerializable(key) ?: OnSubmit()) as OnSubmit
-    }
-}
-
-private class OnCancel(val block: () -> Unit = { /* do nothing */ }) : Serializable {
-    companion object {
-        const val key = "onCancel"
-        fun Bundle?.getOnCancelInstance() = (this?.getSerializable(key) ?: OnCancel) as OnCancel
     }
 }
