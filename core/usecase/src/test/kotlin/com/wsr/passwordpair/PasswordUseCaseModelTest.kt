@@ -3,7 +3,7 @@
 package com.wsr.passwordpair
 
 import com.google.common.truth.Truth.assertThat
-import com.wsr.utils.UniqueId
+import com.wsr.passwordgroup.PasswordGroupId
 import kotlin.test.Test
 
 class PasswordUseCaseModelTest {
@@ -11,22 +11,22 @@ class PasswordUseCaseModelTest {
     /*** toUseCaseModel ***/
     @Test
     fun Passwordから実行すれば対応するUseCaseModelに変換して返す() {
-        val mockedPasswordId = UniqueId.from("mockedPasswordId")
-        val mockedPasswordGroupId = UniqueId.from("mockedPasswordId")
-        val mockedName = "mockedName"
-        val mockedPassword = "mockedPassword"
+        val mockedPasswordPairId = PasswordPairId("mockedPasswordId")
+        val mockedPasswordGroupId = PasswordGroupId("mockedPasswordId")
+        val mockedName = Name("mockedName")
+        val mockedPassword = Password("mockedPassword")
 
-        val actual = PasswordPair.of(
-            id = mockedPasswordId,
+        val actual = PasswordPair(
+            id = mockedPasswordPairId,
             passwordGroupId = mockedPasswordGroupId,
             name = mockedName,
             password = mockedPassword,
         ).toUseCaseModel()
         val expected = PasswordPairUseCaseModel(
-            id = mockedPasswordId.value,
+            id = mockedPasswordPairId.value,
             passwordGroupId = mockedPasswordGroupId.value,
-            name = mockedName,
-            password = mockedPassword,
+            name = mockedName.value,
+            password = mockedPassword.value,
         )
         assertThat(actual).isEqualTo(expected)
     }

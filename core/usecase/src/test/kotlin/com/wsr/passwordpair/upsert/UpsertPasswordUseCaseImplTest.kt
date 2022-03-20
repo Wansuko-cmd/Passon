@@ -4,10 +4,14 @@ package com.wsr.passwordpair.upsert
 
 import com.google.common.truth.Truth.assertThat
 import com.wsr.exceptions.UpsertDataFailedException
+import com.wsr.passwordgroup.PasswordGroupId
+import com.wsr.passwordpair.Name
+import com.wsr.passwordpair.Password
 import com.wsr.passwordpair.PasswordPair
+import com.wsr.passwordpair.PasswordPairId
 import com.wsr.passwordpair.PasswordPairRepository
+import com.wsr.passwordpair.toUseCaseModel
 import com.wsr.state.State
-import com.wsr.utils.UniqueId
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -34,40 +38,40 @@ class UpsertPasswordUseCaseImplTest {
     /*** upsert関数 ***/
     @Test
     fun 新しいPasswordの情報を渡すとPasswordの登録or更新を行い返す(): Unit = runTest {
-        val mockedPasswordId = UniqueId.from("mockedPasswordId")
-        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
-        val mockedName = "mockedName"
-        val mockedPassword = "mockedPassword"
-        val expectedPassword =
-            PasswordPair.of(mockedPasswordId, mockedPasswordGroupId, mockedName, mockedPassword)
+        val mockedPasswordPairId = PasswordPairId("mockedPasswordId")
+        val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
+        val mockedName = Name("mockedName")
+        val mockedPassword = Password("mockedPassword")
+        val expectedPasswordPair =
+            PasswordPair(mockedPasswordPairId, mockedPasswordGroupId, mockedName, mockedPassword)
 
-        coEvery { passwordRepository.upsert(expectedPassword) } returns expectedPassword
+        coEvery { passwordRepository.upsert(expectedPasswordPair) } returns expectedPasswordPair
 
         val actual = target.upsert(
-            id = mockedPasswordId.value,
+            id = mockedPasswordPairId.value,
             passwordGroupId = mockedPasswordGroupId.value,
-            name = mockedName,
-            password = mockedPassword,
+            name = mockedName.value,
+            password = mockedPassword.value,
         )
-        val expected = State.Success(expectedPassword.toUseCaseModel())
+        val expected = State.Success(expectedPasswordPair.toUseCaseModel())
 
         assertThat(actual).isEqualTo(expected)
 
-        coVerify(exactly = 1) { passwordRepository.upsert(expectedPassword) }
+        coVerify(exactly = 1) { passwordRepository.upsert(expectedPasswordPair) }
         confirmVerified(passwordRepository)
     }
 
     @Test
     fun 登録or更新するときにエラーが起きればその内容を返す() = runTest {
-        val mockedPasswordId = UniqueId.from("mockedPasswordId")
-        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
+        val mockedPasswordPairId = PasswordPairId("mockedPasswordId")
+        val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
         val mockedName = "mockedName"
         val mockedPassword = "mockedPassword"
 
         coEvery { passwordRepository.upsert(any()) } throws UpsertDataFailedException.DatabaseException()
 
         val actual = target.upsert(
-            id = mockedPasswordId.value,
+            id = mockedPasswordPairId.value,
             passwordGroupId = mockedPasswordGroupId.value,
             name = mockedName,
             password = mockedPassword,

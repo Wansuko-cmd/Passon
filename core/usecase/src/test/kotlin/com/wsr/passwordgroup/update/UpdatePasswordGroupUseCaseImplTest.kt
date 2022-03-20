@@ -6,10 +6,12 @@ import com.google.common.truth.Truth.assertThat
 import com.wsr.email.Email
 import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
+import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
+import com.wsr.passwordgroup.Remark
+import com.wsr.passwordgroup.Title
 import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
-import com.wsr.utils.UniqueId
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -36,11 +38,11 @@ class UpdatePasswordGroupUseCaseImplTest {
     /*** update関数 ***/
     @Test
     fun 新しいPasswordGroupの情報を渡すと指定されたPasswordGroupの更新を行う() = runTest {
-        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
-        val mockedEmail = Email.from("mockedEmail")
-        val mockedTitle = "mockedTitle"
-        val mockedRemark = "mockedRemark"
-        val mockedPasswordGroup = PasswordGroup.of(
+        val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
+        val mockedEmail = Email("mockedEmail")
+        val mockedTitle = Title("mockedTitle")
+        val mockedRemark = Remark("mockedRemark")
+        val mockedPasswordGroup = PasswordGroup(
             id = mockedPasswordGroupId,
             email = mockedEmail,
             title = mockedTitle,
@@ -50,15 +52,15 @@ class UpdatePasswordGroupUseCaseImplTest {
         coEvery {
             passwordGroupRepository.update(
                 id = mockedPasswordGroup.id,
-                title = mockedPasswordGroup.title,
-                remark = mockedPasswordGroup.remark,
+                title = mockedPasswordGroup.title.value,
+                remark = mockedPasswordGroup.remark.value,
             )
         } returns mockedPasswordGroup
 
         val actual = target.update(
             id = mockedPasswordGroup.id.value,
-            title = mockedPasswordGroup.title,
-            remark = mockedPasswordGroup.remark,
+            title = mockedPasswordGroup.title.value,
+            remark = mockedPasswordGroup.remark.value,
         )
         val expected = State.Success(mockedPasswordGroup.toUseCaseModel())
 
@@ -67,8 +69,8 @@ class UpdatePasswordGroupUseCaseImplTest {
         coVerify(exactly = 1) {
             passwordGroupRepository.update(
                 id = mockedPasswordGroup.id,
-                title = mockedPasswordGroup.title,
-                remark = mockedPasswordGroup.remark,
+                title = mockedPasswordGroup.title.value,
+                remark = mockedPasswordGroup.remark.value,
             )
         }
         confirmVerified(passwordGroupRepository)
@@ -76,7 +78,7 @@ class UpdatePasswordGroupUseCaseImplTest {
 
     @Test
     fun 更新するときにエラーが起きればその内容を返す() = runTest {
-        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
+        val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
         val mockedTitle = "mockedTitle"
         val mockedRemark = "mockedRemark"
 

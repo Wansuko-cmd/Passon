@@ -6,7 +6,10 @@ import com.google.common.truth.Truth.assertThat
 import com.wsr.email.Email
 import com.wsr.exceptions.CreateDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
+import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
+import com.wsr.passwordgroup.Remark
+import com.wsr.passwordgroup.Title
 import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
 import io.mockk.MockKAnnotations
@@ -18,7 +21,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockkStatic
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import java.util.*
+import java.util.UUID
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -42,10 +45,12 @@ class CreatePasswordGroupUseCaseImplTest {
         val uuid = "5af48f3b-468b-4ae0-a065-7d7ac70b37a8"
         every { UUID.randomUUID().toString() } returns uuid
 
-        val mockedEmail = Email.from("mockedEmail")
-        val mockedTitle = "mockedTitle"
-        val mockedRemark = "mockedRemark"
-        val mockedPasswordGroup = PasswordGroup.of(
+        val mockedPasswordGroupId = PasswordGroupId(uuid)
+        val mockedEmail = Email("mockedEmail")
+        val mockedTitle = Title("mockedTitle")
+        val mockedRemark = Remark("mockedRemark")
+        val mockedPasswordGroup = PasswordGroup(
+            id = mockedPasswordGroupId,
             email = mockedEmail,
             title = mockedTitle,
             remark = mockedRemark,
@@ -55,7 +60,7 @@ class CreatePasswordGroupUseCaseImplTest {
 
         val actual = target.create(
             email = mockedEmail.value,
-            title = mockedTitle,
+            title = mockedTitle.value,
         )
         val expected = State.Success(mockedPasswordGroup.toUseCaseModel())
 
@@ -67,7 +72,7 @@ class CreatePasswordGroupUseCaseImplTest {
 
     @Test
     fun 作成するときにエラーが起きればその内容を返す() = runTest {
-        val mockedEmail = Email.from("mockedEmail")
+        val mockedEmail = Email("mockedEmail")
         val mockedTitle = "mockTitle"
 
         coEvery { passwordGroupRepository.create(any()) } throws CreateDataFailedException.DatabaseException()

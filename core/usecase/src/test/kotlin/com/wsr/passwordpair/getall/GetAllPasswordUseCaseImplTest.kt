@@ -6,10 +6,13 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.passwordgroup.PasswordGroupId
+import com.wsr.passwordpair.Name
+import com.wsr.passwordpair.Password
 import com.wsr.passwordpair.PasswordPair
+import com.wsr.passwordpair.PasswordPairId
 import com.wsr.passwordpair.PasswordPairRepository
+import com.wsr.passwordpair.toUseCaseModel
 import com.wsr.state.State
-import com.wsr.utils.UniqueId
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -37,22 +40,22 @@ class GetAllPasswordUseCaseImplTest {
     @Test
     fun PasswordGroupIdを渡すと所属する全てのPasswordを返す() = runTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
-        val mockedPasswords = List(5) { index ->
-            PasswordPair.of(
-                id = UniqueId.from(value = "UniqueId$index"),
+        val mockedPasswordPairs = List(5) { index ->
+            PasswordPair(
+                id = PasswordPairId(value = "UniqueId$index"),
                 passwordGroupId = mockedPasswordGroupId,
-                name = "name$index",
-                password = "password$index"
+                name = Name("name$index"),
+                password = Password("password$index"),
             )
         }
-        coEvery { passwordRepository.getAllByPasswordGroupId(mockedPasswordGroupId) } returns mockedPasswords
+        coEvery { passwordRepository.getAllByPasswordGroupId(mockedPasswordGroupId) } returns mockedPasswordPairs
 
         target.data.test {
             target.getAllByPasswordGroupId(mockedPasswordGroupId.value)
 
             assertThat(awaitItem()).isEqualTo(State.Loading)
 
-            val expected = mockedPasswords.map { it.toUseCaseModel() }
+            val expected = mockedPasswordPairs.map { it.toUseCaseModel() }
             assertThat(awaitItem()).isEqualTo(State.Success(expected))
 
             cancelAndIgnoreRemainingEvents()
@@ -64,7 +67,7 @@ class GetAllPasswordUseCaseImplTest {
 
     @Test
     fun 取得するときにエラーが起きればその内容を返す() = runTest {
-        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
+        val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
         coEvery { passwordRepository.getAllByPasswordGroupId(mockedPasswordGroupId) } throws GetAllDataFailedException.DatabaseException()
 
         target.data.test {

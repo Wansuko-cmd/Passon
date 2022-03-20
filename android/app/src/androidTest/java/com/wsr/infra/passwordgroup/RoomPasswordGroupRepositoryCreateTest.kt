@@ -10,7 +10,9 @@ import com.google.common.truth.Truth.assertThat
 import com.wsr.email.Email
 import com.wsr.infra.PassonDatabase
 import com.wsr.passwordgroup.PasswordGroup
-import com.wsr.utils.UniqueId
+import com.wsr.passwordgroup.PasswordGroupId
+import com.wsr.passwordgroup.Remark
+import com.wsr.passwordgroup.Title
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.runner.RunWith
@@ -42,12 +44,12 @@ class RoomPasswordGroupRepositoryCreateTest {
     /*** create関数 ***/
     @Test
     fun 新しいPasswordGroupの情報を渡せば登録する() = runTest {
-        val mockedEmail = Email.from("mockedEmail")
-        val mockedPasswordGroup = PasswordGroup.of(
-            id = UniqueId.from("mockedPasswordGroupId"),
+        val mockedEmail = Email("mockedEmail")
+        val mockedPasswordGroup = PasswordGroup(
+            id = PasswordGroupId("mockedPasswordGroupId"),
             email = mockedEmail,
-            title = "mockedTitle",
-            remark = "mockedRemark",
+            title = Title("mockedTitle"),
+            remark = Remark("mockedRemark"),
         )
         target.create(mockedPasswordGroup)
 

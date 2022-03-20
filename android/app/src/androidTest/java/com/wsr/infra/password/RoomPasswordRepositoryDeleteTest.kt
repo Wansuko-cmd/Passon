@@ -8,8 +8,11 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import com.wsr.infra.PassonDatabase
+import com.wsr.passwordgroup.PasswordGroupId
+import com.wsr.passwordpair.Name
+import com.wsr.passwordpair.Password
 import com.wsr.passwordpair.PasswordPair
-import com.wsr.utils.UniqueId
+import com.wsr.passwordpair.PasswordPairId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.runner.RunWith
@@ -43,17 +46,17 @@ class RoomPasswordRepositoryDeleteTest {
     @Test
     fun passwordIdを渡すと対応するPasswordを削除する() = runTest {
 
-        val mockedPasswordId = UniqueId.from("mockedPasswordId")
-        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
-        val mockedPassword = PasswordPair.of(
-            id = mockedPasswordId,
+        val mockedPasswordPairId = PasswordPairId("mockedPasswordId")
+        val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
+        val mockedPasswordPair = PasswordPair(
+            id = mockedPasswordPairId,
             passwordGroupId = mockedPasswordGroupId,
-            name = "mockedName",
-            password = "mockedPassword"
+            name = Name("mockedName"),
+            password = Password("mockedPassword"),
         )
-        target.upsert(mockedPassword)
+        target.upsert(mockedPasswordPair)
 
-        target.delete(mockedPasswordId)
+        target.delete(mockedPasswordPairId)
 
         val actual = target.getAllByPasswordGroupId(mockedPasswordGroupId)
         assertThat(actual).isEmpty()
