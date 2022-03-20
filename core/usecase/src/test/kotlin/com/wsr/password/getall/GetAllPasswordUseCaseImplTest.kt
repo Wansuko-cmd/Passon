@@ -8,6 +8,7 @@ import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.password.Password
 import com.wsr.password.PasswordRepository
 import com.wsr.password.toUseCaseModel
+import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.state.State
 import com.wsr.utils.UniqueId
 import io.mockk.MockKAnnotations
@@ -36,7 +37,7 @@ class GetAllPasswordUseCaseImplTest {
     /*** getAllByPasswordGroupId関数 ***/
     @Test
     fun PasswordGroupIdを渡すと所属する全てのPasswordを返す() = runTest {
-        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
+        val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
         val mockedPasswords = List(5) { index ->
             Password.of(
                 id = UniqueId.from(value = "UniqueId$index"),

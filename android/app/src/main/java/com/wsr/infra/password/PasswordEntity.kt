@@ -4,7 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.wsr.password.Password
-import com.wsr.utils.UniqueId
+import com.wsr.password.PasswordId
+import com.wsr.passwordgroup.PasswordGroupId
 
 @Entity(tableName = "passwords")
 data class PasswordEntity(
@@ -14,9 +15,9 @@ data class PasswordEntity(
     @ColumnInfo(name = "password") val password: String,
 ) {
 
-    fun toPassword() = Password.of(
-        id = UniqueId.from(id),
-        passwordGroupId = UniqueId.from(passwordGroupId),
+    fun toPassword() = Password(
+        id = PasswordId(id),
+        passwordGroupId = PasswordGroupId(passwordGroupId),
         name = name,
         password = password,
     )

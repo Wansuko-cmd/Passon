@@ -1,10 +1,13 @@
 package com.wsr.password.create
 
-import com.wsr.password.Password
+import com.wsr.password.PasswordFactory
 import com.wsr.password.toUseCaseModel
-import com.wsr.utils.UniqueId
+import com.wsr.passwordgroup.PasswordGroupId
 
 class CreatePasswordUseCaseImpl : CreatePasswordUseCase {
+
+    private val passwordFactory = PasswordFactory()
+
     override fun createPasswordInstance(passwordGroupId: String) =
-        Password.of(passwordGroupId = UniqueId.from(passwordGroupId)).toUseCaseModel()
+        passwordFactory.create(PasswordGroupId(passwordGroupId)).toUseCaseModel()
 }

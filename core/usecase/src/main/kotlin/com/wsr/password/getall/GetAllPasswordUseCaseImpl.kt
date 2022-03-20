@@ -4,8 +4,8 @@ import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.password.PasswordRepository
 import com.wsr.password.PasswordUseCaseModel
 import com.wsr.password.toUseCaseModel
+import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.state.State
-import com.wsr.utils.UniqueId
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -21,7 +21,7 @@ class GetAllPasswordUseCaseImpl(
         try {
             _data.emit(State.Loading)
             val passwords = passwordRepository
-                .getAllByPasswordGroupId(UniqueId.from(passwordGroupId))
+                .getAllByPasswordGroupId(PasswordGroupId(passwordGroupId))
                 .map { it.toUseCaseModel() }
 
             _data.emit(State.Success(passwords))

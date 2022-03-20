@@ -17,7 +17,7 @@ class EditEpoxyController(
 
     override fun buildModels(
         passwordGroup: PasswordGroupEditUiState,
-        list: List<PasswordEditUiState>
+        list: List<PasswordEditUiState>,
     ) {
 
         editTitleRow {

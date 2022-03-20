@@ -1,19 +1,12 @@
 package com.wsr.password
 
-import com.wsr.utils.UniqueId
+import com.wsr.passwordgroup.PasswordGroupId
 
 data class Password(
-    val id: UniqueId,
-    val passwordGroupId: UniqueId,
+    val id: PasswordId,
+    val passwordGroupId: PasswordGroupId,
     val name: String,
     val password: String,
-) {
-    companion object {
-        fun of(
-            id: UniqueId = UniqueId.from(),
-            passwordGroupId: UniqueId,
-            name: String = "",
-            password: String = "",
-        ) = Password(id, passwordGroupId, name, password)
-    }
-}
+)
+
+data class PasswordId(val value: String)

@@ -16,7 +16,7 @@ class ShowEpoxyController(
 
     override fun buildModels(
         passwordGroup: PasswordGroupShowUiState,
-        list: List<PasswordShowUiState>
+        list: List<PasswordShowUiState>,
     ) {
         if (list.isEmpty()) {
             messageRow {

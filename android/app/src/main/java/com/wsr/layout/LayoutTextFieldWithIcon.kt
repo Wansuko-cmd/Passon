@@ -108,7 +108,7 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
         @JvmStatic
         fun setEndIconOnClickListener(
             view: LayoutTextFieldWithIcon,
-            listener: OnClickListener
+            listener: OnClickListener,
         ) = view.setEndIconOnClickListener(listener)
     }
 }
