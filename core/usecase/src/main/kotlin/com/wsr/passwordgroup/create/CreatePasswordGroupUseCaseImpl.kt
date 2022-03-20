@@ -5,6 +5,7 @@ import com.wsr.exceptions.CreateDataFailedException
 import com.wsr.passwordgroup.PasswordGroupFactory
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.PasswordGroupUseCaseModel
+import com.wsr.passwordgroup.Title
 import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
 
@@ -20,7 +21,7 @@ class CreatePasswordGroupUseCaseImpl(
     ): State<PasswordGroupUseCaseModel, CreateDataFailedException> = try {
         val passwordGroup = passwordGroupFactory.create(
             email = Email(email),
-            title = title,
+            title = Title(title),
         )
 
         State.Success(passwordGroupRepository.create(passwordGroup).toUseCaseModel())

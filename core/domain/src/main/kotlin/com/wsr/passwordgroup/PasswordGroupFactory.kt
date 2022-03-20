@@ -4,7 +4,11 @@ import com.wsr.email.Email
 import java.util.UUID
 
 class PasswordGroupFactory {
-    fun create(email: Email, title: String = "", remark: String = ""): PasswordGroup {
+    fun create(
+        email: Email,
+        title: Title = Title(""),
+        remark: Remark = Remark(""),
+    ): PasswordGroup {
         val id = PasswordGroupId(UUID.randomUUID().toString())
         return PasswordGroup(id, email, title, remark)
     }
@@ -12,7 +16,7 @@ class PasswordGroupFactory {
     fun create(
         passwordGroupId: PasswordGroupId,
         email: Email,
-        title: String,
-        remark: String
+        title: Title,
+        remark: Remark,
     ): PasswordGroup = PasswordGroup(passwordGroupId, email, title, remark)
 }

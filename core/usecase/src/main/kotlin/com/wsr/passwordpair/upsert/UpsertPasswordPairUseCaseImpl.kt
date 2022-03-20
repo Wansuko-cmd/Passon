@@ -2,6 +2,8 @@ package com.wsr.passwordpair.upsert
 
 import com.wsr.exceptions.UpsertDataFailedException
 import com.wsr.passwordgroup.PasswordGroupId
+import com.wsr.passwordpair.Name
+import com.wsr.passwordpair.Password
 import com.wsr.passwordpair.PasswordPairFactory
 import com.wsr.passwordpair.PasswordPairId
 import com.wsr.passwordpair.PasswordPairRepository
@@ -24,8 +26,8 @@ class UpsertPasswordPairUseCaseImpl(
         val newPassword = passwordFactory.create(
             passwordId = PasswordPairId(id),
             passwordGroupId = PasswordGroupId(passwordGroupId),
-            name = name,
-            password = password,
+            name = Name(name),
+            password = Password(password),
         )
         State.Success(passwordRepository.upsert(newPassword).toUseCaseModel())
     } catch (e: UpsertDataFailedException) {

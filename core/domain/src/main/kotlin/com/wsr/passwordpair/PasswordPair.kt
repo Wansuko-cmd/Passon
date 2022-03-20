@@ -9,7 +9,8 @@ data class PasswordPair(
     val password: Password,
 )
 
-data class PasswordPairId(val value: String)
+@JvmInline
+value class PasswordPairId(val value: String)
 
 @JvmInline
 value class Name(val value: String)
