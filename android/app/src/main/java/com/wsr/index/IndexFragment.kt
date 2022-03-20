@@ -15,11 +15,11 @@ import com.wsr.databinding.FragmentIndexBinding
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.index.dialog.IndexCreatePasswordGroupDialogFragment
 import com.wsr.state.consume
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class IndexFragment : Fragment(R.layout.fragment_index) {
 
-    private val indexViewModel: IndexViewModel by viewModel()
+    private val indexViewModel: IndexViewModel by sharedViewModel()
 
     private val email by lazy { "example1@gmail.com" }
 
@@ -51,7 +51,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
 
         binding.indexFragmentFab.setOnClickListener {
             showDialogIfNotDrew(tag) {
-                IndexCreatePasswordGroupDialogFragment.create(indexViewModel, email)
+                IndexCreatePasswordGroupDialogFragment.create(email)
             }
         }
 

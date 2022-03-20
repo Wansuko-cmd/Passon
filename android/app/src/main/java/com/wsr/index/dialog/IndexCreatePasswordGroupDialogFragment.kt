@@ -9,26 +9,24 @@ import androidx.lifecycle.Lifecycle
 import com.wsr.databinding.DialogIndexCreatePasswordGroupBinding
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.index.IndexViewModel
-import com.wsr.index.dialog.BundleHandler.Companion.getValue
-import com.wsr.index.dialog.BundleHandler.Companion.putValue
 import com.wsr.utils.autoCleared
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.Serializable
 
 class IndexCreatePasswordGroupDialogFragment : DialogFragment() {
 
     private val indexCreatePasswordGroupDialogViewModel by viewModel<IndexCreatePasswordGroupDialogViewModel>()
     private var binding: DialogIndexCreatePasswordGroupBinding by autoCleared()
+    private val indexViewModel by sharedViewModel<IndexViewModel>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        val indexViewModel = arguments?.getValue<IndexViewModel>("indexViewModel")
         val email = arguments?.getString("email") ?: ""
 
         binding =
             DialogIndexCreatePasswordGroupBinding.inflate(requireActivity().layoutInflater).apply {
                 dialogIndexCreatePasswordGroupSubmitButton.setOnClickListener {
-                    indexViewModel?.createPasswordGroup(
+                    indexViewModel.createPasswordGroup(
                         email,
                         dialogIndexCreatePasswordGroupEditText.text.toString(),
                         indexCreatePasswordGroupDialogViewModel.shouldNavigateToEdit.value,
@@ -57,24 +55,12 @@ class IndexCreatePasswordGroupDialogFragment : DialogFragment() {
     }
 
     companion object {
-        fun create(
-            indexViewModel: IndexViewModel,
-            email: String,
-        ): IndexCreatePasswordGroupDialogFragment {
+        fun create(email: String): IndexCreatePasswordGroupDialogFragment {
             return IndexCreatePasswordGroupDialogFragment().apply {
                 val bundle = Bundle()
-                bundle.putValue("indexViewModel", indexViewModel)
                 bundle.putString("email", email)
                 arguments = bundle
             }
         }
-    }
-}
-
-private class BundleHandler<T : Any> private constructor(val value: T) : Serializable {
-    companion object {
-        @Suppress("UNCHECKED_CAST")
-        fun <T : Any> Bundle.getValue(key: String): T? = (this.getSerializable(key) as? BundleHandler<T>)?.value
-        fun <T : Any> Bundle.putValue(key: String, value: T) = this.putSerializable(key, BundleHandler(value))
     }
 }

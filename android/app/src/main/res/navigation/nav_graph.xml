@@ -33,7 +33,7 @@
     <fragment
         android:id="@+id/show_fragment"
         android:name="com.wsr.show.ShowFragment"
-        android:label="Loading"
+        android:label=""
         tools:layout="@layout/fragment_show">
         <argument
             android:name="password_group_id"
