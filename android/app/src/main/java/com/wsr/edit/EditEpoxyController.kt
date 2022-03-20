@@ -28,19 +28,19 @@ class EditEpoxyController(
             )
         }
 
-        passwordPairs.forEach { password ->
+        passwordPairs.forEach { passwordPair ->
             editPasswordRow {
-                id(password.id)
-                name(password.name)
-                password(password.password)
+                id(passwordPair.id)
+                name(passwordPair.name)
+                password(passwordPair.password)
                 afterNameChanged(
                     AfterTextChanged(
-                        curry(this@EditEpoxyController.afterNameChanged)(password.id)
+                        curry(this@EditEpoxyController.afterNameChanged)(passwordPair.id)
                     )
                 )
                 afterPasswordChanged(
                     AfterTextChanged(
-                        curry(this@EditEpoxyController.afterPasswordChanged)(password.id)
+                        curry(this@EditEpoxyController.afterPasswordChanged)(passwordPair.id)
                     )
                 )
             }

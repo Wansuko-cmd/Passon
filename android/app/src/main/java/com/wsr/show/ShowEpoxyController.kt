@@ -24,17 +24,17 @@ class ShowEpoxyController(
                 message(this@ShowEpoxyController.resources.getString(R.string.show_no_password_message))
             }
         } else {
-            passwordPairs.forEach { password ->
+            passwordPairs.forEach { passwordPair ->
                 showPasswordRow {
-                    id(password.id)
-                    name(password.name)
-                    password(password.password)
-                    showPassword(password.showPassword)
+                    id(passwordPair.id)
+                    name(passwordPair.name)
+                    password(passwordPair.password)
+                    showPassword(passwordPair.showPassword)
                     onClickShowPassword { _, _, _, _ ->
-                        this@ShowEpoxyController.onClickShowPassword(password)
+                        this@ShowEpoxyController.onClickShowPassword(passwordPair)
                     }
                     onClickPasswordCopy { _, _, _, _ ->
-                        this@ShowEpoxyController.onClickPasswordCopy(password)
+                        this@ShowEpoxyController.onClickPasswordCopy(passwordPair)
                     }
                 }
             }
