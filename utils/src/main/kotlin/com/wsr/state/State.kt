@@ -8,7 +8,7 @@ sealed class State<out T, out E> {
 
 inline fun <T, E, NT, NE> State<T, E>.mapBoth(
     success: (T) -> NT,
-    failure: (E) -> NE
+    failure: (E) -> NE,
 ): State<NT, NE> =
     when (this) {
         is State.Success -> State.Success(success(value))

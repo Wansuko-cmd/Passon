@@ -7,10 +7,12 @@ import com.google.common.truth.Truth.assertThat
 import com.wsr.email.Email
 import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
+import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
+import com.wsr.passwordgroup.Remark
+import com.wsr.passwordgroup.Title
 import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
-import com.wsr.utils.UniqueId
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -37,13 +39,13 @@ class GetAllPasswordGroupUseCaseImplTest {
     /*** getAllByEmail関数 ***/
     @Test
     fun emailを渡すと所属する全てのPasswordGroupを返す() = runTest {
-        val mockedEmail = Email.from("mockedEmail")
+        val mockedEmail = Email("mockedEmail")
         val mockedPasswordGroups = List(5) { index ->
-            PasswordGroup.of(
-                id = UniqueId.from("mockedPasswordGroupId$index"),
+            PasswordGroup(
+                id = PasswordGroupId("mockedPasswordGroupId$index"),
                 email = mockedEmail,
-                title = "mockedTitle$index",
-                remark = "mockedRemark$index"
+                title = Title("mockedTitle$index"),
+                remark = Remark("mockedRemark$index"),
             )
         }
 
@@ -66,7 +68,7 @@ class GetAllPasswordGroupUseCaseImplTest {
 
     @Test
     fun 取得するときにエラーが起きればその内容を返す() = runTest {
-        val mockedEmail = Email.from("mockedEmail")
+        val mockedEmail = Email("mockedEmail")
 
         coEvery { passwordGroupRepository.getAllByEmail(mockedEmail) } throws GetAllDataFailedException.DatabaseException()
 

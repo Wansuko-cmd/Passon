@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.update
 inline fun <T, U> MutableStateFlow<T>.updateWith(
     target: Flow<U>,
     coroutineScope: CoroutineScope,
-    crossinline block: (T, U) -> T
+    crossinline block: (T, U) -> T,
 ) {
     target.onEach { u ->
         update { t ->

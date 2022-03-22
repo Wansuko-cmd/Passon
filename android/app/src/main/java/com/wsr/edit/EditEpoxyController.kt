@@ -10,14 +10,14 @@ import com.wsr.utils.MyTyped2EpoxyController
 class EditEpoxyController(
     private val afterTitleChanged: (newTitle: String) -> Unit,
     private val afterRemarkChanged: (newRemark: String) -> Unit,
-    private val afterNameChanged: (passwordId: String, newName: String) -> Unit,
-    private val afterPasswordChanged: (passwordId: String, newPassword: String) -> Unit,
+    private val afterNameChanged: (passwordItemId: String, newName: String) -> Unit,
+    private val afterPasswordChanged: (passwordItemId: String, newPassword: String) -> Unit,
     private val onClickAddPasswordButton: () -> Unit,
-) : MyTyped2EpoxyController<PasswordGroupEditUiState, List<PasswordEditUiState>>() {
+) : MyTyped2EpoxyController<PasswordGroupEditUiState, List<PasswordItemEditUiState>>() {
 
     override fun buildModels(
         passwordGroup: PasswordGroupEditUiState,
-        list: List<PasswordEditUiState>
+        passwordItems: List<PasswordItemEditUiState>,
     ) {
 
         editTitleRow {
@@ -28,19 +28,19 @@ class EditEpoxyController(
             )
         }
 
-        list.forEach { password ->
+        passwordItems.forEach { passwordItem ->
             editPasswordRow {
-                id(password.id)
-                name(password.name)
-                password(password.password)
+                id(passwordItem.id)
+                name(passwordItem.name)
+                password(passwordItem.password)
                 afterNameChanged(
                     AfterTextChanged(
-                        curry(this@EditEpoxyController.afterNameChanged)(password.id)
+                        curry(this@EditEpoxyController.afterNameChanged)(passwordItem.id)
                     )
                 )
                 afterPasswordChanged(
                     AfterTextChanged(
-                        curry(this@EditEpoxyController.afterPasswordChanged)(password.id)
+                        curry(this@EditEpoxyController.afterPasswordChanged)(passwordItem.id)
                     )
                 )
             }

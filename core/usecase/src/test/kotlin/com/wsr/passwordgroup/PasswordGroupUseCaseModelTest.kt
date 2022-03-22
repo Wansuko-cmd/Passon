@@ -4,7 +4,6 @@ package com.wsr.passwordgroup
 
 import com.google.common.truth.Truth.assertThat
 import com.wsr.email.Email
-import com.wsr.utils.UniqueId
 import kotlin.test.Test
 
 class PasswordGroupUseCaseModelTest {
@@ -12,12 +11,12 @@ class PasswordGroupUseCaseModelTest {
     /*** toUseCaseModel ***/
     @Test
     fun PasswordGroupから実行すれば対応するUseCaseModelに変換して返す() {
-        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
-        val mockedEmail = Email.from("mockedEmail")
-        val mockedTitle = "mockedTitle"
-        val mockedRemark = "mockedRemark"
+        val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
+        val mockedEmail = Email("mockedEmail")
+        val mockedTitle = Title("mockedTitle")
+        val mockedRemark = Remark("mockedRemark")
 
-        val actual = PasswordGroup.of(
+        val actual = PasswordGroup(
             id = mockedPasswordGroupId,
             email = mockedEmail,
             title = mockedTitle,
@@ -26,8 +25,8 @@ class PasswordGroupUseCaseModelTest {
         val expected = PasswordGroupUseCaseModel(
             id = mockedPasswordGroupId.value,
             email = mockedEmail.value,
-            title = mockedTitle,
-            remark = mockedRemark,
+            title = mockedTitle.value,
+            remark = mockedRemark.value,
         )
         assertThat(actual).isEqualTo(expected)
     }

@@ -10,7 +10,9 @@ import com.google.common.truth.Truth.assertThat
 import com.wsr.email.Email
 import com.wsr.infra.PassonDatabase
 import com.wsr.passwordgroup.PasswordGroup
-import com.wsr.utils.UniqueId
+import com.wsr.passwordgroup.PasswordGroupId
+import com.wsr.passwordgroup.Remark
+import com.wsr.passwordgroup.Title
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.runner.RunWith
@@ -42,23 +44,23 @@ class RoomPasswordGroupRepositoryUpdateTest {
     /*** update関数 ***/
     @Test
     fun 新しいPasswordGroupの情報を渡すと指定されたPasswordGroupの更新を行う() = runTest {
-        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
-        val mockedPasswordGroup = PasswordGroup.of(
+        val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
+        val mockedPasswordGroup = PasswordGroup(
             id = mockedPasswordGroupId,
-            email = Email.from("mockedEmail"),
-            title = "mockedTitle",
-            remark = "mockedRemark",
+            email = Email("mockedEmail"),
+            title = Title("mockedTitle"),
+            remark = Remark("mockedRemark"),
         )
         target.create(mockedPasswordGroup)
 
         val updatedMockedPasswordGroup = mockedPasswordGroup.copy(
-            title = "updatedMockedTitle",
-            remark = "updatedMockedRemark",
+            title = Title("updatedMockedTitle"),
+            remark = Remark("updatedMockedRemark"),
         )
         target.update(
             id = updatedMockedPasswordGroup.id,
-            title = updatedMockedPasswordGroup.title,
-            remark = updatedMockedPasswordGroup.remark,
+            title = updatedMockedPasswordGroup.title.value,
+            remark = updatedMockedPasswordGroup.remark.value,
         )
 
         val actual = target.getById(mockedPasswordGroupId)

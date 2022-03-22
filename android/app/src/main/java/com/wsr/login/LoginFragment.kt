@@ -77,7 +77,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         when (errorCode) {
                             BiometricPrompt.ERROR_USER_CANCELED,
                             BiometricPrompt.ERROR_CANCELED,
-                            BiometricPrompt.ERROR_NEGATIVE_BUTTON -> {
+                            BiometricPrompt.ERROR_NEGATIVE_BUTTON,
+                            -> {
                             }
                             else -> showMessage("Error $errorCode")
                         }

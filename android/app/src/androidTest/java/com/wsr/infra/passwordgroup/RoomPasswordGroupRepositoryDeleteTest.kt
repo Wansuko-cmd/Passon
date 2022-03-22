@@ -10,7 +10,9 @@ import com.wsr.email.Email
 import com.wsr.exceptions.GetDataFailedException
 import com.wsr.infra.PassonDatabase
 import com.wsr.passwordgroup.PasswordGroup
-import com.wsr.utils.UniqueId
+import com.wsr.passwordgroup.PasswordGroupId
+import com.wsr.passwordgroup.Remark
+import com.wsr.passwordgroup.Title
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.runner.RunWith
@@ -43,12 +45,12 @@ class RoomPasswordGroupRepositoryDeleteTest {
     /*** delete関数 ***/
     @Test
     fun passwordGroupIdを渡すと対応するPasswordGroupを削除する() = runTest {
-        val mockedPasswordGroupId = UniqueId.from("mockedPasswordGroupId")
-        val mockedPasswordGroup = PasswordGroup.of(
+        val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
+        val mockedPasswordGroup = PasswordGroup(
             id = mockedPasswordGroupId,
-            email = Email.from("mockedEmail"),
-            title = "mockedTitle",
-            remark = "mockedRemark",
+            email = Email("mockedEmail"),
+            title = Title("mockedTitle"),
+            remark = Remark("mockedRemark"),
         )
         target.create(mockedPasswordGroup)
 

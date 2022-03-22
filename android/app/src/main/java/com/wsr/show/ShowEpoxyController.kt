@@ -8,33 +8,33 @@ import com.wsr.showRemarkRow
 import com.wsr.utils.MyTyped2EpoxyController
 
 class ShowEpoxyController(
-    private val onClickShowPassword: (PasswordShowUiState) -> Unit,
-    private val onClickPasswordCopy: (PasswordShowUiState) -> Unit,
+    private val onClickShowPassword: (PasswordItemShowUiState) -> Unit,
+    private val onClickPasswordCopy: (PasswordItemShowUiState) -> Unit,
     private val resources: Resources,
 ) :
-    MyTyped2EpoxyController<PasswordGroupShowUiState, List<PasswordShowUiState>>() {
+    MyTyped2EpoxyController<PasswordGroupShowUiState, List<PasswordItemShowUiState>>() {
 
     override fun buildModels(
         passwordGroup: PasswordGroupShowUiState,
-        list: List<PasswordShowUiState>
+        passwordItems: List<PasswordItemShowUiState>,
     ) {
-        if (list.isEmpty()) {
+        if (passwordItems.isEmpty()) {
             messageRow {
                 id(MESSAGE_ID)
                 message(this@ShowEpoxyController.resources.getString(R.string.show_no_password_message))
             }
         } else {
-            list.forEach { password ->
+            passwordItems.forEach { passwordItem ->
                 showPasswordRow {
-                    id(password.id)
-                    name(password.name)
-                    password(password.password)
-                    showPassword(password.showPassword)
+                    id(passwordItem.id)
+                    name(passwordItem.name)
+                    password(passwordItem.password)
+                    showPassword(passwordItem.showPassword)
                     onClickShowPassword { _, _, _, _ ->
-                        this@ShowEpoxyController.onClickShowPassword(password)
+                        this@ShowEpoxyController.onClickShowPassword(passwordItem)
                     }
                     onClickPasswordCopy { _, _, _, _ ->
-                        this@ShowEpoxyController.onClickPasswordCopy(password)
+                        this@ShowEpoxyController.onClickPasswordCopy(passwordItem)
                     }
                 }
             }

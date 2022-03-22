@@ -18,7 +18,9 @@ class IndexCreatePasswordGroupDialogFragment : DialogFragment() {
 
     private val indexCreatePasswordGroupDialogViewModel by viewModel<IndexCreatePasswordGroupDialogViewModel>()
     private var binding: DialogIndexCreatePasswordGroupBinding by autoCleared()
-    private val indexViewModel by sharedViewModel<IndexViewModel>(owner = { from(requireParentFragment()) })
+    private val indexViewModel by sharedViewModel<IndexViewModel>(owner = {
+        from(requireParentFragment())
+    })
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 

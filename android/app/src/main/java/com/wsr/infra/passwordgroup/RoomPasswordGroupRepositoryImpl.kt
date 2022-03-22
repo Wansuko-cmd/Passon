@@ -7,8 +7,8 @@ import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.exceptions.GetDataFailedException
 import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
+import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
-import com.wsr.utils.UniqueId
 
 class RoomPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: PasswordGroupEntityDao) :
     PasswordGroupRepository {
@@ -18,7 +18,7 @@ class RoomPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: Passwo
         throw GetAllDataFailedException.DatabaseException(e.message ?: "")
     }
 
-    override suspend fun getById(id: UniqueId): PasswordGroup = try {
+    override suspend fun getById(id: PasswordGroupId): PasswordGroup = try {
         passwordGroupEntityDao.getById(id.value).toPasswordGroup()
     } catch (e: NullPointerException) {
         throw GetDataFailedException.NoSuchElementException(e.message ?: "")
@@ -33,17 +33,18 @@ class RoomPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: Passwo
         throw CreateDataFailedException.DatabaseException(e.message ?: "")
     }
 
-    override suspend fun update(id: UniqueId, title: String, remark: String): PasswordGroup = try {
-        val newPasswordGroup = passwordGroupEntityDao.getById(id.value)
-            .copyWithTitle(title)
-            .copyWithRemark(remark)
-        passwordGroupEntityDao.update(newPasswordGroup)
-        newPasswordGroup.toPasswordGroup()
-    } catch (e: Exception) {
-        throw UpdateDataFailedException.DatabaseException(e.message ?: "")
-    }
+    override suspend fun update(id: PasswordGroupId, title: String, remark: String): PasswordGroup =
+        try {
+            val newPasswordGroup = passwordGroupEntityDao.getById(id.value)
+                .copyWithTitle(title)
+                .copyWithRemark(remark)
+            passwordGroupEntityDao.update(newPasswordGroup)
+            newPasswordGroup.toPasswordGroup()
+        } catch (e: Exception) {
+            throw UpdateDataFailedException.DatabaseException(e.message ?: "")
+        }
 
-    override suspend fun delete(id: UniqueId) = try {
+    override suspend fun delete(id: PasswordGroupId) = try {
         passwordGroupEntityDao.delete(id.value)
     } catch (e: Exception) {
         throw DeleteDataFailedException.DatabaseException(e.message ?: "")
