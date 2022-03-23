@@ -27,13 +27,13 @@ import kotlin.test.Test
 class GetAllPasswordGroupUseCaseImplTest {
 
     @MockK
-    private lateinit var passwordGroupRepository: PasswordGroupRepository
+    private lateinit var getAllPasswordGroupQueryService: GetAllPasswordGroupQueryService
     private lateinit var target: GetAllPasswordGroupUseCaseImpl
 
     @BeforeTest
     fun setup() {
         MockKAnnotations.init(this)
-        target = GetAllPasswordGroupUseCaseImpl(passwordGroupRepository)
+        target = GetAllPasswordGroupUseCaseImpl(getAllPasswordGroupQueryService)
     }
 
     /*** getAllByEmail関数 ***/
@@ -49,7 +49,7 @@ class GetAllPasswordGroupUseCaseImplTest {
             )
         }
 
-        coEvery { passwordGroupRepository.getAllByEmail(mockedEmail) } returns mockedPasswordGroups
+        coEvery { getAllPasswordGroupQueryService.getAllByEmail(mockedEmail) } returns mockedPasswordGroups
 
         target.data.test {
             target.getAllByEmail(mockedEmail.value)
@@ -62,15 +62,15 @@ class GetAllPasswordGroupUseCaseImplTest {
             cancelAndIgnoreRemainingEvents()
         }
 
-        coVerify(exactly = 1) { passwordGroupRepository.getAllByEmail(mockedEmail) }
-        confirmVerified(passwordGroupRepository)
+        coVerify(exactly = 1) { getAllPasswordGroupQueryService.getAllByEmail(mockedEmail) }
+        confirmVerified(getAllPasswordGroupQueryService)
     }
 
     @Test
     fun 取得するときにエラーが起きればその内容を返す() = runTest {
         val mockedEmail = Email("mockedEmail")
 
-        coEvery { passwordGroupRepository.getAllByEmail(mockedEmail) } throws GetAllDataFailedException.DatabaseException()
+        coEvery { getAllPasswordGroupQueryService.getAllByEmail(mockedEmail) } throws GetAllDataFailedException.DatabaseException()
 
         target.data.test {
             target.getAllByEmail(mockedEmail.value)
@@ -83,7 +83,7 @@ class GetAllPasswordGroupUseCaseImplTest {
             cancelAndIgnoreRemainingEvents()
         }
 
-        coVerify(exactly = 1) { passwordGroupRepository.getAllByEmail(mockedEmail) }
-        confirmVerified(passwordGroupRepository)
+        coVerify(exactly = 1) { getAllPasswordGroupQueryService.getAllByEmail(mockedEmail) }
+        confirmVerified(getAllPasswordGroupQueryService)
     }
 }

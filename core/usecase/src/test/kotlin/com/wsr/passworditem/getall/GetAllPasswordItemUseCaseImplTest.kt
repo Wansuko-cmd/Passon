@@ -10,7 +10,6 @@ import com.wsr.passworditem.Name
 import com.wsr.passworditem.Password
 import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
-import com.wsr.passworditem.PasswordItemRepository
 import com.wsr.passworditem.toUseCaseModel
 import com.wsr.state.State
 import io.mockk.MockKAnnotations
@@ -27,13 +26,13 @@ import kotlin.test.Test
 class GetAllPasswordItemUseCaseImplTest {
 
     @MockK
-    private lateinit var passwordRepository: PasswordItemRepository
+    private lateinit var getAllPasswordItemQueryService: GetAllPasswordItemQueryService
     private lateinit var target: GetAllPasswordItemUseCaseImpl
 
     @BeforeTest
     fun setup() {
         MockKAnnotations.init(this)
-        target = GetAllPasswordItemUseCaseImpl(passwordRepository)
+        target = GetAllPasswordItemUseCaseImpl(getAllPasswordItemQueryService)
     }
 
     /*** getAllByPasswordGroupId関数 ***/
@@ -48,7 +47,7 @@ class GetAllPasswordItemUseCaseImplTest {
                 password = Password("password$index"),
             )
         }
-        coEvery { passwordRepository.getAllByPasswordGroupId(mockedPasswordGroupId) } returns mockedPasswordItems
+        coEvery { getAllPasswordItemQueryService.getAllByPasswordGroupId(mockedPasswordGroupId) } returns mockedPasswordItems
 
         target.data.test {
             target.getAllByPasswordGroupId(mockedPasswordGroupId.value)
@@ -61,14 +60,14 @@ class GetAllPasswordItemUseCaseImplTest {
             cancelAndIgnoreRemainingEvents()
         }
 
-        coVerify(exactly = 1) { passwordRepository.getAllByPasswordGroupId(mockedPasswordGroupId) }
-        confirmVerified(passwordRepository)
+        coVerify(exactly = 1) { getAllPasswordItemQueryService.getAllByPasswordGroupId(mockedPasswordGroupId) }
+        confirmVerified(getAllPasswordItemQueryService)
     }
 
     @Test
     fun 取得するときにエラーが起きればその内容を返す() = runTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
-        coEvery { passwordRepository.getAllByPasswordGroupId(mockedPasswordGroupId) } throws GetAllDataFailedException.DatabaseException()
+        coEvery { getAllPasswordItemQueryService.getAllByPasswordGroupId(mockedPasswordGroupId) } throws GetAllDataFailedException.DatabaseException()
 
         target.data.test {
             target.getAllByPasswordGroupId(mockedPasswordGroupId.value)
@@ -81,7 +80,7 @@ class GetAllPasswordItemUseCaseImplTest {
             cancelAndIgnoreRemainingEvents()
         }
 
-        coVerify(exactly = 1) { passwordRepository.getAllByPasswordGroupId(mockedPasswordGroupId) }
-        confirmVerified(passwordRepository)
+        coVerify(exactly = 1) { getAllPasswordItemQueryService.getAllByPasswordGroupId(mockedPasswordGroupId) }
+        confirmVerified(getAllPasswordItemQueryService)
     }
 }

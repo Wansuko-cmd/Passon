@@ -8,7 +8,6 @@ import com.wsr.email.Email
 import com.wsr.exceptions.GetDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
-import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
 import com.wsr.passwordgroup.toUseCaseModel
@@ -27,13 +26,13 @@ import kotlin.test.Test
 class GetPasswordGroupUseCaseImplTest {
 
     @MockK
-    private lateinit var passwordGroupRepository: PasswordGroupRepository
+    private lateinit var getPasswordGroupQueryService: GetPasswordGroupQueryService
     private lateinit var target: GetPasswordGroupUseCaseImpl
 
     @BeforeTest
     fun setup() {
         MockKAnnotations.init(this)
-        target = GetPasswordGroupUseCaseImpl(passwordGroupRepository)
+        target = GetPasswordGroupUseCaseImpl(getPasswordGroupQueryService)
     }
 
     /*** getById関数 ***/
@@ -50,7 +49,7 @@ class GetPasswordGroupUseCaseImplTest {
             remark = mockedRemark,
         )
 
-        coEvery { passwordGroupRepository.getById(mockedPasswordGroupId) } returns mockedPasswordGroup
+        coEvery { getPasswordGroupQueryService.getById(mockedPasswordGroupId) } returns mockedPasswordGroup
 
         target.data.test {
             target.getById(mockedPasswordGroupId.value)
@@ -63,15 +62,15 @@ class GetPasswordGroupUseCaseImplTest {
             cancelAndIgnoreRemainingEvents()
         }
 
-        coVerify(exactly = 1) { passwordGroupRepository.getById(mockedPasswordGroupId) }
-        confirmVerified(passwordGroupRepository)
+        coVerify(exactly = 1) { getPasswordGroupQueryService.getById(mockedPasswordGroupId) }
+        confirmVerified(getPasswordGroupQueryService)
     }
 
     @Test
     fun 取得するときにエラーが起きればその内容を返す() = runTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
 
-        coEvery { passwordGroupRepository.getById(mockedPasswordGroupId) } throws GetDataFailedException.DatabaseException()
+        coEvery { getPasswordGroupQueryService.getById(mockedPasswordGroupId) } throws GetDataFailedException.DatabaseException()
 
         target.data.test {
             target.getById(mockedPasswordGroupId.value)
@@ -84,7 +83,7 @@ class GetPasswordGroupUseCaseImplTest {
             cancelAndIgnoreRemainingEvents()
         }
 
-        coVerify(exactly = 1) { passwordGroupRepository.getById(mockedPasswordGroupId) }
-        confirmVerified(passwordGroupRepository)
+        coVerify(exactly = 1) { getPasswordGroupQueryService.getById(mockedPasswordGroupId) }
+        confirmVerified(getPasswordGroupQueryService)
     }
 }
