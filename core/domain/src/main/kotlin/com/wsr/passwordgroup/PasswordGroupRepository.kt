@@ -8,12 +8,6 @@ import com.wsr.exceptions.GetDataFailedException
 import com.wsr.exceptions.UpdateDataFailedException
 
 interface PasswordGroupRepository {
-    @Throws(GetAllDataFailedException::class)
-    suspend fun getAllByEmail(email: Email): List<PasswordGroup>
-
-    @Throws(GetDataFailedException::class)
-    suspend fun getById(id: PasswordGroupId): PasswordGroup
-
     @Throws(CreateDataFailedException::class)
     suspend fun create(passwordGroup: PasswordGroup)
 

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class GetAllPasswordItemUseCaseImpl(
-    private val passwordRepository: PasswordItemRepository,
+    private val getAllPasswordItemQueryService: GetAllPasswordItemQueryService,
 ) : GetAllPasswordItemUseCase {
 
     private val _data =
@@ -20,7 +20,7 @@ class GetAllPasswordItemUseCaseImpl(
     override suspend fun getAllByPasswordGroupId(passwordGroupId: String) {
         try {
             _data.emit(State.Loading)
-            val passwords = passwordRepository
+            val passwords = getAllPasswordItemQueryService
                 .getAllByPasswordGroupId(PasswordGroupId(passwordGroupId))
                 .map { it.toUseCaseModel() }
 

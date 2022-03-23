@@ -10,12 +10,7 @@ import com.wsr.passworditem.PasswordItemRepository
 
 class RoomPasswordItemRepositoryImpl(private val passwordEntityDao: PasswordItemEntityDao) :
     PasswordItemRepository {
-    override suspend fun getAllByPasswordGroupId(passwordGroupId: PasswordGroupId): List<PasswordItem> =
-        try {
-            passwordEntityDao.getAllByPasswordGroupId(passwordGroupId.value).map { it.toPassword() }
-        } catch (e: Exception) {
-            throw GetAllDataFailedException.DatabaseException(e.message ?: "")
-        }
+
 
     override suspend fun upsert(passwordItem: PasswordItem) = try {
         passwordEntityDao.upsert(passwordItem.toEntity())

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 class GetPasswordGroupUseCaseImpl(
-    private val passwordGroupRepository: PasswordGroupRepository,
+    private val getPasswordGroupQueryService: GetPasswordGroupQueryService,
 ) : GetPasswordGroupUseCase {
 
     private val _data =
@@ -21,7 +21,7 @@ class GetPasswordGroupUseCaseImpl(
     override suspend fun getById(id: String) {
         try {
             _data.emit(State.Loading)
-            val passwordGroup = passwordGroupRepository
+            val passwordGroup = getPasswordGroupQueryService
                 .getById(PasswordGroupId(id))
                 .toUseCaseModel()
 
