@@ -10,7 +10,7 @@ interface PasswordItemRepository {
     suspend fun getAllByPasswordGroupId(passwordGroupId: PasswordGroupId): List<PasswordItem>
 
     @Throws(UpsertDataFailedException::class)
-    suspend fun upsert(passwordItem: PasswordItem): PasswordItem
+    suspend fun upsert(passwordItem: PasswordItem)
 
     @Throws(DeleteDataFailedException::class)
     suspend fun delete(id: PasswordItemId)

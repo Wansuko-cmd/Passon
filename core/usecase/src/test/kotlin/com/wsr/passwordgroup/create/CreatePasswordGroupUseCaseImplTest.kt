@@ -48,7 +48,7 @@ class CreatePasswordGroupUseCaseImplTest {
         val mockedPasswordGroupId = PasswordGroupId(uuid)
         val mockedEmail = Email("mockedEmail")
         val mockedTitle = Title("mockedTitle")
-        val mockedRemark = Remark("mockedRemark")
+        val mockedRemark = Remark("")
         val mockedPasswordGroup = PasswordGroup(
             id = mockedPasswordGroupId,
             email = mockedEmail,
@@ -56,7 +56,7 @@ class CreatePasswordGroupUseCaseImplTest {
             remark = mockedRemark,
         )
 
-        coEvery { passwordGroupRepository.create(any()) } returns mockedPasswordGroup
+        coEvery { passwordGroupRepository.create(any()) } returns Unit
 
         val actual = target.create(
             email = mockedEmail.value,

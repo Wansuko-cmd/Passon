@@ -55,7 +55,8 @@ class UpdatePasswordGroupUseCaseImplTest {
                 title = mockedPasswordGroup.title.value,
                 remark = mockedPasswordGroup.remark.value,
             )
-        } returns mockedPasswordGroup
+        } returns Unit
+        coEvery { passwordGroupRepository.getById(mockedPasswordGroupId) } returns mockedPasswordGroup
 
         val actual = target.update(
             id = mockedPasswordGroup.id.value,
@@ -72,6 +73,7 @@ class UpdatePasswordGroupUseCaseImplTest {
                 title = mockedPasswordGroup.title.value,
                 remark = mockedPasswordGroup.remark.value,
             )
+            passwordGroupRepository.getById(mockedPasswordGroupId)
         }
         confirmVerified(passwordGroupRepository)
     }

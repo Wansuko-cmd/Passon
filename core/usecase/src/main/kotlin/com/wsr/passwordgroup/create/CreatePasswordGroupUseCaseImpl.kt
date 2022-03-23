@@ -23,8 +23,8 @@ class CreatePasswordGroupUseCaseImpl(
             email = Email(email),
             title = Title(title),
         )
-
-        State.Success(passwordGroupRepository.create(passwordGroup).toUseCaseModel())
+        passwordGroupRepository.create(passwordGroup)
+        State.Success(passwordGroup.toUseCaseModel())
     } catch (e: CreateDataFailedException) {
         State.Failure(e)
     }

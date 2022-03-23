@@ -16,10 +16,10 @@ class UpdatePasswordGroupUseCaseImpl(
         title: String,
         remark: String,
     ): State<PasswordGroupUseCaseModel, UpdateDataFailedException> = try {
-        State.Success(
-            passwordGroupRepository.update(PasswordGroupId(id), title, remark)
-                .toUseCaseModel()
-        )
+        passwordGroupRepository.update(PasswordGroupId(id), title, remark)
+        passwordGroupRepository.getById(PasswordGroupId(id))
+            .toUseCaseModel()
+            .let { State.Success(it) }
     } catch (e: UpdateDataFailedException) {
         State.Failure(e)
     }
