@@ -2,6 +2,7 @@ package com.wsr.passworditem
 
 import com.wsr.exceptions.DeleteDataFailedException
 import com.wsr.exceptions.UpsertDataFailedException
+import com.wsr.passwordgroup.PasswordGroupId
 
 interface PasswordItemRepository {
 
@@ -10,4 +11,7 @@ interface PasswordItemRepository {
 
     @Throws(DeleteDataFailedException::class)
     suspend fun delete(id: PasswordItemId)
+
+    @Throws(DeleteDataFailedException::class)
+    suspend fun deleteByPasswordGroupId(passwordGroupId: PasswordGroupId)
 }

@@ -1,10 +1,10 @@
-package com.wsr.passwordgroup.update
+package com.wsr.passwordgroup.delete
 
 import com.wsr.exceptions.GetDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 
-interface UpdatePasswordGroupUseCasaeQueryService {
+interface DeletePasswordGroupUseCaseQueryService {
     @Throws(GetDataFailedException::class)
     suspend fun getById(passwordGroupId: PasswordGroupId): PasswordGroup
 }

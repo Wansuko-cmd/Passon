@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Passon</string>
 
-    <!-- メニュー画面 -->
+    <!-- メニュー画面タイトル -->
+    <string name="menu_title_show">Show</string>
     <string name="menu_title_edit">Edit</string>
+
+    <!-- メニューアイテム共通 -->
     <string name="menu_title_setting">Setting</string>
 
     <!-- ログイン画面 -->

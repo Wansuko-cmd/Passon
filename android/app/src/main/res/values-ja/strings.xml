@@ -2,6 +2,7 @@
     <string name="app_name">Passon</string>
 
     <!-- メニュー画面 -->
+    <string name="menu_title_show">詳細</string>
     <string name="menu_title_edit">編集</string>
     <string name="menu_title_setting">設定</string>
 

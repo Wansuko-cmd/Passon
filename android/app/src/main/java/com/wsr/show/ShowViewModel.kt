@@ -3,7 +3,9 @@ package com.wsr.show
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.ext.updateWith
+import com.wsr.passwordgroup.delete.DeletePasswordGroupUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
+import com.wsr.passworditem.delete.DeletePasswordItemUseCase
 import com.wsr.passworditem.getall.GetAllPasswordItemUseCase
 import com.wsr.show.PasswordGroupShowUiState.Companion.toShowUiModel
 import com.wsr.show.PasswordItemShowUiState.Companion.toShowUiModel
@@ -16,6 +18,8 @@ import kotlinx.coroutines.launch
 class ShowViewModel(
     private val getPasswordGroupUseCase: GetPasswordGroupUseCase,
     private val getAllPasswordItemUseCase: GetAllPasswordItemUseCase,
+    private val deletePasswordItemUseCase: DeletePasswordItemUseCase,
+    private val deletePasswordGroupUseCase: DeletePasswordGroupUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ShowUiState())
@@ -99,4 +103,11 @@ class ShowViewModel(
 
             _uiState.emit(newUiState)
         }
+
+    fun delete(passwordGroupId: String) {
+        viewModelScope.launch {
+            deletePasswordGroupUseCase.delete(passwordGroupId)
+            deletePasswordItemUseCase.deleteAll(passwordGroupId)
+        }
+    }
 }

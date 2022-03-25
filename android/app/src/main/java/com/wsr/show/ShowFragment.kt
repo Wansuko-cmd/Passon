@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,8 +31,22 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
         inflater.inflate(R.menu.show_menu, menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.show_menu_delete -> {
+                showViewModel.delete(passwordGroupId)
+                findNavController().navigate(ShowFragmentDirections.actionShowFragmentToIndexFragment())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setHasOptionsMenu(true)
+
         val binding = FragmentShowBinding.bind(view)
 
         showViewModel.fetch(passwordGroupId)
