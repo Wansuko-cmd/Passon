@@ -10,8 +10,6 @@ import com.wsr.passwordgroup.PasswordGroupRepository
 class RoomPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: PasswordGroupEntityDao) :
     PasswordGroupRepository {
 
-
-
     override suspend fun create(passwordGroup: PasswordGroup) = try {
         passwordGroupEntityDao.insert(passwordGroup.toEntity())
     } catch (e: Exception) {

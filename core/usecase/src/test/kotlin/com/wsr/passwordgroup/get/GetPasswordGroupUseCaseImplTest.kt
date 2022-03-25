@@ -26,7 +26,7 @@ import kotlin.test.Test
 class GetPasswordGroupUseCaseImplTest {
 
     @MockK
-    private lateinit var getPasswordGroupQueryService: GetPasswordGroupQueryService
+    private lateinit var getPasswordGroupQueryService: GetPasswordGroupUseCaseQueryService
     private lateinit var target: GetPasswordGroupUseCaseImpl
 
     @BeforeTest

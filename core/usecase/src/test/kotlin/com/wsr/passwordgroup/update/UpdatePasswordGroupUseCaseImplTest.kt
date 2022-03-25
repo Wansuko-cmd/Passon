@@ -28,7 +28,7 @@ class UpdatePasswordGroupUseCaseImplTest {
     @MockK
     private lateinit var passwordGroupRepository: PasswordGroupRepository
     @MockK
-    private lateinit var updatePasswordGroupQueryService: UpdatePasswordGroupQueryService
+    private lateinit var updatePasswordGroupQueryService: UpdatePasswordGroupUseCasaeQueryService
     private lateinit var target: UpdatePasswordGroupUseCaseImpl
 
     @BeforeTest

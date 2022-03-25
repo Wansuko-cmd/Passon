@@ -8,7 +8,6 @@ import com.wsr.email.Email
 import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
-import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
 import com.wsr.passwordgroup.toUseCaseModel
@@ -27,7 +26,7 @@ import kotlin.test.Test
 class GetAllPasswordGroupUseCaseImplTest {
 
     @MockK
-    private lateinit var getAllPasswordGroupQueryService: GetAllPasswordGroupQueryService
+    private lateinit var getAllPasswordGroupQueryService: GetAllPasswordGroupUseCaseQueryService
     private lateinit var target: GetAllPasswordGroupUseCaseImpl
 
     @BeforeTest

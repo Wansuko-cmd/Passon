@@ -4,7 +4,7 @@ import com.wsr.email.Email
 import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 
-interface GetAllPasswordGroupQueryService {
+interface GetAllPasswordGroupUseCaseQueryService {
     @Throws(GetAllDataFailedException::class)
     suspend fun getAllByEmail(email: Email): List<PasswordGroup>
 }

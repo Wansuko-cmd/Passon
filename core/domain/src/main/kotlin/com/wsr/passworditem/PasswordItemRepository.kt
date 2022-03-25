@@ -1,9 +1,7 @@
 package com.wsr.passworditem
 
 import com.wsr.exceptions.DeleteDataFailedException
-import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.exceptions.UpsertDataFailedException
-import com.wsr.passwordgroup.PasswordGroupId
 
 interface PasswordItemRepository {
 

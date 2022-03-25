@@ -4,11 +4,11 @@ import com.wsr.exceptions.GetDataFailedException
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
-import com.wsr.passwordgroup.get.GetPasswordGroupQueryService
+import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCasaeQueryService
 
-class RoomGetPasswordGroupQueryServiceImpl(
+class RoomUpdatePasswordGroupUseCaseQueryServiceImpl(
     private val passwordGroupEntityDao: PasswordGroupEntityDao,
-) : GetPasswordGroupQueryService {
+) : UpdatePasswordGroupUseCasaeQueryService {
     override suspend fun getById(passwordGroupId: PasswordGroupId): PasswordGroup = try {
         passwordGroupEntityDao.getById(passwordGroupId.value).toPasswordGroup()
     } catch (e: NullPointerException) {

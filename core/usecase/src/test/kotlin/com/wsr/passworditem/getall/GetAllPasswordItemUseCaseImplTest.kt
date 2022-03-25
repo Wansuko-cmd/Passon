@@ -26,7 +26,7 @@ import kotlin.test.Test
 class GetAllPasswordItemUseCaseImplTest {
 
     @MockK
-    private lateinit var getAllPasswordItemQueryService: GetAllPasswordItemQueryService
+    private lateinit var getAllPasswordItemQueryService: GetAllPasswordItemUseCaseQueryService
     private lateinit var target: GetAllPasswordItemUseCaseImpl
 
     @BeforeTest

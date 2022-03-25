@@ -7,31 +7,31 @@ import com.wsr.index.dialog.IndexCreatePasswordGroupDialogViewModel
 import com.wsr.infra.PassonDatabase
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passwordgroup.RoomPasswordGroupRepositoryImpl
-import com.wsr.infra.passwordgroup.queryservice.RoomGetAllPasswordGroupQueryServiceImpl
-import com.wsr.infra.passwordgroup.queryservice.RoomGetPasswordGroupQueryServiceImpl
-import com.wsr.infra.passwordgroup.queryservice.RoomUpdatePasswordGroupQueryServiceImpl
+import com.wsr.infra.passwordgroup.queryservice.RoomGetAllPasswordGroupUseCaseQueryServiceImpl
+import com.wsr.infra.passwordgroup.queryservice.RoomGetPasswordGroupUseCaseQueryServiceImpl
+import com.wsr.infra.passwordgroup.queryservice.RoomUpdatePasswordGroupUseCaseQueryServiceImpl
 import com.wsr.infra.passworditem.PasswordItemEntityDao
 import com.wsr.infra.passworditem.RoomPasswordItemRepositoryImpl
-import com.wsr.infra.passworditem.queryservice.RoomGetAllPasswordItemQueryServiceImpl
+import com.wsr.infra.passworditem.queryservice.RoomGetAllPasswordItemUseCaseQueryServiceImpl
 import com.wsr.login.LoginViewModel
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.create.CreatePasswordGroupUseCase
 import com.wsr.passwordgroup.create.CreatePasswordGroupUseCaseImpl
-import com.wsr.passwordgroup.get.GetPasswordGroupQueryService
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCaseImpl
-import com.wsr.passwordgroup.getall.GetAllPasswordGroupQueryService
+import com.wsr.passwordgroup.get.GetPasswordGroupUseCaseQueryService
 import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCase
 import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCaseImpl
-import com.wsr.passwordgroup.update.UpdatePasswordGroupQueryService
+import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCaseQueryService
+import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCasaeQueryService
 import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCase
 import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCaseImpl
 import com.wsr.passworditem.PasswordItemRepository
 import com.wsr.passworditem.create.CreatePasswordItemUseCase
 import com.wsr.passworditem.create.CreatePasswordItemUseCaseImpl
-import com.wsr.passworditem.getall.GetAllPasswordItemQueryService
 import com.wsr.passworditem.getall.GetAllPasswordItemUseCase
 import com.wsr.passworditem.getall.GetAllPasswordItemUseCaseImpl
+import com.wsr.passworditem.getall.GetAllPasswordItemUseCaseQueryService
 import com.wsr.passworditem.upsert.UpsertPasswordItemUseCase
 import com.wsr.passworditem.upsert.UpsertPasswordItemUseCaseImpl
 import com.wsr.show.ShowViewModel
@@ -65,15 +65,14 @@ val module = module {
     single<UpsertPasswordItemUseCase> { UpsertPasswordItemUseCaseImpl(get()) }
     single<CreatePasswordItemUseCase> { CreatePasswordItemUseCaseImpl() }
 
-
     /*** QueryService ***/
     // Password Group
-    single<GetAllPasswordGroupQueryService> { RoomGetAllPasswordGroupQueryServiceImpl(get()) }
-    single<GetPasswordGroupQueryService> { RoomGetPasswordGroupQueryServiceImpl(get()) }
-    single<UpdatePasswordGroupQueryService> { RoomUpdatePasswordGroupQueryServiceImpl(get()) }
+    single<GetAllPasswordGroupUseCaseQueryService> { RoomGetAllPasswordGroupUseCaseQueryServiceImpl(get()) }
+    single<GetPasswordGroupUseCaseQueryService> { RoomGetPasswordGroupUseCaseQueryServiceImpl(get()) }
+    single<UpdatePasswordGroupUseCasaeQueryService> { RoomUpdatePasswordGroupUseCaseQueryServiceImpl(get()) }
 
     // Password Item
-    single<GetAllPasswordItemQueryService> { RoomGetAllPasswordItemQueryServiceImpl(get()) }
+    single<GetAllPasswordItemUseCaseQueryService> { RoomGetAllPasswordItemUseCaseQueryServiceImpl(get()) }
 
     /*** Repository ***/
     single<PasswordGroupRepository> { RoomPasswordGroupRepositoryImpl(get()) }

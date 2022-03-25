@@ -4,11 +4,11 @@ import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.infra.passworditem.PasswordItemEntityDao
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passworditem.PasswordItem
-import com.wsr.passworditem.getall.GetAllPasswordItemQueryService
+import com.wsr.passworditem.getall.GetAllPasswordItemUseCaseQueryService
 
-class RoomGetAllPasswordItemQueryServiceImpl(
+class RoomGetAllPasswordItemUseCaseQueryServiceImpl(
     private val passwordEntityDao: PasswordItemEntityDao,
-)  : GetAllPasswordItemQueryService {
+) : GetAllPasswordItemUseCaseQueryService {
     override suspend fun getAllByPasswordGroupId(passwordGroupId: PasswordGroupId): List<PasswordItem> =
         try {
             passwordEntityDao.getAllByPasswordGroupId(passwordGroupId.value).map { it.toPassword() }

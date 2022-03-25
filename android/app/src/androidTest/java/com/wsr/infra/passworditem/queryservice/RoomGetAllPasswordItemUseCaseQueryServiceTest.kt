@@ -1,6 +1,6 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.infra.passworditem
+package com.wsr.infra.passworditem.queryservice
 
 import android.content.Context
 import androidx.room.Room
@@ -8,6 +8,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import com.wsr.infra.PassonDatabase
+import com.wsr.infra.passworditem.PasswordItemEntityDao
+import com.wsr.infra.passworditem.toEntity
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passworditem.Name
 import com.wsr.passworditem.Password
@@ -22,11 +24,10 @@ import kotlin.test.Test
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-
-class RoomPasswordItemRepositoryDeleteTest {
+class RoomGetAllPasswordItemUseCaseQueryServiceTest {
     private lateinit var passwordEntityDao: PasswordItemEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: RoomPasswordItemRepositoryImpl
+    private lateinit var target: RoomGetAllPasswordItemUseCaseQueryServiceImpl
 
     @BeforeTest
     fun setup() {
@@ -34,7 +35,7 @@ class RoomPasswordItemRepositoryDeleteTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordEntityDao = db.passwordEntityDao()
 
-        target = RoomPasswordItemRepositoryImpl(passwordEntityDao)
+        target = RoomGetAllPasswordItemUseCaseQueryServiceImpl(passwordEntityDao)
     }
 
     @AfterTest
@@ -42,23 +43,22 @@ class RoomPasswordItemRepositoryDeleteTest {
         db.close()
     }
 
-    /*** delete関数 ***/
+    /*** getAllByPasswordGroupId関数 ***/
     @Test
-    fun passwordItemIdを渡すと対応するPasswordを削除する() = runTest {
-
-        val mockedPasswordItemId = PasswordItemId("mockedpasswordItemId")
+    fun passwordGroupIdを渡すと所属する全てのPasswordGroupを返す() = runTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
-        val mockedPasswordItem = PasswordItem(
-            id = mockedPasswordItemId,
-            passwordGroupId = mockedPasswordGroupId,
-            name = Name("mockedName"),
-            password = Password("mockedPassword"),
-        )
-        target.upsert(mockedPasswordItem)
+        val mockedPasswordItems = List(5) { index ->
+            PasswordItem(
+                id = PasswordItemId("mockedpasswordItemId$index"),
+                passwordGroupId = mockedPasswordGroupId,
+                name = Name("mockedName$index"),
+                password = Password("mockedPassword$index"),
+            )
+        }
 
-        target.delete(mockedPasswordItemId)
+        mockedPasswordItems.forEach { passwordEntityDao.upsert(it.toEntity()) }
 
         val actual = target.getAllByPasswordGroupId(mockedPasswordGroupId)
-        assertThat(actual).isEmpty()
+        assertThat(actual).isEqualTo(mockedPasswordItems)
     }
 }
