@@ -29,6 +29,11 @@
     <string name="show_show_password_checkbox_text">Show Password</string>
     <string name="show_no_password_message">Click right bottom button to register your password</string>
     <string name="show_toast_on_copy_message">Copied</string>
+    <string name="show_delete_password_group_dialog_title">Waring</string>
+    <string name="show_delete_password_group_dialog_text">Are you sure you want to delete this password group?</string>
+    <string name="show_delete_password_group_dialog_ok_button">Delete</string>
+    <string name="show_delete_password_group_dialog_cancel_button">Cancel</string>
+    <string name="show_menu_icon_delete">Delete</string>
 
     <!-- 編集画面 -->
     <string name="edit_title_row">Title</string>

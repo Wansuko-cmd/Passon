@@ -17,12 +17,16 @@ import androidx.navigation.fragment.navArgs
 import com.wsr.R
 import com.wsr.databinding.FragmentShowBinding
 import com.wsr.ext.launchInLifecycleScope
+import com.wsr.ext.sharedViewModel
+import com.wsr.ext.showDialogIfNotDrew
+import com.wsr.show.dialog.ShowDeletePasswordGroupDialogFragment
 import com.wsr.state.consume
+import org.koin.androidx.viewmodel.ViewModelOwner
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ShowFragment : Fragment(R.layout.fragment_show) {
 
-    private val showViewModel: ShowViewModel by viewModel()
+    private val showViewModel: ShowViewModel by sharedViewModel(owner = { ViewModelOwner.from(this) })
 
     private val args: ShowFragmentArgs by navArgs()
     private val passwordGroupId by lazy { args.passwordGroupId }
@@ -34,8 +38,9 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.show_menu_delete -> {
-                showViewModel.delete(passwordGroupId)
-                findNavController().navigate(ShowFragmentDirections.actionShowFragmentToIndexFragment())
+                showDialogIfNotDrew(tag) {
+                    ShowDeletePasswordGroupDialogFragment.create(passwordGroupId)
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -86,6 +91,12 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
                     failure = ::showErrorMessage,
                     loading = { /* do nothing */ },
                 )
+            }
+        }
+
+        launchInLifecycleScope(Lifecycle.State.STARTED) {
+            showViewModel.navigateToIndexEvent.collect {
+                findNavController().navigate(ShowFragmentDirections.actionShowFragmentToIndexFragment())
             }
         }
     }

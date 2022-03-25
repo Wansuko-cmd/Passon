@@ -11,7 +11,9 @@ import com.wsr.show.PasswordGroupShowUiState.Companion.toShowUiModel
 import com.wsr.show.PasswordItemShowUiState.Companion.toShowUiModel
 import com.wsr.state.map
 import com.wsr.state.mapBoth
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -24,6 +26,9 @@ class ShowViewModel(
 
     private val _uiState = MutableStateFlow(ShowUiState())
     val uiState = _uiState.asStateFlow()
+
+    private val _navigateToIndexEvent = MutableSharedFlow<Unit>()
+    val navigateToIndexEvent = _navigateToIndexEvent.asSharedFlow()
 
     init {
         setupTitle()
@@ -108,6 +113,7 @@ class ShowViewModel(
         viewModelScope.launch {
             deletePasswordGroupUseCase.delete(passwordGroupId)
             deletePasswordItemUseCase.deleteAll(passwordGroupId)
+            _navigateToIndexEvent.emit(Unit)
         }
     }
 }
