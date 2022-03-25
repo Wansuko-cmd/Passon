@@ -1,12 +1,14 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.infra.passworditem
+package com.wsr.infra.passworditem.repository
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
 import com.wsr.infra.PassonDatabase
+import com.wsr.infra.passworditem.PasswordItemEntityDao
+import com.wsr.infra.passworditem.RoomPasswordItemRepositoryImpl
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passworditem.Name
 import com.wsr.passworditem.Password
@@ -50,7 +52,7 @@ class RoomPasswordItemRepositoryUpsertTest {
         )
         target.upsert(mockedPassword)
 
-        val actual = target.getAllByPasswordGroupId(mockedPassword.passwordGroupId)
+        val actual = passwordEntityDao.getAllByPasswordGroupId(mockedPassword.passwordGroupId.value)
         assertThat(actual).contains(mockedPassword)
     }
 
@@ -76,7 +78,7 @@ class RoomPasswordItemRepositoryUpsertTest {
         )
         target.upsert(updatedMockedPassword)
 
-        val actual = target.getAllByPasswordGroupId(mockedPasswordGroupId)
+        val actual = passwordEntityDao.getAllByPasswordGroupId(mockedPasswordGroupId.value)
         assertThat(actual).contains(updatedMockedPassword)
     }
 }

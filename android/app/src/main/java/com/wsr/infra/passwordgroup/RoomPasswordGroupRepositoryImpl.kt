@@ -1,10 +1,7 @@
 package com.wsr.infra.passwordgroup
 
-import com.wsr.email.Email
 import com.wsr.exceptions.CreateDataFailedException
 import com.wsr.exceptions.DeleteDataFailedException
-import com.wsr.exceptions.GetAllDataFailedException
-import com.wsr.exceptions.GetDataFailedException
 import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
@@ -12,34 +9,19 @@ import com.wsr.passwordgroup.PasswordGroupRepository
 
 class RoomPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: PasswordGroupEntityDao) :
     PasswordGroupRepository {
-    override suspend fun getAllByEmail(email: Email): List<PasswordGroup> = try {
-        passwordGroupEntityDao.getAllByEmail(email.value).map { it.toPasswordGroup() }
-    } catch (e: Exception) {
-        throw GetAllDataFailedException.DatabaseException(e.message ?: "")
-    }
 
-    override suspend fun getById(id: PasswordGroupId): PasswordGroup = try {
-        passwordGroupEntityDao.getById(id.value).toPasswordGroup()
-    } catch (e: NullPointerException) {
-        throw GetDataFailedException.NoSuchElementException(e.message ?: "")
-    } catch (e: Exception) {
-        throw GetDataFailedException.DatabaseException(e.message ?: "")
-    }
-
-    override suspend fun create(passwordGroup: PasswordGroup): PasswordGroup = try {
+    override suspend fun create(passwordGroup: PasswordGroup) = try {
         passwordGroupEntityDao.insert(passwordGroup.toEntity())
-        passwordGroup
     } catch (e: Exception) {
         throw CreateDataFailedException.DatabaseException(e.message ?: "")
     }
 
-    override suspend fun update(id: PasswordGroupId, title: String, remark: String): PasswordGroup =
+    override suspend fun update(id: PasswordGroupId, title: String, remark: String) =
         try {
-            val newPasswordGroup = passwordGroupEntityDao.getById(id.value)
+            passwordGroupEntityDao.getById(id.value)
                 .copyWithTitle(title)
                 .copyWithRemark(remark)
-            passwordGroupEntityDao.update(newPasswordGroup)
-            newPasswordGroup.toPasswordGroup()
+                .let { passwordGroupEntityDao.update(it) }
         } catch (e: Exception) {
             throw UpdateDataFailedException.DatabaseException(e.message ?: "")
         }

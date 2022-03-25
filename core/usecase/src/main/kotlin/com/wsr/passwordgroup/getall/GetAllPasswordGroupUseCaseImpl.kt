@@ -2,7 +2,6 @@ package com.wsr.passwordgroup.getall
 
 import com.wsr.email.Email
 import com.wsr.exceptions.GetAllDataFailedException
-import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.PasswordGroupUseCaseModel
 import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
@@ -11,7 +10,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 class GetAllPasswordGroupUseCaseImpl(
-    private val passwordGroupRepository: PasswordGroupRepository,
+    private val getAllPasswordGroupQueryService: GetAllPasswordGroupUseCaseQueryService,
 ) : GetAllPasswordGroupUseCase {
 
     private val _data =
@@ -21,7 +20,7 @@ class GetAllPasswordGroupUseCaseImpl(
     override suspend fun getAllByEmail(email: String) {
         try {
             _data.emit(State.Loading)
-            val passwordGroups = passwordGroupRepository
+            val passwordGroups = getAllPasswordGroupQueryService
                 .getAllByEmail(Email(email))
                 .map { it.toUseCaseModel() }
 

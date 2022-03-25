@@ -27,12 +27,14 @@ class UpdatePasswordGroupUseCaseImplTest {
 
     @MockK
     private lateinit var passwordGroupRepository: PasswordGroupRepository
+    @MockK
+    private lateinit var updatePasswordGroupQueryService: UpdatePasswordGroupUseCasaeQueryService
     private lateinit var target: UpdatePasswordGroupUseCaseImpl
 
     @BeforeTest
     fun setup() {
         MockKAnnotations.init(this)
-        target = UpdatePasswordGroupUseCaseImpl(passwordGroupRepository)
+        target = UpdatePasswordGroupUseCaseImpl(passwordGroupRepository, updatePasswordGroupQueryService)
     }
 
     /*** update関数 ***/
@@ -55,7 +57,8 @@ class UpdatePasswordGroupUseCaseImplTest {
                 title = mockedPasswordGroup.title.value,
                 remark = mockedPasswordGroup.remark.value,
             )
-        } returns mockedPasswordGroup
+        } returns Unit
+        coEvery { updatePasswordGroupQueryService.getById(mockedPasswordGroupId) } returns mockedPasswordGroup
 
         val actual = target.update(
             id = mockedPasswordGroup.id.value,
@@ -72,8 +75,9 @@ class UpdatePasswordGroupUseCaseImplTest {
                 title = mockedPasswordGroup.title.value,
                 remark = mockedPasswordGroup.remark.value,
             )
+            updatePasswordGroupQueryService.getById(mockedPasswordGroupId)
         }
-        confirmVerified(passwordGroupRepository)
+        confirmVerified(passwordGroupRepository, updatePasswordGroupQueryService)
     }
 
     @Test

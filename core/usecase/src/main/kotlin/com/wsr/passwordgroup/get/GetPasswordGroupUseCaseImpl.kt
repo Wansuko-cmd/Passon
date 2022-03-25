@@ -2,7 +2,6 @@ package com.wsr.passwordgroup.get
 
 import com.wsr.exceptions.GetDataFailedException
 import com.wsr.passwordgroup.PasswordGroupId
-import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.PasswordGroupUseCaseModel
 import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
@@ -11,7 +10,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 class GetPasswordGroupUseCaseImpl(
-    private val passwordGroupRepository: PasswordGroupRepository,
+    private val getPasswordGroupQueryService: GetPasswordGroupUseCaseQueryService,
 ) : GetPasswordGroupUseCase {
 
     private val _data =
@@ -21,7 +20,7 @@ class GetPasswordGroupUseCaseImpl(
     override suspend fun getById(id: String) {
         try {
             _data.emit(State.Loading)
-            val passwordGroup = passwordGroupRepository
+            val passwordGroup = getPasswordGroupQueryService
                 .getById(PasswordGroupId(id))
                 .toUseCaseModel()
 
