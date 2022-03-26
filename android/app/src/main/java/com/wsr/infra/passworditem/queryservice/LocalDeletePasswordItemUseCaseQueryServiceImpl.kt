@@ -8,7 +8,7 @@ import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
 import com.wsr.passworditem.delete.DeletePasswordItemUseCaseQueryService
 
-class RoomDeletePasswordItemUseCaseQueryServiceImpl(
+class LocalDeletePasswordItemUseCaseQueryServiceImpl(
     private val passwordEntityDao: PasswordItemEntityDao,
 ) : DeletePasswordItemUseCaseQueryService {
     override suspend fun getById(passwordItemId: PasswordItemId): PasswordItem = try {

@@ -30,7 +30,7 @@ class RoomGetPasswordGroupUseCaseQueryServiceTest {
 
     private lateinit var passwordGroupEntityDao: PasswordGroupEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: RoomGetPasswordGroupUseCaseQueryServiceImpl
+    private lateinit var target: LocalGetPasswordGroupUseCaseQueryServiceImpl
 
     @BeforeTest
     fun setup() {
@@ -38,7 +38,7 @@ class RoomGetPasswordGroupUseCaseQueryServiceTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordGroupEntityDao = db.passwordGroupEntityDao()
 
-        target = RoomGetPasswordGroupUseCaseQueryServiceImpl(passwordGroupEntityDao)
+        target = LocalGetPasswordGroupUseCaseQueryServiceImpl(passwordGroupEntityDao)
     }
 
     @AfterTest

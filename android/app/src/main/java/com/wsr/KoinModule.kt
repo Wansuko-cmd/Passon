@@ -6,15 +6,15 @@ import com.wsr.index.IndexViewModel
 import com.wsr.index.dialog.IndexCreatePasswordGroupDialogViewModel
 import com.wsr.infra.PassonDatabase
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
-import com.wsr.infra.passwordgroup.RoomPasswordGroupRepositoryImpl
-import com.wsr.infra.passwordgroup.queryservice.RoomDeletePasswordGroupUseCaseQueryImpl
-import com.wsr.infra.passwordgroup.queryservice.RoomGetAllPasswordGroupUseCaseQueryServiceImpl
-import com.wsr.infra.passwordgroup.queryservice.RoomGetPasswordGroupUseCaseQueryServiceImpl
-import com.wsr.infra.passwordgroup.queryservice.RoomUpdatePasswordGroupUseCaseQueryServiceImpl
+import com.wsr.infra.passwordgroup.LocalPasswordGroupRepositoryImpl
+import com.wsr.infra.passwordgroup.queryservice.LocalDeletePasswordGroupUseCaseQueryImpl
+import com.wsr.infra.passwordgroup.queryservice.LocalGetAllPasswordGroupUseCaseQueryServiceImpl
+import com.wsr.infra.passwordgroup.queryservice.LocalGetPasswordGroupUseCaseQueryServiceImpl
+import com.wsr.infra.passwordgroup.queryservice.LocalUpdatePasswordGroupUseCaseQueryServiceImpl
 import com.wsr.infra.passworditem.PasswordItemEntityDao
-import com.wsr.infra.passworditem.RoomPasswordItemRepositoryImpl
-import com.wsr.infra.passworditem.queryservice.RoomDeletePasswordItemUseCaseQueryServiceImpl
-import com.wsr.infra.passworditem.queryservice.RoomGetAllPasswordItemUseCaseQueryServiceImpl
+import com.wsr.infra.passworditem.LocalPasswordItemRepositoryImpl
+import com.wsr.infra.passworditem.queryservice.LocalDeletePasswordItemUseCaseQueryServiceImpl
+import com.wsr.infra.passworditem.queryservice.LocalGetAllPasswordItemUseCaseQueryServiceImpl
 import com.wsr.login.LoginViewModel
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.create.CreatePasswordGroupUseCase
@@ -77,18 +77,18 @@ val module = module {
 
     /*** QueryService ***/
     // Password Group
-    single<GetAllPasswordGroupUseCaseQueryService> { RoomGetAllPasswordGroupUseCaseQueryServiceImpl(get()) }
-    single<GetPasswordGroupUseCaseQueryService> { RoomGetPasswordGroupUseCaseQueryServiceImpl(get()) }
-    single<UpdatePasswordGroupUseCaseQueryService> { RoomUpdatePasswordGroupUseCaseQueryServiceImpl(get()) }
-    single<DeletePasswordGroupUseCaseQueryService> { RoomDeletePasswordGroupUseCaseQueryImpl(get()) }
+    single<GetAllPasswordGroupUseCaseQueryService> { LocalGetAllPasswordGroupUseCaseQueryServiceImpl(get()) }
+    single<GetPasswordGroupUseCaseQueryService> { LocalGetPasswordGroupUseCaseQueryServiceImpl(get()) }
+    single<UpdatePasswordGroupUseCaseQueryService> { LocalUpdatePasswordGroupUseCaseQueryServiceImpl(get()) }
+    single<DeletePasswordGroupUseCaseQueryService> { LocalDeletePasswordGroupUseCaseQueryImpl(get()) }
 
     // Password Item
-    single<GetAllPasswordItemUseCaseQueryService> { RoomGetAllPasswordItemUseCaseQueryServiceImpl(get()) }
-    single<DeletePasswordItemUseCaseQueryService> { RoomDeletePasswordItemUseCaseQueryServiceImpl(get()) }
+    single<GetAllPasswordItemUseCaseQueryService> { LocalGetAllPasswordItemUseCaseQueryServiceImpl(get()) }
+    single<DeletePasswordItemUseCaseQueryService> { LocalDeletePasswordItemUseCaseQueryServiceImpl(get()) }
 
     /*** Repository ***/
-    single<PasswordGroupRepository> { RoomPasswordGroupRepositoryImpl(get()) }
-    single<PasswordItemRepository> { RoomPasswordItemRepositoryImpl(get()) }
+    single<PasswordGroupRepository> { LocalPasswordGroupRepositoryImpl(get()) }
+    single<PasswordItemRepository> { LocalPasswordItemRepositoryImpl(get()) }
 
     single<PassonDatabase> {
         Room.databaseBuilder(

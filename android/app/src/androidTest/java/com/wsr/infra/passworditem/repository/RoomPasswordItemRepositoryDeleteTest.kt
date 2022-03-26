@@ -9,7 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import com.wsr.infra.PassonDatabase
 import com.wsr.infra.passworditem.PasswordItemEntityDao
-import com.wsr.infra.passworditem.RoomPasswordItemRepositoryImpl
+import com.wsr.infra.passworditem.LocalPasswordItemRepositoryImpl
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passworditem.Name
 import com.wsr.passworditem.Password
@@ -28,7 +28,7 @@ import kotlin.test.Test
 class RoomPasswordItemRepositoryDeleteTest {
     private lateinit var passwordEntityDao: PasswordItemEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: RoomPasswordItemRepositoryImpl
+    private lateinit var target: LocalPasswordItemRepositoryImpl
 
     @BeforeTest
     fun setup() {
@@ -36,7 +36,7 @@ class RoomPasswordItemRepositoryDeleteTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordEntityDao = db.passwordEntityDao()
 
-        target = RoomPasswordItemRepositoryImpl(passwordEntityDao)
+        target = LocalPasswordItemRepositoryImpl(passwordEntityDao)
     }
 
     @AfterTest

@@ -13,12 +13,12 @@ fun Fragment.launchInLifecycleScope(
     block: suspend CoroutineScope.() -> Unit,
 ) = lifecycleScope.launch { viewLifecycleOwner.repeatOnLifecycle(state, block) }
 
-fun Fragment.showDialogIfNotDrew(tag: String?, builder: () -> DialogFragment) {
-    if (isNotDrewDialogWithThisTag(tag)) builder().showNow(
+fun Fragment.showDialogIfNotDrawn(tag: String?, builder: () -> DialogFragment) {
+    if (isNotDrawnDialogWithThisTag(tag)) builder().showNow(
         childFragmentManager,
         tag
     )
 }
 
-private fun Fragment.isNotDrewDialogWithThisTag(tag: String?) =
+private fun Fragment.isNotDrawnDialogWithThisTag(tag: String?) =
     (requireActivity().supportFragmentManager.findFragmentByTag(tag) as? DialogFragment)?.dialog == null

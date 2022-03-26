@@ -27,7 +27,7 @@ import kotlin.test.Test
 class RoomGetAllPasswordGroupUseCaseQueryServiceTest {
     private lateinit var passwordGroupEntityDao: PasswordGroupEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: RoomGetAllPasswordGroupUseCaseQueryServiceImpl
+    private lateinit var target: LocalGetAllPasswordGroupUseCaseQueryServiceImpl
 
     @BeforeTest
     fun setup() {
@@ -35,7 +35,7 @@ class RoomGetAllPasswordGroupUseCaseQueryServiceTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordGroupEntityDao = db.passwordGroupEntityDao()
 
-        target = RoomGetAllPasswordGroupUseCaseQueryServiceImpl(passwordGroupEntityDao)
+        target = LocalGetAllPasswordGroupUseCaseQueryServiceImpl(passwordGroupEntityDao)
     }
 
     @AfterTest

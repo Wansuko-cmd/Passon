@@ -7,7 +7,7 @@ import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
 import com.wsr.passworditem.PasswordItemRepository
 
-class RoomPasswordItemRepositoryImpl(private val passwordEntityDao: PasswordItemEntityDao) :
+class LocalPasswordItemRepositoryImpl(private val passwordEntityDao: PasswordItemEntityDao) :
     PasswordItemRepository {
 
     override suspend fun upsert(passwordItem: PasswordItem) = try {

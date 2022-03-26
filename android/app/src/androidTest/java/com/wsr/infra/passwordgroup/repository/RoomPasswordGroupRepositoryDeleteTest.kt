@@ -10,7 +10,7 @@ import com.wsr.email.Email
 import com.wsr.exceptions.GetDataFailedException
 import com.wsr.infra.PassonDatabase
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
-import com.wsr.infra.passwordgroup.RoomPasswordGroupRepositoryImpl
+import com.wsr.infra.passwordgroup.LocalPasswordGroupRepositoryImpl
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
@@ -28,7 +28,7 @@ import kotlin.test.assertFailsWith
 class RoomPasswordGroupRepositoryDeleteTest {
     private lateinit var passwordGroupEntityDao: PasswordGroupEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: RoomPasswordGroupRepositoryImpl
+    private lateinit var target: LocalPasswordGroupRepositoryImpl
 
     @BeforeTest
     fun setup() {
@@ -36,7 +36,7 @@ class RoomPasswordGroupRepositoryDeleteTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordGroupEntityDao = db.passwordGroupEntityDao()
 
-        target = RoomPasswordGroupRepositoryImpl(passwordGroupEntityDao)
+        target = LocalPasswordGroupRepositoryImpl(passwordGroupEntityDao)
     }
 
     @AfterTest

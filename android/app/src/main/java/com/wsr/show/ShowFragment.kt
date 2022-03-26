@@ -17,7 +17,7 @@ import com.wsr.R
 import com.wsr.databinding.FragmentShowBinding
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.ext.sharedViewModel
-import com.wsr.ext.showDialogIfNotDrew
+import com.wsr.ext.showDialogIfNotDrawn
 import com.wsr.show.dialog.ShowDeletePasswordGroupDialogFragment
 import com.wsr.state.consume
 import org.koin.androidx.viewmodel.ViewModelOwner
@@ -36,7 +36,7 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.show_menu_delete -> {
-                showDialogIfNotDrew(tag) {
+                showDialogIfNotDrawn(tag) {
                     ShowDeletePasswordGroupDialogFragment.create(passwordGroupId)
                 }
                 true

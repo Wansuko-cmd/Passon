@@ -12,7 +12,6 @@ import org.koin.androidx.viewmodel.ViewModelOwner
 
 class ShowDeletePasswordGroupDialogFragment : DialogFragment() {
 
-    private var binding: DialogShowDeletePasswordGroupBinding by autoCleared()
     private val showViewModel by sharedViewModel<ShowViewModel>(owner = {
         ViewModelOwner.from(requireParentFragment())
     })
@@ -22,7 +21,7 @@ class ShowDeletePasswordGroupDialogFragment : DialogFragment() {
         val passwordGroupId = arguments?.getString("passwordGroupId")
             ?: throw NoSuchElementException("passwordGroupId does not exist in bundle at ShowDeletePasswordGroupDialogFragment")
 
-        binding =
+        val binding =
             DialogShowDeletePasswordGroupBinding.inflate(requireActivity().layoutInflater).apply {
                 dialogShowDeletePasswordGroupOkButton.setOnClickListener {
                     showViewModel.delete(passwordGroupId)

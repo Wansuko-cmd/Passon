@@ -13,7 +13,7 @@ import com.wsr.R
 import com.wsr.databinding.FragmentIndexBinding
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.ext.sharedViewModel
-import com.wsr.ext.showDialogIfNotDrew
+import com.wsr.ext.showDialogIfNotDrawn
 import com.wsr.index.dialog.IndexCreatePasswordGroupDialogFragment
 import com.wsr.state.consume
 import org.koin.androidx.viewmodel.ViewModelOwner.Companion.from
@@ -51,7 +51,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
         }
 
         binding.indexFragmentFab.setOnClickListener {
-            showDialogIfNotDrew(tag) {
+            showDialogIfNotDrawn(tag) {
                 IndexCreatePasswordGroupDialogFragment.create(email)
             }
         }

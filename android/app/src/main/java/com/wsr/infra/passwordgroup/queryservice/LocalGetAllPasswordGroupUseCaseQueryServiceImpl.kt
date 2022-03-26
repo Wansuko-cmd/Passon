@@ -6,7 +6,7 @@ import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCaseQueryService
 
-class RoomGetAllPasswordGroupUseCaseQueryServiceImpl(
+class LocalGetAllPasswordGroupUseCaseQueryServiceImpl(
     private val passwordGroupEntityDao: PasswordGroupEntityDao,
 ) : GetAllPasswordGroupUseCaseQueryService {
     override suspend fun getAllByEmail(email: Email): List<PasswordGroup> = try {

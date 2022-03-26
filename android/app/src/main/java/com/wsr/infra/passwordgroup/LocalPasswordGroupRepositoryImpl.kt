@@ -7,7 +7,7 @@ import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
 
-class RoomPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: PasswordGroupEntityDao) :
+class LocalPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: PasswordGroupEntityDao) :
     PasswordGroupRepository {
 
     override suspend fun create(passwordGroup: PasswordGroup) = try {

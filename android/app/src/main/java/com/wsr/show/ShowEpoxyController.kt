@@ -29,6 +29,7 @@ class ShowEpoxyController(
                 message(this@ShowEpoxyController.resources.getString(R.string.show_no_password_message))
             }
         } else {
+            passwordItems.asSequence().map(onClickPasswordCopy).map {  }.toList()
             passwordItems.forEach { passwordItem ->
                 showPasswordRow {
                     id(passwordItem.id)

@@ -220,8 +220,6 @@ class EditViewModel(
         viewModelScope.launch {
             val newPasswordItems = _uiState.value.passwordItems
                 .map { passwordItems -> passwordItems.filter { it.id != passwordItemId } }
-            println(passwordItemId)
-            println(newPasswordItems)
 
             _uiState.update { editUiState ->
                 editUiState.copyWithPasswordItems(newPasswordItems)
