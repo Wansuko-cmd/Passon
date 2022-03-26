@@ -146,17 +146,17 @@ class EditViewModel(
 
     fun createPasswordItem(passwordGroupId: String) {
         viewModelScope.launch {
-            val newPasswordItem = _uiState.value.passwordItems
+            val newPasswordItems = _uiState.value.passwordItems
                 .map { list ->
                     list + createPasswordItemUseCase.createPasswordInstance(passwordGroupId)
                         .toEditUiState()
                 }
 
             _uiState.update { editUiState ->
-                editUiState.copyWithPasswordItems(newPasswordItem)
+                editUiState.copyWithPasswordItems(newPasswordItems)
             }
 
-            newPasswordItem.consume(
+            newPasswordItems.consume(
                 success = { _editRefreshEvent.emit(EditRefreshEvent(passwordItems = it)) },
                 failure = { /* do nothing */ },
                 loading = { /* do nothing */ },
@@ -215,4 +215,23 @@ class EditViewModel(
                 is State.Loading -> passwords
             }
         }
+
+    fun deletePasswordItem(passwordItemId: String) {
+        viewModelScope.launch {
+            val newPasswordItems = _uiState.value.passwordItems
+                .map { passwordItems -> passwordItems.filter { it.id != passwordItemId } }
+            println(passwordItemId)
+            println(newPasswordItems)
+
+            _uiState.update { editUiState ->
+                editUiState.copyWithPasswordItems(newPasswordItems)
+            }
+
+            newPasswordItems.consume(
+                success = { _editRefreshEvent.emit(EditRefreshEvent(passwordItems = it)) },
+                failure = { /* do nothing */ },
+                loading = { /* do nothing */ },
+            )
+        }
+    }
 }

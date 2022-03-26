@@ -36,6 +36,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             afterRemarkChanged = editViewModel::updateRemark,
             afterNameChanged = editViewModel::updateName,
             afterPasswordChanged = editViewModel::updatePassword,
+            onClickDeletePasswordItemButton = { editViewModel.deletePasswordItem(it) },
             onClickAddPasswordButton = { editViewModel.createPasswordItem(passwordGroupId) },
         )
 

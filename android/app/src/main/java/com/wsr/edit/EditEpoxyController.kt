@@ -1,5 +1,6 @@
 package com.wsr.edit
 
+import android.view.View
 import com.wsr.editAddPasswordButton
 import com.wsr.editPasswordRow
 import com.wsr.editRemarkRow
@@ -12,6 +13,7 @@ class EditEpoxyController(
     private val afterRemarkChanged: (newRemark: String) -> Unit,
     private val afterNameChanged: (passwordItemId: String, newName: String) -> Unit,
     private val afterPasswordChanged: (passwordItemId: String, newPassword: String) -> Unit,
+    private val onClickDeletePasswordItemButton: (passwordItemId: String) -> Unit,
     private val onClickAddPasswordButton: () -> Unit,
 ) : MyTyped2EpoxyController<PasswordGroupEditUiState, List<PasswordItemEditUiState>>() {
 
@@ -42,6 +44,11 @@ class EditEpoxyController(
                     AfterTextChanged(
                         curry(this@EditEpoxyController.afterPasswordChanged)(passwordItem.id)
                     )
+                )
+                onClickDeletePasswordItemButton(
+                    View.OnClickListener {
+                        this@EditEpoxyController.onClickDeletePasswordItemButton(passwordItem.id)
+                    }
                 )
             }
         }
