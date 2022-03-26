@@ -26,11 +26,11 @@ import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class RoomUpdatePasswordGroupUseCaseQueryServiceTest {
+class LocalGetPasswordGroupUseCaseQueryServiceTest {
 
     private lateinit var passwordGroupEntityDao: PasswordGroupEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: LocalUpdatePasswordGroupUseCaseQueryServiceImpl
+    private lateinit var target: LocalGetPasswordGroupUseCaseQueryServiceImpl
 
     @BeforeTest
     fun setup() {
@@ -38,7 +38,7 @@ class RoomUpdatePasswordGroupUseCaseQueryServiceTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordGroupEntityDao = db.passwordGroupEntityDao()
 
-        target = LocalUpdatePasswordGroupUseCaseQueryServiceImpl(passwordGroupEntityDao)
+        target = LocalGetPasswordGroupUseCaseQueryServiceImpl(passwordGroupEntityDao)
     }
 
     @AfterTest

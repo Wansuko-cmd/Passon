@@ -77,7 +77,10 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
                 )
 
                 showUiState.passwordItems.consume(
-                    success = showEpoxyController::setSecondData,
+                    success = { passwordItems ->
+                        binding.showFragmentNoPasswordMessage.visibility = if (passwordItems.isEmpty()) View.VISIBLE else View.GONE
+                        showEpoxyController.setSecondData(passwordItems)
+                    },
                     failure = ::showErrorMessage,
                     loading = { /* do nothing */ },
                 )

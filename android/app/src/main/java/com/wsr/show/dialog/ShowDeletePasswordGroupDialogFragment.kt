@@ -7,7 +7,6 @@ import androidx.fragment.app.DialogFragment
 import com.wsr.databinding.DialogShowDeletePasswordGroupBinding
 import com.wsr.ext.sharedViewModel
 import com.wsr.show.ShowViewModel
-import com.wsr.utils.autoCleared
 import org.koin.androidx.viewmodel.ViewModelOwner
 
 class ShowDeletePasswordGroupDialogFragment : DialogFragment() {

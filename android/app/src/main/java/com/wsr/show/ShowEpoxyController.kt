@@ -1,8 +1,6 @@
 package com.wsr.show
 
 import android.content.res.Resources
-import com.wsr.R
-import com.wsr.messageRow
 import com.wsr.showPasswordRow
 import com.wsr.showRemarkRow
 import com.wsr.showTitleRow
@@ -23,13 +21,7 @@ class ShowEpoxyController(
             id(TITLE_ID)
             title(passwordGroup.title)
         }
-        if (passwordItems.isEmpty()) {
-            messageRow {
-                id(MESSAGE_ID)
-                message(this@ShowEpoxyController.resources.getString(R.string.show_no_password_message))
-            }
-        } else {
-            passwordItems.asSequence().map(onClickPasswordCopy).map {  }.toList()
+        if (passwordItems.isNotEmpty()) {
             passwordItems.forEach { passwordItem ->
                 showPasswordRow {
                     id(passwordItem.id)

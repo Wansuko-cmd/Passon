@@ -7,8 +7,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
 import com.wsr.infra.PassonDatabase
-import com.wsr.infra.passworditem.PasswordItemEntityDao
 import com.wsr.infra.passworditem.LocalPasswordItemRepositoryImpl
+import com.wsr.infra.passworditem.PasswordItemEntityDao
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passworditem.Name
 import com.wsr.passworditem.Password
@@ -21,7 +21,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class RoomPasswordItemRepositoryUpsertTest {
+class LocalPasswordItemRepositoryUpsertTest {
     private lateinit var passwordEntityDao: PasswordItemEntityDao
     private lateinit var db: PassonDatabase
     private lateinit var target: LocalPasswordItemRepositoryImpl
