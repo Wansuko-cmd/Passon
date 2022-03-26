@@ -49,18 +49,10 @@ class EditViewModel(
         ) { editUiState, state ->
 
             editUiState
-                .copyWithTitle(
-                    titleState = state.mapBoth(
-                        success = { it.title },
+                .copyWithPasswordGroup(
+                    passwordGroup = state.mapBoth(
+                        success = { it.toEditUiState() },
                         failure = { ErrorEditUiState(it.message ?: "") },
-                    ),
-                )
-                .copyWithContents(
-                    contents = editUiState.contents.copyWithPasswordGroup(
-                        passwordGroup = state.mapBoth(
-                            success = { it.toEditUiState() },
-                            failure = { ErrorEditUiState(it.message ?: "") },
-                        )
                     )
                 )
         }
@@ -72,12 +64,10 @@ class EditViewModel(
             coroutineScope = viewModelScope,
         ) { editUiState, state ->
 
-            editUiState.copyWithContents(
-                contents = editUiState.contents.copyWithPasswordItems(
-                    passwordItems = state.mapBoth(
-                        success = { list -> list.map { it.toEditUiState() } },
-                        failure = { ErrorEditUiState(it.message ?: "") }
-                    )
+            editUiState.copyWithPasswordItems(
+                passwordItems = state.mapBoth(
+                    success = { list -> list.map { it.toEditUiState() } },
+                    failure = { ErrorEditUiState(it.message ?: "") }
                 )
             )
         }
@@ -103,11 +93,9 @@ class EditViewModel(
     fun updateTitle(newTitle: String) {
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.copyWithContents(
-                    contents = editUiState.contents.copyWithPasswordGroup(
-                        passwordGroup = editUiState.contents.passwordGroup
-                            .map { it.copyWithTitle(newTitle) }
-                    )
+                editUiState.copyWithPasswordGroup(
+                    passwordGroup = editUiState.passwordGroup
+                        .map { it.copyWithTitle(newTitle) }
                 )
             }
         }
@@ -116,11 +104,9 @@ class EditViewModel(
     fun updateRemark(newRemark: String) {
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.copyWithContents(
-                    contents = editUiState.contents.copyWithPasswordGroup(
-                        passwordGroup = editUiState.contents.passwordGroup
-                            .map { it.copyWithRemark(newRemark) }
-                    )
+                editUiState.copyWithPasswordGroup(
+                    passwordGroup = editUiState.passwordGroup
+                        .map { it.copyWithRemark(newRemark) }
                 )
             }
         }
@@ -128,7 +114,6 @@ class EditViewModel(
 
     fun updateName(passwordItemId: String, newName: String) {
         val newPasswords = _uiState.value
-            .contents
             .passwordItems
             .map { list ->
                 list.map {
@@ -138,16 +123,13 @@ class EditViewModel(
 
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.copyWithContents(
-                    contents = editUiState.contents.copyWithPasswordItems(newPasswords)
-                )
+                editUiState.copyWithPasswordItems(newPasswords)
             }
         }
     }
 
     fun updatePassword(passwordItemId: String, newPassword: String) {
         val newPasswords = _uiState.value
-            .contents
             .passwordItems
             .map { list ->
                 list.map {
@@ -157,25 +139,21 @@ class EditViewModel(
 
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.copyWithContents(
-                    contents = editUiState.contents.copyWithPasswordItems(newPasswords)
-                )
+                editUiState.copyWithPasswordItems(newPasswords)
             }
         }
     }
 
     fun createPasswordItem(passwordGroupId: String) {
         viewModelScope.launch {
-            val newPasswordItem = _uiState.value.contents.passwordItems
+            val newPasswordItem = _uiState.value.passwordItems
                 .map { list ->
                     list + createPasswordItemUseCase.createPasswordInstance(passwordGroupId)
                         .toEditUiState()
                 }
 
             _uiState.update { editUiState ->
-                editUiState.copyWithContents(
-                    contents = editUiState.contents.copyWithPasswordItems(newPasswordItem)
-                )
+                editUiState.copyWithPasswordItems(newPasswordItem)
             }
 
             newPasswordItem.consume(
@@ -203,7 +181,7 @@ class EditViewModel(
 
     private suspend fun savePasswordGroup(passwordGroupId: String): State<Unit, ErrorEditUiState> =
         withContext(viewModelScope.coroutineContext) {
-            when (val passwordGroup = _uiState.value.contents.passwordGroup) {
+            when (val passwordGroup = _uiState.value.passwordGroup) {
                 is State.Success -> updatePasswordGroupUseCase.update(
                     id = passwordGroupId,
                     title = passwordGroup.value.title,
@@ -219,7 +197,7 @@ class EditViewModel(
 
     private suspend fun savePasswordItems(passwordGroupId: String): State<Unit, ErrorEditUiState> =
         withContext(viewModelScope.coroutineContext) {
-            when (val passwords = _uiState.value.contents.passwordItems) {
+            when (val passwords = _uiState.value.passwordItems) {
                 is State.Success -> passwords.value.map {
                     upsertPasswordItemUseCase.upsert(
                         id = it.id,

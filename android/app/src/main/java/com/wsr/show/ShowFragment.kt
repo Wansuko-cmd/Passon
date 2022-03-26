@@ -9,7 +9,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
@@ -22,7 +21,6 @@ import com.wsr.ext.showDialogIfNotDrew
 import com.wsr.show.dialog.ShowDeletePasswordGroupDialogFragment
 import com.wsr.state.consume
 import org.koin.androidx.viewmodel.ViewModelOwner
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ShowFragment : Fragment(R.layout.fragment_show) {
 
@@ -72,21 +70,13 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             showViewModel.uiState.collect { showUiState ->
 
-                showUiState.titleState.consume(
-                    success = {
-                        (requireActivity() as AppCompatActivity).supportActionBar?.title = it
-                    },
-                    failure = ::showErrorMessage,
-                    loading = { /* do nothing */ },
-                )
-
-                showUiState.contents.passwordGroup.consume(
+                showUiState.passwordGroup.consume(
                     success = showEpoxyController::setFirstData,
                     failure = ::showErrorMessage,
                     loading = { /* do nothing */ },
                 )
 
-                showUiState.contents.passwordItems.consume(
+                showUiState.passwordItems.consume(
                     success = showEpoxyController::setSecondData,
                     failure = ::showErrorMessage,
                     loading = { /* do nothing */ },

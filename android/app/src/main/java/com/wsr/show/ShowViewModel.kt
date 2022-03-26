@@ -40,16 +40,10 @@ class ShowViewModel(
             target = getPasswordGroupUseCase.data,
             coroutineScope = viewModelScope,
         ) { showUiState, state ->
-            showUiState.copy(
-                titleState = state.mapBoth(
-                    success = { passwordGroup -> passwordGroup.title },
-                    failure = { ErrorShowUiState(it.message ?: "") }
-                ),
-                contents = showUiState.contents.copyWithPasswordGroup(
-                    passwordGroup = state.mapBoth(
-                        success = { it.toShowUiModel() },
-                        failure = { ErrorShowUiState(it.message ?: "") },
-                    )
+            showUiState.copyWithPasswordGroup(
+                passwordGroup = state.mapBoth(
+                    success = { it.toShowUiModel() },
+                    failure = { ErrorShowUiState(it.message ?: "") },
                 )
             )
         }
@@ -60,12 +54,10 @@ class ShowViewModel(
             target = getAllPasswordItemUseCase.data,
             coroutineScope = viewModelScope,
         ) { showUiState, state ->
-            showUiState.copy(
-                contents = showUiState.contents.copyWithPasswordItems(
-                    passwords = state.mapBoth(
-                        success = { list -> list.map { it.toShowUiModel() } },
-                        failure = { ErrorShowUiState(it.message ?: "") }
-                    )
+            showUiState.copyWithPasswordItems(
+                passwords = state.mapBoth(
+                    success = { list -> list.map { it.toShowUiModel() } },
+                    failure = { ErrorShowUiState(it.message ?: "") }
                 )
             )
         }
@@ -92,7 +84,6 @@ class ShowViewModel(
         viewModelScope.launch {
 
             val newPasswordItemsState = _uiState.value
-                .contents
                 .passwordItems
                 .map { list ->
                     list.map {
@@ -100,10 +91,8 @@ class ShowViewModel(
                     }
                 }
 
-            val newUiState = _uiState.value.copy(
-                contents = _uiState.value.contents.copyWithPasswordItems(
-                    passwords = newPasswordItemsState
-                )
+            val newUiState = _uiState.value.copyWithPasswordItems(
+                passwords = newPasswordItemsState
             )
 
             _uiState.emit(newUiState)

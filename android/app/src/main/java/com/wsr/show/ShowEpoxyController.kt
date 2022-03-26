@@ -5,6 +5,7 @@ import com.wsr.R
 import com.wsr.messageRow
 import com.wsr.showPasswordRow
 import com.wsr.showRemarkRow
+import com.wsr.showTitleRow
 import com.wsr.utils.MyTyped2EpoxyController
 
 class ShowEpoxyController(
@@ -18,6 +19,10 @@ class ShowEpoxyController(
         passwordGroup: PasswordGroupShowUiState,
         passwordItems: List<PasswordItemShowUiState>,
     ) {
+        showTitleRow {
+            id(TITLE_ID)
+            title(passwordGroup.title)
+        }
         if (passwordItems.isEmpty()) {
             messageRow {
                 id(MESSAGE_ID)
@@ -47,6 +52,7 @@ class ShowEpoxyController(
     }
 
     companion object {
+        const val TITLE_ID = "show_title_row_id"
         const val MESSAGE_ID = "show_message_row_id"
     }
 }

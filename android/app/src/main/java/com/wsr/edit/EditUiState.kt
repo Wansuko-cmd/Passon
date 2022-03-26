@@ -32,7 +32,7 @@ data class PasswordGroupEditUiState(
     }
 }
 
-data class EditContentsUiState(
+data class EditUiState(
     val passwordGroup: State<PasswordGroupEditUiState, ErrorEditUiState> = State.Loading,
     val passwordItems: State<List<PasswordItemEditUiState>, ErrorEditUiState> = State.Loading,
 ) {
@@ -44,13 +44,3 @@ data class EditContentsUiState(
 }
 
 data class ErrorEditUiState(val message: String)
-
-data class EditUiState(
-    val titleState: State<String, ErrorEditUiState> = State.Loading,
-    val contents: EditContentsUiState = EditContentsUiState(),
-) {
-    fun copyWithTitle(titleState: State<String, ErrorEditUiState>) =
-        this.copy(titleState = titleState)
-
-    fun copyWithContents(contents: EditContentsUiState) = this.copy(contents = contents)
-}
