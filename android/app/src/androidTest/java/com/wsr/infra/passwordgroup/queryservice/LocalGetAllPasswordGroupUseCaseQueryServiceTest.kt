@@ -24,10 +24,10 @@ import kotlin.test.Test
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class RoomGetAllPasswordGroupUseCaseQueryServiceTest {
+class LocalGetAllPasswordGroupUseCaseQueryServiceTest {
     private lateinit var passwordGroupEntityDao: PasswordGroupEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: RoomGetAllPasswordGroupUseCaseQueryServiceImpl
+    private lateinit var target: LocalGetAllPasswordGroupUseCaseQueryServiceImpl
 
     @BeforeTest
     fun setup() {
@@ -35,7 +35,7 @@ class RoomGetAllPasswordGroupUseCaseQueryServiceTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordGroupEntityDao = db.passwordGroupEntityDao()
 
-        target = RoomGetAllPasswordGroupUseCaseQueryServiceImpl(passwordGroupEntityDao)
+        target = LocalGetAllPasswordGroupUseCaseQueryServiceImpl(passwordGroupEntityDao)
     }
 
     @AfterTest

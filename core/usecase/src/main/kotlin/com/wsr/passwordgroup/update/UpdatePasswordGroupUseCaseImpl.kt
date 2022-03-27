@@ -9,7 +9,7 @@ import com.wsr.state.State
 
 class UpdatePasswordGroupUseCaseImpl(
     private val passwordGroupRepository: PasswordGroupRepository,
-    private val updatePasswordGroupQueryService: UpdatePasswordGroupUseCasaeQueryService,
+    private val updatePasswordGroupQueryService: UpdatePasswordGroupUseCaseQueryService,
 ) : UpdatePasswordGroupUseCase {
 
     override suspend fun update(

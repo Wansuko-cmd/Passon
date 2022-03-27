@@ -2,6 +2,7 @@
     <string name="app_name">Passon</string>
 
     <!-- メニュー画面 -->
+    <string name="menu_title_show">詳細</string>
     <string name="menu_title_edit">編集</string>
     <string name="menu_title_setting">設定</string>
 
@@ -26,6 +27,12 @@
     <string name="show_show_password_checkbox_text">表示する</string>
     <string name="show_no_password_message">右下のボタンからパスワードを登録できます</string>
     <string name="show_toast_on_copy_message">コピーしました</string>
+    <string name="show_delete_password_group_dialog_title">警告</string>
+    <string name="show_delete_password_group_dialog_text">このパスワードグループを削除しますか？</string>
+    <string name="show_delete_password_group_dialog_ok_button">削除</string>
+    <string name="show_delete_password_group_dialog_cancel_button">キャンセル</string>
+    <string name="show_menu_icon_delete">削除</string>
+
 
     <!-- 編集画面 -->
     <string name="edit_title_row">タイトル</string>

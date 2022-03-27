@@ -6,7 +6,7 @@ import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCaseQueryService
 
-class RoomGetPasswordGroupUseCaseQueryServiceImpl(
+class LocalGetPasswordGroupUseCaseQueryServiceImpl(
     private val passwordGroupEntityDao: PasswordGroupEntityDao,
 ) : GetPasswordGroupUseCaseQueryService {
     override suspend fun getById(passwordGroupId: PasswordGroupId): PasswordGroup = try {

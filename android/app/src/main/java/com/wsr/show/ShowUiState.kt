@@ -20,17 +20,18 @@ data class PasswordItemShowUiState(
 
 data class PasswordGroupShowUiState(
     val id: String,
+    val title: String,
     val remark: String,
 ) {
     companion object {
         fun PasswordGroupUseCaseModel.toShowUiModel() =
-            PasswordGroupShowUiState(id = id, remark = remark)
+            PasswordGroupShowUiState(id = id, title = title, remark = remark)
     }
 }
 
 data class ErrorShowUiState(val message: String)
 
-data class ShowContentsUiState(
+data class ShowUiState(
     val passwordGroup: State<PasswordGroupShowUiState, ErrorShowUiState> = State.Loading,
     val passwordItems: State<List<PasswordItemShowUiState>, ErrorShowUiState> = State.Loading,
 ) {
@@ -40,8 +41,3 @@ data class ShowContentsUiState(
     fun copyWithPasswordItems(passwords: State<List<PasswordItemShowUiState>, ErrorShowUiState>) =
         this.copy(passwordItems = passwords)
 }
-
-data class ShowUiState(
-    val titleState: State<String, ErrorShowUiState> = State.Loading,
-    val contents: ShowContentsUiState = ShowContentsUiState(),
-)

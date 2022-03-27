@@ -5,10 +5,11 @@ package com.wsr.infra.passworditem.repository
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import com.wsr.infra.PassonDatabase
+import com.wsr.infra.passworditem.LocalPasswordItemRepositoryImpl
 import com.wsr.infra.passworditem.PasswordItemEntityDao
-import com.wsr.infra.passworditem.RoomPasswordItemRepositoryImpl
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passworditem.Name
 import com.wsr.passworditem.Password
@@ -16,15 +17,18 @@ import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.junit.runner.RunWith
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
+@RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class RoomPasswordItemRepositoryUpsertTest {
+
+class LocalPasswordItemRepositoryDeleteTest {
     private lateinit var passwordEntityDao: PasswordItemEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: RoomPasswordItemRepositoryImpl
+    private lateinit var target: LocalPasswordItemRepositoryImpl
 
     @BeforeTest
     fun setup() {
@@ -32,7 +36,7 @@ class RoomPasswordItemRepositoryUpsertTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordEntityDao = db.passwordEntityDao()
 
-        target = RoomPasswordItemRepositoryImpl(passwordEntityDao)
+        target = LocalPasswordItemRepositoryImpl(passwordEntityDao)
     }
 
     @AfterTest
@@ -40,45 +44,23 @@ class RoomPasswordItemRepositoryUpsertTest {
         db.close()
     }
 
-    /*** upsert関数 ***/
+    /*** delete関数 ***/
     @Test
-    fun 存在しないpasswordItemIdを持つ新しいPasswordGroupの情報を渡せば新規作成する() = runTest {
-
-        val mockedPassword = PasswordItem(
-            id = PasswordItemId("mockedpasswordItemId"),
-            passwordGroupId = PasswordGroupId("mockedPasswordGroupId"),
-            name = Name("mockedName"),
-            password = Password("mockedPassword"),
-        )
-        target.upsert(mockedPassword)
-
-        val actual = passwordEntityDao.getAllByPasswordGroupId(mockedPassword.passwordGroupId.value)
-        assertThat(actual).contains(mockedPassword)
-    }
-
-    @Test
-    fun 存在するpasswordItemIdを持つPasswordGroupの情報を渡せば更新を行う() = runTest {
+    fun passwordItemIdを渡すと対応するPasswordを削除する() = runTest {
 
         val mockedPasswordItemId = PasswordItemId("mockedpasswordItemId")
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
-
-        val mockedPassword = PasswordItem(
+        val mockedPasswordItem = PasswordItem(
             id = mockedPasswordItemId,
             passwordGroupId = mockedPasswordGroupId,
             name = Name("mockedName"),
             password = Password("mockedPassword"),
         )
-        target.upsert(mockedPassword)
+        target.upsert(mockedPasswordItem)
 
-        val updatedMockedPassword = PasswordItem(
-            id = mockedPasswordItemId,
-            passwordGroupId = mockedPasswordGroupId,
-            name = Name("updatedMockedName"),
-            password = Password("updatedMockedPassword"),
-        )
-        target.upsert(updatedMockedPassword)
+        target.delete(mockedPasswordItemId)
 
         val actual = passwordEntityDao.getAllByPasswordGroupId(mockedPasswordGroupId.value)
-        assertThat(actual).contains(updatedMockedPassword)
+        assertThat(actual).isEmpty()
     }
 }

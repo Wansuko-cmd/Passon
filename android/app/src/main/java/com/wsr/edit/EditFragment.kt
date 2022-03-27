@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
@@ -37,6 +36,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             afterRemarkChanged = editViewModel::updateRemark,
             afterNameChanged = editViewModel::updateName,
             afterPasswordChanged = editViewModel::updatePassword,
+            onClickDeletePasswordItemButton = { editViewModel.deletePasswordItem(it) },
             onClickAddPasswordButton = { editViewModel.createPasswordItem(passwordGroupId) },
         )
 
@@ -64,21 +64,13 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             editViewModel.uiState.collect { editUiState ->
 
-                editUiState.titleState.consume(
-                    success = {
-                        (requireActivity() as AppCompatActivity).supportActionBar?.title = it
-                    },
-                    failure = ::showErrorMessage,
-                    loading = { /* do nothing */ },
-                )
-
-                editUiState.contents.passwordGroup.consume(
+                editUiState.passwordGroup.consume(
                     success = editEpoxyController::initializeFirstData,
                     failure = ::showErrorMessage,
                     loading = { /* do nothing */ },
                 )
 
-                editUiState.contents.passwordItems.consume(
+                editUiState.passwordItems.consume(
                     success = editEpoxyController::initializeSecondData,
                     failure = ::showErrorMessage,
                     loading = { /* do nothing */ },

@@ -3,23 +3,32 @@ package com.wsr.show
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.ext.updateWith
+import com.wsr.passwordgroup.delete.DeletePasswordGroupUseCase
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
+import com.wsr.passworditem.delete.DeletePasswordItemUseCase
 import com.wsr.passworditem.getall.GetAllPasswordItemUseCase
 import com.wsr.show.PasswordGroupShowUiState.Companion.toShowUiModel
 import com.wsr.show.PasswordItemShowUiState.Companion.toShowUiModel
 import com.wsr.state.map
 import com.wsr.state.mapBoth
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ShowViewModel(
     private val getPasswordGroupUseCase: GetPasswordGroupUseCase,
     private val getAllPasswordItemUseCase: GetAllPasswordItemUseCase,
+    private val deletePasswordItemUseCase: DeletePasswordItemUseCase,
+    private val deletePasswordGroupUseCase: DeletePasswordGroupUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ShowUiState())
     val uiState = _uiState.asStateFlow()
+
+    private val _navigateToIndexEvent = MutableSharedFlow<Unit>()
+    val navigateToIndexEvent = _navigateToIndexEvent.asSharedFlow()
 
     init {
         setupTitle()
@@ -31,16 +40,10 @@ class ShowViewModel(
             target = getPasswordGroupUseCase.data,
             coroutineScope = viewModelScope,
         ) { showUiState, state ->
-            showUiState.copy(
-                titleState = state.mapBoth(
-                    success = { passwordGroup -> passwordGroup.title },
-                    failure = { ErrorShowUiState(it.message ?: "") }
-                ),
-                contents = showUiState.contents.copyWithPasswordGroup(
-                    passwordGroup = state.mapBoth(
-                        success = { it.toShowUiModel() },
-                        failure = { ErrorShowUiState(it.message ?: "") },
-                    )
+            showUiState.copyWithPasswordGroup(
+                passwordGroup = state.mapBoth(
+                    success = { it.toShowUiModel() },
+                    failure = { ErrorShowUiState(it.message ?: "") },
                 )
             )
         }
@@ -51,12 +54,10 @@ class ShowViewModel(
             target = getAllPasswordItemUseCase.data,
             coroutineScope = viewModelScope,
         ) { showUiState, state ->
-            showUiState.copy(
-                contents = showUiState.contents.copyWithPasswordItems(
-                    passwords = state.mapBoth(
-                        success = { list -> list.map { it.toShowUiModel() } },
-                        failure = { ErrorShowUiState(it.message ?: "") }
-                    )
+            showUiState.copyWithPasswordItems(
+                passwords = state.mapBoth(
+                    success = { list -> list.map { it.toShowUiModel() } },
+                    failure = { ErrorShowUiState(it.message ?: "") }
                 )
             )
         }
@@ -83,7 +84,6 @@ class ShowViewModel(
         viewModelScope.launch {
 
             val newPasswordItemsState = _uiState.value
-                .contents
                 .passwordItems
                 .map { list ->
                     list.map {
@@ -91,12 +91,18 @@ class ShowViewModel(
                     }
                 }
 
-            val newUiState = _uiState.value.copy(
-                contents = _uiState.value.contents.copyWithPasswordItems(
-                    passwords = newPasswordItemsState
-                )
+            val newUiState = _uiState.value.copyWithPasswordItems(
+                passwords = newPasswordItemsState
             )
 
             _uiState.emit(newUiState)
         }
+
+    fun delete(passwordGroupId: String) {
+        viewModelScope.launch {
+            deletePasswordGroupUseCase.delete(passwordGroupId)
+            deletePasswordItemUseCase.deleteAll(passwordGroupId)
+            _navigateToIndexEvent.emit(Unit)
+        }
+    }
 }
