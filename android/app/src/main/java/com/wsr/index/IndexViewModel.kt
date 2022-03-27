@@ -2,7 +2,7 @@ package com.wsr.index
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wsr.passwordgroup.create.CreatePasswordGroupUseCase
+import com.wsr.create.CreatePasswordGroupUseCase
 import com.wsr.passwordgroup.getall.GetAllPasswordGroupUseCase
 import com.wsr.state.consume
 import com.wsr.state.mapBoth

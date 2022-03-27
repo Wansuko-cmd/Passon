@@ -1,4 +1,4 @@
-package com.wsr.passwordgroup.create
+package com.wsr.create
 
 import com.wsr.email.Email
 import com.wsr.exceptions.CreateDataFailedException

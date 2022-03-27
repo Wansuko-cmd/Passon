@@ -1,4 +1,4 @@
-package com.wsr.passworditem.create
+package com.wsr.create
 
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passworditem.PasswordItemFactory

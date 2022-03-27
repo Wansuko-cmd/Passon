@@ -1,4 +1,4 @@
-package com.wsr.passwordgroup.create
+package com.wsr.create
 
 import com.wsr.exceptions.CreateDataFailedException
 import com.wsr.passwordgroup.PasswordGroupUseCaseModel

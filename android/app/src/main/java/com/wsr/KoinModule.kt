@@ -17,8 +17,8 @@ import com.wsr.infra.passworditem.queryservice.LocalDeletePasswordItemUseCaseQue
 import com.wsr.infra.passworditem.queryservice.LocalGetAllPasswordItemUseCaseQueryServiceImpl
 import com.wsr.login.LoginViewModel
 import com.wsr.passwordgroup.PasswordGroupRepository
-import com.wsr.passwordgroup.create.CreatePasswordGroupUseCase
-import com.wsr.passwordgroup.create.CreatePasswordGroupUseCaseImpl
+import com.wsr.create.CreatePasswordGroupUseCase
+import com.wsr.create.CreatePasswordGroupUseCaseImpl
 import com.wsr.passwordgroup.delete.DeletePasswordGroupUseCase
 import com.wsr.passwordgroup.delete.DeletePasswordGroupUseCaseImpl
 import com.wsr.passwordgroup.delete.DeletePasswordGroupUseCaseQueryService
@@ -32,8 +32,8 @@ import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCase
 import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCaseImpl
 import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCaseQueryService
 import com.wsr.passworditem.PasswordItemRepository
-import com.wsr.passworditem.create.CreatePasswordItemUseCase
-import com.wsr.passworditem.create.CreatePasswordItemUseCaseImpl
+import com.wsr.create.CreatePasswordItemUseCase
+import com.wsr.create.CreatePasswordItemUseCaseImpl
 import com.wsr.passworditem.delete.DeletePasswordItemUseCase
 import com.wsr.passworditem.delete.DeletePasswordItemUseCaseImpl
 import com.wsr.passworditem.delete.DeletePasswordItemUseCaseQueryService

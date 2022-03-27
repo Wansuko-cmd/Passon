@@ -3,6 +3,7 @@
 package com.wsr.passworditem.create
 
 import com.google.common.truth.Truth.assertThat
+import com.wsr.create.CreatePasswordItemUseCaseImpl
 import com.wsr.passworditem.PasswordItemUseCaseModel
 import io.mockk.every
 import io.mockk.mockkStatic

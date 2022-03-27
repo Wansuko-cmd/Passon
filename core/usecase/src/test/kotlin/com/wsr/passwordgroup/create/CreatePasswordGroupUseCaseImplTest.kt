@@ -3,6 +3,7 @@
 package com.wsr.passwordgroup.create
 
 import com.google.common.truth.Truth.assertThat
+import com.wsr.create.CreatePasswordGroupUseCaseImpl
 import com.wsr.email.Email
 import com.wsr.exceptions.CreateDataFailedException
 import com.wsr.passwordgroup.PasswordGroup

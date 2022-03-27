@@ -7,7 +7,7 @@ import com.wsr.edit.PasswordItemEditUiState.Companion.toEditUiState
 import com.wsr.ext.updateWith
 import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
 import com.wsr.passwordgroup.update.UpdatePasswordGroupUseCase
-import com.wsr.passworditem.create.CreatePasswordItemUseCase
+import com.wsr.create.CreatePasswordItemUseCase
 import com.wsr.passworditem.getall.GetAllPasswordItemUseCase
 import com.wsr.passworditem.upsert.UpsertPasswordItemUseCase
 import com.wsr.state.State
