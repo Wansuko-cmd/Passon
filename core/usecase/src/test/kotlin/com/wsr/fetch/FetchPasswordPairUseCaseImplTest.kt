@@ -6,6 +6,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.wsr.PasswordPairUseCaseModel
 import com.wsr.email.Email
+import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
@@ -88,5 +89,25 @@ class FetchPasswordPairUseCaseImplTest {
     }
 
     @Test
-    fun 取得するときにエラーが起きればその内容を返す() = runTest { }
+    fun 取得するときにエラーが起きればその内容を返す() = runTest {
+        val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
+
+        coEvery {
+            queryService.getPasswordPair(mockedPasswordGroupId)
+        } throws GetAllDataFailedException.DatabaseException()
+
+        target.data.test {
+            target.fetch(mockedPasswordGroupId.value)
+
+            assertThat(awaitItem()).isEqualTo(State.Loading)
+
+            val expected = State.Failure(GetAllDataFailedException.DatabaseException())
+            assertThat(awaitItem()).isEqualTo(expected)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        coVerify(exactly = 1) { queryService.getPasswordPair(mockedPasswordGroupId) }
+        confirmVerified(queryService)
+    }
 }
