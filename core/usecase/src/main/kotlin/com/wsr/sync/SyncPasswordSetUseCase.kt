@@ -1,8 +1,12 @@
 package com.wsr.sync
 
-import com.wsr.passwordgroup.PasswordGroupUseCaseModel
-import com.wsr.passworditem.PasswordItemUseCaseModel
+import com.wsr.PasswordItemUseCaseModel
 
 interface SyncPasswordSetUseCase {
-    fun update(passwordGroup: PasswordGroupUseCaseModel, passwordItems: List<PasswordItemUseCaseModel>)
+    suspend fun sync(
+        passwordGroupId: String,
+        title: String,
+        remark: String,
+        passwordItems: List<PasswordItemUseCaseModel>,
+    )
 }

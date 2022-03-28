@@ -1,14 +1,14 @@
-package com.wsr.infra.passwordgroup.queryservice
+package com.wsr.infra.queryservice
 
+import com.wsr.delete.DeletePasswordGroupUseCaseQueryService
 import com.wsr.exceptions.GetDataFailedException
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
-import com.wsr.passwordgroup.get.GetPasswordGroupUseCaseQueryService
 
-class LocalGetPasswordGroupUseCaseQueryServiceImpl(
+class LocalDeletePasswordGroupUseCaseQueryImpl(
     private val passwordGroupEntityDao: PasswordGroupEntityDao,
-) : GetPasswordGroupUseCaseQueryService {
+) : DeletePasswordGroupUseCaseQueryService {
     override suspend fun getById(passwordGroupId: PasswordGroupId): PasswordGroup = try {
         passwordGroupEntityDao.getById(passwordGroupId.value).toPasswordGroup()
     } catch (e: NullPointerException) {

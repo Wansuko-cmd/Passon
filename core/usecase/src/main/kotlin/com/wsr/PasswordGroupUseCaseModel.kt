@@ -1,4 +1,6 @@
-package com.wsr.passwordgroup
+package com.wsr
+
+import com.wsr.passwordgroup.PasswordGroup
 
 data class PasswordGroupUseCaseModel(
     val id: String,

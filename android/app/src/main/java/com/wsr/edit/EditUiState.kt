@@ -1,7 +1,7 @@
 package com.wsr.edit
 
-import com.wsr.passwordgroup.PasswordGroupUseCaseModel
-import com.wsr.passworditem.PasswordItemUseCaseModel
+import com.wsr.PasswordGroupUseCaseModel
+import com.wsr.PasswordItemUseCaseModel
 import com.wsr.state.State
 
 data class PasswordItemEditUiState(
@@ -15,6 +15,8 @@ data class PasswordItemEditUiState(
     companion object {
         fun PasswordItemUseCaseModel.toEditUiState() =
             PasswordItemEditUiState(id = id, name = name, password = password)
+        fun PasswordItemEditUiState.toUseCaseModel(passwordGroupId: String) =
+            PasswordItemUseCaseModel(id = id, passwordGroupId = passwordGroupId, name = name, password = password)
     }
 }
 

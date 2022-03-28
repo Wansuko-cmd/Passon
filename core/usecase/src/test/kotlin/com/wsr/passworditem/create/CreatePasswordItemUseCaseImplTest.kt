@@ -29,7 +29,7 @@ class CreatePasswordItemUseCaseImplTest {
 
         val mockedPasswordGroupId = "mockedPasswordGroupId"
 
-        val actual = target.createPasswordInstance(mockedPasswordGroupId)
+        val actual = target.createPasswordItemInstance(mockedPasswordGroupId)
         val expected = PasswordItemUseCaseModel(uuid, mockedPasswordGroupId, "", "")
 
         assertThat(actual).isEqualTo(expected)

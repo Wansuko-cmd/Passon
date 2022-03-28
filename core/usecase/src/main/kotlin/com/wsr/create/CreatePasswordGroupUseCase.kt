@@ -1,7 +1,7 @@
 package com.wsr.create
 
+import com.wsr.PasswordGroupUseCaseModel
 import com.wsr.exceptions.CreateDataFailedException
-import com.wsr.passwordgroup.PasswordGroupUseCaseModel
 import com.wsr.state.State
 
 interface CreatePasswordGroupUseCase {

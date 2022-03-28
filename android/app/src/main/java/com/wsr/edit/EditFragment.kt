@@ -47,7 +47,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
         binding.editFragmentFab.setOnClickListener {
             launchInLifecycleScope(Lifecycle.State.STARTED) {
-                editViewModel.save(passwordGroupId).consume(
+                editViewModel.sync(passwordGroupId).consume(
                     success = {
                         Toast.makeText(
                             context,

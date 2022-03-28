@@ -1,4 +1,6 @@
-package com.wsr.passworditem
+package com.wsr
+
+import com.wsr.passworditem.PasswordItem
 
 data class PasswordItemUseCaseModel(
     val id: String,

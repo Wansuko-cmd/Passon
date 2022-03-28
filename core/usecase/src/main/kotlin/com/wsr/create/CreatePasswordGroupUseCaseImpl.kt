@@ -1,13 +1,13 @@
 package com.wsr.create
 
+import com.wsr.PasswordGroupUseCaseModel
 import com.wsr.email.Email
 import com.wsr.exceptions.CreateDataFailedException
 import com.wsr.passwordgroup.PasswordGroupFactory
 import com.wsr.passwordgroup.PasswordGroupRepository
-import com.wsr.passwordgroup.PasswordGroupUseCaseModel
 import com.wsr.passwordgroup.Title
-import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
+import com.wsr.toUseCaseModel
 
 class CreatePasswordGroupUseCaseImpl(
     private val passwordGroupRepository: PasswordGroupRepository,

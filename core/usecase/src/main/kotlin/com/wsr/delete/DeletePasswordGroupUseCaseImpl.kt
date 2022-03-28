@@ -1,12 +1,12 @@
-package com.wsr.passwordgroup.delete
+package com.wsr.delete
 
+import com.wsr.PasswordGroupUseCaseModel
 import com.wsr.exceptions.DeleteDataFailedException
 import com.wsr.exceptions.GetDataFailedException
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
-import com.wsr.passwordgroup.PasswordGroupUseCaseModel
-import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
+import com.wsr.toUseCaseModel
 
 class DeletePasswordGroupUseCaseImpl(
     private val passwordGroupRepository: PasswordGroupRepository,

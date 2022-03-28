@@ -1,7 +1,7 @@
 package com.wsr.create
 
-import com.wsr.passworditem.PasswordItemUseCaseModel
+import com.wsr.PasswordItemUseCaseModel
 
 interface CreatePasswordItemUseCase {
-    fun createPasswordInstance(passwordGroupId: String): PasswordItemUseCaseModel
+    fun createPasswordItemInstance(passwordGroupId: String): PasswordItemUseCaseModel
 }
