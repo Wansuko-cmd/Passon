@@ -9,11 +9,11 @@ import com.wsr.passworditem.PasswordItemFactory
 import com.wsr.passworditem.PasswordItemId
 import com.wsr.passworditem.PasswordItemRepository
 
-class SyncPasswordSetUseCaseImpl(
+class SyncPasswordPairUseCaseImpl(
     private val passwordGroupRepository: PasswordGroupRepository,
     private val passwordItemRepository: PasswordItemRepository,
-    private val queryService: SyncPasswordSetUseCaseQueryService,
-) : SyncPasswordSetUseCase {
+    private val queryService: SyncPasswordPairUseCaseQueryService,
+) : SyncPasswordPairUseCase {
 
     private val passwordItemFactory = PasswordItemFactory()
 

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.delete.DeletePasswordGroupUseCase
 import com.wsr.ext.updateWith
-import com.wsr.fetch.FetchPasswordSetUseCase
+import com.wsr.fetch.FetchPasswordPairUseCase
 import com.wsr.show.PasswordGroupShowUiState.Companion.toShowUiModel
 import com.wsr.show.PasswordItemShowUiState.Companion.toShowUiModel
 import com.wsr.state.map
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ShowViewModel(
-    private val fetchPasswordSetUseCase: FetchPasswordSetUseCase,
+    private val fetchPasswordSetUseCase: FetchPasswordPairUseCase,
     private val deletePasswordGroupUseCase: DeletePasswordGroupUseCase,
 ) : ViewModel() {
 
@@ -36,12 +36,12 @@ class ShowViewModel(
             coroutineScope = viewModelScope,
         ) { showUiState, state ->
             showUiState.copyWithPasswordGroup(
-                passwordGroup = state.map { it.first }.mapBoth(
+                passwordGroup = state.map { it.passwordGroup }.mapBoth(
                     success = { it.toShowUiModel() },
                     failure = { ErrorShowUiState(it.message ?: "") },
                 )
             ).copyWithPasswordItems(
-                passwordItems = state.map { it.second }.mapBoth(
+                passwordItems = state.map { it.passwordItems }.mapBoth(
                     success = { list -> list.map { it.toShowUiModel() } },
                     failure = { ErrorShowUiState(it.message ?: "") }
                 )

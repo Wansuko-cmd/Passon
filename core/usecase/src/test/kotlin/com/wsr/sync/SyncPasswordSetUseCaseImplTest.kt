@@ -32,13 +32,13 @@ class SyncPasswordSetUseCaseImplTest {
     @MockK
     private lateinit var passwordItemRepository: PasswordItemRepository
     @MockK
-    private lateinit var queryService: SyncPasswordSetUseCaseQueryService
-    private lateinit var target: SyncPasswordSetUseCase
+    private lateinit var queryService: SyncPasswordPairUseCaseQueryService
+    private lateinit var target: SyncPasswordPairUseCase
 
     @BeforeTest
     fun setup() {
         MockKAnnotations.init(this)
-        target = SyncPasswordSetUseCaseImpl(passwordGroupRepository, passwordItemRepository, queryService)
+        target = SyncPasswordPairUseCaseImpl(passwordGroupRepository, passwordItemRepository, queryService)
     }
 
     /*** sync関数 ***/

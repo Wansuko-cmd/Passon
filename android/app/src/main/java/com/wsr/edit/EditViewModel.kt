@@ -7,12 +7,12 @@ import com.wsr.edit.PasswordGroupEditUiState.Companion.toEditUiState
 import com.wsr.edit.PasswordItemEditUiState.Companion.toEditUiState
 import com.wsr.edit.PasswordItemEditUiState.Companion.toUseCaseModel
 import com.wsr.ext.updateWith
-import com.wsr.fetch.FetchPasswordSetUseCase
+import com.wsr.fetch.FetchPasswordPairUseCase
 import com.wsr.state.State
 import com.wsr.state.consume
 import com.wsr.state.map
 import com.wsr.state.mapBoth
-import com.wsr.sync.SyncPasswordSetUseCase
+import com.wsr.sync.SyncPasswordPairUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -22,8 +22,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class EditViewModel(
-    private val fetchPasswordSetUseCase: FetchPasswordSetUseCase,
-    private val syncPasswordSetUseCase: SyncPasswordSetUseCase,
+    private val fetchPasswordSetUseCase: FetchPasswordPairUseCase,
+    private val syncPasswordSetUseCase: SyncPasswordPairUseCase,
     private val createPasswordItemUseCase: CreatePasswordItemUseCase,
 ) : ViewModel() {
 
@@ -44,12 +44,12 @@ class EditViewModel(
         ) { editUiState, state ->
 
             editUiState.copyWithPasswordGroup(
-                passwordGroup = state.map { it.first }.mapBoth(
+                passwordGroup = state.map { it.passwordGroup }.mapBoth(
                     success = { it.toEditUiState() },
                     failure = { ErrorEditUiState(it.message ?: "") },
                 )
             ).copyWithPasswordItems(
-                passwordItems = state.map { it.second }.mapBoth(
+                passwordItems = state.map { it.passwordItems }.mapBoth(
                     success = { list -> list.map { it.toEditUiState() } },
                     failure = { ErrorEditUiState(it.message ?: "") }
                 )

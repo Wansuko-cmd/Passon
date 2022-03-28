@@ -4,7 +4,6 @@ import com.wsr.PasswordGroupUseCaseModel
 import com.wsr.email.Email
 import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.state.State
-import com.wsr.toUseCaseModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -21,7 +20,6 @@ class FetchAllPasswordGroupUseCaseImpl(
             _data.emit(State.Loading)
             val passwordGroups = queryService
                 .getAllPasswordGroup(Email(email))
-                .map { it.toUseCaseModel() }
 
             _data.emit(State.Success(passwordGroups))
         } catch (e: GetAllDataFailedException) {

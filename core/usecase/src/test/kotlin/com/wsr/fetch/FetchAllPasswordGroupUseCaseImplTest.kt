@@ -48,7 +48,7 @@ class FetchAllPasswordGroupUseCaseImplTest {
             )
         }
 
-        coEvery { queryService.getAllPasswordGroup(mockedEmail) } returns mockedPasswordGroups
+        coEvery { queryService.getAllPasswordGroup(mockedEmail) } returns mockedPasswordGroups.map { it.toUseCaseModel() }
 
         target.data.test {
             target.fetch(mockedEmail.value)

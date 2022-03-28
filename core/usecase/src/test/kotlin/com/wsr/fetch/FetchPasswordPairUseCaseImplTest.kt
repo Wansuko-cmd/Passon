@@ -4,6 +4,7 @@ package com.wsr.fetch
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import com.wsr.PasswordPairUseCaseModel
 import com.wsr.email.Email
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
@@ -26,16 +27,16 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class FetchPasswordSetUseCaseImplTest {
+class FetchPasswordPairUseCaseImplTest {
 
     @MockK
-    private lateinit var queryService: FetchPasswordSetUseCaseQueryService
-    private lateinit var target: FetchPasswordSetUseCaseImpl
+    private lateinit var queryService: FetchPasswordPairUseCaseQueryService
+    private lateinit var target: FetchPasswordPairUseCaseImpl
 
     @BeforeTest
     fun setup() {
         MockKAnnotations.init(this)
-        target = FetchPasswordSetUseCaseImpl(queryService)
+        target = FetchPasswordPairUseCaseImpl(queryService)
     }
 
     /*** fetch関数 ***/
@@ -61,20 +62,28 @@ class FetchPasswordSetUseCaseImplTest {
             )
         }
 
-        coEvery { queryService.getPasswordSet(mockedPasswordGroupId) } returns Pair(mockedPasswordGroup, mockedPasswordItems)
+        coEvery {
+            queryService.getPasswordPair(mockedPasswordGroupId)
+        } returns PasswordPairUseCaseModel(
+            passwordGroup = mockedPasswordGroup.toUseCaseModel(),
+            passwordItems = mockedPasswordItems.map { it.toUseCaseModel() },
+        )
 
         target.data.test {
             target.fetch(mockedPasswordGroupId.value)
 
             assertThat(awaitItem()).isEqualTo(State.Loading)
 
-            val expected = mockedPasswordGroup.toUseCaseModel() to mockedPasswordItems.map { it.toUseCaseModel() }
+            val expected = PasswordPairUseCaseModel(
+                passwordGroup = mockedPasswordGroup.toUseCaseModel(),
+                passwordItems = mockedPasswordItems.map { it.toUseCaseModel() },
+            )
             assertThat(awaitItem()).isEqualTo(State.Success(expected))
 
             cancelAndIgnoreRemainingEvents()
         }
 
-        coVerify(exactly = 1) { queryService.getPasswordSet(mockedPasswordGroupId) }
+        coVerify(exactly = 1) { queryService.getPasswordPair(mockedPasswordGroupId) }
         confirmVerified(queryService)
     }
 
