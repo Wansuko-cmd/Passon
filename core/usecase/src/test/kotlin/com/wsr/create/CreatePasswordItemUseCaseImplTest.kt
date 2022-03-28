@@ -1,10 +1,9 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.passworditem.create
+package com.wsr.create
 
 import com.google.common.truth.Truth.assertThat
-import com.wsr.create.CreatePasswordItemUseCaseImpl
-import com.wsr.passworditem.PasswordItemUseCaseModel
+import com.wsr.PasswordItemUseCaseModel
 import io.mockk.every
 import io.mockk.mockkStatic
 import java.util.UUID

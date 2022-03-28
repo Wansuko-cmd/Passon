@@ -7,7 +7,6 @@ import com.wsr.create.CreatePasswordItemUseCase
 import com.wsr.create.CreatePasswordItemUseCaseImpl
 import com.wsr.delete.DeletePasswordGroupUseCase
 import com.wsr.delete.DeletePasswordGroupUseCaseImpl
-import com.wsr.delete.DeletePasswordGroupUseCaseQueryService
 import com.wsr.edit.EditViewModel
 import com.wsr.fetch.FetchAllPasswordGroupUseCase
 import com.wsr.fetch.FetchAllPasswordGroupUseCaseImpl
@@ -22,7 +21,6 @@ import com.wsr.infra.passwordgroup.LocalPasswordGroupRepositoryImpl
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passworditem.LocalPasswordItemRepositoryImpl
 import com.wsr.infra.passworditem.PasswordItemEntityDao
-import com.wsr.infra.queryservice.LocalDeletePasswordGroupUseCaseQueryImpl
 import com.wsr.infra.queryservice.LocalFetchAllPasswordGroupUseCaseQueryServiceImpl
 import com.wsr.infra.queryservice.LocalFetchPasswordSetUseCaseQueryServiceImpl
 import com.wsr.infra.queryservice.LocalSyncPasswordSetUseCaseQueryServiceImpl
@@ -57,8 +55,7 @@ val module = module {
     single<CreatePasswordItemUseCase> { CreatePasswordItemUseCaseImpl() }
 
     // delete
-    single<DeletePasswordGroupUseCase> { DeletePasswordGroupUseCaseImpl(get(), get()) }
-    single<DeletePasswordGroupUseCaseQueryService> { LocalDeletePasswordGroupUseCaseQueryImpl(get()) }
+    single<DeletePasswordGroupUseCase> { DeletePasswordGroupUseCaseImpl(get()) }
 
     // fetch
     factory<FetchAllPasswordGroupUseCase> { FetchAllPasswordGroupUseCaseImpl(get()) }

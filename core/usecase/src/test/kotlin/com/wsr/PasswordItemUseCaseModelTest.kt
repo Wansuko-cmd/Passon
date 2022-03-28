@@ -1,9 +1,13 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.passworditem
+package com.wsr
 
 import com.google.common.truth.Truth.assertThat
 import com.wsr.passwordgroup.PasswordGroupId
+import com.wsr.passworditem.Name
+import com.wsr.passworditem.Password
+import com.wsr.passworditem.PasswordItem
+import com.wsr.passworditem.PasswordItemId
 import kotlin.test.Test
 
 class PasswordItemUseCaseModelTest {

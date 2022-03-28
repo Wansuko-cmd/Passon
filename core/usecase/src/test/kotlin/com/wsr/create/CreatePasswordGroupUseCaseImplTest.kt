@@ -1,9 +1,8 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.passwordgroup.create
+package com.wsr.create
 
 import com.google.common.truth.Truth.assertThat
-import com.wsr.create.CreatePasswordGroupUseCaseImpl
 import com.wsr.email.Email
 import com.wsr.exceptions.CreateDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
@@ -11,8 +10,8 @@ import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
-import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
+import com.wsr.toUseCaseModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify

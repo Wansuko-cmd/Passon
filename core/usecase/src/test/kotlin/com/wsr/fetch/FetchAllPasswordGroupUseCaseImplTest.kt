@@ -1,6 +1,6 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.passwordgroup.getall
+package com.wsr.fetch
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
@@ -10,8 +10,8 @@ import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
-import com.wsr.passwordgroup.toUseCaseModel
 import com.wsr.state.State
+import com.wsr.toUseCaseModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -23,19 +23,19 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class GetAllPasswordGroupUseCaseImplTest {
+class FetchAllPasswordGroupUseCaseImplTest {
 
     @MockK
-    private lateinit var getAllPasswordGroupQueryService: GetAllPasswordGroupUseCaseQueryService
-    private lateinit var target: GetAllPasswordGroupUseCaseImpl
+    private lateinit var queryService: FetchAllPasswordGroupUseCaseQueryService
+    private lateinit var target: FetchAllPasswordGroupUseCase
 
     @BeforeTest
     fun setup() {
         MockKAnnotations.init(this)
-        target = GetAllPasswordGroupUseCaseImpl(getAllPasswordGroupQueryService)
+        target = FetchAllPasswordGroupUseCaseImpl(queryService)
     }
 
-    /*** getAllByEmail関数 ***/
+    /*** fetch関数 ***/
     @Test
     fun emailを渡すと所属する全てのPasswordGroupを返す() = runTest {
         val mockedEmail = Email("mockedEmail")
@@ -48,10 +48,10 @@ class GetAllPasswordGroupUseCaseImplTest {
             )
         }
 
-        coEvery { getAllPasswordGroupQueryService.getAllByEmail(mockedEmail) } returns mockedPasswordGroups
+        coEvery { queryService.getAllPasswordGroup(mockedEmail) } returns mockedPasswordGroups
 
         target.data.test {
-            target.getAllByEmail(mockedEmail.value)
+            target.fetch(mockedEmail.value)
 
             assertThat(awaitItem()).isEqualTo(State.Loading)
 
@@ -61,18 +61,18 @@ class GetAllPasswordGroupUseCaseImplTest {
             cancelAndIgnoreRemainingEvents()
         }
 
-        coVerify(exactly = 1) { getAllPasswordGroupQueryService.getAllByEmail(mockedEmail) }
-        confirmVerified(getAllPasswordGroupQueryService)
+        coVerify(exactly = 1) { queryService.getAllPasswordGroup(mockedEmail) }
+        confirmVerified(queryService)
     }
 
     @Test
     fun 取得するときにエラーが起きればその内容を返す() = runTest {
         val mockedEmail = Email("mockedEmail")
 
-        coEvery { getAllPasswordGroupQueryService.getAllByEmail(mockedEmail) } throws GetAllDataFailedException.DatabaseException()
+        coEvery { queryService.getAllPasswordGroup(mockedEmail) } throws GetAllDataFailedException.DatabaseException()
 
         target.data.test {
-            target.getAllByEmail(mockedEmail.value)
+            target.fetch(mockedEmail.value)
 
             assertThat(awaitItem()).isEqualTo(State.Loading)
 
@@ -82,7 +82,7 @@ class GetAllPasswordGroupUseCaseImplTest {
             cancelAndIgnoreRemainingEvents()
         }
 
-        coVerify(exactly = 1) { getAllPasswordGroupQueryService.getAllByEmail(mockedEmail) }
-        confirmVerified(getAllPasswordGroupQueryService)
+        coVerify(exactly = 1) { queryService.getAllPasswordGroup(mockedEmail) }
+        confirmVerified(queryService)
     }
 }
