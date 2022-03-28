@@ -20,7 +20,7 @@ class FetchAllPasswordGroupUseCaseImpl(
         try {
             _data.emit(State.Loading)
             val passwordGroups = queryService
-                .getAll(Email(email))
+                .getAllPasswordGroup(Email(email))
                 .map { it.toUseCaseModel() }
 
             _data.emit(State.Success(passwordGroups))

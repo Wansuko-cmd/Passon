@@ -6,5 +6,5 @@ import com.wsr.passwordgroup.PasswordGroup
 
 interface FetchAllPasswordGroupUseCaseQueryService {
     @Throws(GetAllDataFailedException::class)
-    suspend fun getAll(email: Email): List<PasswordGroup>
+    suspend fun getAllPasswordGroup(email: Email): List<PasswordGroup>
 }

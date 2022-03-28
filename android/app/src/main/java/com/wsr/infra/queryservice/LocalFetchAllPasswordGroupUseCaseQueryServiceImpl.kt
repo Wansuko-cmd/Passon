@@ -10,6 +10,6 @@ class LocalFetchAllPasswordGroupUseCaseQueryServiceImpl(
     private val passwordGroupEntityDao: PasswordGroupEntityDao,
 ) : FetchAllPasswordGroupUseCaseQueryService {
     @Throws(GetAllDataFailedException::class)
-    override suspend fun getAll(email: Email): List<PasswordGroup> =
+    override suspend fun getAllPasswordGroup(email: Email): List<PasswordGroup> =
         passwordGroupEntityDao.getAllByEmail(email.value).map { it.toPasswordGroup() }
 }

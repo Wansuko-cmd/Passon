@@ -17,7 +17,7 @@ class LocalFetchPasswordSetUseCaseQueryServiceImpl(
     private val passwordItemEntityDao: PasswordItemEntityDao,
 ) : FetchPasswordSetUseCaseQueryService {
     @Throws(GetAllDataFailedException::class)
-    override suspend fun get(passwordGroupId: PasswordGroupId): Pair<PasswordGroup, List<PasswordItem>> = withContext(Dispatchers.IO) {
+    override suspend fun getPasswordSet(passwordGroupId: PasswordGroupId): Pair<PasswordGroup, List<PasswordItem>> = withContext(Dispatchers.IO) {
         val passwordGroup = async { passwordGroupEntityDao.getById(passwordGroupId.value).toPasswordGroup() }
         val passwordItems = async { passwordItemEntityDao.getAllByPasswordGroupId(passwordGroupId.value).map { it.toPassword() } }
         passwordGroup.await() to passwordItems.await()

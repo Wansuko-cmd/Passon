@@ -1,6 +1,6 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.infra.passwordgroup.queryservice
+package com.wsr.infra.queryservice.fetch
 
 import android.content.Context
 import androidx.room.Room
@@ -11,6 +11,7 @@ import com.wsr.email.Email
 import com.wsr.infra.PassonDatabase
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passwordgroup.toEntity
+import com.wsr.infra.queryservice.LocalFetchAllPasswordGroupUseCaseQueryServiceImpl
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
@@ -24,10 +25,10 @@ import kotlin.test.Test
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class LocalGetAllPasswordGroupUseCaseQueryServiceTest {
+class LocalFetchAllPasswordGroupUseCaseQueryServiceTest {
     private lateinit var passwordGroupEntityDao: PasswordGroupEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: LocalGetAllPasswordGroupUseCaseQueryServiceImpl
+    private lateinit var target: LocalFetchAllPasswordGroupUseCaseQueryServiceImpl
 
     @BeforeTest
     fun setup() {
@@ -35,7 +36,7 @@ class LocalGetAllPasswordGroupUseCaseQueryServiceTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordGroupEntityDao = db.passwordGroupEntityDao()
 
-        target = LocalGetAllPasswordGroupUseCaseQueryServiceImpl(passwordGroupEntityDao)
+        target = LocalFetchAllPasswordGroupUseCaseQueryServiceImpl(passwordGroupEntityDao)
     }
 
     @AfterTest
@@ -43,9 +44,9 @@ class LocalGetAllPasswordGroupUseCaseQueryServiceTest {
         db.close()
     }
 
-    /*** getAllByEmail関数 ***/
+    /*** getAllPasswordGroup関数 ***/
     @Test
-    fun Emailを渡せば所属するPasswordGroupIdを返す() = runTest {
+    fun Emailを渡せば所属するPasswordGroupを返す() = runTest {
         val mockedEmail = Email("mockedEmail")
         val mockedPasswordGroups = List(5) { index ->
             PasswordGroup(
@@ -66,7 +67,7 @@ class LocalGetAllPasswordGroupUseCaseQueryServiceTest {
         }
         notTargetMockedPasswordGroups.forEach { passwordGroupEntityDao.insert(it.toEntity()) }
 
-        val actual = target.getAllByEmail(mockedEmail)
+        val actual = target.getAllPasswordGroup(mockedEmail)
         assertThat(actual).isEqualTo(mockedPasswordGroups)
     }
 }

@@ -13,7 +13,7 @@ class DeletePasswordGroupUseCaseImpl(
     private val passwordGroupUseCaseQueryService: DeletePasswordGroupUseCaseQueryService,
 ) : DeletePasswordGroupUseCase {
     override suspend fun delete(id: String): State<PasswordGroupUseCaseModel, DeleteDataFailedException> = try {
-        val passwordGroup = passwordGroupUseCaseQueryService.getById(passwordGroupId = PasswordGroupId(id))
+        val passwordGroup = passwordGroupUseCaseQueryService.getPasswordGroup(passwordGroupId = PasswordGroupId(id))
         passwordGroupRepository.delete(PasswordGroupId(id))
         State.Success(passwordGroup.toUseCaseModel())
     } catch (e: GetDataFailedException) {

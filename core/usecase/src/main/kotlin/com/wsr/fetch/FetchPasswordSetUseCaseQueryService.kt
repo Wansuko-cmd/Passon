@@ -8,5 +8,5 @@ import kotlin.jvm.Throws
 
 interface FetchPasswordSetUseCaseQueryService {
     @Throws(GetAllDataFailedException::class)
-    suspend fun get(passwordGroupId: PasswordGroupId): Pair<PasswordGroup, List<PasswordItem>>
+    suspend fun getPasswordSet(passwordGroupId: PasswordGroupId): Pair<PasswordGroup, List<PasswordItem>>
 }

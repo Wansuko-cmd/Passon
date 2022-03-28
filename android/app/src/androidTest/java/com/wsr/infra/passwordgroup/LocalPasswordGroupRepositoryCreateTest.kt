@@ -1,16 +1,14 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.infra.passwordgroup.repository
+package com.wsr.infra.passwordgroup
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.common.truth.Truth.assertThat
 import com.wsr.email.Email
-import com.wsr.exceptions.GetDataFailedException
 import com.wsr.infra.PassonDatabase
-import com.wsr.infra.passwordgroup.LocalPasswordGroupRepositoryImpl
-import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
@@ -21,11 +19,10 @@ import org.junit.runner.RunWith
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class LocalPasswordGroupRepositoryDeleteTest {
+class LocalPasswordGroupRepositoryCreateTest {
     private lateinit var passwordGroupEntityDao: PasswordGroupEntityDao
     private lateinit var db: PassonDatabase
     private lateinit var target: LocalPasswordGroupRepositoryImpl
@@ -44,22 +41,19 @@ class LocalPasswordGroupRepositoryDeleteTest {
         db.close()
     }
 
-    /*** delete関数 ***/
+    /*** create関数 ***/
     @Test
-    fun passwordGroupIdを渡すと対応するPasswordGroupを削除する() = runTest {
-        val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
+    fun 新しいPasswordGroupの情報を渡せば登録する() = runTest {
+        val mockedEmail = Email("mockedEmail")
         val mockedPasswordGroup = PasswordGroup(
-            id = mockedPasswordGroupId,
-            email = Email("mockedEmail"),
+            id = PasswordGroupId("mockedPasswordGroupId"),
+            email = mockedEmail,
             title = Title("mockedTitle"),
             remark = Remark("mockedRemark"),
         )
         target.create(mockedPasswordGroup)
 
-        target.delete(mockedPasswordGroupId)
-
-        assertFailsWith<GetDataFailedException.NoSuchElementException> {
-            passwordGroupEntityDao.getById(mockedPasswordGroupId.value)
-        }
+        val actual = passwordGroupEntityDao.getAllByEmail(mockedEmail.value)
+        assertThat(actual).contains(mockedPasswordGroup)
     }
 }

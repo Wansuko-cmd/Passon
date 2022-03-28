@@ -19,7 +19,7 @@ class FetchPasswordSetUseCaseImpl(
         try {
             _data.emit(State.Loading)
             val passwordSet = queryService
-                .get(PasswordGroupId(passwordGroupId))
+                .getPasswordSet(PasswordGroupId(passwordGroupId))
                 .let { (first, second) -> first.toUseCaseModel() to second.map { it.toUseCaseModel() } }
 
             _data.emit(State.Success(passwordSet))

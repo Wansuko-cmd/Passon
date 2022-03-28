@@ -1,6 +1,6 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.infra.passwordgroup.queryservice
+package com.wsr.infra.queryservice.delete
 
 import android.content.Context
 import androidx.room.Room
@@ -12,6 +12,7 @@ import com.wsr.exceptions.GetDataFailedException
 import com.wsr.infra.PassonDatabase
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passwordgroup.toEntity
+import com.wsr.infra.queryservice.LocalDeletePasswordGroupUseCaseQueryImpl
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
@@ -26,11 +27,11 @@ import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class LocalUpdatePasswordGroupUseCaseQueryServiceTest {
+class LocalDeletePasswordGroupUseCaseImplQueryServiceTest {
 
     private lateinit var passwordGroupEntityDao: PasswordGroupEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: LocalUpdatePasswordGroupUseCaseQueryServiceImpl
+    private lateinit var target: LocalDeletePasswordGroupUseCaseQueryImpl
 
     @BeforeTest
     fun setup() {
@@ -38,7 +39,7 @@ class LocalUpdatePasswordGroupUseCaseQueryServiceTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordGroupEntityDao = db.passwordGroupEntityDao()
 
-        target = LocalUpdatePasswordGroupUseCaseQueryServiceImpl(passwordGroupEntityDao)
+        target = LocalDeletePasswordGroupUseCaseQueryImpl(passwordGroupEntityDao)
     }
 
     @AfterTest
@@ -46,7 +47,7 @@ class LocalUpdatePasswordGroupUseCaseQueryServiceTest {
         db.close()
     }
 
-    /*** getById関数 ***/
+    /*** getPasswordGroup関数 ***/
     @Test
     fun passwordGroupIdを渡せば対応するPasswordGroupを返す() = runTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
@@ -66,7 +67,7 @@ class LocalUpdatePasswordGroupUseCaseQueryServiceTest {
         )
         passwordGroupEntityDao.insert(notTargetMockedPasswordGroup.toEntity())
 
-        val actual = target.getById(mockedPasswordGroupId)
+        val actual = target.getPasswordGroup(mockedPasswordGroupId)
         Truth.assertThat(actual).isEqualTo(mockedPasswordGroup)
     }
 
@@ -75,7 +76,7 @@ class LocalUpdatePasswordGroupUseCaseQueryServiceTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
 
         assertFailsWith<GetDataFailedException.NoSuchElementException> {
-            target.getById(mockedPasswordGroupId)
+            target.getPasswordGroup(mockedPasswordGroupId)
         }
     }
 }

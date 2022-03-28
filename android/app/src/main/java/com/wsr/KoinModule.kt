@@ -85,7 +85,7 @@ val module = module {
     /*** DAO ***/
     single<PasswordItemEntityDao> {
         val database by inject<PassonDatabase>()
-        database.passwordEntityDao()
+        database.passwordItemEntityDao()
     }
     single<PasswordGroupEntityDao> {
         val database by inject<PassonDatabase>()

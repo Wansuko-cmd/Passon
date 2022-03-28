@@ -6,5 +6,5 @@ import com.wsr.passwordgroup.PasswordGroupId
 
 interface DeletePasswordGroupUseCaseQueryService {
     @Throws(GetDataFailedException::class)
-    suspend fun getById(passwordGroupId: PasswordGroupId): PasswordGroup
+    suspend fun getPasswordGroup(passwordGroupId: PasswordGroupId): PasswordGroup
 }

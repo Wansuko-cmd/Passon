@@ -9,7 +9,7 @@ import com.wsr.passwordgroup.PasswordGroupId
 class LocalDeletePasswordGroupUseCaseQueryImpl(
     private val passwordGroupEntityDao: PasswordGroupEntityDao,
 ) : DeletePasswordGroupUseCaseQueryService {
-    override suspend fun getById(passwordGroupId: PasswordGroupId): PasswordGroup = try {
+    override suspend fun getPasswordGroup(passwordGroupId: PasswordGroupId): PasswordGroup = try {
         passwordGroupEntityDao.getById(passwordGroupId.value).toPasswordGroup()
     } catch (e: NullPointerException) {
         throw GetDataFailedException.NoSuchElementException(e.message ?: "")

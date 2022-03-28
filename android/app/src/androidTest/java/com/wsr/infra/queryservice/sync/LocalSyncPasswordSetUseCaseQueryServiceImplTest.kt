@@ -1,6 +1,6 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.infra.passworditem.queryservice
+package com.wsr.infra.queryservice.sync
 
 import android.content.Context
 import androidx.room.Room
@@ -10,6 +10,7 @@ import com.google.common.truth.Truth.assertThat
 import com.wsr.infra.PassonDatabase
 import com.wsr.infra.passworditem.PasswordItemEntityDao
 import com.wsr.infra.passworditem.toEntity
+import com.wsr.infra.queryservice.LocalSyncPasswordSetUseCaseQueryServiceImpl
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passworditem.Name
 import com.wsr.passworditem.Password
@@ -24,18 +25,18 @@ import kotlin.test.Test
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class LocalGetAllPasswordItemUseCaseQueryServiceTest {
+class LocalSyncPasswordSetUseCaseQueryServiceImplTest {
     private lateinit var passwordEntityDao: PasswordItemEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: LocalGetAllPasswordItemUseCaseQueryServiceImpl
+    private lateinit var target: LocalSyncPasswordSetUseCaseQueryServiceImpl
 
     @BeforeTest
     fun setup() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
-        passwordEntityDao = db.passwordEntityDao()
+        passwordEntityDao = db.passwordItemEntityDao()
 
-        target = LocalGetAllPasswordItemUseCaseQueryServiceImpl(passwordEntityDao)
+        target = LocalSyncPasswordSetUseCaseQueryServiceImpl(passwordEntityDao)
     }
 
     @AfterTest
@@ -45,7 +46,7 @@ class LocalGetAllPasswordItemUseCaseQueryServiceTest {
 
     /*** getAllByPasswordGroupId関数 ***/
     @Test
-    fun passwordGroupIdを渡すと所属する全てのPasswordGroupを返す() = runTest {
+    fun passwordGroupIdを渡すと所属する全てのPasswordItemのIDを返す() = runTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
         val mockedPasswordItems = List(5) { index ->
             PasswordItem(
@@ -58,7 +59,7 @@ class LocalGetAllPasswordItemUseCaseQueryServiceTest {
 
         mockedPasswordItems.forEach { passwordEntityDao.upsert(it.toEntity()) }
 
-        val actual = target.getAllByPasswordGroupId(mockedPasswordGroupId)
-        assertThat(actual).isEqualTo(mockedPasswordItems)
+        val actual = target.getAllPasswordItemId(mockedPasswordGroupId)
+        assertThat(actual).isEqualTo(mockedPasswordItems.map { it.id })
     }
 }
