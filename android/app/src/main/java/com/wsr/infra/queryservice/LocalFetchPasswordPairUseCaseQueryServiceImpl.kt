@@ -17,12 +17,16 @@ class LocalFetchPasswordPairUseCaseQueryServiceImpl(
     private val passwordItemEntityDao: PasswordItemEntityDao,
 ) : FetchPasswordPairUseCaseQueryService {
     @Throws(GetAllDataFailedException::class)
-    override suspend fun getPasswordPair(passwordGroupId: PasswordGroupId): PasswordPairUseCaseModel = withContext(Dispatchers.IO) {
-        val passwordGroup = async { passwordGroupEntityDao.getById(passwordGroupId.value).toPasswordGroup() }
-        val passwordItems = async { passwordItemEntityDao.getAllByPasswordGroupId(passwordGroupId.value).map { it.toPassword() } }
-        PasswordPairUseCaseModel(
-            passwordGroup = passwordGroup.await().toUseCaseModel(),
-            passwordItems = passwordItems.await().map { it.toUseCaseModel() },
-        )
+    override suspend fun getPasswordPair(passwordGroupId: PasswordGroupId): PasswordPairUseCaseModel = try {
+        withContext(Dispatchers.IO) {
+            val passwordGroup = async { passwordGroupEntityDao.getById(passwordGroupId.value).toPasswordGroup() }
+            val passwordItems = async { passwordItemEntityDao.getAllByPasswordGroupId(passwordGroupId.value).map { it.toPassword() } }
+            PasswordPairUseCaseModel(
+                passwordGroup = passwordGroup.await().toUseCaseModel(),
+                passwordItems = passwordItems.await().map { it.toUseCaseModel() },
+            )
+        }
+    } catch (e: Exception) {
+        throw GetAllDataFailedException.DatabaseException(e.message ?: "")
     }
 }
