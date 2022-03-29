@@ -6,6 +6,7 @@ import com.wsr.editPasswordRow
 import com.wsr.editRemarkRow
 import com.wsr.editTitleRow
 import com.wsr.layout.AfterTextChanged
+import com.wsr.show.PasswordItemShowUiState
 import com.wsr.utils.MyTyped2EpoxyController
 
 class EditEpoxyController(
@@ -15,6 +16,7 @@ class EditEpoxyController(
     private val afterPasswordChanged: (passwordItemId: String, newPassword: String) -> Unit,
     private val onClickDeletePasswordItemButton: (passwordItemId: String) -> Unit,
     private val onClickAddPasswordButton: () -> Unit,
+    private val onClickShowPassword: (passwordItemId: String) -> Unit,
 ) : MyTyped2EpoxyController<PasswordGroupEditUiState, List<PasswordItemEditUiState>>() {
 
     override fun buildModels(
@@ -35,6 +37,10 @@ class EditEpoxyController(
                 id(passwordItem.id)
                 name(passwordItem.name)
                 password(passwordItem.password)
+                showPassword(passwordItem.showPassword)
+                onClickShowPassword { _, _, _, _ ->
+                    this@EditEpoxyController.onClickShowPassword(passwordItem.id)
+                }
                 afterNameChanged(
                     AfterTextChanged(
                         curry(this@EditEpoxyController.afterNameChanged)(passwordItem.id)

@@ -41,4 +41,5 @@
     <string name="edit_password_row_password">Password</string>
     <string name="edit_remark_row">Remark</string>
     <string name="edit_toast_on_save_message">Saved</string>
+    <string name="edit_show_password_checkbox_text">Show Password</string>
 </resources>

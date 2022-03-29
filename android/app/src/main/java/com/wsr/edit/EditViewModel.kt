@@ -117,6 +117,30 @@ class EditViewModel(
         }
     }
 
+    fun updateShowPassword(passwordItemId: String) =
+        viewModelScope.launch {
+
+            val newPasswordItems = _uiState.value
+                .passwordItems
+                .map { list ->
+                    list.map {
+                        if (it.id == passwordItemId) it.copyWithShowPassword(!it.showPassword) else it
+                    }
+                }
+
+            val newUiState = _uiState.value.copyWithPasswordItems(
+                passwordItems = newPasswordItems
+            )
+
+            _uiState.emit(newUiState)
+
+            newPasswordItems.consume(
+                success = { _editRefreshEvent.emit(EditRefreshEvent(passwordItems = it)) },
+                failure = { /* do nothing */ },
+                loading = { /* do nothing */ },
+            )
+        }
+
     fun createPasswordItem(passwordGroupId: String) {
         viewModelScope.launch {
             val newPasswordItems = _uiState.value.passwordItems

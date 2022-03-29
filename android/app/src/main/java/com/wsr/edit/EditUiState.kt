@@ -8,13 +8,15 @@ data class PasswordItemEditUiState(
     val id: String,
     val name: String,
     val password: String,
+    val showPassword: Boolean,
 ) {
     fun copyWithName(name: String) = this.copy(name = name)
     fun copyWithPassword(password: String) = this.copy(password = password)
+    fun copyWithShowPassword(showPassword: Boolean) = this.copy(showPassword = showPassword)
 
     companion object {
         fun PasswordItemUseCaseModel.toEditUiState() =
-            PasswordItemEditUiState(id = id, name = name, password = password)
+            PasswordItemEditUiState(id = id, name = name, password = password, showPassword = false)
         fun PasswordItemEditUiState.toUseCaseModel(passwordGroupId: String) =
             PasswordItemUseCaseModel(id = id, passwordGroupId = passwordGroupId, name = name, password = password)
     }

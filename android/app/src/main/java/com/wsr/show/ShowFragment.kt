@@ -55,8 +55,9 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
         showViewModel.fetch(passwordGroupId)
 
         val showEpoxyController = ShowEpoxyController(
-            onClickShowPassword = { showViewModel.changePasswordState(it.id) },
-        ) { writeToClipboard("password", it.password) }
+            onClickShowPassword = { showViewModel.updateShowPassword(it) },
+            onClickPasswordCopy = { writePasswordToClipboard(it.password) },
+        )
 
         binding.showFragmentRecyclerView.apply {
             setHasFixedSize(true)
@@ -92,8 +93,8 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
         }
     }
 
-    private fun writeToClipboard(tag: String, text: String) {
-        val clip = ClipData.newPlainText(tag, text)
+    private fun writePasswordToClipboard(text: String) {
+        val clip = ClipData.newPlainText("password", text)
         val clipBoardManager =
             requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         clipBoardManager.setPrimaryClip(clip)
