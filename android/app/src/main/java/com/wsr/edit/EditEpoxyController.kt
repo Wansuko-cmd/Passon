@@ -6,7 +6,6 @@ import com.wsr.editPasswordRow
 import com.wsr.editRemarkRow
 import com.wsr.editTitleRow
 import com.wsr.layout.AfterTextChanged
-import com.wsr.show.PasswordItemShowUiState
 import com.wsr.utils.MyTyped2EpoxyController
 
 class EditEpoxyController(

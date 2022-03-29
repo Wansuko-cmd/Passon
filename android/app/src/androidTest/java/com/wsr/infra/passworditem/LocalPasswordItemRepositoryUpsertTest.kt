@@ -51,7 +51,7 @@ class LocalPasswordItemRepositoryUpsertTest {
         target.upsert(mockedPassword)
 
         val actual = passwordEntityDao.getAllByPasswordGroupId(mockedPassword.passwordGroupId.value)
-        assertThat(actual).contains(mockedPassword)
+        assertThat(actual).contains(mockedPassword.toEntity())
     }
 
     @Test
@@ -77,6 +77,6 @@ class LocalPasswordItemRepositoryUpsertTest {
         target.upsert(updatedMockedPassword)
 
         val actual = passwordEntityDao.getAllByPasswordGroupId(mockedPasswordGroupId.value)
-        assertThat(actual).contains(updatedMockedPassword)
+        assertThat(actual).contains(updatedMockedPassword.toEntity())
     }
 }
