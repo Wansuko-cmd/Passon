@@ -54,6 +54,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
+
+    override fun onUserLeaveHint() {
+        finish()
+        super.onUserLeaveHint()
+    }
 }
 
 private fun Int.actionBarColorToStatusBarColor(): Int {
