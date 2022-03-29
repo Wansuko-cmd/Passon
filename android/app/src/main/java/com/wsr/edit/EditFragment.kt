@@ -3,10 +3,13 @@ package com.wsr.edit
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.wsr.R
 import com.wsr.databinding.FragmentEditBinding
@@ -25,9 +28,32 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         inflater.inflate(R.menu.edit_menu, menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                if (editViewModel.uiState.value.edited) {
+                    Toast.makeText(requireContext(), getString(R.string.edit_leave_page_waring), Toast.LENGTH_LONG).show()
+                    editViewModel.resetEdited()
+                    return true
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         val binding = FragmentEditBinding.bind(view)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            if (editViewModel.uiState.value.edited) {
+                Toast.makeText(requireContext(), getString(R.string.edit_leave_page_waring), Toast.LENGTH_LONG).show()
+                editViewModel.resetEdited()
+                return@addCallback
+            }
+            findNavController().popBackStack()
+        }
 
         editViewModel.fetch(passwordGroupId)
 
@@ -53,7 +79,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
                         Toast.makeText(
                             context,
                             getString(R.string.edit_toast_on_save_message),
-                            Toast.LENGTH_LONG,
+                            Toast.LENGTH_SHORT,
                         ).show()
                     },
                     failure = this@EditFragment::showErrorMessage,

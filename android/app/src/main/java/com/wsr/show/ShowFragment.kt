@@ -102,7 +102,7 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
         Toast.makeText(
             context,
             getString(R.string.show_toast_on_copy_message),
-            Toast.LENGTH_LONG,
+            Toast.LENGTH_SHORT,
         ).show()
     }
 

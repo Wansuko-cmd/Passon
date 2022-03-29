@@ -41,4 +41,5 @@
     <string name="edit_remark_row">備考</string>
     <string name="edit_toast_on_save_message">セーブしました</string>
     <string name="edit_show_password_checkbox_text">表示する</string>
+    <string name="edit_leave_page_waring">セーブされていません（もう一度押すと変更を破棄して移動します）</string>
 </resources>

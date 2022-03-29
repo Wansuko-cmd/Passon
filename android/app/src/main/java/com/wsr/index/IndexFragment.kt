@@ -31,7 +31,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.index_menu_setting -> Toast.makeText(requireContext(), "設定項目なし", Toast.LENGTH_LONG).show()
+            R.id.index_menu_setting -> Toast.makeText(requireContext(), "設定項目なし", Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)
     }
