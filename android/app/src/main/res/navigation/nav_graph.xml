@@ -14,7 +14,9 @@
             app:destination="@id/index_fragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:exitAnim="@anim/slide_out_to_bottom"
+            app:popEnterAnim="@anim/slide_in_from_bottom"/>
     </fragment>
 
     <fragment
@@ -24,9 +26,17 @@
         tools:layout="@layout/fragment_index">
         <action
             android:id="@+id/action_index_fragment_to_show_fragment"
+            app:enterAnim="@anim/slide_in_from_end"
+            app:exitAnim="@anim/slide_out_to_start"
+            app:popEnterAnim="@anim/slide_in_from_start"
+            app:popExitAnim="@anim/slide_out_to_end"
             app:destination="@id/show_fragment" />
         <action
             android:id="@+id/action_index_fragment_to_edit_fragment"
+            app:enterAnim="@anim/slide_in_from_end"
+            app:exitAnim="@anim/slide_out_to_start"
+            app:popEnterAnim="@anim/slide_in_from_start"
+            app:popExitAnim="@anim/slide_out_to_end"
             app:destination="@id/edit_fragment" />
     </fragment>
 
@@ -39,10 +49,11 @@
             android:name="password_group_id"
             app:argType="string" />
         <action
-            android:id="@+id/action_show_fragment_to_index_fragment"
-            app:destination="@id/index_fragment" />
-        <action
             android:id="@+id/action_show_fragment_to_edit_fragment"
+            app:enterAnim="@anim/slide_in_from_end"
+            app:exitAnim="@anim/slide_out_to_start"
+            app:popEnterAnim="@anim/slide_in_from_start"
+            app:popExitAnim="@anim/slide_out_to_end"
             app:destination="@id/edit_fragment" />
     </fragment>
 
@@ -54,9 +65,6 @@
         <argument
             android:name="password_group_id"
             app:argType="string" />
-        <action
-            android:id="@+id/action_edit_fragment_to_show_fragment"
-            app:destination="@id/show_fragment" />
 
     </fragment>
 

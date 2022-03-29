@@ -87,7 +87,7 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             showViewModel.navigateToIndexEvent.collect {
-                findNavController().navigate(ShowFragmentDirections.actionShowFragmentToIndexFragment())
+                findNavController().popBackStack()
             }
         }
     }
