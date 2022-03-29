@@ -13,5 +13,5 @@ interface PasswordItemRepository {
     suspend fun delete(id: PasswordItemId)
 
     @Throws(DeleteDataFailedException::class)
-    suspend fun deleteByPasswordGroupId(passwordGroupId: PasswordGroupId)
+    suspend fun deleteAll(passwordGroupId: PasswordGroupId)
 }

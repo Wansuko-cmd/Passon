@@ -56,9 +56,7 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
 
         val showEpoxyController = ShowEpoxyController(
             onClickShowPassword = { showViewModel.changePasswordState(it.id) },
-            onClickPasswordCopy = { writeToClipboard("password", it.password) },
-            resources = resources,
-        )
+        ) { writeToClipboard("password", it.password) }
 
         binding.showFragmentRecyclerView.apply {
             setHasFixedSize(true)

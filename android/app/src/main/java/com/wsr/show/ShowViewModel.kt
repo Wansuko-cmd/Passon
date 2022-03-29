@@ -2,11 +2,9 @@ package com.wsr.show
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wsr.delete.DeletePasswordGroupUseCase
 import com.wsr.ext.updateWith
-import com.wsr.passwordgroup.delete.DeletePasswordGroupUseCase
-import com.wsr.passwordgroup.get.GetPasswordGroupUseCase
-import com.wsr.passworditem.delete.DeletePasswordItemUseCase
-import com.wsr.passworditem.getall.GetAllPasswordItemUseCase
+import com.wsr.fetch.FetchPasswordPairUseCase
 import com.wsr.show.PasswordGroupShowUiState.Companion.toShowUiModel
 import com.wsr.show.PasswordItemShowUiState.Companion.toShowUiModel
 import com.wsr.state.map
@@ -18,9 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ShowViewModel(
-    private val getPasswordGroupUseCase: GetPasswordGroupUseCase,
-    private val getAllPasswordItemUseCase: GetAllPasswordItemUseCase,
-    private val deletePasswordItemUseCase: DeletePasswordItemUseCase,
+    private val fetchPasswordSetUseCase: FetchPasswordPairUseCase,
     private val deletePasswordGroupUseCase: DeletePasswordGroupUseCase,
 ) : ViewModel() {
 
@@ -31,31 +27,21 @@ class ShowViewModel(
     val navigateToIndexEvent = _navigateToIndexEvent.asSharedFlow()
 
     init {
-        setupTitle()
-        setupPasswords()
+        setup()
     }
 
-    private fun setupTitle() {
+    private fun setup() {
         _uiState.updateWith(
-            target = getPasswordGroupUseCase.data,
+            target = fetchPasswordSetUseCase.data,
             coroutineScope = viewModelScope,
         ) { showUiState, state ->
             showUiState.copyWithPasswordGroup(
-                passwordGroup = state.mapBoth(
+                passwordGroup = state.map { it.passwordGroup }.mapBoth(
                     success = { it.toShowUiModel() },
                     failure = { ErrorShowUiState(it.message ?: "") },
                 )
-            )
-        }
-    }
-
-    private fun setupPasswords() {
-        _uiState.updateWith(
-            target = getAllPasswordItemUseCase.data,
-            coroutineScope = viewModelScope,
-        ) { showUiState, state ->
-            showUiState.copyWithPasswordItems(
-                passwords = state.mapBoth(
+            ).copyWithPasswordItems(
+                passwordItems = state.map { it.passwordItems }.mapBoth(
                     success = { list -> list.map { it.toShowUiModel() } },
                     failure = { ErrorShowUiState(it.message ?: "") }
                 )
@@ -64,19 +50,8 @@ class ShowViewModel(
     }
 
     fun fetch(passwordGroupId: String) {
-        fetchTitle(passwordGroupId)
-        fetchPasswordItems(passwordGroupId)
-    }
-
-    private fun fetchTitle(passwordGroupId: String) {
         viewModelScope.launch {
-            getPasswordGroupUseCase.getById(passwordGroupId)
-        }
-    }
-
-    private fun fetchPasswordItems(passwordGroupId: String) {
-        viewModelScope.launch {
-            getAllPasswordItemUseCase.getAllByPasswordGroupId(passwordGroupId)
+            fetchPasswordSetUseCase.fetch(passwordGroupId)
         }
     }
 
@@ -92,7 +67,7 @@ class ShowViewModel(
                 }
 
             val newUiState = _uiState.value.copyWithPasswordItems(
-                passwords = newPasswordItemsState
+                passwordItems = newPasswordItemsState
             )
 
             _uiState.emit(newUiState)
@@ -101,7 +76,6 @@ class ShowViewModel(
     fun delete(passwordGroupId: String) {
         viewModelScope.launch {
             deletePasswordGroupUseCase.delete(passwordGroupId)
-            deletePasswordItemUseCase.deleteAll(passwordGroupId)
             _navigateToIndexEvent.emit(Unit)
         }
     }

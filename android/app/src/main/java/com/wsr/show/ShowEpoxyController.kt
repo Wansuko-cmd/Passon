@@ -1,6 +1,5 @@
 package com.wsr.show
 
-import android.content.res.Resources
 import com.wsr.showPasswordRow
 import com.wsr.showRemarkRow
 import com.wsr.showTitleRow
@@ -9,7 +8,6 @@ import com.wsr.utils.MyTyped2EpoxyController
 class ShowEpoxyController(
     private val onClickShowPassword: (PasswordItemShowUiState) -> Unit,
     private val onClickPasswordCopy: (PasswordItemShowUiState) -> Unit,
-    private val resources: Resources,
 ) :
     MyTyped2EpoxyController<PasswordGroupShowUiState, List<PasswordItemShowUiState>>() {
 
@@ -46,6 +44,5 @@ class ShowEpoxyController(
 
     companion object {
         const val TITLE_ID = "show_title_row_id"
-        const val MESSAGE_ID = "show_message_row_id"
     }
 }

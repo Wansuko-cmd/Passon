@@ -1,6 +1,6 @@
 package com.wsr.index
 
-import com.wsr.passwordgroup.PasswordGroupUseCaseModel
+import com.wsr.PasswordGroupUseCaseModel
 import com.wsr.state.State
 
 data class PasswordGroupIndexUiState(

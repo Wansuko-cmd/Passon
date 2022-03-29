@@ -22,7 +22,7 @@ class LocalPasswordItemRepositoryImpl(private val passwordEntityDao: PasswordIte
         throw DeleteDataFailedException.DatabaseException(e.message ?: "")
     }
 
-    override suspend fun deleteByPasswordGroupId(passwordGroupId: PasswordGroupId) = try {
+    override suspend fun deleteAll(passwordGroupId: PasswordGroupId) = try {
         passwordEntityDao.deleteAllByPasswordGroupId(passwordGroupId.value)
     } catch (e: Exception) {
         throw DeleteDataFailedException.DatabaseException(e.message ?: "")

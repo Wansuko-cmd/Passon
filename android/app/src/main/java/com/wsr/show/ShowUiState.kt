@@ -1,7 +1,7 @@
 package com.wsr.show
 
-import com.wsr.passwordgroup.PasswordGroupUseCaseModel
-import com.wsr.passworditem.PasswordItemUseCaseModel
+import com.wsr.PasswordGroupUseCaseModel
+import com.wsr.PasswordItemUseCaseModel
 import com.wsr.state.State
 
 data class PasswordItemShowUiState(
@@ -38,6 +38,6 @@ data class ShowUiState(
     fun copyWithPasswordGroup(passwordGroup: State<PasswordGroupShowUiState, ErrorShowUiState>) =
         this.copy(passwordGroup = passwordGroup)
 
-    fun copyWithPasswordItems(passwords: State<List<PasswordItemShowUiState>, ErrorShowUiState>) =
-        this.copy(passwordItems = passwords)
+    fun copyWithPasswordItems(passwordItems: State<List<PasswordItemShowUiState>, ErrorShowUiState>) =
+        this.copy(passwordItems = passwordItems)
 }
