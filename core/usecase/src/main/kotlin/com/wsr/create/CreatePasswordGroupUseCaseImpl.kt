@@ -1,7 +1,7 @@
 package com.wsr.create
 
 import com.wsr.PasswordGroupUseCaseModel
-import com.wsr.email.Email
+import com.wsr.user.Email
 import com.wsr.exceptions.CreateDataFailedException
 import com.wsr.passwordgroup.PasswordGroupFactory
 import com.wsr.passwordgroup.PasswordGroupRepository

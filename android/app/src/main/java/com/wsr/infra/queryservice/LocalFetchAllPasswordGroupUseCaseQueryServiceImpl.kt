@@ -1,7 +1,7 @@
 package com.wsr.infra.queryservice
 
 import com.wsr.PasswordGroupUseCaseModel
-import com.wsr.email.Email
+import com.wsr.user.Email
 import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.fetch.FetchAllPasswordGroupUseCaseQueryService
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao

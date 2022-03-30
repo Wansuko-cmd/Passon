@@ -4,7 +4,7 @@ package com.wsr.fetch
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.wsr.email.Email
+import com.wsr.user.Email
 import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId

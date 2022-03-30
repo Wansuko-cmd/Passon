@@ -1,6 +1,6 @@
 package com.wsr.passwordgroup
 
-import com.wsr.email.Email
+import com.wsr.user.Email
 import java.util.UUID
 
 class PasswordGroupFactory {

@@ -3,7 +3,7 @@
 package com.wsr
 
 import com.google.common.truth.Truth.assertThat
-import com.wsr.email.Email
+import com.wsr.user.Email
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark

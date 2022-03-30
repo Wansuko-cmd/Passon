@@ -1,6 +1,6 @@
 package com.wsr.passwordgroup
 
-import com.wsr.email.Email
+import com.wsr.user.Email
 
 data class PasswordGroup(
     val id: PasswordGroupId,

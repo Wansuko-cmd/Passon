@@ -2,7 +2,7 @@
 
 package com.wsr.sync
 
-import com.wsr.email.Email
+import com.wsr.user.Email
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
