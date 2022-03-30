@@ -13,6 +13,7 @@
             android:buttonTint="@color/moss_green"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:focusable="false"
             tools:checked="true" />
 
         <TextView
@@ -22,6 +23,7 @@
             android:maxLines="1"
             android:paddingHorizontal="16dp"
             android:textColor="@color/black"
+            android:focusable="false"
             app:layout_constraintBottom_toBottomOf="@id/layout_checkbox_with_text_checkbox"
             app:layout_constraintStart_toEndOf="@id/layout_checkbox_with_text_checkbox"
             app:layout_constraintTop_toTopOf="@id/layout_checkbox_with_text_checkbox"

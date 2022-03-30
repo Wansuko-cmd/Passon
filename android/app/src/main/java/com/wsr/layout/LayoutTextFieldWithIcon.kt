@@ -50,7 +50,7 @@ class LayoutTextFieldWithIcon @JvmOverloads constructor(
     }
 
     private fun setInputType(inputType: InputType) {
-        binding.layoutTextFieldWithIconTextInput.inputType = inputType.value
+        binding.layoutTextFieldWithIconTextInput.inputType = android.text.InputType.TYPE_CLASS_TEXT
     }
 
     private fun setIcon(icon: Drawable?) {
