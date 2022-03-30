@@ -6,7 +6,7 @@ import com.wsr.showTitleRow
 import com.wsr.utils.MyTyped2EpoxyController
 
 class ShowEpoxyController(
-    private val onClickShowPassword: (PasswordItemShowUiState) -> Unit,
+    private val onClickShowPassword: (passwordItemId: String) -> Unit,
     private val onClickPasswordCopy: (PasswordItemShowUiState) -> Unit,
 ) :
     MyTyped2EpoxyController<PasswordGroupShowUiState, List<PasswordItemShowUiState>>() {
@@ -27,7 +27,7 @@ class ShowEpoxyController(
                     password(passwordItem.password)
                     showPassword(passwordItem.showPassword)
                     onClickShowPassword { _, _, _, _ ->
-                        this@ShowEpoxyController.onClickShowPassword(passwordItem)
+                        this@ShowEpoxyController.onClickShowPassword(passwordItem.id)
                     }
                     onClickPasswordCopy { _, _, _, _ ->
                         this@ShowEpoxyController.onClickPasswordCopy(passwordItem)

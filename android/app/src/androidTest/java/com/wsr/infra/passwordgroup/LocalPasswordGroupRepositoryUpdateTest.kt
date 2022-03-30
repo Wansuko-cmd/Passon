@@ -64,6 +64,6 @@ class LocalPasswordGroupRepositoryUpdateTest {
         )
 
         val actual = passwordGroupEntityDao.getById(mockedPasswordGroupId.value)
-        assertThat(actual).isEqualTo(updatedMockedPasswordGroup)
+        assertThat(actual).isEqualTo(updatedMockedPasswordGroup.toEntity())
     }
 }

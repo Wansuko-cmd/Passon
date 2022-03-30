@@ -69,7 +69,7 @@ class EditViewModel(
                 editUiState.copyWithPasswordGroup(
                     passwordGroup = editUiState.passwordGroup
                         .map { it.copyWithTitle(newTitle) }
-                )
+                ).copyWithEdited(edited = true)
             }
         }
     }
@@ -80,7 +80,7 @@ class EditViewModel(
                 editUiState.copyWithPasswordGroup(
                     passwordGroup = editUiState.passwordGroup
                         .map { it.copyWithRemark(newRemark) }
-                )
+                ).copyWithEdited(edited = true)
             }
         }
     }
@@ -96,7 +96,7 @@ class EditViewModel(
 
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.copyWithPasswordItems(newPasswords)
+                editUiState.copyWithPasswordItems(newPasswords).copyWithEdited(edited = true)
             }
         }
     }
@@ -112,10 +112,34 @@ class EditViewModel(
 
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.copyWithPasswordItems(newPasswords)
+                editUiState.copyWithPasswordItems(newPasswords).copyWithEdited(edited = true)
             }
         }
     }
+
+    fun updateShowPassword(passwordItemId: String) =
+        viewModelScope.launch {
+
+            val newPasswordItems = _uiState.value
+                .passwordItems
+                .map { list ->
+                    list.map {
+                        if (it.id == passwordItemId) it.copyWithShowPassword(!it.showPassword) else it
+                    }
+                }
+
+            val newUiState = _uiState.value.copyWithPasswordItems(
+                passwordItems = newPasswordItems
+            )
+
+            _uiState.emit(newUiState)
+
+            newPasswordItems.consume(
+                success = { _editRefreshEvent.emit(EditRefreshEvent(passwordItems = it)) },
+                failure = { /* do nothing */ },
+                loading = { /* do nothing */ },
+            )
+        }
 
     fun createPasswordItem(passwordGroupId: String) {
         viewModelScope.launch {
@@ -126,7 +150,7 @@ class EditViewModel(
                 }
 
             _uiState.update { editUiState ->
-                editUiState.copyWithPasswordItems(newPasswordItems)
+                editUiState.copyWithPasswordItems(newPasswordItems).copyWithEdited(edited = true)
             }
 
             newPasswordItems.consume(
@@ -151,6 +175,7 @@ class EditViewModel(
                             passwordGroup.value.remark,
                             passwordItems.value.map { it.toUseCaseModel(passwordGroupId) },
                         )
+                        _uiState.update { editUiState -> editUiState.copyWithEdited(edited = false) }
                         State.Success(Unit)
                     }
                     is State.Failure -> passwordItems
@@ -167,7 +192,7 @@ class EditViewModel(
                 .map { passwordItems -> passwordItems.filter { it.id != passwordItemId } }
 
             _uiState.update { editUiState ->
-                editUiState.copyWithPasswordItems(newPasswordItems)
+                editUiState.copyWithPasswordItems(newPasswordItems).copyWithEdited(edited = true)
             }
 
             newPasswordItems.consume(
@@ -175,6 +200,14 @@ class EditViewModel(
                 failure = { /* do nothing */ },
                 loading = { /* do nothing */ },
             )
+        }
+    }
+
+    fun resetEdited() {
+        viewModelScope.launch {
+            _uiState.update { editUiState ->
+                editUiState.copyWithEdited(edited = false)
+            }
         }
     }
 }

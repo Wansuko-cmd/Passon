@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.wsr.layout.InputType" />
+
         <variable
             name="title"
             type="String" />
@@ -29,6 +31,7 @@
             app:afterTextChanged="@{afterTitleChanged}"
             app:hint="@{@string/edit_title_row}"
             app:layout_constraintTop_toTopOf="parent"
+            app:inputType="@{InputType.Text}"
             app:text="@{title}"
             tools:text="Title" />
 

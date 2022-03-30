@@ -105,7 +105,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun showMessage(message: String) = Toast
-        .makeText(requireContext(), message, Toast.LENGTH_LONG)
+        .makeText(requireContext(), message, Toast.LENGTH_SHORT)
         .show()
 
     private fun navigateToIndex() {

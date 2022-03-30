@@ -3,6 +3,7 @@ package com.wsr.index
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +27,13 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.index_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.index_menu_setting -> Toast.makeText(requireContext(), "設定項目なし", Toast.LENGTH_SHORT).show()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

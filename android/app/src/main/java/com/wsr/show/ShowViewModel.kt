@@ -55,7 +55,7 @@ class ShowViewModel(
         }
     }
 
-    fun changePasswordState(passwordItemId: String) =
+    fun updateShowPassword(passwordItemId: String) =
         viewModelScope.launch {
 
             val newPasswordItemsState = _uiState.value

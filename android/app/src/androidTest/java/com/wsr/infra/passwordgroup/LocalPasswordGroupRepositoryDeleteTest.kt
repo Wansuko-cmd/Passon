@@ -6,8 +6,8 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.common.truth.Truth.assertThat
 import com.wsr.email.Email
-import com.wsr.exceptions.GetDataFailedException
 import com.wsr.infra.PassonDatabase
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
@@ -19,7 +19,6 @@ import org.junit.runner.RunWith
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -56,8 +55,6 @@ class LocalPasswordGroupRepositoryDeleteTest {
 
         target.delete(mockedPasswordGroupId)
 
-        assertFailsWith<GetDataFailedException.NoSuchElementException> {
-            passwordGroupEntityDao.getById(mockedPasswordGroupId.value)
-        }
+        assertThat(passwordGroupEntityDao.getById(mockedPasswordGroupId.value)).isNull()
     }
 }
