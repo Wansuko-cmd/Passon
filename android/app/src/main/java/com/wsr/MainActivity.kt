@@ -1,6 +1,5 @@
 package com.wsr
 
-import android.app.ActionBar
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
