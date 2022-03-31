@@ -21,7 +21,7 @@ class ResetUseCaseImpl(
     ): State<Unit, GetDataFailedException> {
         val submittedPassword = LoginPassword.PlainLoginPassword(currentPassword).toHashed()
         val actualPassword = queryService.getPassword(Email(email))
-        if(submittedPassword == actualPassword) {
+        if (submittedPassword == actualPassword) {
             userFactory.create(
                 email = Email(email),
                 loginPassword = LoginPassword.PlainLoginPassword(newPassword),
