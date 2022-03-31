@@ -1,7 +1,6 @@
 package com.wsr.create
 
 import com.wsr.PasswordGroupUseCaseModel
-import com.wsr.exceptions.CreateDataFailedException
 import com.wsr.passwordgroup.PasswordGroupFactory
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.Title
@@ -18,14 +17,14 @@ class CreatePasswordGroupUseCaseImpl(
     override suspend fun create(
         email: String,
         title: String,
-    ): State<PasswordGroupUseCaseModel, CreateDataFailedException> = try {
+    ): State<PasswordGroupUseCaseModel, CreatePasswordGroupUseCaseException> = try {
         val passwordGroup = passwordGroupFactory.create(
             email = Email(email),
             title = Title(title),
         )
         passwordGroupRepository.create(passwordGroup)
         State.Success(passwordGroup.toUseCaseModel())
-    } catch (e: CreateDataFailedException) {
-        State.Failure(e)
+    } catch (e: Throwable) {
+        State.Failure(CreatePasswordGroupUseCaseException.SystemError(e.message.orEmpty(), e))
     }
 }
