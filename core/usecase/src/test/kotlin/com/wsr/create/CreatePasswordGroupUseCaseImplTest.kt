@@ -3,7 +3,6 @@
 package com.wsr.create
 
 import com.google.common.truth.Truth.assertThat
-import com.wsr.user.Email
 import com.wsr.exceptions.CreateDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
@@ -12,6 +11,7 @@ import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
 import com.wsr.state.State
 import com.wsr.toUseCaseModel
+import com.wsr.user.Email
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
