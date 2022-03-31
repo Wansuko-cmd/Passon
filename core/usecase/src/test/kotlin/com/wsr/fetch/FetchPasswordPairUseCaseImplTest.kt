@@ -5,7 +5,6 @@ package com.wsr.fetch
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.wsr.PasswordPairUseCaseModel
-import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
@@ -24,6 +23,7 @@ import io.mockk.confirmVerified
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import kotlin.Exception
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -94,14 +94,14 @@ class FetchPasswordPairUseCaseImplTest {
 
         coEvery {
             queryService.getPasswordPair(mockedPasswordGroupId)
-        } throws GetAllDataFailedException.DatabaseException()
+        } throws Exception()
 
         target.data.test {
             target.fetch(mockedPasswordGroupId.value)
 
             assertThat(awaitItem()).isEqualTo(State.Loading)
 
-            val expected = State.Failure(GetAllDataFailedException.DatabaseException())
+            val expected = State.Failure(FetchPasswordPairUseCaseException.SystemError("", Exception()))
             assertThat(awaitItem()).isEqualTo(expected)
 
             cancelAndIgnoreRemainingEvents()
