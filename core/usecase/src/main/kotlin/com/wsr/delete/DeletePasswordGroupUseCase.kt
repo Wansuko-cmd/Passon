@@ -1,6 +1,5 @@
 package com.wsr.delete
 
-import com.wsr.exceptions.DeleteDataFailedException
 import com.wsr.state.State
 
 interface DeletePasswordGroupUseCase {
