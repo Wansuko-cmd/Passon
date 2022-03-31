@@ -3,11 +3,11 @@ package com.wsr.infra.passwordgroup
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.wsr.email.Email
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
+import com.wsr.user.Email
 
 @Entity(tableName = "password_groups")
 data class PasswordGroupEntity(

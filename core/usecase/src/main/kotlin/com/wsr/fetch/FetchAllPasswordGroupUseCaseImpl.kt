@@ -1,9 +1,9 @@
 package com.wsr.fetch
 
 import com.wsr.PasswordGroupUseCaseModel
-import com.wsr.email.Email
 import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.state.State
+import com.wsr.user.Email
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged

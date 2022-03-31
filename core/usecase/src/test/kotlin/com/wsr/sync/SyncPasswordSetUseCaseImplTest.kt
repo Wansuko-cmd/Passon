@@ -2,7 +2,6 @@
 
 package com.wsr.sync
 
-import com.wsr.email.Email
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
@@ -14,6 +13,7 @@ import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
 import com.wsr.passworditem.PasswordItemRepository
 import com.wsr.toUseCaseModel
+import com.wsr.user.Email
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify

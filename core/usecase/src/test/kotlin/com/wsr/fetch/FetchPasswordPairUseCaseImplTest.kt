@@ -5,7 +5,6 @@ package com.wsr.fetch
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.wsr.PasswordPairUseCaseModel
-import com.wsr.email.Email
 import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
@@ -17,6 +16,7 @@ import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
 import com.wsr.state.State
 import com.wsr.toUseCaseModel
+import com.wsr.user.Email
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
