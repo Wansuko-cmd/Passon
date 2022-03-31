@@ -13,8 +13,7 @@ class DeletePasswordGroupUseCaseImpl(
         State.Success(Unit)
     } catch (e: DeleteDataFailedException.NoSuchElementException) {
         State.Failure(DeletePasswordGroupUseCaseException.NoSuchPasswordGroupException(e.message))
-    }
-    catch (e: Exception) {
+    } catch (e: Exception) {
         State.Failure(DeletePasswordGroupUseCaseException.SystemError(e.message.orEmpty(), e))
     }
 }
