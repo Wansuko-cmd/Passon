@@ -1,7 +1,6 @@
 name: 'gradleのテストを実行'
 
 on:
-  - push
   - pull_request
 
 jobs:
