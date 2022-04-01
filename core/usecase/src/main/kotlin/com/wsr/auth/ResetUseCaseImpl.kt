@@ -1,6 +1,6 @@
 package com.wsr.auth
 
-import com.wsr.state.State
+import com.wsr.maybe.Maybe
 import com.wsr.user.Email
 import com.wsr.user.LoginPassword
 import com.wsr.user.UserFactory
@@ -18,32 +18,31 @@ class ResetUseCaseImpl(
         email: String,
         currentPassword: String,
         newPassword: String,
-    ): State<Unit, ResetUseCaseException> {
+    ): Maybe<Unit, ResetUseCaseException> {
         val submittedPassword = LoginPassword.PlainLoginPassword(currentPassword).toHashed()
 
         return when (val actualPassword = queryService.getPassword(Email(email))) {
-            is State.Success -> {
+            is Maybe.Success -> {
                 if (submittedPassword == actualPassword.value) {
                     userFactory.create(
                         email = Email(email),
                         loginPassword = LoginPassword.PlainLoginPassword(newPassword),
                     ).also { userRepository.update(it) }
-                    return State.Success(Unit)
+                    return Maybe.Success(Unit)
                 }
-                return State.Failure(ResetUseCaseException.AuthenticationFailedException(""))
+                return Maybe.Failure(ResetUseCaseException.AuthenticationFailedException(""))
             }
-            is State.Failure -> when (actualPassword.value) {
+            is Maybe.Failure -> when (actualPassword.value) {
                 is ResetUseCaseQueryServiceException.NoSuchUserException ->
-                    State.Failure(ResetUseCaseException.NoSuchUserException(""))
+                    Maybe.Failure(ResetUseCaseException.NoSuchUserException(""))
                 is ResetUseCaseQueryServiceException.DatabaseError ->
-                    State.Failure(
+                    Maybe.Failure(
                         ResetUseCaseException.SystemError(
                             message = actualPassword.value.message.orEmpty(),
                             cause = actualPassword.value
                         )
                     )
             }
-            is State.Loading -> throw Exception()
         }
     }
 }
