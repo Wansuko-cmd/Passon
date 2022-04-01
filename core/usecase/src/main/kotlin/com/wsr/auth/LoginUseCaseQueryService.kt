@@ -1,11 +1,11 @@
 package com.wsr.auth
 
-import com.wsr.state.State
+import com.wsr.maybe.Maybe
 import com.wsr.user.Email
 import com.wsr.user.LoginPassword
 
 interface LoginUseCaseQueryService {
-    suspend fun getPassword(email: Email): State<LoginPassword.HashedLoginPassword, LoginUseCaseQueryServiceException>
+    suspend fun getPassword(email: Email): Maybe<LoginPassword.HashedLoginPassword, LoginUseCaseQueryServiceException>
 }
 
 sealed class LoginUseCaseQueryServiceException : Throwable() {
