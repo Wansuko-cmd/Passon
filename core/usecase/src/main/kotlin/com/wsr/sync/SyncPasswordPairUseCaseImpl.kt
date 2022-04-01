@@ -30,7 +30,7 @@ class SyncPasswordPairUseCaseImpl(
         if (updateResult is Maybe.Failure) return when (updateResult.value) {
             is UpdateDataFailedException.NoSuchElementException ->
                 Maybe.Failure(SyncPasswordPairUseCaseException.NoSuchPasswordGroupException(""))
-            is UpdateDataFailedException.DatabaseException ->
+            is UpdateDataFailedException.DatabaseError ->
                 Maybe.Failure(
                     SyncPasswordPairUseCaseException.SystemError(
                         message = updateResult.value.message.orEmpty(),

@@ -19,7 +19,7 @@ class DeletePasswordGroupUseCaseImpl(
                         is DeleteDataFailedException.NoSuchElementException ->
                             DeletePasswordGroupUseCaseException.NoSuchPasswordGroupException(exception.message)
 
-                        is DeleteDataFailedException.DatabaseException ->
+                        is DeleteDataFailedException.DatabaseError ->
                             DeletePasswordGroupUseCaseException.SystemError(
                                 message = exception.message,
                                 cause = exception,

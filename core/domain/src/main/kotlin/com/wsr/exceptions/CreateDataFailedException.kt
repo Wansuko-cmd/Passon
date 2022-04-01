@@ -1,5 +1,5 @@
 package com.wsr.exceptions
 
 sealed class CreateDataFailedException : Throwable() {
-    data class DatabaseException(override val message: String = "") : CreateDataFailedException()
+    data class DatabaseError(override val message: String = "") : CreateDataFailedException()
 }

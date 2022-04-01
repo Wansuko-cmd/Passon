@@ -28,7 +28,7 @@ class CreatePasswordGroupUseCaseImpl(
             success = { passwordGroup.toUseCaseModel() },
             failure = { exception ->
                 when (exception) {
-                    is CreateDataFailedException.DatabaseException ->
+                    is CreateDataFailedException.DatabaseError ->
                         CreatePasswordGroupUseCaseException.SystemError(
                             message = exception.message,
                             cause = exception,

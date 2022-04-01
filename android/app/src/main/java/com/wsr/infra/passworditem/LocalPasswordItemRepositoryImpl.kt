@@ -15,20 +15,20 @@ class LocalPasswordItemRepositoryImpl(private val passwordEntityDao: PasswordIte
         passwordEntityDao.upsert(passwordItem.toEntity())
         Maybe.Success(Unit)
     } catch (e: Exception) {
-        Maybe.Failure(UpsertDataFailedException.DatabaseException(e.message ?: ""))
+        Maybe.Failure(UpsertDataFailedException.DatabaseError(e.message ?: ""))
     }
 
     override suspend fun delete(id: PasswordItemId) = try {
         passwordEntityDao.delete(id.value)
         Maybe.Success(Unit)
     } catch (e: Exception) {
-        Maybe.Failure(DeleteDataFailedException.DatabaseException(e.message ?: ""))
+        Maybe.Failure(DeleteDataFailedException.DatabaseError(e.message ?: ""))
     }
 
     override suspend fun deleteAll(passwordGroupId: PasswordGroupId) = try {
         passwordEntityDao.deleteAllByPasswordGroupId(passwordGroupId.value)
         Maybe.Success(Unit)
     } catch (e: Exception) {
-        Maybe.Failure(DeleteDataFailedException.DatabaseException(e.message ?: ""))
+        Maybe.Failure(DeleteDataFailedException.DatabaseError(e.message ?: ""))
     }
 }
