@@ -5,7 +5,6 @@ import com.wsr.user.Email
 import com.wsr.user.LoginPassword
 import com.wsr.user.UserFactory
 import com.wsr.user.UserRepository
-import java.lang.Exception
 
 class ResetUseCaseImpl(
     private val userRepository: UserRepository,

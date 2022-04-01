@@ -11,6 +11,5 @@ interface PasswordItemRepository {
 
     suspend fun delete(id: PasswordItemId): Maybe<Unit, DeleteDataFailedException>
 
-
     suspend fun deleteAll(passwordGroupId: PasswordGroupId): Maybe<Unit, DeleteDataFailedException>
 }
