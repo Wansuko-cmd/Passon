@@ -33,7 +33,7 @@ class DeletePasswordGroupUsecaseImplTest {
     fun passwordGroupIdを渡せば対応するPasswordGroupを削除する() = runTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
 
-        coEvery { passwordGroupRepository.delete(mockedPasswordGroupId) } returns Unit
+        coEvery { passwordGroupRepository.delete(mockedPasswordGroupId) } returns State.Success(Unit)
 
         val actual = target.delete(mockedPasswordGroupId.value)
         assertThat(actual).isEqualTo(State.Success(Unit))
@@ -43,7 +43,7 @@ class DeletePasswordGroupUsecaseImplTest {
     fun 削除するときにエラーが起きればその内容を返す() = runTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
 
-        coEvery { passwordGroupRepository.delete(mockedPasswordGroupId) } throws DeleteDataFailedException.NoSuchElementException()
+        coEvery { passwordGroupRepository.delete(mockedPasswordGroupId) } returns State.Failure(DeleteDataFailedException.NoSuchElementException())
 
         val actual = target.delete(mockedPasswordGroupId.value)
         val expected = State.Failure(DeletePasswordGroupUseCaseException.NoSuchPasswordGroupException(""))

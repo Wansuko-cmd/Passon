@@ -12,6 +12,7 @@ import com.wsr.passworditem.Password
 import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
 import com.wsr.passworditem.PasswordItemRepository
+import com.wsr.state.State
 import com.wsr.toUseCaseModel
 import com.wsr.user.Email
 import io.mockk.MockKAnnotations
@@ -76,9 +77,9 @@ class SyncPasswordSetUseCaseImplTest {
                 title = updatedMockedPasswordGroup.title.value,
                 remark = updatedMockedPasswordGroup.remark.value,
             )
-        } returns Unit
-        coEvery { passwordItemRepository.delete(PasswordItemId(any())) } returns Unit
-        coEvery { passwordItemRepository.upsert(any()) } returns Unit
+        } returns State.Success(Unit)
+        coEvery { passwordItemRepository.delete(PasswordItemId(any())) } returns State.Success(Unit)
+        coEvery { passwordItemRepository.upsert(any()) } returns State.Success(Unit)
         coEvery { queryService.getAllPasswordItemId(mockedPasswordGroupId) } returns mockedPasswordItems.map { it.id }
 
         target.sync(

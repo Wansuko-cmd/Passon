@@ -56,7 +56,7 @@ class CreatePasswordGroupUseCaseImplTest {
             remark = mockedRemark,
         )
 
-        coEvery { passwordGroupRepository.create(any()) } returns Unit
+        coEvery { passwordGroupRepository.create(any()) } returns State.Success(Unit)
 
         val actual = target.create(
             email = mockedEmail.value,
@@ -75,7 +75,7 @@ class CreatePasswordGroupUseCaseImplTest {
         val mockedEmail = Email("mockedEmail")
         val mockedTitle = "mockTitle"
 
-        coEvery { passwordGroupRepository.create(any()) } throws CreateDataFailedException.DatabaseException()
+        coEvery { passwordGroupRepository.create(any()) } returns State.Failure(CreateDataFailedException.DatabaseException())
 
         val actual = target.create(
             email = mockedEmail.value,
