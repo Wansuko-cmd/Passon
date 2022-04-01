@@ -13,6 +13,7 @@ import com.wsr.passworditem.Name
 import com.wsr.passworditem.Password
 import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
+import com.wsr.state.State
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.runner.RunWith
@@ -56,7 +57,7 @@ class LocalPasswordItemRepositoryDeleteTest {
         )
         target.upsert(mockedPasswordItem)
 
-        target.delete(mockedPasswordItemId)
+        target.delete(mockedPasswordItemId).also { assertThat(it).isEqualTo(State.Success(Unit)) }
 
         val actual = passwordEntityDao.getAllByPasswordGroupId(mockedPasswordGroupId.value)
         assertThat(actual).isEmpty()

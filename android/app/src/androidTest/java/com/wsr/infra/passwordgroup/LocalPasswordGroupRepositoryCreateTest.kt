@@ -12,6 +12,7 @@ import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
+import com.wsr.state.State
 import com.wsr.user.Email
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -51,7 +52,7 @@ class LocalPasswordGroupRepositoryCreateTest {
             title = Title("mockedTitle"),
             remark = Remark("mockedRemark"),
         )
-        target.create(mockedPasswordGroup)
+        target.create(mockedPasswordGroup).also { assertThat(it).isEqualTo(State.Success(Unit)) }
 
         val actual = passwordGroupEntityDao.getAllByEmail(mockedEmail.value)
         assertThat(actual).contains(mockedPasswordGroup.toEntity())

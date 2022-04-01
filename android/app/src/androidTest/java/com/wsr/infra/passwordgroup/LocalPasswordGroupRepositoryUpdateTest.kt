@@ -12,6 +12,7 @@ import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
+import com.wsr.state.State
 import com.wsr.user.Email
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -61,7 +62,7 @@ class LocalPasswordGroupRepositoryUpdateTest {
             id = updatedMockedPasswordGroup.id,
             title = updatedMockedPasswordGroup.title.value,
             remark = updatedMockedPasswordGroup.remark.value,
-        )
+        ).also { assertThat(it).isEqualTo(State.Success(Unit)) }
 
         val actual = passwordGroupEntityDao.getById(mockedPasswordGroupId.value)
         assertThat(actual).isEqualTo(updatedMockedPasswordGroup.toEntity())

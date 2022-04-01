@@ -12,6 +12,7 @@ import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
+import com.wsr.state.State
 import com.wsr.user.Email
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -53,7 +54,7 @@ class LocalPasswordGroupRepositoryDeleteTest {
         )
         target.create(mockedPasswordGroup)
 
-        target.delete(mockedPasswordGroupId)
+        target.delete(mockedPasswordGroupId).also { assertThat(it).isEqualTo(State.Success(Unit)) }
 
         assertThat(passwordGroupEntityDao.getById(mockedPasswordGroupId.value)).isNull()
     }
