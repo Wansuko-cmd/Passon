@@ -24,7 +24,7 @@ class CreatePasswordGroupUseCaseImpl(
             email = Email(email),
             title = Title(title),
         )
-        passwordGroupRepository.create(passwordGroup).mapBoth(
+        return passwordGroupRepository.create(passwordGroup).mapBoth(
             success = { passwordGroup.toUseCaseModel() },
             failure = { exception ->
                 when (exception) {
