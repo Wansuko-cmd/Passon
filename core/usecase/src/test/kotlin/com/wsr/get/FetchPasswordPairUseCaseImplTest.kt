@@ -1,8 +1,7 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.fetch
+package com.wsr.get
 
-import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.wsr.PasswordPairUseCaseModel
 import com.wsr.passwordgroup.PasswordGroup
@@ -23,7 +22,6 @@ import io.mockk.confirmVerified
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import kotlin.Exception
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -32,12 +30,12 @@ class FetchPasswordPairUseCaseImplTest {
 
     @MockK
     private lateinit var queryService: FetchPasswordPairUseCaseQueryService
-    private lateinit var target: FetchPasswordPairUseCaseImpl
+    private lateinit var target: GetPasswordPairUseCaseImpl
 
     @BeforeTest
     fun setup() {
         MockKAnnotations.init(this)
-        target = FetchPasswordPairUseCaseImpl(queryService)
+        target = GetPasswordPairUseCaseImpl(queryService)
     }
 
     /*** fetch関数 ***/

@@ -1,8 +1,8 @@
 package com.wsr.infra.queryservice
 
 import com.wsr.PasswordPairUseCaseModel
-import com.wsr.fetch.FetchPasswordPairUseCaseQueryService
-import com.wsr.fetch.FetchPasswordPairUseCaseQueryServiceException
+import com.wsr.get.FetchPasswordPairUseCaseQueryService
+import com.wsr.get.FetchPasswordPairUseCaseQueryServiceException
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passworditem.PasswordItemEntityDao
 import com.wsr.maybe.Maybe

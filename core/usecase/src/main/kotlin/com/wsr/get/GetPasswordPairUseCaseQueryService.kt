@@ -1,4 +1,4 @@
-package com.wsr.fetch
+package com.wsr.get
 
 import com.wsr.PasswordPairUseCaseModel
 import com.wsr.passwordgroup.PasswordGroupId

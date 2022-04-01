@@ -1,8 +1,7 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.fetch
+package com.wsr.get
 
-import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
@@ -27,12 +26,12 @@ class FetchAllPasswordGroupUseCaseImplTest {
 
     @MockK
     private lateinit var queryService: FetchAllPasswordGroupUseCaseQueryService
-    private lateinit var target: FetchAllPasswordGroupUseCase
+    private lateinit var target: GetAllPasswordGroupUseCase
 
     @BeforeTest
     fun setup() {
         MockKAnnotations.init(this)
-        target = FetchAllPasswordGroupUseCaseImpl(queryService)
+        target = GetAllPasswordGroupUseCaseImpl(queryService)
     }
 
     /*** fetch関数 ***/

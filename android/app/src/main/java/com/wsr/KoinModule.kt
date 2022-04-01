@@ -8,12 +8,12 @@ import com.wsr.create.CreatePasswordItemUseCaseImpl
 import com.wsr.delete.DeletePasswordGroupUseCase
 import com.wsr.delete.DeletePasswordGroupUseCaseImpl
 import com.wsr.edit.EditViewModel
-import com.wsr.fetch.FetchAllPasswordGroupUseCase
-import com.wsr.fetch.FetchAllPasswordGroupUseCaseImpl
-import com.wsr.fetch.FetchAllPasswordGroupUseCaseQueryService
-import com.wsr.fetch.FetchPasswordPairUseCase
-import com.wsr.fetch.FetchPasswordPairUseCaseImpl
-import com.wsr.fetch.FetchPasswordPairUseCaseQueryService
+import com.wsr.get.GetAllPasswordGroupUseCase
+import com.wsr.get.GetAllPasswordGroupUseCaseImpl
+import com.wsr.get.FetchAllPasswordGroupUseCaseQueryService
+import com.wsr.get.GetPasswordPairUseCase
+import com.wsr.get.GetPasswordPairUseCaseImpl
+import com.wsr.get.FetchPasswordPairUseCaseQueryService
 import com.wsr.index.IndexViewModel
 import com.wsr.index.dialog.IndexCreatePasswordGroupDialogViewModel
 import com.wsr.infra.PassonDatabase
@@ -58,9 +58,9 @@ val module = module {
     single<DeletePasswordGroupUseCase> { DeletePasswordGroupUseCaseImpl(get()) }
 
     // fetch
-    factory<FetchAllPasswordGroupUseCase> { FetchAllPasswordGroupUseCaseImpl(get()) }
+    factory<GetAllPasswordGroupUseCase> { GetAllPasswordGroupUseCaseImpl(get()) }
     single<FetchAllPasswordGroupUseCaseQueryService> { LocalFetchAllPasswordGroupUseCaseQueryServiceImpl(get()) }
-    factory<FetchPasswordPairUseCase> { FetchPasswordPairUseCaseImpl(get()) }
+    factory<GetPasswordPairUseCase> { GetPasswordPairUseCaseImpl(get()) }
     single<FetchPasswordPairUseCaseQueryService> { LocalFetchPasswordPairUseCaseQueryServiceImpl(get(), get()) }
 
     // sync

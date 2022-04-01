@@ -1,8 +1,8 @@
 package com.wsr.infra.queryservice
 
 import com.wsr.PasswordGroupUseCaseModel
-import com.wsr.fetch.FetchAllPasswordGroupUseCaseQueryService
-import com.wsr.fetch.FetchAllPasswordGroupUseCaseQueryServiceException
+import com.wsr.get.FetchAllPasswordGroupUseCaseQueryService
+import com.wsr.get.FetchAllPasswordGroupUseCaseQueryServiceException
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.maybe.Maybe
 import com.wsr.maybe.sequence

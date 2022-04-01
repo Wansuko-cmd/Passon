@@ -2,7 +2,7 @@ package com.wsr.edit
 
 import com.wsr.PasswordGroupUseCaseModel
 import com.wsr.PasswordItemUseCaseModel
-import com.wsr.state.State
+import com.wsr.utils.State
 
 data class PasswordItemEditUiState(
     val id: String,

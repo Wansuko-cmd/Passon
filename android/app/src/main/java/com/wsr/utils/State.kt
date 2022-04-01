@@ -50,7 +50,7 @@ fun <T, E> List<State<T, E>>.sequence(): State<List<T>, E> {
     return State.Success(result)
 }
 
-fun <T, E> Maybe<T, E>.toState() = this.mapBoth(
-    success = { State.Success(it) },
-    failure = { State.Failure(it) },
-)
+fun <T, E> Maybe<T, E>.asState(): State<T, E> = when(this) {
+    is Maybe.Success -> State.Success(value)
+    is Maybe.Failure -> State.Failure(value)
+}

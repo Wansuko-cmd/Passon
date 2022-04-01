@@ -1,7 +1,7 @@
 package com.wsr.index
 
 import com.wsr.PasswordGroupUseCaseModel
-import com.wsr.state.State
+import com.wsr.utils.State
 
 data class PasswordGroupIndexUiState(
     val id: String,
