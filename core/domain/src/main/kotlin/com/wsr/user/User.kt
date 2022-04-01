@@ -5,7 +5,12 @@ import java.security.MessageDigest
 data class User(
     val email: Email,
     val loginPassword: LoginPassword.HashedLoginPassword,
-)
+) {
+    fun shouldPass(password: LoginPassword) = when (password) {
+        is LoginPassword.PlainLoginPassword -> password.toHashed().value == loginPassword.value
+        is LoginPassword.HashedLoginPassword -> password.value == loginPassword.value
+    }
+}
 
 @JvmInline
 value class Email(val value: String)
