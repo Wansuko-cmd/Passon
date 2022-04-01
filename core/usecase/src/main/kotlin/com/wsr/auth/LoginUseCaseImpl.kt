@@ -1,7 +1,7 @@
 package com.wsr.auth
 
-import com.wsr.state.State
-import com.wsr.state.mapBoth
+import com.wsr.maybe.Maybe
+import com.wsr.maybe.mapBoth
 import com.wsr.user.Email
 import com.wsr.user.LoginPassword
 
@@ -12,7 +12,7 @@ class LoginUseCaseImpl(
     override suspend fun shouldPass(
         email: String,
         password: String,
-    ): State<Boolean, LoginUseCaseException> = try {
+    ): Maybe<Boolean, LoginUseCaseException> = try {
         val submittedPassword = LoginPassword.PlainLoginPassword(password).toHashed()
         loginUseCaseQueryService.getPassword(Email(email)).mapBoth(
             success = { submittedPassword == it },
@@ -29,6 +29,6 @@ class LoginUseCaseImpl(
             }
         )
     } catch (e: LoginUseCaseException) {
-        State.Failure(e)
+        Maybe.Failure(e)
     }
 }

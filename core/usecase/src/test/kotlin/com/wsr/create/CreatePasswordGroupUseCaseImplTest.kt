@@ -4,12 +4,12 @@ package com.wsr.create
 
 import com.google.common.truth.Truth.assertThat
 import com.wsr.exceptions.CreateDataFailedException
+import com.wsr.maybe.Maybe
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
-import com.wsr.state.State
 import com.wsr.toUseCaseModel
 import com.wsr.user.Email
 import io.mockk.MockKAnnotations
@@ -56,13 +56,13 @@ class CreatePasswordGroupUseCaseImplTest {
             remark = mockedRemark,
         )
 
-        coEvery { passwordGroupRepository.create(any()) } returns State.Success(Unit)
+        coEvery { passwordGroupRepository.create(any()) } returns Maybe.Success(Unit)
 
         val actual = target.create(
             email = mockedEmail.value,
             title = mockedTitle.value,
         )
-        val expected = State.Success(mockedPasswordGroup.toUseCaseModel())
+        val expected = Maybe.Success(mockedPasswordGroup.toUseCaseModel())
 
         assertThat(actual).isEqualTo(expected)
 
@@ -75,13 +75,13 @@ class CreatePasswordGroupUseCaseImplTest {
         val mockedEmail = Email("mockedEmail")
         val mockedTitle = "mockTitle"
 
-        coEvery { passwordGroupRepository.create(any()) } returns State.Failure(CreateDataFailedException.DatabaseException())
+        coEvery { passwordGroupRepository.create(any()) } returns Maybe.Failure(CreateDataFailedException.DatabaseException())
 
         val actual = target.create(
             email = mockedEmail.value,
             title = mockedTitle,
         )
-        val expected = State.Failure(CreatePasswordGroupUseCaseException.SystemError("", CreateDataFailedException.DatabaseException()))
+        val expected = Maybe.Failure(CreatePasswordGroupUseCaseException.SystemError("", CreateDataFailedException.DatabaseException()))
 
         assertThat(actual).isEqualTo(expected)
 

@@ -16,7 +16,7 @@ import com.wsr.ext.launchInLifecycleScope
 import com.wsr.ext.sharedViewModel
 import com.wsr.ext.showDialogIfNotDrawn
 import com.wsr.index.dialog.IndexCreatePasswordGroupDialogFragment
-import com.wsr.state.consume
+import com.wsr.utils.consume
 import org.koin.androidx.viewmodel.ViewModelOwner.Companion.from
 
 class IndexFragment : Fragment(R.layout.fragment_index) {

@@ -19,7 +19,7 @@ import com.wsr.ext.launchInLifecycleScope
 import com.wsr.ext.sharedViewModel
 import com.wsr.ext.showDialogIfNotDrawn
 import com.wsr.show.dialog.ShowDeletePasswordGroupDialogFragment
-import com.wsr.state.consume
+import com.wsr.utils.consume
 import org.koin.androidx.viewmodel.ViewModelOwner
 
 class ShowFragment : Fragment(R.layout.fragment_show) {

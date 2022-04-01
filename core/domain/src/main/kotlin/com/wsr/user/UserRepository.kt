@@ -2,9 +2,9 @@ package com.wsr.user
 
 import com.wsr.exceptions.CreateDataFailedException
 import com.wsr.exceptions.UpdateDataFailedException
-import com.wsr.state.State
+import com.wsr.maybe.Maybe
 
 interface UserRepository {
-    suspend fun create(user: User): State<Unit, CreateDataFailedException>
-    suspend fun update(user: User): State<Unit, UpdateDataFailedException>
+    suspend fun create(user: User): Maybe<Unit, CreateDataFailedException>
+    suspend fun update(user: User): Maybe<Unit, UpdateDataFailedException>
 }

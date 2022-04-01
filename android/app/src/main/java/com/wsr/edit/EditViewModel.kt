@@ -6,13 +6,13 @@ import com.wsr.create.CreatePasswordItemUseCase
 import com.wsr.edit.PasswordGroupEditUiState.Companion.toEditUiState
 import com.wsr.edit.PasswordItemEditUiState.Companion.toEditUiState
 import com.wsr.edit.PasswordItemEditUiState.Companion.toUseCaseModel
-import com.wsr.ext.updateWith
-import com.wsr.fetch.FetchPasswordPairUseCase
-import com.wsr.state.State
-import com.wsr.state.consume
-import com.wsr.state.map
-import com.wsr.state.mapBoth
+import com.wsr.get.GetPasswordPairUseCase
 import com.wsr.sync.SyncPasswordPairUseCase
+import com.wsr.utils.State
+import com.wsr.utils.asState
+import com.wsr.utils.consume
+import com.wsr.utils.map
+import com.wsr.utils.mapBoth
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class EditViewModel(
-    private val fetchPasswordSetUseCase: FetchPasswordPairUseCase,
+    private val getPasswordPairUseCase: GetPasswordPairUseCase,
     private val syncPasswordSetUseCase: SyncPasswordPairUseCase,
     private val createPasswordItemUseCase: CreatePasswordItemUseCase,
 ) : ViewModel() {
@@ -33,33 +33,27 @@ class EditViewModel(
     private val _editRefreshEvent = MutableSharedFlow<EditRefreshEvent>()
     val editRefreshEvent = _editRefreshEvent.asSharedFlow()
 
-    init {
-        setup()
-    }
-
-    private fun setup() {
-        _uiState.updateWith(
-            target = fetchPasswordSetUseCase.data,
-            coroutineScope = viewModelScope,
-        ) { editUiState, state ->
-
-            editUiState.copyWithPasswordGroup(
-                passwordGroup = state.map { it.passwordGroup }.mapBoth(
-                    success = { it.toEditUiState() },
-                    failure = { ErrorEditUiState(it.message ?: "") },
-                )
-            ).copyWithPasswordItems(
-                passwordItems = state.map { it.passwordItems }.mapBoth(
-                    success = { list -> list.map { it.toEditUiState() } },
-                    failure = { ErrorEditUiState(it.message ?: "") }
-                )
-            )
-        }
-    }
-
     fun fetch(passwordGroupId: String) {
+        viewModelScope.launch { _uiState.emit(EditUiState()) }
+        fetchPasswordPair(passwordGroupId)
+    }
+
+    private fun fetchPasswordPair(passwordGroupId: String) {
         viewModelScope.launch {
-            fetchPasswordSetUseCase.fetch(passwordGroupId)
+            val passwordPair = getPasswordPairUseCase.get(passwordGroupId).asState()
+            _uiState.update { showUiState ->
+                showUiState.copyWithPasswordGroup(
+                    passwordGroup = passwordPair.map { it.passwordGroup }.mapBoth(
+                        success = { it.toEditUiState() },
+                        failure = { ErrorEditUiState(it.message ?: "") },
+                    )
+                ).copyWithPasswordItems(
+                    passwordItems = passwordPair.map { it.passwordItems }.mapBoth(
+                        success = { list -> list.map { it.toEditUiState() } },
+                        failure = { ErrorEditUiState(it.message ?: "") }
+                    )
+                )
+            }
         }
     }
 

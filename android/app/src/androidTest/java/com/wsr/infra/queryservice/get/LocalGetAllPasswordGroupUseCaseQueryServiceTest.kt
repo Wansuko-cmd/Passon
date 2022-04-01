@@ -1,6 +1,6 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.infra.queryservice.fetch
+package com.wsr.infra.queryservice.get
 
 import android.content.Context
 import androidx.room.Room
@@ -10,13 +10,13 @@ import com.google.common.truth.Truth.assertThat
 import com.wsr.infra.PassonDatabase
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passwordgroup.toEntity
-import com.wsr.infra.queryservice.LocalFetchAllPasswordGroupUseCaseQueryServiceImpl
+import com.wsr.infra.queryservice.LocalGetAllPasswordGroupUseCaseQueryServiceImpl
+import com.wsr.maybe.Maybe
+import com.wsr.maybe.sequence
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
-import com.wsr.state.State
-import com.wsr.state.sequence
 import com.wsr.toUseCaseModel
 import com.wsr.user.Email
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,10 +28,10 @@ import kotlin.test.Test
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class LocalFetchAllPasswordGroupUseCaseQueryServiceTest {
+class LocalGetAllPasswordGroupUseCaseQueryServiceTest {
     private lateinit var passwordGroupEntityDao: PasswordGroupEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: LocalFetchAllPasswordGroupUseCaseQueryServiceImpl
+    private lateinit var target: LocalGetAllPasswordGroupUseCaseQueryServiceImpl
 
     @BeforeTest
     fun setup() {
@@ -39,7 +39,7 @@ class LocalFetchAllPasswordGroupUseCaseQueryServiceTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordGroupEntityDao = db.passwordGroupEntityDao()
 
-        target = LocalFetchAllPasswordGroupUseCaseQueryServiceImpl(passwordGroupEntityDao)
+        target = LocalGetAllPasswordGroupUseCaseQueryServiceImpl(passwordGroupEntityDao)
     }
 
     @AfterTest
@@ -71,6 +71,6 @@ class LocalFetchAllPasswordGroupUseCaseQueryServiceTest {
         notTargetMockedPasswordGroups.forEach { passwordGroupEntityDao.insert(it.toEntity()) }
 
         val actual = target.getAllPasswordGroup(mockedEmail)
-        assertThat(actual).isEqualTo(mockedPasswordGroups.map { it.toUseCaseModel() }.map { State.Success(it) }.sequence())
+        assertThat(actual).isEqualTo(mockedPasswordGroups.map { it.toUseCaseModel() }.map { Maybe.Success(it) }.sequence())
     }
 }

@@ -4,9 +4,9 @@ package com.wsr.delete
 
 import com.google.common.truth.Truth.assertThat
 import com.wsr.exceptions.DeleteDataFailedException
+import com.wsr.maybe.Maybe
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
-import com.wsr.state.State
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -33,20 +33,20 @@ class DeletePasswordGroupUsecaseImplTest {
     fun passwordGroupIdを渡せば対応するPasswordGroupを削除する() = runTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
 
-        coEvery { passwordGroupRepository.delete(mockedPasswordGroupId) } returns State.Success(Unit)
+        coEvery { passwordGroupRepository.delete(mockedPasswordGroupId) } returns Maybe.Success(Unit)
 
         val actual = target.delete(mockedPasswordGroupId.value)
-        assertThat(actual).isEqualTo(State.Success(Unit))
+        assertThat(actual).isEqualTo(Maybe.Success(Unit))
     }
 
     @Test
     fun 削除するときにエラーが起きればその内容を返す() = runTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
 
-        coEvery { passwordGroupRepository.delete(mockedPasswordGroupId) } returns State.Failure(DeleteDataFailedException.NoSuchElementException())
+        coEvery { passwordGroupRepository.delete(mockedPasswordGroupId) } returns Maybe.Failure(DeleteDataFailedException.NoSuchElementException())
 
         val actual = target.delete(mockedPasswordGroupId.value)
-        val expected = State.Failure(DeletePasswordGroupUseCaseException.NoSuchPasswordGroupException(""))
+        val expected = Maybe.Failure(DeletePasswordGroupUseCaseException.NoSuchPasswordGroupException(""))
         assertThat(actual).isEqualTo(expected)
     }
 }

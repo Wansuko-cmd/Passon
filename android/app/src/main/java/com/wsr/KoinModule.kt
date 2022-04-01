@@ -8,12 +8,12 @@ import com.wsr.create.CreatePasswordItemUseCaseImpl
 import com.wsr.delete.DeletePasswordGroupUseCase
 import com.wsr.delete.DeletePasswordGroupUseCaseImpl
 import com.wsr.edit.EditViewModel
-import com.wsr.fetch.FetchAllPasswordGroupUseCase
-import com.wsr.fetch.FetchAllPasswordGroupUseCaseImpl
-import com.wsr.fetch.FetchAllPasswordGroupUseCaseQueryService
-import com.wsr.fetch.FetchPasswordPairUseCase
-import com.wsr.fetch.FetchPasswordPairUseCaseImpl
-import com.wsr.fetch.FetchPasswordPairUseCaseQueryService
+import com.wsr.get.FetchAllPasswordGroupUseCaseQueryService
+import com.wsr.get.FetchPasswordPairUseCaseQueryService
+import com.wsr.get.GetAllPasswordGroupUseCase
+import com.wsr.get.GetAllPasswordGroupUseCaseImpl
+import com.wsr.get.GetPasswordPairUseCase
+import com.wsr.get.GetPasswordPairUseCaseImpl
 import com.wsr.index.IndexViewModel
 import com.wsr.index.dialog.IndexCreatePasswordGroupDialogViewModel
 import com.wsr.infra.PassonDatabase
@@ -21,8 +21,8 @@ import com.wsr.infra.passwordgroup.LocalPasswordGroupRepositoryImpl
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passworditem.LocalPasswordItemRepositoryImpl
 import com.wsr.infra.passworditem.PasswordItemEntityDao
-import com.wsr.infra.queryservice.LocalFetchAllPasswordGroupUseCaseQueryServiceImpl
-import com.wsr.infra.queryservice.LocalFetchPasswordPairUseCaseQueryServiceImpl
+import com.wsr.infra.queryservice.LocalGetAllPasswordGroupUseCaseQueryServiceImpl
+import com.wsr.infra.queryservice.LocalGetPasswordPairUseCaseQueryServiceImpl
 import com.wsr.infra.queryservice.LocalSyncPasswordPairUseCaseQueryServiceImpl
 import com.wsr.login.LoginViewModel
 import com.wsr.passwordgroup.PasswordGroupRepository
@@ -58,10 +58,10 @@ val module = module {
     single<DeletePasswordGroupUseCase> { DeletePasswordGroupUseCaseImpl(get()) }
 
     // fetch
-    factory<FetchAllPasswordGroupUseCase> { FetchAllPasswordGroupUseCaseImpl(get()) }
-    single<FetchAllPasswordGroupUseCaseQueryService> { LocalFetchAllPasswordGroupUseCaseQueryServiceImpl(get()) }
-    factory<FetchPasswordPairUseCase> { FetchPasswordPairUseCaseImpl(get()) }
-    single<FetchPasswordPairUseCaseQueryService> { LocalFetchPasswordPairUseCaseQueryServiceImpl(get(), get()) }
+    factory<GetAllPasswordGroupUseCase> { GetAllPasswordGroupUseCaseImpl(get()) }
+    single<FetchAllPasswordGroupUseCaseQueryService> { LocalGetAllPasswordGroupUseCaseQueryServiceImpl(get()) }
+    factory<GetPasswordPairUseCase> { GetPasswordPairUseCaseImpl(get()) }
+    single<FetchPasswordPairUseCaseQueryService> { LocalGetPasswordPairUseCaseQueryServiceImpl(get(), get()) }
 
     // sync
     single<SyncPasswordPairUseCase> { SyncPasswordPairUseCaseImpl(get(), get(), get()) }
