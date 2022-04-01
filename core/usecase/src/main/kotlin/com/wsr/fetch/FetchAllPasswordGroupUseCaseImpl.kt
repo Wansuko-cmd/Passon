@@ -2,6 +2,8 @@ package com.wsr.fetch
 
 import com.wsr.PasswordGroupUseCaseModel
 import com.wsr.state.State
+import com.wsr.state.consume
+import com.wsr.state.mapBoth
 import com.wsr.user.Email
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -15,14 +17,14 @@ class FetchAllPasswordGroupUseCaseImpl(
     override val data get() = _data.asSharedFlow().distinctUntilChanged()
 
     override suspend fun fetch(email: String) {
-        try {
-            _data.emit(State.Loading)
-            val passwordGroups = queryService
-                .getAllPasswordGroup(Email(email))
+        _data.emit(State.Loading)
+        val passwordGroups = queryService
+            .getAllPasswordGroup(Email(email))
+            .mapBoth(
+                success = { it },
+                failure = { FetchAllPasswordGroupUseCaseException.SystemError(it.message.orEmpty(), it) }
+            )
 
-            _data.emit(State.Success(passwordGroups))
-        } catch (e: Exception) {
-            _data.emit(State.Failure(FetchAllPasswordGroupUseCaseException.SystemError(e.message.orEmpty(), e)))
-        }
+        _data.emit(passwordGroups)
     }
 }
