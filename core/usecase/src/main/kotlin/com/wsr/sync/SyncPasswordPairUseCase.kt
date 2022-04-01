@@ -1,7 +1,7 @@
 package com.wsr.sync
 
 import com.wsr.PasswordItemUseCaseModel
-import com.wsr.state.State
+import com.wsr.maybe.Maybe
 
 interface SyncPasswordPairUseCase {
     suspend fun sync(
@@ -9,5 +9,5 @@ interface SyncPasswordPairUseCase {
         title: String,
         remark: String,
         passwordItems: List<PasswordItemUseCaseModel>,
-    ): State<Unit, SyncPasswordPairUseCaseException>
+    ): Maybe<Unit, SyncPasswordPairUseCaseException>
 }

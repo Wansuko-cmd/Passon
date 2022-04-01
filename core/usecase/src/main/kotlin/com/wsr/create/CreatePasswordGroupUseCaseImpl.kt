@@ -5,8 +5,8 @@ import com.wsr.exceptions.CreateDataFailedException
 import com.wsr.passwordgroup.PasswordGroupFactory
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.Title
-import com.wsr.state.State
-import com.wsr.state.mapBoth
+import com.wsr.maybe.Maybe
+import com.wsr.maybe.mapBoth
 import com.wsr.toUseCaseModel
 import com.wsr.user.Email
 
@@ -19,7 +19,7 @@ class CreatePasswordGroupUseCaseImpl(
     override suspend fun create(
         email: String,
         title: String,
-    ): State<PasswordGroupUseCaseModel, CreatePasswordGroupUseCaseException> {
+    ): Maybe<PasswordGroupUseCaseModel, CreatePasswordGroupUseCaseException> {
         val passwordGroup = passwordGroupFactory.create(
             email = Email(email),
             title = Title(title),

@@ -2,6 +2,8 @@ package com.wsr.sync
 
 import com.wsr.PasswordItemUseCaseModel
 import com.wsr.exceptions.UpdateDataFailedException
+import com.wsr.maybe.Maybe
+import com.wsr.maybe.consume
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passworditem.Name
@@ -9,9 +11,6 @@ import com.wsr.passworditem.Password
 import com.wsr.passworditem.PasswordItemFactory
 import com.wsr.passworditem.PasswordItemId
 import com.wsr.passworditem.PasswordItemRepository
-import com.wsr.state.State
-import com.wsr.state.consume
-import com.wsr.state.map
 
 class SyncPasswordPairUseCaseImpl(
     private val passwordGroupRepository: PasswordGroupRepository,
@@ -26,13 +25,13 @@ class SyncPasswordPairUseCaseImpl(
         title: String,
         remark: String,
         passwordItems: List<PasswordItemUseCaseModel>
-    ): State<Unit, SyncPasswordPairUseCaseException> {
+    ): Maybe<Unit, SyncPasswordPairUseCaseException> {
         val updateResult = passwordGroupRepository.update(PasswordGroupId(passwordGroupId), title, remark)
-        if (updateResult is State.Failure) return when (updateResult.value) {
+        if (updateResult is Maybe.Failure) return when (updateResult.value) {
             is UpdateDataFailedException.NoSuchElementException ->
-                State.Failure(SyncPasswordPairUseCaseException.NoSuchPasswordGroupException(""))
+                Maybe.Failure(SyncPasswordPairUseCaseException.NoSuchPasswordGroupException(""))
             is UpdateDataFailedException.DatabaseException ->
-                State.Failure(
+                Maybe.Failure(
                     SyncPasswordPairUseCaseException.SystemError(
                         message = updateResult.value.message.orEmpty(),
                         cause = updateResult.value
@@ -49,7 +48,6 @@ class SyncPasswordPairUseCaseImpl(
                         .forEach { passwordItemRepository.delete(it) }
                 },
                 failure = {},
-                loading = {},
             )
 
         passwordItems.forEach {
@@ -61,6 +59,6 @@ class SyncPasswordPairUseCaseImpl(
             )
             passwordItemRepository.upsert(newPasswordItem)
         }
-        return State.Success(Unit)
+        return Maybe.Success(Unit)
     }
 }

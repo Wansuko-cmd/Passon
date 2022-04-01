@@ -3,13 +3,13 @@ package com.wsr.delete
 import com.wsr.exceptions.DeleteDataFailedException
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
-import com.wsr.state.State
-import com.wsr.state.mapBoth
+import com.wsr.maybe.Maybe
+import com.wsr.maybe.mapBoth
 
 class DeletePasswordGroupUseCaseImpl(
     private val passwordGroupRepository: PasswordGroupRepository,
 ) : DeletePasswordGroupUseCase {
-    override suspend fun delete(id: String): State<Unit, DeletePasswordGroupUseCaseException> =
+    override suspend fun delete(id: String): Maybe<Unit, DeletePasswordGroupUseCaseException> =
         passwordGroupRepository
             .delete(PasswordGroupId(id))
             .mapBoth(

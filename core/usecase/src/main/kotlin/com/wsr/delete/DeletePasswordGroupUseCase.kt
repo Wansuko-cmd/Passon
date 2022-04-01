@@ -1,7 +1,7 @@
 package com.wsr.delete
 
-import com.wsr.state.State
+import com.wsr.maybe.Maybe
 
 interface DeletePasswordGroupUseCase {
-    suspend fun delete(id: String): State<Unit, DeletePasswordGroupUseCaseException>
+    suspend fun delete(id: String): Maybe<Unit, DeletePasswordGroupUseCaseException>
 }

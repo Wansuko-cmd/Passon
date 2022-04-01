@@ -2,10 +2,10 @@ package com.wsr.fetch
 
 import com.wsr.PasswordPairUseCaseModel
 import com.wsr.passwordgroup.PasswordGroupId
-import com.wsr.state.State
+import com.wsr.maybe.Maybe
 
 interface FetchPasswordPairUseCaseQueryService {
-    suspend fun getPasswordPair(passwordGroupId: PasswordGroupId): State<PasswordPairUseCaseModel, FetchPasswordPairUseCaseQueryServiceException>
+    suspend fun getPasswordPair(passwordGroupId: PasswordGroupId): Maybe<PasswordPairUseCaseModel, FetchPasswordPairUseCaseQueryServiceException>
 }
 
 sealed class FetchPasswordPairUseCaseQueryServiceException : Throwable() {

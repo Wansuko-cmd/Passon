@@ -2,19 +2,19 @@ package com.wsr.fetch
 
 import com.wsr.PasswordPairUseCaseModel
 import com.wsr.passwordgroup.PasswordGroupId
-import com.wsr.state.State
-import com.wsr.state.mapBoth
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.wsr.maybe.Maybe
+import com.wsr.maybe.mapBoth
+import kotlinx.coroutines.flow.MutableMaybeFlow
 
 class FetchPasswordPairUseCaseImpl(
     private val queryService: FetchPasswordPairUseCaseQueryService,
 ) : FetchPasswordPairUseCase {
     private val _data =
-        MutableStateFlow<State<PasswordPairUseCaseModel, FetchPasswordPairUseCaseException>>(State.Loading)
+        MutableMaybeFlow<Maybe<PasswordPairUseCaseModel, FetchPasswordPairUseCaseException>>(Maybe.Loading)
     override val data get() = _data
 
     override suspend fun fetch(passwordGroupId: String) {
-        _data.emit(State.Loading)
+        _data.emit(Maybe.Loading)
         val passwordSet = queryService
             .getPasswordPair(PasswordGroupId(passwordGroupId))
             .mapBoth(
