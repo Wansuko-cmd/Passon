@@ -1,5 +1,8 @@
 package com.wsr.utils
 
+import com.wsr.maybe.Maybe
+import com.wsr.maybe.mapBoth
+
 sealed class State<out T, out E> {
     object Loading : State<Nothing, Nothing>()
     data class Success<T>(val value: T) : State<T, Nothing>()
@@ -46,3 +49,8 @@ fun <T, E> List<State<T, E>>.sequence(): State<List<T>, E> {
     }
     return State.Success(result)
 }
+
+fun <T, E> Maybe<T, E>.toState() = this.mapBoth(
+    success = { State.Success(it) },
+    failure = { State.Failure(it) },
+)
