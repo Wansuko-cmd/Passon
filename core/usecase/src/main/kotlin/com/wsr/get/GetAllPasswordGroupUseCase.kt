@@ -6,3 +6,11 @@ import com.wsr.maybe.Maybe
 interface GetAllPasswordGroupUseCase {
     suspend fun get(email: String): Maybe<List<PasswordGroupUseCaseModel>, GetAllPasswordGroupUseCaseException>
 }
+
+sealed class GetAllPasswordGroupUseCaseException : Throwable() {
+    data class SystemError(
+        override val message: String,
+        override val cause: Throwable,
+    ) : GetAllPasswordGroupUseCaseException()
+}
+

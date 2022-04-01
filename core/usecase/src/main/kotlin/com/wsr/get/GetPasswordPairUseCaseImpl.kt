@@ -1,19 +1,26 @@
 package com.wsr.get
 
-import com.wsr.maybe.mapBoth
+import com.wsr.maybe.mapFailure
 import com.wsr.passwordgroup.PasswordGroupId
+import com.wsr.queryservice.PasswordPairQueryService
+import com.wsr.queryservice.PasswordPairQueryServiceException
 
 class GetPasswordPairUseCaseImpl(
-    private val queryService: FetchPasswordPairUseCaseQueryService,
+    private val passwordPairQueryService: PasswordPairQueryService,
 ) : GetPasswordPairUseCase {
 
     override suspend fun get(passwordGroupId: String) =
-        queryService
-            .getPasswordPair(PasswordGroupId(passwordGroupId))
-            .mapBoth(
-                success = { it },
-                failure = {
-                    GetPasswordPairUseCaseException.SystemError(it.message.orEmpty(), it)
-                }
+        passwordPairQueryService
+            .get(PasswordGroupId(passwordGroupId))
+            .mapFailure { it.toGetPasswordPairUseCaseException() }
+
+    private fun PasswordPairQueryServiceException.toGetPasswordPairUseCaseException() = when(this) {
+        is PasswordPairQueryServiceException.NoSuchPasswordGroupException ->
+            GetPasswordPairUseCaseException.NoSuchPasswordGroupException("")
+        is PasswordPairQueryServiceException.DatabaseError ->
+            GetPasswordPairUseCaseException.SystemError(
+                message = this.message,
+                cause = this,
             )
+    }
 }

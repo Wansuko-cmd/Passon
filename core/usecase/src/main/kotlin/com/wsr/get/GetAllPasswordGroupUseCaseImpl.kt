@@ -1,19 +1,24 @@
 package com.wsr.get
 
-import com.wsr.maybe.mapBoth
+import com.wsr.maybe.mapFailure
+import com.wsr.queryservice.PasswordGroupQueryService
+import com.wsr.queryservice.PasswordGroupQueryServiceException
 import com.wsr.user.Email
 
 class GetAllPasswordGroupUseCaseImpl(
-    private val queryService: FetchAllPasswordGroupUseCaseQueryService,
+    private val passwordGroupQueryService: PasswordGroupQueryService,
 ) : GetAllPasswordGroupUseCase {
 
     override suspend fun get(email: String) =
-        queryService
-            .getAllPasswordGroup(Email(email))
-            .mapBoth(
-                success = { it },
-                failure = {
-                    GetAllPasswordGroupUseCaseException.SystemError(it.message.orEmpty(), it)
-                }
+        passwordGroupQueryService
+            .getAll(Email(email))
+            .mapFailure { it.toGetAllPasswordGroupUseCaseException() }
+
+    private fun PasswordGroupQueryServiceException.toGetAllPasswordGroupUseCaseException() = when(this) {
+        is PasswordGroupQueryServiceException.DatabaseError ->
+            GetAllPasswordGroupUseCaseException.SystemError(
+                message = this.message,
+                cause = this,
             )
+    }
 }
