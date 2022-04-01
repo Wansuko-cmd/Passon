@@ -22,6 +22,7 @@ import com.wsr.passworditem.Name
 import com.wsr.passworditem.Password
 import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
+import com.wsr.state.State
 import com.wsr.toUseCaseModel
 import com.wsr.user.Email
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -100,6 +101,6 @@ class LocalFetchPasswordPairUseCaseQueryServiceImplTest {
             passwordItems = mockedPasswordItems.map { it.toUseCaseModel() },
         )
 
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isEqualTo(State.Success(expected))
     }
 }

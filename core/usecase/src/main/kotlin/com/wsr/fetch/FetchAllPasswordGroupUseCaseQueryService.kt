@@ -9,5 +9,5 @@ interface FetchAllPasswordGroupUseCaseQueryService {
 }
 
 sealed class FetchAllPasswordGroupUseCaseQueryServiceException : Throwable() {
-    class DatabaseError(override val message: String) : FetchAllPasswordGroupUseCaseException()
+    class DatabaseError(override val message: String) : FetchAllPasswordGroupUseCaseQueryServiceException()
 }

@@ -16,6 +16,8 @@ import com.wsr.passworditem.Name
 import com.wsr.passworditem.Password
 import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
+import com.wsr.state.State
+import com.wsr.state.sequence
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.runner.RunWith
@@ -60,6 +62,6 @@ class LocalSyncPasswordPairUseCaseQueryServiceImplTest {
         mockedPasswordItems.forEach { passwordEntityDao.upsert(it.toEntity()) }
 
         val actual = target.getAllPasswordItemId(mockedPasswordGroupId)
-        assertThat(actual).isEqualTo(mockedPasswordItems.map { it.id })
+        assertThat(actual).isEqualTo(mockedPasswordItems.map { it.id }.map { State.Success(it) }.sequence())
     }
 }
