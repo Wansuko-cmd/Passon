@@ -81,7 +81,7 @@ class CreatePasswordGroupUseCaseImplTest {
             email = mockedEmail.value,
             title = mockedTitle,
         )
-        val expected = State.Failure(CreateDataFailedException.DatabaseException())
+        val expected = State.Failure(CreatePasswordGroupUseCaseException.SystemError("", CreateDataFailedException.DatabaseException()))
 
         assertThat(actual).isEqualTo(expected)
 

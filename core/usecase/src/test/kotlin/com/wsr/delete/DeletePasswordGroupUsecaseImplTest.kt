@@ -46,7 +46,7 @@ class DeletePasswordGroupUsecaseImplTest {
         coEvery { passwordGroupRepository.delete(mockedPasswordGroupId) } throws DeleteDataFailedException.NoSuchElementException()
 
         val actual = target.delete(mockedPasswordGroupId.value)
-        val expected = State.Failure(DeleteDataFailedException.NoSuchElementException())
+        val expected = State.Failure(DeletePasswordGroupUseCaseException.NoSuchPasswordGroupException(""))
         assertThat(actual).isEqualTo(expected)
     }
 }

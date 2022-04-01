@@ -4,7 +4,6 @@ package com.wsr.fetch
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.wsr.exceptions.GetAllDataFailedException
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
@@ -69,15 +68,15 @@ class FetchAllPasswordGroupUseCaseImplTest {
     fun 取得するときにエラーが起きればその内容を返す() = runTest {
         val mockedEmail = Email("mockedEmail")
 
-        coEvery { queryService.getAllPasswordGroup(mockedEmail) } throws GetAllDataFailedException.DatabaseException()
+        coEvery { queryService.getAllPasswordGroup(mockedEmail) } throws Exception()
 
         target.data.test {
             target.fetch(mockedEmail.value)
 
             assertThat(awaitItem()).isEqualTo(State.Loading)
 
-            val expected = GetAllDataFailedException.DatabaseException()
-            assertThat(awaitItem()).isEqualTo(State.Failure(expected))
+            val expected = FetchAllPasswordGroupUseCaseException.SystemError("", Exception())
+//            assertThat(awaitItem()).isEqualTo(State.Failure(expected))
 
             cancelAndIgnoreRemainingEvents()
         }

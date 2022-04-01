@@ -1,6 +1,5 @@
 package com.wsr.auth
 
-import com.wsr.exceptions.GetDataFailedException
 import com.wsr.state.State
 import com.wsr.user.Email
 import com.wsr.user.LoginPassword
@@ -18,7 +17,7 @@ class ResetUseCaseImpl(
         email: String,
         currentPassword: String,
         newPassword: String,
-    ): State<Unit, GetDataFailedException> {
+    ): State<Unit, ResetUseCaseException> {
         val submittedPassword = LoginPassword.PlainLoginPassword(currentPassword).toHashed()
         val actualPassword = queryService.getPassword(Email(email))
         if (submittedPassword == actualPassword) {
@@ -28,6 +27,6 @@ class ResetUseCaseImpl(
             ).also { userRepository.update(it) }
             return State.Success(Unit)
         }
-        return State.Failure(GetDataFailedException.DatabaseException())
+        return State.Failure(ResetUseCaseException.AuthenticationFailedException(""))
     }
 }
