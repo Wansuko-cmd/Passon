@@ -15,6 +15,8 @@ import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
+import com.wsr.state.State
+import com.wsr.state.sequence
 import com.wsr.toUseCaseModel
 import com.wsr.user.Email
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -69,6 +71,6 @@ class LocalFetchAllPasswordGroupUseCaseQueryServiceTest {
         notTargetMockedPasswordGroups.forEach { passwordGroupEntityDao.insert(it.toEntity()) }
 
         val actual = target.getAllPasswordGroup(mockedEmail)
-        assertThat(actual).isEqualTo(mockedPasswordGroups.map { it.toUseCaseModel() })
+        assertThat(actual).isEqualTo(mockedPasswordGroups.map { it.toUseCaseModel() }.map { State.Success(it) }.sequence())
     }
 }

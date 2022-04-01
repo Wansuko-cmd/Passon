@@ -3,6 +3,7 @@ package com.wsr.fetch
 import com.wsr.PasswordPairUseCaseModel
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.state.State
+import com.wsr.state.mapBoth
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class FetchPasswordPairUseCaseImpl(
@@ -13,14 +14,14 @@ class FetchPasswordPairUseCaseImpl(
     override val data get() = _data
 
     override suspend fun fetch(passwordGroupId: String) {
-        try {
-            _data.emit(State.Loading)
-            val passwordSet = queryService
-                .getPasswordPair(PasswordGroupId(passwordGroupId))
+        _data.emit(State.Loading)
+        val passwordSet = queryService
+            .getPasswordPair(PasswordGroupId(passwordGroupId))
+            .mapBoth(
+                success = { it },
+                failure = { FetchPasswordPairUseCaseException.SystemError(it.message.orEmpty(), it) }
+            )
 
-            _data.emit(State.Success(passwordSet))
-        } catch (e: Exception) {
-            _data.emit(State.Failure(FetchPasswordPairUseCaseException.SystemError(e.message.orEmpty(), e)))
-        }
+        _data.emit(passwordSet)
     }
 }

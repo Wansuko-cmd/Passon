@@ -10,6 +10,8 @@ import com.wsr.passworditem.PasswordItemFactory
 import com.wsr.passworditem.PasswordItemId
 import com.wsr.passworditem.PasswordItemRepository
 import com.wsr.state.State
+import com.wsr.state.consume
+import com.wsr.state.map
 
 class SyncPasswordPairUseCaseImpl(
     private val passwordGroupRepository: PasswordGroupRepository,
@@ -41,8 +43,14 @@ class SyncPasswordPairUseCaseImpl(
         val passwordItemIds = passwordItems.map { passwordItem -> passwordItem.id }
         queryService
             .getAllPasswordItemId(PasswordGroupId(passwordGroupId))
-            .filterNot { passwordItemIds.contains(it.value) }
-            .forEach { passwordItemRepository.delete(it) }
+            .consume(
+                success = { value ->
+                    value.filterNot { passwordItemIds.contains(it.value) }
+                        .forEach { passwordItemRepository.delete(it) }
+                },
+                failure = {},
+                loading = {},
+            )
 
         passwordItems.forEach {
             val newPasswordItem = passwordItemFactory.create(
