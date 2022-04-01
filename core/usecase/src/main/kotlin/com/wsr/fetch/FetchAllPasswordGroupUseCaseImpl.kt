@@ -2,7 +2,6 @@ package com.wsr.fetch
 
 import com.wsr.PasswordGroupUseCaseModel
 import com.wsr.state.State
-import com.wsr.state.consume
 import com.wsr.state.mapBoth
 import com.wsr.user.Email
 import kotlinx.coroutines.flow.MutableStateFlow

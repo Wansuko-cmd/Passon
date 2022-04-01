@@ -1,7 +1,6 @@
 package com.wsr.auth
 
 import com.wsr.state.State
-import com.wsr.state.consume
 import com.wsr.state.mapBoth
 import com.wsr.user.Email
 import com.wsr.user.LoginPassword
@@ -18,7 +17,7 @@ class LoginUseCaseImpl(
         loginUseCaseQueryService.getPassword(Email(email)).mapBoth(
             success = { submittedPassword == it },
             failure = { exception: LoginUseCaseQueryServiceException ->
-                when(exception) {
+                when (exception) {
                     is LoginUseCaseQueryServiceException.NoSuchUserException ->
                         LoginUseCaseException.NoSuchUserException("")
                     is LoginUseCaseQueryServiceException.DatabaseError ->
