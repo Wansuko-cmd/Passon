@@ -2,7 +2,7 @@ package com.wsr.delete
 
 import com.wsr.exceptions.DeleteDataFailedException
 import com.wsr.maybe.Maybe
-import com.wsr.maybe.mapBoth
+import com.wsr.maybe.mapFailure
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
 
@@ -12,19 +12,15 @@ class DeletePasswordGroupUseCaseImpl(
     override suspend fun delete(id: String): Maybe<Unit, DeletePasswordGroupUseCaseException> =
         passwordGroupRepository
             .delete(PasswordGroupId(id))
-            .mapBoth(
-                success = { },
-                failure = { exception ->
-                    when (exception) {
-                        is DeleteDataFailedException.NoSuchElementException ->
-                            DeletePasswordGroupUseCaseException.NoSuchPasswordGroupException(exception.message)
+            .mapFailure { it.toDeletePasswordGroupUseCaseException() }
 
-                        is DeleteDataFailedException.DatabaseError ->
-                            DeletePasswordGroupUseCaseException.SystemError(
-                                message = exception.message,
-                                cause = exception,
-                            )
-                    }
-                },
+    private fun DeleteDataFailedException.toDeletePasswordGroupUseCaseException() = when(this) {
+        is DeleteDataFailedException.NoSuchElementException ->
+            DeletePasswordGroupUseCaseException.NoSuchPasswordGroupException("")
+        is DeleteDataFailedException.DatabaseError ->
+            DeletePasswordGroupUseCaseException.SystemError(
+                message = this.message,
+                cause = this,
             )
+    }
 }
