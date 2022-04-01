@@ -10,6 +10,9 @@ data class User(
         is LoginPassword.PlainLoginPassword -> password.toHashed().value == loginPassword.value
         is LoginPassword.HashedLoginPassword -> password.value == loginPassword.value
     }
+
+    fun copyWithLoginPassword(loginPassword: LoginPassword.PlainLoginPassword) =
+        this.copy(loginPassword = loginPassword.toHashed())
 }
 
 @JvmInline

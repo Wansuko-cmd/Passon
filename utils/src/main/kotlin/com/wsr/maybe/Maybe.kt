@@ -20,9 +20,15 @@ inline fun <T, E, NT> Maybe<T, E>.map(block: (T) -> NT): Maybe<NT, E> =
         is Maybe.Failure -> this
     }
 
+inline fun <T, E, NE> Maybe<T, E>.mapFailure(block: (E) -> NE): Maybe<T, NE> =
+    when (this) {
+        is Maybe.Success -> this
+        is Maybe.Failure -> Maybe.Failure(block(value))
+    }
+
 inline fun <T, E> Maybe<T, E>.consume(
-    success: (T) -> Unit,
-    failure: (E) -> Unit,
+    success: (T) -> Unit = {},
+    failure: (E) -> Unit = {},
 ) {
     when (this) {
         is Maybe.Success -> success(value)

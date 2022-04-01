@@ -1,47 +1,74 @@
 package com.wsr.auth
 
+import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.maybe.Maybe
+import com.wsr.maybe.mapFailure
+import com.wsr.queryservice.UserQueryService
+import com.wsr.queryservice.UserQueryServiceException
 import com.wsr.user.Email
 import com.wsr.user.LoginPassword
-import com.wsr.user.UserFactory
+import com.wsr.user.User
 import com.wsr.user.UserRepository
 
 class ResetUseCaseImpl(
     private val userRepository: UserRepository,
-    private val queryService: ResetUseCaseQueryService,
+    private val userQueryService: UserQueryService,
 ) : ResetUseCase {
-
-    private val userFactory = UserFactory()
 
     override suspend fun reset(
         email: String,
         currentPassword: String,
         newPassword: String,
-    ): Maybe<Unit, ResetUseCaseException> {
-        val submittedPassword = LoginPassword.PlainLoginPassword(currentPassword).toHashed()
+    ): Maybe<Unit, ResetUseCaseException> = userQueryService.get(Email(email))
+        .mapFailure { it.toResetUseCaseException() }
+        .checkCurrentPassword(currentPassword)
+        .updatePassword(newPassword)
 
-        return when (val actualPassword = queryService.getPassword(Email(email))) {
-            is Maybe.Success -> {
-                if (submittedPassword == actualPassword.value) {
-                    userFactory.create(
-                        email = Email(email),
-                        loginPassword = LoginPassword.PlainLoginPassword(newPassword),
-                    ).also { userRepository.update(it) }
-                    return Maybe.Success(Unit)
-                }
-                return Maybe.Failure(ResetUseCaseException.AuthenticationFailedException(""))
-            }
-            is Maybe.Failure -> when (actualPassword.value) {
-                is ResetUseCaseQueryServiceException.NoSuchUserException ->
-                    Maybe.Failure(ResetUseCaseException.NoSuchUserException(""))
-                is ResetUseCaseQueryServiceException.DatabaseError ->
-                    Maybe.Failure(
-                        ResetUseCaseException.SystemError(
-                            message = actualPassword.value.message.orEmpty(),
-                            cause = actualPassword.value
-                        )
-                    )
-            }
-        }
+    private fun Maybe<User, ResetUseCaseException>.checkCurrentPassword(
+        currentPassword: String,
+    ): Maybe<User, ResetUseCaseException> = when (this) {
+        is Maybe.Success ->
+            if (value.shouldPass(LoginPassword.PlainLoginPassword(currentPassword))) this
+            else Maybe.Failure(ResetUseCaseException.AuthenticationFailedException(""))
+        is Maybe.Failure -> this
     }
+
+    private suspend fun Maybe<User, ResetUseCaseException>.updatePassword(
+        newPassword: String,
+    ): Maybe<Unit, ResetUseCaseException> = when (this) {
+        is Maybe.Success ->
+            userRepository
+                .update(value.copyWithLoginPassword(LoginPassword.PlainLoginPassword(newPassword)))
+                .mapFailure { it.toResetUseCaseException() }
+        is Maybe.Failure -> this
+    }
+
+    private fun UserQueryServiceException.toResetUseCaseException() = when (this) {
+        is UserQueryServiceException.NoSuchUserException ->
+            ResetUseCaseException.NoSuchUserException(this.message)
+        is UserQueryServiceException.DatabaseError ->
+            ResetUseCaseException.SystemError(
+                message = this.message,
+                cause = this,
+            )
+    }
+
+    private fun UpdateDataFailedException.toResetUseCaseException() = when (this) {
+        is UpdateDataFailedException.NoSuchElementException ->
+            ResetUseCaseException.NoSuchUserException("")
+        is UpdateDataFailedException.DatabaseError ->
+            ResetUseCaseException.SystemError(
+                message = this.message,
+                cause = this,
+            )
+    }
+}
+
+sealed class ResetUseCaseException : Throwable() {
+    data class AuthenticationFailedException(override val message: String) : ResetUseCaseException()
+    data class NoSuchUserException(override val message: String) : ResetUseCaseException()
+    data class SystemError(
+        override val message: String,
+        override val cause: Throwable,
+    ) : ResetUseCaseException()
 }
