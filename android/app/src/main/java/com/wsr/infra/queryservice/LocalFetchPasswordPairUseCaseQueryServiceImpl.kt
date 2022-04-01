@@ -5,8 +5,8 @@ import com.wsr.fetch.FetchPasswordPairUseCaseQueryService
 import com.wsr.fetch.FetchPasswordPairUseCaseQueryServiceException
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passworditem.PasswordItemEntityDao
+import com.wsr.maybe.Maybe
 import com.wsr.passwordgroup.PasswordGroupId
-import com.wsr.state.State
 import com.wsr.toUseCaseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -16,14 +16,14 @@ class LocalFetchPasswordPairUseCaseQueryServiceImpl(
     private val passwordGroupEntityDao: PasswordGroupEntityDao,
     private val passwordItemEntityDao: PasswordItemEntityDao,
 ) : FetchPasswordPairUseCaseQueryService {
-    override suspend fun getPasswordPair(passwordGroupId: PasswordGroupId): State<PasswordPairUseCaseModel, FetchPasswordPairUseCaseQueryServiceException> = try {
+    override suspend fun getPasswordPair(passwordGroupId: PasswordGroupId): Maybe<PasswordPairUseCaseModel, FetchPasswordPairUseCaseQueryServiceException> = try {
         withContext(Dispatchers.IO) {
             val passwordGroup = async { passwordGroupEntityDao.getById(passwordGroupId.value).toPasswordGroup() }
             val passwordItems = async { passwordItemEntityDao.getAllByPasswordGroupId(passwordGroupId.value).map { it.toPassword() } }
             PasswordPairUseCaseModel(
                 passwordGroup = passwordGroup.await().toUseCaseModel(),
                 passwordItems = passwordItems.await().map { it.toUseCaseModel() },
-            ).let { State.Success(it) }
+            ).let { Maybe.Success(it) }
         }
     } catch (e: Exception) {
         throw e
