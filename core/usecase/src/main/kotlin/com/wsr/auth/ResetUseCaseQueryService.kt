@@ -9,6 +9,6 @@ interface ResetUseCaseQueryService {
 }
 
 sealed class ResetUseCaseQueryServiceException : Throwable() {
-    class NoSuchUserException(override val message: String) : LoginUseCaseQueryServiceException()
-    class DatabaseError(override val message: String) : LoginUseCaseQueryServiceException()
+    class NoSuchUserException(override val message: String) : ResetUseCaseQueryServiceException()
+    class DatabaseError(override val message: String) : ResetUseCaseQueryServiceException()
 }
