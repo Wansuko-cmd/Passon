@@ -2,6 +2,8 @@
 
 package com.wsr.sync
 
+import com.wsr.maybe.Maybe
+import com.wsr.maybe.sequence
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.PasswordGroupRepository
@@ -12,8 +14,6 @@ import com.wsr.passworditem.Password
 import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
 import com.wsr.passworditem.PasswordItemRepository
-import com.wsr.state.State
-import com.wsr.state.sequence
 import com.wsr.toUseCaseModel
 import com.wsr.user.Email
 import io.mockk.MockKAnnotations
@@ -78,10 +78,10 @@ class SyncPasswordSetUseCaseImplTest {
                 title = updatedMockedPasswordGroup.title.value,
                 remark = updatedMockedPasswordGroup.remark.value,
             )
-        } returns State.Success(Unit)
-        coEvery { passwordItemRepository.delete(PasswordItemId(any())) } returns State.Success(Unit)
-        coEvery { passwordItemRepository.upsert(any()) } returns State.Success(Unit)
-        coEvery { queryService.getAllPasswordItemId(mockedPasswordGroupId) } returns mockedPasswordItems.map { it.id }.map { State.Success(it) }.sequence()
+        } returns Maybe.Success(Unit)
+        coEvery { passwordItemRepository.delete(PasswordItemId(any())) } returns Maybe.Success(Unit)
+        coEvery { passwordItemRepository.upsert(any()) } returns Maybe.Success(Unit)
+        coEvery { queryService.getAllPasswordItemId(mockedPasswordGroupId) } returns mockedPasswordItems.map { it.id }.map { Maybe.Success(it) }.sequence()
 
         target.sync(
             passwordGroupId = mockedPasswordGroupId.value,

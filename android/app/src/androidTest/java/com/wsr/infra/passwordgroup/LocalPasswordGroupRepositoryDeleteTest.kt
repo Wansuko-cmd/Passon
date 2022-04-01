@@ -8,11 +8,11 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import com.wsr.infra.PassonDatabase
+import com.wsr.maybe.Maybe
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
-import com.wsr.state.State
 import com.wsr.user.Email
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -54,7 +54,7 @@ class LocalPasswordGroupRepositoryDeleteTest {
         )
         target.create(mockedPasswordGroup)
 
-        target.delete(mockedPasswordGroupId).also { assertThat(it).isEqualTo(State.Success(Unit)) }
+        target.delete(mockedPasswordGroupId).also { assertThat(it).isEqualTo(Maybe.Success(Unit)) }
 
         assertThat(passwordGroupEntityDao.getById(mockedPasswordGroupId.value)).isNull()
     }

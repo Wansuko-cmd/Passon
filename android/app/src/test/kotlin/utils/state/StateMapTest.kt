@@ -1,8 +1,10 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.state
+package utils.state
 
 import com.google.common.truth.Truth.assertThat
+import com.wsr.utils.State
+import com.wsr.utils.map
 import kotlin.test.Test
 import kotlin.test.fail
 

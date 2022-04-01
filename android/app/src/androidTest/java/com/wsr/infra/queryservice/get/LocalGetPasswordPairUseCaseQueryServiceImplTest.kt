@@ -1,6 +1,6 @@
 @file:Suppress("NonAsciiCharacters", "TestFunctionName")
 
-package com.wsr.infra.queryservice.fetch
+package com.wsr.infra.queryservice.get
 
 import android.content.Context
 import androidx.room.Room
@@ -13,7 +13,8 @@ import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passwordgroup.toEntity
 import com.wsr.infra.passworditem.PasswordItemEntityDao
 import com.wsr.infra.passworditem.toEntity
-import com.wsr.infra.queryservice.LocalFetchPasswordPairUseCaseQueryServiceImpl
+import com.wsr.infra.queryservice.LocalGetPasswordPairUseCaseQueryServiceImpl
+import com.wsr.maybe.Maybe
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
@@ -22,7 +23,6 @@ import com.wsr.passworditem.Name
 import com.wsr.passworditem.Password
 import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
-import com.wsr.state.State
 import com.wsr.toUseCaseModel
 import com.wsr.user.Email
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,11 +34,11 @@ import kotlin.test.Test
 
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class LocalFetchPasswordPairUseCaseQueryServiceImplTest {
+class LocalGetPasswordPairUseCaseQueryServiceImplTest {
     private lateinit var passwordGroupEntityDao: PasswordGroupEntityDao
     private lateinit var passwordItemEntityDao: PasswordItemEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: LocalFetchPasswordPairUseCaseQueryServiceImpl
+    private lateinit var target: LocalGetPasswordPairUseCaseQueryServiceImpl
 
     @BeforeTest
     fun setup() {
@@ -47,7 +47,7 @@ class LocalFetchPasswordPairUseCaseQueryServiceImplTest {
         passwordGroupEntityDao = db.passwordGroupEntityDao()
         passwordItemEntityDao = db.passwordItemEntityDao()
 
-        target = LocalFetchPasswordPairUseCaseQueryServiceImpl(passwordGroupEntityDao, passwordItemEntityDao)
+        target = LocalGetPasswordPairUseCaseQueryServiceImpl(passwordGroupEntityDao, passwordItemEntityDao)
     }
 
     @AfterTest
@@ -101,6 +101,6 @@ class LocalFetchPasswordPairUseCaseQueryServiceImplTest {
             passwordItems = mockedPasswordItems.map { it.toUseCaseModel() },
         )
 
-        assertThat(actual).isEqualTo(State.Success(expected))
+        assertThat(actual).isEqualTo(Maybe.Success(expected))
     }
 }

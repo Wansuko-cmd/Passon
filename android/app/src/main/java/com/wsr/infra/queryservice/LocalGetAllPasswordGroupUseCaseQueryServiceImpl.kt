@@ -9,7 +9,7 @@ import com.wsr.maybe.sequence
 import com.wsr.toUseCaseModel
 import com.wsr.user.Email
 
-class LocalFetchAllPasswordGroupUseCaseQueryServiceImpl(
+class LocalGetAllPasswordGroupUseCaseQueryServiceImpl(
     private val passwordGroupEntityDao: PasswordGroupEntityDao,
 ) : FetchAllPasswordGroupUseCaseQueryService {
     override suspend fun getAllPasswordGroup(email: Email): Maybe<List<PasswordGroupUseCaseModel>, FetchAllPasswordGroupUseCaseQueryServiceException> = try {

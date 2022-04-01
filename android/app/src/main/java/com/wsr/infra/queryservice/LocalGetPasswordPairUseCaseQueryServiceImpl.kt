@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
-class LocalFetchPasswordPairUseCaseQueryServiceImpl(
+class LocalGetPasswordPairUseCaseQueryServiceImpl(
     private val passwordGroupEntityDao: PasswordGroupEntityDao,
     private val passwordItemEntityDao: PasswordItemEntityDao,
 ) : FetchPasswordPairUseCaseQueryService {
