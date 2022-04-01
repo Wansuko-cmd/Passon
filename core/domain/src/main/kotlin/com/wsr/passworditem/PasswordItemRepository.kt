@@ -3,15 +3,13 @@ package com.wsr.passworditem
 import com.wsr.exceptions.DeleteDataFailedException
 import com.wsr.exceptions.UpsertDataFailedException
 import com.wsr.passwordgroup.PasswordGroupId
+import com.wsr.state.State
 
 interface PasswordItemRepository {
 
-    @Throws(UpsertDataFailedException::class)
-    suspend fun upsert(passwordItem: PasswordItem)
+    suspend fun upsert(passwordItem: PasswordItem): State<Unit, UpsertDataFailedException>
 
-    @Throws(DeleteDataFailedException::class)
-    suspend fun delete(id: PasswordItemId)
+    suspend fun delete(id: PasswordItemId): State<Unit, DeleteDataFailedException>
 
-    @Throws(DeleteDataFailedException::class)
-    suspend fun deleteAll(passwordGroupId: PasswordGroupId)
+    suspend fun deleteAll(passwordGroupId: PasswordGroupId): State<Unit, DeleteDataFailedException>
 }
