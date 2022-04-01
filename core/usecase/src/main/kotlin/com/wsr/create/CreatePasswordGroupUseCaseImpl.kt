@@ -26,15 +26,22 @@ class CreatePasswordGroupUseCaseImpl(
         )
         return passwordGroupRepository.create(passwordGroup).mapBoth(
             success = { passwordGroup.toUseCaseModel() },
-            failure = { exception ->
-                when (exception) {
-                    is CreateDataFailedException.DatabaseError ->
-                        CreatePasswordGroupUseCaseException.SystemError(
-                            message = exception.message,
-                            cause = exception,
-                        )
-                }
-            }
+            failure = { it.toCreatePasswordGroupUseCaseException() }
         )
     }
+
+    private fun CreateDataFailedException.toCreatePasswordGroupUseCaseException() = when(this) {
+        is CreateDataFailedException.DatabaseError ->
+            CreatePasswordGroupUseCaseException.SystemError(
+                message = this.message,
+                cause = this,
+            )
+    }
+}
+
+sealed class CreatePasswordGroupUseCaseException : Throwable() {
+    data class SystemError(
+        override val message: String,
+        override val cause: Throwable,
+    ) : CreatePasswordGroupUseCaseException()
 }
