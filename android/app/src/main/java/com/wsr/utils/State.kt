@@ -1,4 +1,4 @@
-package com.wsr.state
+package com.wsr.utils
 
 sealed class State<out T, out E> {
     object Loading : State<Nothing, Nothing>()
