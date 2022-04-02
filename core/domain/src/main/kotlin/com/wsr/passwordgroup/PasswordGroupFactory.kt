@@ -9,7 +9,7 @@ class PasswordGroupFactory {
         title: Title = Title(""),
         remark: Remark = Remark(""),
     ): PasswordGroup {
-        val id = PasswordGroupId(UUID.randomUUID().toString())
-        return PasswordGroup(id, email, title, remark)
+        val passwordGroupId = PasswordGroupId(UUID.randomUUID().toString())
+        return PasswordGroup(passwordGroupId, email, title, remark)
     }
 }
