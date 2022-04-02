@@ -28,5 +28,5 @@ sealed class LoginPassword private constructor(val value: String) {
             }
             .let { HashedLoginPassword(it) }
     }
-    class HashedLoginPassword internal constructor(value: String) : LoginPassword(value)
+    class HashedLoginPassword(value: String) : LoginPassword(value)
 }
