@@ -19,7 +19,11 @@
             app:popEnterAnim="@anim/slide_in_from_bottom"/>
         <action
             android:id="@+id/action_login_fragment_to_sign_up_fragment"
-            app:destination="@id/sign_up_fragment" />
+            app:destination="@id/sign_up_fragment"
+            app:enterAnim="@anim/slide_in_from_end"
+            app:exitAnim="@anim/slide_out_to_start"
+            app:popEnterAnim="@anim/slide_in_from_start"
+            app:popExitAnim="@anim/slide_out_to_end"/>
     </fragment>
 
     <fragment
