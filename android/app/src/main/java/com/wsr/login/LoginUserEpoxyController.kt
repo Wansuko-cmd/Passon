@@ -8,6 +8,7 @@ class LoginUserEpoxyController(private val onSelected: (userId: String) -> Unit)
     override fun buildModels(users: List<UserLoginUiState>) {
         users.forEach { user ->
             loginUserRow {
+                id(user.id)
                 displayName(user.displayName)
                 databasePath(user.databasePath)
                 isSelected(user.isSelected)

@@ -54,7 +54,7 @@ class LocalPasswordGroupRepositoryCreateTest {
         )
         target.create(mockedPasswordGroup).also { assertThat(it).isEqualTo(Maybe.Success(Unit)) }
 
-        val actual = passwordGroupEntityDao.getAllByEmail(mockedEmail.value)
+        val actual = passwordGroupEntityDao.getAllByUserId(mockedEmail.value)
         assertThat(actual).contains(mockedPasswordGroup.toEntity())
     }
 }

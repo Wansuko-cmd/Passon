@@ -15,6 +15,7 @@ import com.wsr.R
 import com.wsr.databinding.FragmentLoginBinding
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.layout.AfterTextChanged
+import com.wsr.utils.consume
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -30,6 +31,27 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             loginFragmentPassword.onEnterClicked(loginViewModel::checkPassword)
             loginFragmentNextButton.setOnClickListener { loginViewModel.checkPassword() }
             loginFragmentSignUpButton.setOnClickListener { navigateToSignUp() }
+        }
+
+        loginViewModel.fetch()
+
+        val loginUserEpoxyController = LoginUserEpoxyController(
+            onSelected = loginViewModel::updateIsSelected,
+        )
+
+        binding.loginFragmentUserRecyclerView.apply {
+            setHasFixedSize(true)
+            adapter = loginUserEpoxyController.adapter
+        }
+
+        launchInLifecycleScope(Lifecycle.State.STARTED) {
+            loginViewModel.uiState.collect { loginUiState ->
+                loginUiState.users.consume(
+                    success = loginUserEpoxyController::setData,
+                    failure = { showMessage(it.message) },
+                    loading = { /* do nothing */ }
+                )
+            }
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {

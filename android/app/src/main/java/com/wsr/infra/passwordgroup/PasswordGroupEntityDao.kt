@@ -9,8 +9,8 @@ import androidx.room.Update
 @Dao
 interface PasswordGroupEntityDao {
 
-    @Query("SELECT * FROM password_groups WHERE userId = :userId")
-    suspend fun getAllByEmail(userId: String): List<PasswordGroupEntity>
+    @Query("SELECT * FROM password_groups WHERE user_id = :userId")
+    suspend fun getAllByUserId(userId: String): List<PasswordGroupEntity>
 
     @Query("SELECT * FROM password_groups WHERE id = :id")
     suspend fun getById(id: String): PasswordGroupEntity

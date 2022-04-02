@@ -52,7 +52,7 @@ import org.koin.dsl.module
 val module = module {
 
     /*** View Model ***/
-    viewModel { LoginViewModel() }
+    viewModel { LoginViewModel(get(), get()) }
     viewModel { SignUpViewModel(get()) }
     viewModel { IndexViewModel(get(), get()) }
     viewModel { IndexCreatePasswordGroupDialogViewModel() }
