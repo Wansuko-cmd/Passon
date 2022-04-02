@@ -15,7 +15,6 @@ class LocalPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: Passw
         passwordGroupEntityDao
             .insert(passwordGroup.toEntity())
         Maybe.Success(Unit)
-        Maybe.Success(Unit)
     } catch (e: Exception) {
         Maybe.Failure(CreateDataFailedException.DatabaseError(e.message ?: ""))
     }
