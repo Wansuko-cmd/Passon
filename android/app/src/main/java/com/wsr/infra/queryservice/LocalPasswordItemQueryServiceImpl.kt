@@ -4,20 +4,19 @@ import com.wsr.infra.passworditem.PasswordItemEntityDao
 import com.wsr.maybe.Maybe
 import com.wsr.maybe.sequence
 import com.wsr.passwordgroup.PasswordGroupId
-import com.wsr.passworditem.PasswordItemId
-import com.wsr.sync.SyncPasswordPairUseCaseException
-import com.wsr.sync.SyncPasswordPairUseCaseQueryService
+import com.wsr.passworditem.PasswordItem
+import com.wsr.queryservice.PasswordItemQueryService
+import com.wsr.queryservice.PasswordItemQueryServiceException
 
-class LocalSyncPasswordPairUseCaseQueryServiceImpl(
+class LocalPasswordItemQueryServiceImpl(
     private val passwordItemEntityDao: PasswordItemEntityDao,
-) : SyncPasswordPairUseCaseQueryService {
-    override suspend fun getAllPasswordItemId(
+) : PasswordItemQueryService {
+    override suspend fun getAll(
         passwordGroupId: PasswordGroupId,
-    ): Maybe<List<PasswordItemId>, SyncPasswordPairUseCaseException> = try {
+    ): Maybe<List<PasswordItem>, PasswordItemQueryServiceException> = try {
         passwordItemEntityDao
             .getAllByPasswordGroupId(passwordGroupId.value)
-            .map { PasswordItemId(it.id) }
-            .map { Maybe.Success(it) }
+            .map { Maybe.Success(it.toPassword()) }
             .sequence()
     } catch (e: Exception) {
         throw e

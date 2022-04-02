@@ -13,7 +13,7 @@ import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passwordgroup.toEntity
 import com.wsr.infra.passworditem.PasswordItemEntityDao
 import com.wsr.infra.passworditem.toEntity
-import com.wsr.infra.queryservice.LocalGetPasswordPairUseCaseQueryServiceImpl
+import com.wsr.infra.queryservice.LocalPasswordPairQueryServiceImpl
 import com.wsr.maybe.Maybe
 import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
@@ -38,7 +38,7 @@ class LocalGetPasswordPairUseCaseQueryServiceImplTest {
     private lateinit var passwordGroupEntityDao: PasswordGroupEntityDao
     private lateinit var passwordItemEntityDao: PasswordItemEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: LocalGetPasswordPairUseCaseQueryServiceImpl
+    private lateinit var target: LocalPasswordPairQueryServiceImpl
 
     @BeforeTest
     fun setup() {
@@ -47,7 +47,7 @@ class LocalGetPasswordPairUseCaseQueryServiceImplTest {
         passwordGroupEntityDao = db.passwordGroupEntityDao()
         passwordItemEntityDao = db.passwordItemEntityDao()
 
-        target = LocalGetPasswordPairUseCaseQueryServiceImpl(passwordGroupEntityDao, passwordItemEntityDao)
+        target = LocalPasswordPairQueryServiceImpl(passwordGroupEntityDao, passwordItemEntityDao)
     }
 
     @AfterTest

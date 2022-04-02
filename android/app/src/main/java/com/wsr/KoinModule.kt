@@ -22,8 +22,8 @@ import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passworditem.LocalPasswordItemRepositoryImpl
 import com.wsr.infra.passworditem.PasswordItemEntityDao
 import com.wsr.infra.queryservice.LocalGetAllPasswordGroupUseCaseQueryServiceImpl
-import com.wsr.infra.queryservice.LocalGetPasswordPairUseCaseQueryServiceImpl
-import com.wsr.infra.queryservice.LocalSyncPasswordPairUseCaseQueryServiceImpl
+import com.wsr.infra.queryservice.LocalPasswordPairQueryServiceImpl
+import com.wsr.infra.queryservice.LocalPasswordItemQueryServiceImpl
 import com.wsr.login.LoginViewModel
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passworditem.PasswordItemRepository
@@ -61,11 +61,11 @@ val module = module {
     factory<GetAllPasswordGroupUseCase> { GetAllPasswordGroupUseCaseImpl(get()) }
     single<FetchAllPasswordGroupUseCaseQueryService> { LocalGetAllPasswordGroupUseCaseQueryServiceImpl(get()) }
     factory<GetPasswordPairUseCase> { GetPasswordPairUseCaseImpl(get()) }
-    single<FetchPasswordPairUseCaseQueryService> { LocalGetPasswordPairUseCaseQueryServiceImpl(get(), get()) }
+    single<FetchPasswordPairUseCaseQueryService> { LocalPasswordPairQueryServiceImpl(get(), get()) }
 
     // sync
     single<SyncPasswordPairUseCase> { SyncPasswordPairUseCaseImpl(get(), get(), get()) }
-    single<SyncPasswordPairUseCaseQueryService> { LocalSyncPasswordPairUseCaseQueryServiceImpl(get()) }
+    single<SyncPasswordPairUseCaseQueryService> { LocalPasswordItemQueryServiceImpl(get()) }
 
     /*** Repository ***/
     single<PasswordGroupRepository> { LocalPasswordGroupRepositoryImpl(get()) }

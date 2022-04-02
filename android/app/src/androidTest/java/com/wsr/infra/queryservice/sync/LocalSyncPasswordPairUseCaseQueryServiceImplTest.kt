@@ -10,7 +10,7 @@ import com.google.common.truth.Truth.assertThat
 import com.wsr.infra.PassonDatabase
 import com.wsr.infra.passworditem.PasswordItemEntityDao
 import com.wsr.infra.passworditem.toEntity
-import com.wsr.infra.queryservice.LocalSyncPasswordPairUseCaseQueryServiceImpl
+import com.wsr.infra.queryservice.LocalPasswordItemQueryServiceImpl
 import com.wsr.maybe.Maybe
 import com.wsr.maybe.sequence
 import com.wsr.passwordgroup.PasswordGroupId
@@ -30,7 +30,7 @@ import kotlin.test.Test
 class LocalSyncPasswordPairUseCaseQueryServiceImplTest {
     private lateinit var passwordEntityDao: PasswordItemEntityDao
     private lateinit var db: PassonDatabase
-    private lateinit var target: LocalSyncPasswordPairUseCaseQueryServiceImpl
+    private lateinit var target: LocalPasswordItemQueryServiceImpl
 
     @BeforeTest
     fun setup() {
@@ -38,7 +38,7 @@ class LocalSyncPasswordPairUseCaseQueryServiceImplTest {
         db = Room.inMemoryDatabaseBuilder(context, PassonDatabase::class.java).build()
         passwordEntityDao = db.passwordItemEntityDao()
 
-        target = LocalSyncPasswordPairUseCaseQueryServiceImpl(passwordEntityDao)
+        target = LocalPasswordItemQueryServiceImpl(passwordEntityDao)
     }
 
     @AfterTest
