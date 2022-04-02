@@ -14,7 +14,7 @@ class DeletePasswordGroupUseCaseImpl(
             .delete(PasswordGroupId(id))
             .mapFailure { it.toDeletePasswordGroupUseCaseException() }
 
-    private fun DeleteDataFailedException.toDeletePasswordGroupUseCaseException() = when(this) {
+    private fun DeleteDataFailedException.toDeletePasswordGroupUseCaseException() = when (this) {
         is DeleteDataFailedException.NoSuchElementException ->
             DeletePasswordGroupUseCaseException.NoSuchPasswordGroupException("")
         is DeleteDataFailedException.DatabaseError ->

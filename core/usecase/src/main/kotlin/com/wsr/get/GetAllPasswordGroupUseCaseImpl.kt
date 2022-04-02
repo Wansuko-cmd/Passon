@@ -14,7 +14,7 @@ class GetAllPasswordGroupUseCaseImpl(
             .getAll(Email(email))
             .mapFailure { it.toGetAllPasswordGroupUseCaseException() }
 
-    private fun PasswordGroupQueryServiceException.toGetAllPasswordGroupUseCaseException() = when(this) {
+    private fun PasswordGroupQueryServiceException.toGetAllPasswordGroupUseCaseException() = when (this) {
         is PasswordGroupQueryServiceException.DatabaseError ->
             GetAllPasswordGroupUseCaseException.SystemError(
                 message = this.message,

@@ -23,7 +23,7 @@ class LoginUseCaseImpl(
         Maybe.Failure(e)
     }
 
-    private fun UserQueryServiceException.toLoginUseCaseException() = when(this) {
+    private fun UserQueryServiceException.toLoginUseCaseException() = when (this) {
         is UserQueryServiceException.NoSuchUserException ->
             LoginUseCaseException.NoSuchUserException("")
         is UserQueryServiceException.DatabaseError ->

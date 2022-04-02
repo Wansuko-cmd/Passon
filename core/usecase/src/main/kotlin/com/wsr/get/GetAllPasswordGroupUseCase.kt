@@ -13,4 +13,3 @@ sealed class GetAllPasswordGroupUseCaseException : Throwable() {
         override val cause: Throwable,
     ) : GetAllPasswordGroupUseCaseException()
 }
-

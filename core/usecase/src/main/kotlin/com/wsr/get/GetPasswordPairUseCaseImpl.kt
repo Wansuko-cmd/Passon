@@ -14,7 +14,7 @@ class GetPasswordPairUseCaseImpl(
             .get(PasswordGroupId(passwordGroupId))
             .mapFailure { it.toGetPasswordPairUseCaseException() }
 
-    private fun PasswordPairQueryServiceException.toGetPasswordPairUseCaseException() = when(this) {
+    private fun PasswordPairQueryServiceException.toGetPasswordPairUseCaseException() = when (this) {
         is PasswordPairQueryServiceException.NoSuchPasswordGroupException ->
             GetPasswordPairUseCaseException.NoSuchPasswordGroupException("")
         is PasswordPairQueryServiceException.DatabaseError ->
