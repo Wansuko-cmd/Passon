@@ -16,7 +16,6 @@ import com.wsr.databinding.FragmentLoginBinding
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.layout.AfterTextChanged
 import com.wsr.utils.consume
-import com.wsr.utils.map
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment(R.layout.fragment_login) {

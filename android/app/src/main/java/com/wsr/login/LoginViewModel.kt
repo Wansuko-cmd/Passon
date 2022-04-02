@@ -99,7 +99,7 @@ class LoginViewModel(
                 .map { it.getSelected() }
                 .consume(
                     success = {
-                        if(it == null) _shouldPassEvent.emit(false)
+                        if (it == null) _shouldPassEvent.emit(false)
                         else {
                             _shouldPassEvent.emit(true)
                             _navigateToIndex.emit(it.id)
