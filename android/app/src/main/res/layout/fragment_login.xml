@@ -109,7 +109,7 @@
                 android:textSize="16sp"
                 android:layout_marginVertical="16dp"
                 android:layout_marginEnd="24dp"
-                android:text="別のデータベース"/>
+                android:text="@string/login_sign_up_button"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/login_fragment_user_recycler_view"
