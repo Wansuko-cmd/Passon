@@ -38,7 +38,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             loginViewModel.shouldPassEvent.collect { success ->
-                if (success) showMessage(getString(R.string.login_biometric_success_message))
+                if (success) showMessage(getString(R.string.login_success_message))
                 else showMessage(getString(R.string.login_password_wrong))
             }
         }
@@ -49,10 +49,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 binding.loginFragmentFingerPrintButton.setOnClickListener {
                     showBiometricAuthenticationDialog(
                         success = {
-                            showMessage(getString(R.string.login_biometric_success_message))
+                            showMessage(getString(R.string.login_success_message))
                             navigateToIndex()
                         },
-                        failure = { showMessage(getString(R.string.login_biometric_failure_message)) }
+                        failure = { showMessage(getString(R.string.login_failure_message)) }
                     )
                 }
             }

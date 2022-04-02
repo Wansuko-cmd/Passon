@@ -12,12 +12,14 @@
     <string name="sign_up_display_name_hint">Display Name</string>
     <string name="sign_up_login_password">Password for Login</string>
     <string name="sign_up_next_button">Next</string>
+    <string name="sign_up_success_message">Success</string>
+    <string name="sign_up_failure_message">Failure</string>
 
     <!-- ログイン画面 -->
     <string name="login_password_hint">Password</string>
     <string name="login_password_wrong">Wrong Password</string>
-    <string name="login_biometric_success_message">Success</string>
-    <string name="login_biometric_failure_message">Failure</string>
+    <string name="login_success_message">Success</string>
+    <string name="login_failure_message">Failure</string>
     <string name="login_biometric_title">Login</string>
     <string name="login_biometric_negative">Cancel</string>
     <string name="login_next_button">Next</string>

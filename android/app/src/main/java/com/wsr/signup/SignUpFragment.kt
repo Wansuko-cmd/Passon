@@ -32,8 +32,15 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
-            signUpViewModel.showErrorMessage.collect { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
+            signUpViewModel.succeedCreatingUserEvent.collect { success ->
+                if (success) showMessage(getString(R.string.sign_up_success_message))
+                else showMessage(getString(R.string.sign_up_failure_message))
+            }
         }
+    }
+
+    private fun showMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun navigateToIndex() {
