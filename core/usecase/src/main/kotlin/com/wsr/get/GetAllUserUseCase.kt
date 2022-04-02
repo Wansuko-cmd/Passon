@@ -1,10 +1,10 @@
 package com.wsr.get
 
+import com.wsr.UserUseCaseModel
 import com.wsr.maybe.Maybe
-import com.wsr.user.User
 
 interface GetAllUserUseCase {
-    suspend fun getAll(): Maybe<List<User>, GetAllUserUseCaseException>
+    suspend fun getAll(): Maybe<List<UserUseCaseModel>, GetAllUserUseCaseException>
 }
 
 sealed class GetAllUserUseCaseException : Throwable() {
