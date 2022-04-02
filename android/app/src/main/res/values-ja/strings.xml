@@ -6,6 +6,11 @@
     <string name="menu_title_edit">編集</string>
     <string name="menu_title_setting">設定</string>
 
+    <!-- サインアップ画面 -->
+    <string name="sign_up_display_name_hint">表示名</string>
+    <string name="sign_up_login_password">ログイン用のパスワード</string>
+    <string name="sign_up_next_button">次へ</string>
+
     <!-- ログイン画面 -->
     <string name="login_password_hint">パスワード</string>
     <string name="login_password_wrong">間違えています</string>

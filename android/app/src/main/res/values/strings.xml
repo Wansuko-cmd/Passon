@@ -8,6 +8,11 @@
     <!-- メニューアイテム共通 -->
     <string name="menu_title_setting">Setting</string>
 
+    <!-- サインアップ画面 -->
+    <string name="sign_up_display_name_hint">Display Name</string>
+    <string name="sign_up_login_password">Password for Login</string>
+    <string name="sign_up_next_button">Next</string>
+
     <!-- ログイン画面 -->
     <string name="login_password_hint">Password</string>
     <string name="login_password_wrong">Wrong Password</string>
