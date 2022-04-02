@@ -1,8 +1,8 @@
 package com.wsr.queryservice
 
 import com.wsr.maybe.Maybe
-import com.wsr.user.UserId
 import com.wsr.user.User
+import com.wsr.user.UserId
 
 interface UserQueryService {
     suspend fun get(email: UserId): Maybe<User, UserQueryServiceException>

@@ -29,7 +29,7 @@ class SignUpUseCaseImpl(private val userRepository: UserRepository) : SignUpUseC
         )
     }
 
-    private fun CreateDataFailedException.toSignUpUseCaseException() = when(this) {
+    private fun CreateDataFailedException.toSignUpUseCaseException() = when (this) {
         is CreateDataFailedException.DatabaseError ->
             SignUpUseCaseException.SystemError(
                 message = this.message,

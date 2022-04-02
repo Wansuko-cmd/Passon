@@ -1,6 +1,6 @@
 package com.wsr.user
 
-import java.util.*
+import java.util.UUID
 
 class UserFactory {
     fun create(

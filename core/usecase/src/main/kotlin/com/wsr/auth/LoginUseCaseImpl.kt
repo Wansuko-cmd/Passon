@@ -4,8 +4,8 @@ import com.wsr.maybe.Maybe
 import com.wsr.maybe.mapBoth
 import com.wsr.queryservice.UserQueryService
 import com.wsr.queryservice.UserQueryServiceException
-import com.wsr.user.UserId
 import com.wsr.user.LoginPassword
+import com.wsr.user.UserId
 
 class LoginUseCaseImpl(
     private val userQueryService: UserQueryService,
