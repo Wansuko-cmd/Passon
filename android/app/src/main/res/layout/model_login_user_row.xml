@@ -9,6 +9,12 @@
         <variable
             name="databasePath"
             type="String" />
+        <variable
+            name="isSelected"
+            type="Boolean" />
+        <variable
+            name="onSelected"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,7 +30,10 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/model_login_user_row_display_name"
             app:layout_constraintBottom_toBottomOf="@id/model_login_user_row_database_path"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:checked="@{isSelected}"
+            android:onClick="@{onSelected}"
+            />
 
         <TextView
             android:id="@+id/model_login_user_row_display_name"
