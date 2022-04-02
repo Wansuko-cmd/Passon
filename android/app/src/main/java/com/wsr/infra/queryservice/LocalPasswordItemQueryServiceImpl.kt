@@ -16,9 +16,9 @@ class LocalPasswordItemQueryServiceImpl(
     ): Maybe<List<PasswordItem>, PasswordItemQueryServiceException> = try {
         passwordItemEntityDao
             .getAllByPasswordGroupId(passwordGroupId.value)
-            .map { Maybe.Success(it.toPassword()) }
-            .sequence()
+            .map { it.toPassword() }
+            .let { Maybe.Success(it) }
     } catch (e: Exception) {
-        throw e
+        Maybe.Failure(PasswordItemQueryServiceException.DatabaseError(e.message.orEmpty()))
     }
 }

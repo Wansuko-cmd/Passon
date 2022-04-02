@@ -1,13 +1,25 @@
 package com.wsr.infra.queryservice
 
+import com.wsr.infra.user.UserEntityDao
 import com.wsr.maybe.Maybe
 import com.wsr.queryservice.UserQueryService
 import com.wsr.queryservice.UserQueryServiceException
 import com.wsr.user.User
 import com.wsr.user.UserId
 
-class LocalUserQueryServiceImpl : UserQueryService {
-    override suspend fun get(userId: UserId): Maybe<User, UserQueryServiceException> {
-        TODO("Not yet implemented")
+class LocalUserQueryServiceImpl(private val userEntityDao: UserEntityDao) : UserQueryService {
+    override suspend fun get(userId: UserId): Maybe<User, UserQueryServiceException> = try {
+        userEntityDao.getById(userId.value).toUser().let { Maybe.Success(it) }
+    } catch (e: Exception) {
+        Maybe.Failure(UserQueryServiceException.DatabaseError(e.message.orEmpty()))
+    }
+
+    override suspend fun getAll(): Maybe<List<User>, UserQueryServiceException> = try {
+        userEntityDao
+            .getAll()
+            .map { it.toUser() }
+            .let { Maybe.Success(it) }
+    } catch (e: Exception) {
+        Maybe.Failure(UserQueryServiceException.DatabaseError(e.message.orEmpty()))
     }
 }

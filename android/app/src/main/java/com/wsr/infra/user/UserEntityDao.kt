@@ -9,8 +9,11 @@ import androidx.room.Update
 @Dao
 interface UserEntityDao {
 
+    @Query("SELECT * FROM user")
+    suspend fun getAll(): List<UserEntity>
+
     @Query("SELECT * FROM user WHERE userId = :userId")
-    suspend fun getByEmail(userId: String): UserEntity
+    suspend fun getById(userId: String): UserEntity
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(userEntity: UserEntity)
