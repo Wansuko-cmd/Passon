@@ -111,6 +111,12 @@
                 android:layout_marginEnd="24dp"
                 android:text="別のデータベース"/>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/login_fragment_user_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/login_fragment_sign_up_button"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
