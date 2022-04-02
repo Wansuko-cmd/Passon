@@ -18,7 +18,7 @@ import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
 import com.wsr.toUseCaseModel
-import com.wsr.user.Email
+import com.wsr.user.UserId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.runner.RunWith
@@ -50,7 +50,7 @@ class LocalGetAllPasswordGroupUseCaseQueryServiceTest {
     /*** getAllPasswordGroup関数 ***/
     @Test
     fun Emailを渡せば所属するPasswordGroupを返す() = runTest {
-        val mockedEmail = Email("mockedEmail")
+        val mockedEmail = UserId("mockedEmail")
         val mockedPasswordGroups = List(5) { index ->
             PasswordGroup(
                 id = PasswordGroupId("mockedPasswordGroupId$index"),
@@ -63,7 +63,7 @@ class LocalGetAllPasswordGroupUseCaseQueryServiceTest {
         val notTargetMockedPasswordGroups = List(5) { index ->
             PasswordGroup(
                 id = PasswordGroupId("notTargetMockedPasswordGroupId$index"),
-                email = Email("notTargetMockedEmail$index"),
+                email = UserId("notTargetMockedEmail$index"),
                 title = Title("notTargetMockedTitle$index"),
                 remark = Remark("notTargetMockedRemark$index"),
             )

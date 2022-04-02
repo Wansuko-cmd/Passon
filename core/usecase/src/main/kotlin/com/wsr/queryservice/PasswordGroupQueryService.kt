@@ -2,10 +2,10 @@ package com.wsr.queryservice
 
 import com.wsr.PasswordGroupUseCaseModel
 import com.wsr.maybe.Maybe
-import com.wsr.user.Email
+import com.wsr.user.UserId
 
 interface PasswordGroupQueryService {
-    suspend fun getAll(email: Email): Maybe<List<PasswordGroupUseCaseModel>, PasswordGroupQueryServiceException>
+    suspend fun getAll(email: UserId): Maybe<List<PasswordGroupUseCaseModel>, PasswordGroupQueryServiceException>
 }
 
 sealed class PasswordGroupQueryServiceException : Throwable() {

@@ -3,7 +3,8 @@ package com.wsr.user
 import java.security.MessageDigest
 
 data class User(
-    val email: Email,
+    val userId: UserId,
+    val databasePath: DatabasePath,
     val loginPassword: LoginPassword.HashedLoginPassword,
 ) {
     fun shouldPass(password: LoginPassword) = when (password) {
@@ -16,7 +17,10 @@ data class User(
 }
 
 @JvmInline
-value class Email(val value: String)
+value class UserId(val value: String)
+
+@JvmInline
+value class DatabasePath(val value: String)
 
 sealed class LoginPassword private constructor(val value: String) {
     class PlainLoginPassword(value: String) : LoginPassword(value) {

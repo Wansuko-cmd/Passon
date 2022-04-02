@@ -8,7 +8,7 @@ import com.wsr.passwordgroup.PasswordGroupFactory
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.Title
 import com.wsr.toUseCaseModel
-import com.wsr.user.Email
+import com.wsr.user.UserId
 
 class CreatePasswordGroupUseCaseImpl(
     private val passwordGroupRepository: PasswordGroupRepository,
@@ -21,7 +21,7 @@ class CreatePasswordGroupUseCaseImpl(
         title: String,
     ): Maybe<PasswordGroupUseCaseModel, CreatePasswordGroupUseCaseException> {
         val passwordGroup = passwordGroupFactory.create(
-            email = Email(email),
+            email = UserId(email),
             title = Title(title),
         )
         return passwordGroupRepository.create(passwordGroup).mapBoth(

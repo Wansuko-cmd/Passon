@@ -13,7 +13,7 @@ import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
-import com.wsr.user.Email
+import com.wsr.user.UserId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.runner.RunWith
@@ -45,7 +45,7 @@ class LocalPasswordGroupRepositoryCreateTest {
     /*** create関数 ***/
     @Test
     fun 新しいPasswordGroupの情報を渡せば登録する() = runTest {
-        val mockedEmail = Email("mockedEmail")
+        val mockedEmail = UserId("mockedEmail")
         val mockedPasswordGroup = PasswordGroup(
             id = PasswordGroupId("mockedPasswordGroupId"),
             email = mockedEmail,

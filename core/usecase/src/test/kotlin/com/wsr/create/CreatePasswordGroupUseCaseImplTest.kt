@@ -11,7 +11,7 @@ import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
 import com.wsr.toUseCaseModel
-import com.wsr.user.Email
+import com.wsr.user.UserId
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -46,7 +46,7 @@ class CreatePasswordGroupUseCaseImplTest {
         every { UUID.randomUUID().toString() } returns uuid
 
         val mockedPasswordGroupId = PasswordGroupId(uuid)
-        val mockedEmail = Email("mockedEmail")
+        val mockedEmail = UserId("mockedEmail")
         val mockedTitle = Title("mockedTitle")
         val mockedRemark = Remark("")
         val mockedPasswordGroup = PasswordGroup(
@@ -72,7 +72,7 @@ class CreatePasswordGroupUseCaseImplTest {
 
     @Test
     fun 作成するときにエラーが起きればその内容を返す() = runTest {
-        val mockedEmail = Email("mockedEmail")
+        val mockedEmail = UserId("mockedEmail")
         val mockedTitle = "mockTitle"
 
         coEvery { passwordGroupRepository.create(any()) } returns Maybe.Failure(CreateDataFailedException.DatabaseError())

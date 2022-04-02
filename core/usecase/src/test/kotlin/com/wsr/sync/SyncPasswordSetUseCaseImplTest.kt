@@ -15,7 +15,7 @@ import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
 import com.wsr.passworditem.PasswordItemRepository
 import com.wsr.toUseCaseModel
-import com.wsr.user.Email
+import com.wsr.user.UserId
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -58,7 +58,7 @@ class SyncPasswordSetUseCaseImplTest {
 
         val updatedMockedPasswordGroup = PasswordGroup(
             id = mockedPasswordGroupId,
-            email = Email("updatedMockedEmail"),
+            email = UserId("updatedMockedEmail"),
             title = Title("updatedMockedTitle"),
             remark = Remark("updatedMockedRemark"),
         )

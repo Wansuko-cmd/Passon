@@ -24,7 +24,7 @@ import com.wsr.passworditem.Password
 import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
 import com.wsr.toUseCaseModel
-import com.wsr.user.Email
+import com.wsr.user.UserId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.runner.RunWith
@@ -61,7 +61,7 @@ class LocalGetPasswordPairUseCaseQueryServiceImplTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
         val mockedPasswordGroup = PasswordGroup(
             id = mockedPasswordGroupId,
-            email = Email("mockedEmail"),
+            email = UserId("mockedEmail"),
             title = Title("mockedTitle"),
             remark = Remark("mockedRemark"),
         )
@@ -69,7 +69,7 @@ class LocalGetPasswordPairUseCaseQueryServiceImplTest {
         val notTargetMockedPasswordGroups = List(5) { index ->
             PasswordGroup(
                 id = PasswordGroupId("notTargetMockedPasswordGroupId$index"),
-                email = Email("notTargetMockedEmail$index"),
+                email = UserId("notTargetMockedEmail$index"),
                 title = Title("notTargetMockedTitle$index"),
                 remark = Remark("notTargetMockedRemark$index"),
             )

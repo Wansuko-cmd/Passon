@@ -1,10 +1,10 @@
 package com.wsr.passwordgroup
 
-import com.wsr.user.Email
+import com.wsr.user.UserId
 
 data class PasswordGroup(
     val id: PasswordGroupId,
-    val email: Email,
+    val email: UserId,
     val title: Title,
     val remark: Remark,
 )

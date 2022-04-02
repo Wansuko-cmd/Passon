@@ -7,10 +7,10 @@ import com.wsr.maybe.sequence
 import com.wsr.queryservice.PasswordGroupQueryService
 import com.wsr.queryservice.PasswordGroupQueryServiceException
 import com.wsr.toUseCaseModel
-import com.wsr.user.Email
+import com.wsr.user.UserId
 
 class LocalPasswordGroupQueryServiceImpl(private val passwordGroupEntityDao: PasswordGroupEntityDao) : PasswordGroupQueryService{
-    override suspend fun getAll(email: Email): Maybe<List<PasswordGroupUseCaseModel>, PasswordGroupQueryServiceException> = try {
+    override suspend fun getAll(email: UserId): Maybe<List<PasswordGroupUseCaseModel>, PasswordGroupQueryServiceException> = try {
         passwordGroupEntityDao
             .getAllByEmail(email.value)
             .map { it.toPasswordGroup() }

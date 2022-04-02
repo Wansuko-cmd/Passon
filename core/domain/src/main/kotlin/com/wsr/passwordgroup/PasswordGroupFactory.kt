@@ -1,11 +1,11 @@
 package com.wsr.passwordgroup
 
-import com.wsr.user.Email
+import com.wsr.user.UserId
 import java.util.UUID
 
 class PasswordGroupFactory {
     fun create(
-        email: Email,
+        email: UserId,
         title: Title = Title(""),
         remark: Remark = Remark(""),
     ): PasswordGroup {

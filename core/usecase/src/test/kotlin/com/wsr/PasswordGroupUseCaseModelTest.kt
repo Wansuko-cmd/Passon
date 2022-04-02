@@ -7,7 +7,7 @@ import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
-import com.wsr.user.Email
+import com.wsr.user.UserId
 import kotlin.test.Test
 
 class PasswordGroupUseCaseModelTest {
@@ -16,7 +16,7 @@ class PasswordGroupUseCaseModelTest {
     @Test
     fun PasswordGroupから実行すれば対応するUseCaseModelに変換して返す() {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
-        val mockedEmail = Email("mockedEmail")
+        val mockedEmail = UserId("mockedEmail")
         val mockedTitle = Title("mockedTitle")
         val mockedRemark = Remark("mockedRemark")
 

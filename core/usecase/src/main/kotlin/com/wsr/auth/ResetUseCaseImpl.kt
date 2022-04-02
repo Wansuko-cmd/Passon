@@ -5,7 +5,7 @@ import com.wsr.maybe.Maybe
 import com.wsr.maybe.mapFailure
 import com.wsr.queryservice.UserQueryService
 import com.wsr.queryservice.UserQueryServiceException
-import com.wsr.user.Email
+import com.wsr.user.UserId
 import com.wsr.user.LoginPassword
 import com.wsr.user.User
 import com.wsr.user.UserRepository
@@ -19,7 +19,7 @@ class ResetUseCaseImpl(
         email: String,
         currentPassword: String,
         newPassword: String,
-    ): Maybe<Unit, ResetUseCaseException> = userQueryService.get(Email(email))
+    ): Maybe<Unit, ResetUseCaseException> = userQueryService.get(UserId(email))
         .mapFailure { it.toResetUseCaseException() }
         .checkCurrentPassword(currentPassword)
         .updatePassword(newPassword)

@@ -13,7 +13,7 @@ import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
-import com.wsr.user.Email
+import com.wsr.user.UserId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.runner.RunWith
@@ -48,7 +48,7 @@ class LocalPasswordGroupRepositoryUpdateTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
         val mockedPasswordGroup = PasswordGroup(
             id = mockedPasswordGroupId,
-            email = Email("mockedEmail"),
+            email = UserId("mockedEmail"),
             title = Title("mockedTitle"),
             remark = Remark("mockedRemark"),
         )

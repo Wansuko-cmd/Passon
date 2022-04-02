@@ -7,7 +7,7 @@ import com.wsr.passwordgroup.PasswordGroup
 import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
-import com.wsr.user.Email
+import com.wsr.user.UserId
 
 @Entity(tableName = "password_groups")
 data class PasswordGroupEntity(
@@ -21,7 +21,7 @@ data class PasswordGroupEntity(
 
     fun toPasswordGroup() = PasswordGroup(
         id = PasswordGroupId(id),
-        email = Email(email),
+        email = UserId(email),
         title = Title(title),
         remark = Remark(remark),
     )

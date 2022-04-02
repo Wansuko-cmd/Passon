@@ -4,7 +4,7 @@ import com.wsr.maybe.Maybe
 import com.wsr.maybe.mapBoth
 import com.wsr.queryservice.UserQueryService
 import com.wsr.queryservice.UserQueryServiceException
-import com.wsr.user.Email
+import com.wsr.user.UserId
 import com.wsr.user.LoginPassword
 
 class LoginUseCaseImpl(
@@ -15,7 +15,7 @@ class LoginUseCaseImpl(
         email: String,
         password: String,
     ): Maybe<Boolean, LoginUseCaseException> = try {
-        userQueryService.get(Email(email)).mapBoth(
+        userQueryService.get(UserId(email)).mapBoth(
             success = { user -> user.shouldPass(LoginPassword.PlainLoginPassword(password)) },
             failure = { it.toLoginUseCaseException() }
         )
