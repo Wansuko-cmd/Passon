@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.wsr.R
 import com.wsr.databinding.FragmentIndexBinding
 import com.wsr.ext.launchInLifecycleScope
@@ -23,7 +24,8 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
 
     private val indexViewModel: IndexViewModel by sharedViewModel(owner = { from(this) })
 
-    private val email by lazy { "example1@gmail.com" }
+    private val args: IndexFragmentArgs by navArgs()
+    private val userId by lazy { args.userId }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.index_menu, menu)
@@ -46,7 +48,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
             setDisplayHomeAsUpEnabled(false)
         }
 
-        indexViewModel.fetch(email)
+        indexViewModel.fetch(userId)
 
         val indexEpoxyController = IndexEpoxyController(
             onClick = ::navigateToShow,
@@ -60,7 +62,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
 
         binding.indexFragmentFab.setOnClickListener {
             showDialogIfNotDrawn(tag) {
-                IndexCreatePasswordGroupDialogFragment.create(email)
+                IndexCreatePasswordGroupDialogFragment.create(userId)
             }
         }
 
@@ -75,7 +77,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
-            indexViewModel.indexRefreshEvent.collect { indexViewModel.fetch(email) }
+            indexViewModel.indexRefreshEvent.collect { indexViewModel.fetch(userId) }
         }
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             indexViewModel.navigateToEditEvent.collect { navigateToEdit(it) }

@@ -106,7 +106,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         .show()
 
     private fun navigateToIndex() {
-        val action = LoginFragmentDirections.actionLoginFragmentToIndexFragment()
+        val action = LoginFragmentDirections.actionLoginFragmentToIndexFragment("")
         findNavController().navigate(action)
     }
 

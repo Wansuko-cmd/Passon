@@ -44,7 +44,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     }
 
     private fun navigateToIndex() {
-        val action = SignUpFragmentDirections.actionSignUpFragmentToIndexFragment()
+        val action = SignUpFragmentDirections.actionSignUpFragmentToIndexFragment("")
         findNavController().navigate(action)
     }
 }
