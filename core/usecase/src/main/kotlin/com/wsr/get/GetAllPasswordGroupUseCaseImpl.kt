@@ -1,7 +1,6 @@
 package com.wsr.get
 
 import com.wsr.maybe.mapBoth
-import com.wsr.maybe.mapFailure
 import com.wsr.queryservice.PasswordGroupQueryService
 import com.wsr.queryservice.PasswordGroupQueryServiceException
 import com.wsr.toUseCaseModel

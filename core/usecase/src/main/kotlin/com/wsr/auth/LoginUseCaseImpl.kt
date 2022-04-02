@@ -20,9 +20,9 @@ class LoginUseCaseImpl(
             failure = { it.toLoginUseCaseException() }
         )
 
-        when(check) {
+        when (check) {
             is Maybe.Success ->
-                if(check.value) Maybe.Success(Unit)
+                if (check.value) Maybe.Success(Unit)
                 else Maybe.Failure(LoginUseCaseException.AuthenticationException(""))
             is Maybe.Failure -> check
         }

@@ -14,7 +14,7 @@ class GetAllUserUseCaseImpl(private val userQueryService: UserQueryService) : Ge
             failure = { it.toGetAllUserUseCaseException() }
         )
 
-    private fun UserQueryServiceException.toGetAllUserUseCaseException() = when(this) {
+    private fun UserQueryServiceException.toGetAllUserUseCaseException() = when (this) {
         is UserQueryServiceException.NoSuchUserException ->
             GetAllUserUseCaseException.SystemError(
                 message = this.message,
