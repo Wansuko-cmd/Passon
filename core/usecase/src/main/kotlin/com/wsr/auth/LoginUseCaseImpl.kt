@@ -14,11 +14,18 @@ class LoginUseCaseImpl(
     override suspend fun shouldPass(
         userId: String,
         password: String,
-    ): Maybe<Boolean, LoginUseCaseException> = try {
-        userQueryService.get(UserId(userId)).mapBoth(
+    ): Maybe<Unit, LoginUseCaseException> = try {
+        val check = userQueryService.get(UserId(userId)).mapBoth(
             success = { user -> user.shouldPass(LoginPassword.PlainLoginPassword(password)) },
             failure = { it.toLoginUseCaseException() }
         )
+
+        when(check) {
+            is Maybe.Success ->
+                if(check.value) Maybe.Success(Unit)
+                else Maybe.Failure(LoginUseCaseException.AuthenticationException(""))
+            is Maybe.Failure -> check
+        }
     } catch (e: LoginUseCaseException) {
         Maybe.Failure(e)
     }

@@ -29,7 +29,7 @@ class ResetUseCaseImpl(
     ): Maybe<User, ResetUseCaseException> = when (this) {
         is Maybe.Success ->
             if (value.shouldPass(LoginPassword.PlainLoginPassword(currentPassword))) this
-            else Maybe.Failure(ResetUseCaseException.AuthenticationFailedException(""))
+            else Maybe.Failure(ResetUseCaseException.AuthenticationException(""))
         is Maybe.Failure -> this
     }
 
