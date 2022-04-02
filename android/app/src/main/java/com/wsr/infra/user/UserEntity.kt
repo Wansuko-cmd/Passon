@@ -18,7 +18,7 @@ data class UserEntity(
 ) {
 
     fun toUser() = User(
-        userId = UserId(userId),
+        id = UserId(userId),
         displayName = DisplayName(displayName),
         databasePath = DatabasePath(databasePath),
         loginPassword = LoginPassword.HashedLoginPassword(loginPassword)
@@ -26,7 +26,7 @@ data class UserEntity(
 }
 
 fun User.toEntity() = UserEntity(
-    userId = userId.value,
+    userId = id.value,
     displayName = displayName.value,
     databasePath = databasePath.value,
     loginPassword = loginPassword.value,

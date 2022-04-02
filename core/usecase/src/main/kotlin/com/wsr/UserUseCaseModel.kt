@@ -9,7 +9,7 @@ data class UserUseCaseModel(
 )
 
 fun User.toUseCaseModel() = UserUseCaseModel(
-    id = this.userId.value,
+    id = this.id.value,
     displayName = this.displayName.value,
     databasePath = this.databasePath.value
 )

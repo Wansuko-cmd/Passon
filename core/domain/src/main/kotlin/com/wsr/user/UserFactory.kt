@@ -9,7 +9,7 @@ class UserFactory {
         databasePath: DatabasePath,
         loginPassword: LoginPassword.PlainLoginPassword,
     ): User = User(
-        userId = userId,
+        id = userId,
         displayName = displayName,
         databasePath = databasePath,
         loginPassword = loginPassword.toHashed(),
@@ -22,7 +22,7 @@ class UserFactory {
     ): User {
         val userId = UserId(UUID.randomUUID().toString())
         return User(
-            userId = userId,
+            id = userId,
             displayName = displayName,
             databasePath = databasePath,
             loginPassword = loginPassword.toHashed(),

@@ -3,7 +3,7 @@ package com.wsr.user
 import java.security.MessageDigest
 
 data class User(
-    val userId: UserId,
+    val id: UserId,
     val displayName: DisplayName,
     val databasePath: DatabasePath,
     val loginPassword: LoginPassword.HashedLoginPassword,
