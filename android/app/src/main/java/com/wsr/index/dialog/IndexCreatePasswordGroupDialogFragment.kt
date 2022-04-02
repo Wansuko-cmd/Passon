@@ -24,14 +24,14 @@ class IndexCreatePasswordGroupDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        val email = arguments?.getString("email")
-            ?: throw NoSuchElementException("email does not exist in bundle at IndexCreatePasswordGroupDialogFragment")
+        val userId = arguments?.getString("userId")
+            ?: throw NoSuchElementException("userId does not exist in bundle at IndexCreatePasswordGroupDialogFragment")
 
         binding =
             DialogIndexCreatePasswordGroupBinding.inflate(requireActivity().layoutInflater).apply {
                 dialogIndexCreatePasswordGroupSubmitButton.setOnClickListener {
                     indexViewModel.createPasswordGroup(
-                        email,
+                        userId,
                         dialogIndexCreatePasswordGroupEditText.text.toString(),
                         indexCreatePasswordGroupDialogViewModel.shouldNavigateToEdit.value,
                     )
@@ -59,10 +59,10 @@ class IndexCreatePasswordGroupDialogFragment : DialogFragment() {
     }
 
     companion object {
-        fun create(email: String): IndexCreatePasswordGroupDialogFragment {
+        fun create(userId: String): IndexCreatePasswordGroupDialogFragment {
             return IndexCreatePasswordGroupDialogFragment().apply {
                 val bundle = Bundle()
-                bundle.putString("email", email)
+                bundle.putString("userId", userId)
                 arguments = bundle
             }
         }

@@ -5,7 +5,7 @@ import com.wsr.maybe.Maybe
 
 interface CreatePasswordGroupUseCase {
     suspend fun create(
-        email: String,
+        userId: String,
         title: String,
     ): Maybe<PasswordGroupUseCaseModel, CreatePasswordGroupUseCaseException>
 }

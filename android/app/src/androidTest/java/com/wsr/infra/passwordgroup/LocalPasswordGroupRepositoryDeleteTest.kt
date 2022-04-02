@@ -48,7 +48,7 @@ class LocalPasswordGroupRepositoryDeleteTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
         val mockedPasswordGroup = PasswordGroup(
             id = mockedPasswordGroupId,
-            email = UserId("mockedEmail"),
+            userId = UserId("mockedEmail"),
             title = Title("mockedTitle"),
             remark = Remark("mockedRemark"),
         )

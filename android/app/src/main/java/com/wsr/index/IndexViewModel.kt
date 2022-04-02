@@ -28,14 +28,14 @@ class IndexViewModel(
     private val _navigateToEditEvent = MutableSharedFlow<String>()
     val navigateToEditEvent = _navigateToEditEvent.asSharedFlow()
 
-    fun fetch(email: String) {
+    fun fetch(userId: String) {
         viewModelScope.launch { _uiState.emit(IndexUiState()) }
-        fetchPasswordGroups(email)
+        fetchPasswordGroups(userId)
     }
 
-    private fun fetchPasswordGroups(email: String) {
+    private fun fetchPasswordGroups(userId: String) {
         viewModelScope.launch {
-            getAllPasswordGroupUseCase.get(email)
+            getAllPasswordGroupUseCase.get(userId)
                 .mapBoth(
                     success = { list -> list.map { it.toIndexUiState() } },
                     failure = { ErrorIndexUiState(it.message ?: "") },
@@ -45,9 +45,9 @@ class IndexViewModel(
         }
     }
 
-    fun createPasswordGroup(email: String, title: String, shouldNavigateToEdit: Boolean) {
+    fun createPasswordGroup(userId: String, title: String, shouldNavigateToEdit: Boolean) {
         viewModelScope.launch {
-            createPasswordGroupUseCase.create(email, title)
+            createPasswordGroupUseCase.create(userId, title)
                 .asState()
                 .consume(
                     success = {

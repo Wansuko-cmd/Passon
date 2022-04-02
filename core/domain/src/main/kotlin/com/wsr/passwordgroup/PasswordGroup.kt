@@ -4,7 +4,7 @@ import com.wsr.user.UserId
 
 data class PasswordGroup(
     val id: PasswordGroupId,
-    val email: UserId,
+    val userId: UserId,
     val title: Title,
     val remark: Remark,
 )

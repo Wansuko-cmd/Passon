@@ -58,7 +58,7 @@ class SyncPasswordSetUseCaseImplTest {
 
         val updatedMockedPasswordGroup = PasswordGroup(
             id = mockedPasswordGroupId,
-            email = UserId("updatedMockedEmail"),
+            userId = UserId("updatedMockedEmail"),
             title = Title("updatedMockedTitle"),
             remark = Remark("updatedMockedRemark"),
         )

@@ -7,7 +7,7 @@ import com.wsr.user.User
 import com.wsr.user.UserId
 
 class LocalUserQueryServiceImpl : UserQueryService {
-    override suspend fun get(email: UserId): Maybe<User, UserQueryServiceException> {
+    override suspend fun get(userId: UserId): Maybe<User, UserQueryServiceException> {
         TODO("Not yet implemented")
     }
 }

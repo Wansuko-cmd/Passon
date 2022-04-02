@@ -12,10 +12,10 @@ class LoginUseCaseImpl(
 ) : LoginUseCase {
 
     override suspend fun shouldPass(
-        email: String,
+        userId: String,
         password: String,
     ): Maybe<Boolean, LoginUseCaseException> = try {
-        userQueryService.get(UserId(email)).mapBoth(
+        userQueryService.get(UserId(userId)).mapBoth(
             success = { user -> user.shouldPass(LoginPassword.PlainLoginPassword(password)) },
             failure = { it.toLoginUseCaseException() }
         )

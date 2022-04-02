@@ -17,11 +17,11 @@ class CreatePasswordGroupUseCaseImpl(
     private val passwordGroupFactory = PasswordGroupFactory()
 
     override suspend fun create(
-        email: String,
+        userId: String,
         title: String,
     ): Maybe<PasswordGroupUseCaseModel, CreatePasswordGroupUseCaseException> {
         val passwordGroup = passwordGroupFactory.create(
-            email = UserId(email),
+            userId = UserId(userId),
             title = Title(title),
         )
         return passwordGroupRepository.create(passwordGroup).mapBoth(

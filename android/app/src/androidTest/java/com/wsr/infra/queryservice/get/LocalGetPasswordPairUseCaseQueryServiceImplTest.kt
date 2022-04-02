@@ -61,7 +61,7 @@ class LocalGetPasswordPairUseCaseQueryServiceImplTest {
         val mockedPasswordGroupId = PasswordGroupId("mockedPasswordGroupId")
         val mockedPasswordGroup = PasswordGroup(
             id = mockedPasswordGroupId,
-            email = UserId("mockedEmail"),
+            userId = UserId("mockedEmail"),
             title = Title("mockedTitle"),
             remark = Remark("mockedRemark"),
         )
@@ -69,7 +69,7 @@ class LocalGetPasswordPairUseCaseQueryServiceImplTest {
         val notTargetMockedPasswordGroups = List(5) { index ->
             PasswordGroup(
                 id = PasswordGroupId("notTargetMockedPasswordGroupId$index"),
-                email = UserId("notTargetMockedEmail$index"),
+                userId = UserId("notTargetMockedEmail$index"),
                 title = Title("notTargetMockedTitle$index"),
                 remark = Remark("notTargetMockedRemark$index"),
             )

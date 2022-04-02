@@ -9,9 +9,9 @@ class GetAllPasswordGroupUseCaseImpl(
     private val passwordGroupQueryService: PasswordGroupQueryService,
 ) : GetAllPasswordGroupUseCase {
 
-    override suspend fun get(email: String) =
+    override suspend fun get(userId: String) =
         passwordGroupQueryService
-            .getAll(UserId(email))
+            .getAll(UserId(userId))
             .mapFailure { it.toGetAllPasswordGroupUseCaseException() }
 
     private fun PasswordGroupQueryServiceException.toGetAllPasswordGroupUseCaseException() = when (this) {

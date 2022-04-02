@@ -5,7 +5,7 @@ import com.wsr.maybe.Maybe
 import com.wsr.user.UserId
 
 interface PasswordGroupQueryService {
-    suspend fun getAll(email: UserId): Maybe<List<PasswordGroupUseCaseModel>, PasswordGroupQueryServiceException>
+    suspend fun getAll(userId: UserId): Maybe<List<PasswordGroupUseCaseModel>, PasswordGroupQueryServiceException>
 }
 
 sealed class PasswordGroupQueryServiceException : Throwable() {

@@ -24,12 +24,12 @@ class GetAllPasswordGroupUseCaseImplTest {
 
     /*** fetch関数 ***/
     @Test
-    fun emailを渡すと所属する全てのPasswordGroupを返す() = runTest {
+    fun userIdを渡すと所属する全てのPasswordGroupを返す() = runTest {
 //        val mockedEmail = Email("mockedEmail")
 //        val mockedPasswordGroups = List(5) { index ->
 //            PasswordGroup(
 //                id = PasswordGroupId("mockedPasswordGroupId$index"),
-//                email = mockedEmail,
+//                userId = mockedEmail,
 //                title = Title("mockedTitle$index"),
 //                remark = Remark("mockedRemark$index"),
 //            )

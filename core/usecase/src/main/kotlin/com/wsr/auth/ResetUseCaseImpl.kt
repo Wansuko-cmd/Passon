@@ -16,10 +16,10 @@ class ResetUseCaseImpl(
 ) : ResetUseCase {
 
     override suspend fun reset(
-        email: String,
+        userId: String,
         currentPassword: String,
         newPassword: String,
-    ): Maybe<Unit, ResetUseCaseException> = userQueryService.get(UserId(email))
+    ): Maybe<Unit, ResetUseCaseException> = userQueryService.get(UserId(userId))
         .mapFailure { it.toResetUseCaseException() }
         .checkCurrentPassword(currentPassword)
         .updatePassword(newPassword)

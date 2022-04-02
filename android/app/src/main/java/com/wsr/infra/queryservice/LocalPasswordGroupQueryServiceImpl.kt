@@ -10,9 +10,9 @@ import com.wsr.toUseCaseModel
 import com.wsr.user.UserId
 
 class LocalPasswordGroupQueryServiceImpl(private val passwordGroupEntityDao: PasswordGroupEntityDao) : PasswordGroupQueryService {
-    override suspend fun getAll(email: UserId): Maybe<List<PasswordGroupUseCaseModel>, PasswordGroupQueryServiceException> = try {
+    override suspend fun getAll(userId: UserId): Maybe<List<PasswordGroupUseCaseModel>, PasswordGroupQueryServiceException> = try {
         passwordGroupEntityDao
-            .getAllByEmail(email.value)
+            .getAllByEmail(userId.value)
             .map { it.toPasswordGroup() }
             .map { it.toUseCaseModel() }
             .map { Maybe.Success(it) }

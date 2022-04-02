@@ -4,7 +4,7 @@ import com.wsr.PasswordGroupUseCaseModel
 import com.wsr.maybe.Maybe
 
 interface GetAllPasswordGroupUseCase {
-    suspend fun get(email: String): Maybe<List<PasswordGroupUseCaseModel>, GetAllPasswordGroupUseCaseException>
+    suspend fun get(userId: String): Maybe<List<PasswordGroupUseCaseModel>, GetAllPasswordGroupUseCaseException>
 }
 
 sealed class GetAllPasswordGroupUseCaseException : Throwable() {

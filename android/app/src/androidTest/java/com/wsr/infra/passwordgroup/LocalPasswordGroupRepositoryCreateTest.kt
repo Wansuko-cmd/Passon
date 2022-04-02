@@ -48,7 +48,7 @@ class LocalPasswordGroupRepositoryCreateTest {
         val mockedEmail = UserId("mockedEmail")
         val mockedPasswordGroup = PasswordGroup(
             id = PasswordGroupId("mockedPasswordGroupId"),
-            email = mockedEmail,
+            userId = mockedEmail,
             title = Title("mockedTitle"),
             remark = Remark("mockedRemark"),
         )

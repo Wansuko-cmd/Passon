@@ -22,13 +22,13 @@ class PasswordGroupUseCaseModelTest {
 
         val actual = PasswordGroup(
             id = mockedPasswordGroupId,
-            email = mockedEmail,
+            userId = mockedEmail,
             title = mockedTitle,
             remark = mockedRemark,
         ).toUseCaseModel()
         val expected = PasswordGroupUseCaseModel(
             id = mockedPasswordGroupId.value,
-            email = mockedEmail.value,
+            userId = mockedEmail.value,
             title = mockedTitle.value,
             remark = mockedRemark.value,
         )

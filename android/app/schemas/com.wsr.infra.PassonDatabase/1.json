@@ -44,7 +44,7 @@
       },
       {
         "tableName": "password_groups",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `email` TEXT NOT NULL, `title` TEXT NOT NULL, `remark` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `userId` TEXT NOT NULL, `title` TEXT NOT NULL, `remark` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -53,8 +53,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "email",
-            "columnName": "email",
+            "fieldPath": "userId",
+            "columnName": "userId",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -82,11 +82,11 @@
       },
       {
         "tableName": "user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`email` TEXT NOT NULL, `display_name` TEXT NOT NULL, `database_path` TEXT NOT NULL, `login_password` TEXT NOT NULL, PRIMARY KEY(`email`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `display_name` TEXT NOT NULL, `database_path` TEXT NOT NULL, `login_password` TEXT NOT NULL, PRIMARY KEY(`userId`))",
         "fields": [
           {
-            "fieldPath": "email",
-            "columnName": "email",
+            "fieldPath": "userId",
+            "columnName": "userId",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -111,7 +111,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "email"
+            "userId"
           ],
           "autoGenerate": false
         },

@@ -5,27 +5,27 @@ package com.wsr.passwordgroup
 //    companion object {
 //        internal val data = mutableListOf(
 //            PasswordGroup.of(
-//                email = Email.from("email@example.com"),
+//                userId = Email.from("userId@example.com"),
 //                title = "Title1-1",
 //                remark = "Remark1-1"
 //            ),
 //            PasswordGroup.of(
-//                email = Email.from("email@example.com"),
+//                userId = Email.from("userId@example.com"),
 //                title = "Title1-2",
 //                remark = "Remark1-2"
 //            ),
 //            PasswordGroup.of(
-//                email = Email.from("email@example.com"),
+//                userId = Email.from("userId@example.com"),
 //                title = "Title1-3",
 //                remark = "Remark1-3"
 //            ),
 //            PasswordGroup.of(
-//                email = Email.from("email@example.com"),
+//                userId = Email.from("userId@example.com"),
 //                title = "Title2-1",
 //                remark = "Remark2-1"
 //            ),
 //            PasswordGroup.of(
-//                email = Email.from("email@example.com"),
+//                userId = Email.from("userId@example.com"),
 //                title = "Title3-1",
 //                remark = "Remark3-1"
 //            ),
@@ -33,8 +33,8 @@ package com.wsr.passwordgroup
 //    }
 //
 //    @Throws(GetAllDataFailedException::class)
-//    override suspend fun getAllByEmail(email: Email): List<PasswordGroup> =
-//        data.filter { it.email == email }
+//    override suspend fun getAllByEmail(userId: Email): List<PasswordGroup> =
+//        data.filter { it.userId == userId }
 //
 //    @Throws(GetDataFailedException::class)
 //    override suspend fun getById(id: PasswordGroupId): PasswordGroup =

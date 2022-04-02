@@ -31,7 +31,7 @@ class GetPasswordPairUseCaseImplTest {
 //        val mockedRemark = Remark("mockedRemark")
 //        val mockedPasswordGroup = PasswordGroup(
 //            id = mockedPasswordGroupId,
-//            email = mockedEmail,
+//            userId = mockedEmail,
 //            title = mockedTitle,
 //            remark = mockedRemark,
 //        )

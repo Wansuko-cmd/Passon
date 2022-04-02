@@ -5,7 +5,7 @@ import com.wsr.user.User
 import com.wsr.user.UserId
 
 interface UserQueryService {
-    suspend fun get(email: UserId): Maybe<User, UserQueryServiceException>
+    suspend fun get(userId: UserId): Maybe<User, UserQueryServiceException>
 }
 
 sealed class UserQueryServiceException : Throwable() {

@@ -12,7 +12,7 @@ import com.wsr.user.UserId
 @Entity(tableName = "password_groups")
 data class PasswordGroupEntity(
     @PrimaryKey val id: String,
-    @ColumnInfo(name = "email") val email: String,
+    @ColumnInfo(name = "user_id") val userId: String,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "remark") val remark: String,
 ) {
@@ -21,7 +21,7 @@ data class PasswordGroupEntity(
 
     fun toPasswordGroup() = PasswordGroup(
         id = PasswordGroupId(id),
-        email = UserId(email),
+        userId = UserId(userId),
         title = Title(title),
         remark = Remark(remark),
     )
@@ -29,7 +29,7 @@ data class PasswordGroupEntity(
 
 fun PasswordGroup.toEntity() = PasswordGroupEntity(
     id = id.value,
-    email = email.value,
+    userId = userId.value,
     title = title.value,
     remark = remark.value,
 )
