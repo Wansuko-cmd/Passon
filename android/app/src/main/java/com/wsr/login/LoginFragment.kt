@@ -23,15 +23,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val binding = FragmentLoginBinding.bind(view)
-
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
-        binding.afterTextChanged = AfterTextChanged(loginViewModel::updateEnteredPassword)
-
-        binding.loginFragmentPassword.onEnterClicked(loginViewModel::checkPassword)
-        binding.loginFragmentNextButton.setOnClickListener { loginViewModel.checkPassword() }
+        val binding = FragmentLoginBinding.bind(view).apply {
+            afterTextChanged = AfterTextChanged(loginViewModel::updateEnteredPassword)
+            loginFragmentPassword.onEnterClicked(loginViewModel::checkPassword)
+            loginFragmentNextButton.setOnClickListener { loginViewModel.checkPassword() }
+            loginFragmentSignUpButton.setOnClickListener { navigateToSignUp() }
+        }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             loginViewModel.checkPasswordEvent.collect {
@@ -110,6 +109,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun navigateToIndex() {
         val action = LoginFragmentDirections.actionLoginFragmentToIndexFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToSignUp() {
+        val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
         findNavController().navigate(action)
     }
 }
