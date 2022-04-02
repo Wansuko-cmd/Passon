@@ -16,6 +16,8 @@ import com.wsr.delete.DeletePasswordGroupUseCaseImpl
 import com.wsr.edit.EditViewModel
 import com.wsr.get.GetAllPasswordGroupUseCase
 import com.wsr.get.GetAllPasswordGroupUseCaseImpl
+import com.wsr.get.GetAllUserUseCase
+import com.wsr.get.GetAllUserUseCaseImpl
 import com.wsr.get.GetPasswordPairUseCase
 import com.wsr.get.GetPasswordPairUseCaseImpl
 import com.wsr.index.IndexViewModel
@@ -68,6 +70,7 @@ val module = module {
     single<DeletePasswordGroupUseCase> { DeletePasswordGroupUseCaseImpl(get()) }
 
     // get
+    single<GetAllUserUseCase> { GetAllUserUseCaseImpl(get()) }
     single<GetAllPasswordGroupUseCase> { GetAllPasswordGroupUseCaseImpl(get()) }
     single<GetPasswordPairUseCase> { GetPasswordPairUseCaseImpl(get()) }
 
@@ -84,7 +87,7 @@ val module = module {
     single<PasswordGroupQueryService> { LocalPasswordGroupQueryServiceImpl(get()) }
     single<PasswordItemQueryService> { LocalPasswordItemQueryServiceImpl(get()) }
     single<PasswordPairQueryService> { LocalPasswordPairQueryServiceImpl(get(), get()) }
-    single<UserQueryService> { LocalUserQueryServiceImpl() }
+    single<UserQueryService> { LocalUserQueryServiceImpl(get()) }
 
     /*** Repository ***/
     single<PasswordGroupRepository> { LocalPasswordGroupRepositoryImpl(get()) }
