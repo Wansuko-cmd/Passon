@@ -12,7 +12,7 @@ data class UserLoginUiState(
     fun copyWithIsSelected(isSelected: Boolean) = this.copy(isSelected = isSelected)
 }
 
-fun List<UserLoginUiState>.getSelected() = this.first { it.isSelected }
+fun List<UserLoginUiState>.getSelected() = this.firstOrNull() { it.isSelected }
 
 fun List<UserLoginUiState>.copyWithSelected(userId: String) =
     if (this.map { it.id }.contains(userId)) this.map { it.copyWithIsSelected(it.id == userId) }

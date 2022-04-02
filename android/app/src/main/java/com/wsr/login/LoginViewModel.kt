@@ -77,7 +77,7 @@ class LoginViewModel(
     fun checkPassword() {
         viewModelScope.launch {
             val user = _uiState.value.users.map { it.getSelected() }
-            if (user is State.Success) {
+            if (user is State.Success && user.value != null) {
                 loginUseCase.shouldPass(
                     userId = user.value.id,
                     password = _enteredPassword.value,
@@ -88,7 +88,7 @@ class LoginViewModel(
                     },
                     failure = { _shouldPassEvent.emit(false) }
                 )
-            }
+            } else _shouldPassEvent.emit(false)
         }
     }
 }
