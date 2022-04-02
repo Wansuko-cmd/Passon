@@ -17,6 +17,22 @@
             app:popUpToInclusive="true"
             app:exitAnim="@anim/slide_out_to_bottom"
             app:popEnterAnim="@anim/slide_in_from_bottom"/>
+        <action
+            android:id="@+id/action_login_fragment_to_sign_up_fragment"
+            app:destination="@id/sign_up_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/sign_up_fragment"
+        android:name="com.wsr.signup.SignUpFragment"
+        tools:layout="@layout/fragment_sign_up">
+
+        <action
+            android:id="@+id/action_sign_up_fragment_to_index_fragment"
+            app:destination="@id/index_fragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
