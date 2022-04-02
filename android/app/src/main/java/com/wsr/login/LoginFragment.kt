@@ -16,6 +16,7 @@ import com.wsr.databinding.FragmentLoginBinding
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.layout.AfterTextChanged
 import com.wsr.utils.consume
+import com.wsr.utils.map
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -55,7 +56,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
-            loginViewModel.checkPasswordEvent.collect { navigateToIndex() }
+            loginViewModel.navigateToIndex.collect { navigateToIndex(it) }
         }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
@@ -74,10 +75,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 binding.loginFragmentFingerPrintButton.setOnClickListener {
                     showBiometricAuthenticationDialog(
-                        success = {
-                            showMessage(getString(R.string.login_success_message))
-                            navigateToIndex()
-                        },
+                        success = { loginViewModel.passAuthentication() },
                         failure = { showMessage(getString(R.string.login_failure_message)) }
                     )
                 }
@@ -131,8 +129,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         .makeText(requireContext(), message, Toast.LENGTH_SHORT)
         .show()
 
-    private fun navigateToIndex() {
-        val action = LoginFragmentDirections.actionLoginFragmentToIndexFragment("")
+    private fun navigateToIndex(userId: String) {
+        val action = LoginFragmentDirections.actionLoginFragmentToIndexFragment(userId)
         findNavController().navigate(action)
     }
 

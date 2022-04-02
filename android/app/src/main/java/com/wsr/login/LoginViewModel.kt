@@ -28,11 +28,11 @@ class LoginViewModel(
 
     private val _enteredPassword = MutableStateFlow("")
 
-    private val _checkPasswordEvent = MutableSharedFlow<Boolean>(replay = 0)
-    val checkPasswordEvent = _checkPasswordEvent.asSharedFlow()
-
     private val _shouldPassEvent = MutableSharedFlow<Boolean>(replay = 0)
     val shouldPassEvent = _shouldPassEvent.asSharedFlow()
+
+    private val _navigateToIndex = MutableSharedFlow<String>(replay = 0)
+    val navigateToIndex get() = _navigateToIndex.asSharedFlow()
 
     private val _navigateToSignUp = MutableSharedFlow<Unit>(replay = 0)
     val navigateToSignUp get() = _navigateToSignUp.asSharedFlow()
@@ -84,11 +84,29 @@ class LoginViewModel(
                 ).consume(
                     success = {
                         _shouldPassEvent.emit(true)
-                        _checkPasswordEvent.emit(true)
+                        _navigateToIndex.emit(user.value.id)
                     },
                     failure = { _shouldPassEvent.emit(false) }
                 )
             } else _shouldPassEvent.emit(false)
+        }
+    }
+
+    fun passAuthentication() {
+        viewModelScope.launch {
+            _uiState.value
+                .users
+                .map { it.getSelected() }
+                .consume(
+                    success = {
+                        if(it == null) _shouldPassEvent.emit(false)
+                        else {
+                            _shouldPassEvent.emit(true)
+                            _navigateToIndex.emit(it.id)
+                        }
+                    },
+                    failure = { _shouldPassEvent.emit(false) }
+                )
         }
     }
 }
