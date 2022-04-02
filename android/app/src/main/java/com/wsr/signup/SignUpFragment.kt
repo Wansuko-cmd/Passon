@@ -2,6 +2,7 @@ package com.wsr.signup
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -28,6 +29,10 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             signUpViewModel.navigateToIndexEvent.collect { navigateToIndex() }
+        }
+
+        launchInLifecycleScope(Lifecycle.State.STARTED) {
+            signUpViewModel.showErrorMessage.collect { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
         }
     }
 

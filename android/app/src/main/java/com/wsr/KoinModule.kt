@@ -1,6 +1,12 @@
 package com.wsr
 
 import androidx.room.Room
+import com.wsr.auth.LoginUseCase
+import com.wsr.auth.LoginUseCaseImpl
+import com.wsr.auth.ResetUseCase
+import com.wsr.auth.ResetUseCaseImpl
+import com.wsr.auth.SignUpUseCase
+import com.wsr.auth.SignUpUseCaseImpl
 import com.wsr.create.CreatePasswordGroupUseCase
 import com.wsr.create.CreatePasswordGroupUseCaseImpl
 import com.wsr.create.CreatePasswordItemUseCase
@@ -23,6 +29,7 @@ import com.wsr.infra.queryservice.LocalPasswordGroupQueryServiceImpl
 import com.wsr.infra.queryservice.LocalPasswordItemQueryServiceImpl
 import com.wsr.infra.queryservice.LocalPasswordPairQueryServiceImpl
 import com.wsr.infra.queryservice.LocalUserQueryServiceImpl
+import com.wsr.infra.user.LocalUserRepositoryImpl
 import com.wsr.infra.user.UserEntityDao
 import com.wsr.login.LoginViewModel
 import com.wsr.passwordgroup.PasswordGroupRepository
@@ -32,8 +39,10 @@ import com.wsr.queryservice.PasswordItemQueryService
 import com.wsr.queryservice.PasswordPairQueryService
 import com.wsr.queryservice.UserQueryService
 import com.wsr.show.ShowViewModel
+import com.wsr.signup.SignUpViewModel
 import com.wsr.sync.SyncPasswordPairUseCase
 import com.wsr.sync.SyncPasswordPairUseCaseImpl
+import com.wsr.user.UserRepository
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -42,6 +51,7 @@ val module = module {
 
     /*** View Model ***/
     viewModel { LoginViewModel() }
+    viewModel { SignUpViewModel(get()) }
     viewModel { IndexViewModel(get(), get()) }
     viewModel { IndexCreatePasswordGroupDialogViewModel() }
     viewModel { ShowViewModel(get(), get()) }
@@ -57,12 +67,17 @@ val module = module {
     // delete
     single<DeletePasswordGroupUseCase> { DeletePasswordGroupUseCaseImpl(get()) }
 
-    // fetch
+    // get
     single<GetAllPasswordGroupUseCase> { GetAllPasswordGroupUseCaseImpl(get()) }
     single<GetPasswordPairUseCase> { GetPasswordPairUseCaseImpl(get()) }
 
     // sync
     single<SyncPasswordPairUseCase> { SyncPasswordPairUseCaseImpl(get(), get(), get()) }
+
+    // auth
+    single<LoginUseCase> { LoginUseCaseImpl(get()) }
+    single<ResetUseCase> { ResetUseCaseImpl(get(), get()) }
+    single<SignUpUseCase> { SignUpUseCaseImpl(get()) }
 
     /*** QueryService ***/
 
@@ -74,6 +89,7 @@ val module = module {
     /*** Repository ***/
     single<PasswordGroupRepository> { LocalPasswordGroupRepositoryImpl(get()) }
     single<PasswordItemRepository> { LocalPasswordItemRepositoryImpl(get()) }
+    single<UserRepository> { LocalUserRepositoryImpl(get()) }
 
     single<PassonDatabase> {
         Room.databaseBuilder(

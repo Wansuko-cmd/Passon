@@ -17,6 +17,9 @@ class SignUpViewModel(private val signUpUseCase: SignUpUseCase) : ViewModel() {
     private val _navigateToIndexEvent = MutableSharedFlow<Unit>(replay = 0)
     val navigateToIndexEvent get() = _navigateToIndexEvent.asSharedFlow()
 
+    private val _showErrorMessage = MutableSharedFlow<String>(replay = 0)
+    val showErrorMessage = _showErrorMessage.asSharedFlow()
+
     fun updateDisplayName(displayName: String) {
         viewModelScope.launch { _displayName.emit(displayName) }
     }
@@ -31,7 +34,10 @@ class SignUpViewModel(private val signUpUseCase: SignUpUseCase) : ViewModel() {
                 displayName = _displayName.value,
                 databasePath = "Local",
                 loginPassword = _loginPassword.value,
-            ).consume { _navigateToIndexEvent.emit(Unit) }
+            ).consume(
+                success = { _navigateToIndexEvent.emit(Unit) },
+                failure = { _showErrorMessage.emit(it.toString()) }
+            )
         }
     }
 }
