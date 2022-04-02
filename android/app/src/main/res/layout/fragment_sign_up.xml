@@ -8,7 +8,11 @@
         <import type="com.wsr.layout.InputType" />
 
         <variable
-            name="afterTextChanged"
+            name="afterDisplayNameChanged"
+            type="com.wsr.layout.AfterTextChanged" />
+
+        <variable
+            name="afterLoginPasswordChanged"
             type="com.wsr.layout.AfterTextChanged" />
     </data>
 
@@ -67,7 +71,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                app:afterTextChanged="@{afterTextChanged}"
+                app:afterTextChanged="@{afterDisplayNameChanged}"
                 app:hint="@{@string/sign_up_display_name_hint}"
                 app:inputType="@{InputType.TextPassword}"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +83,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                app:afterTextChanged="@{afterTextChanged}"
+                app:afterTextChanged="@{afterLoginPasswordChanged}"
                 app:hint="@{@string/login_password_hint}"
                 app:inputType="@{InputType.TextPassword}"
                 app:layout_constraintStart_toStartOf="parent"
