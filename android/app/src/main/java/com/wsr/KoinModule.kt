@@ -8,8 +8,6 @@ import com.wsr.create.CreatePasswordItemUseCaseImpl
 import com.wsr.delete.DeletePasswordGroupUseCase
 import com.wsr.delete.DeletePasswordGroupUseCaseImpl
 import com.wsr.edit.EditViewModel
-import com.wsr.get.FetchAllPasswordGroupUseCaseQueryService
-import com.wsr.get.FetchPasswordPairUseCaseQueryService
 import com.wsr.get.GetAllPasswordGroupUseCase
 import com.wsr.get.GetAllPasswordGroupUseCaseImpl
 import com.wsr.get.GetPasswordPairUseCase
@@ -21,16 +19,21 @@ import com.wsr.infra.passwordgroup.LocalPasswordGroupRepositoryImpl
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passworditem.LocalPasswordItemRepositoryImpl
 import com.wsr.infra.passworditem.PasswordItemEntityDao
-import com.wsr.infra.queryservice.LocalGetAllPasswordGroupUseCaseQueryServiceImpl
-import com.wsr.infra.queryservice.LocalPasswordPairQueryServiceImpl
+import com.wsr.infra.queryservice.LocalPasswordGroupQueryServiceImpl
 import com.wsr.infra.queryservice.LocalPasswordItemQueryServiceImpl
+import com.wsr.infra.queryservice.LocalPasswordPairQueryServiceImpl
+import com.wsr.infra.queryservice.LocalUserQueryServiceImpl
+import com.wsr.infra.user.UserEntityDao
 import com.wsr.login.LoginViewModel
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passworditem.PasswordItemRepository
+import com.wsr.queryservice.PasswordGroupQueryService
+import com.wsr.queryservice.PasswordItemQueryService
+import com.wsr.queryservice.PasswordPairQueryService
+import com.wsr.queryservice.UserQueryService
 import com.wsr.show.ShowViewModel
 import com.wsr.sync.SyncPasswordPairUseCase
 import com.wsr.sync.SyncPasswordPairUseCaseImpl
-import com.wsr.sync.SyncPasswordPairUseCaseQueryService
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -45,10 +48,7 @@ val module = module {
     viewModel { EditViewModel(get(), get(), get()) }
 
     /**
-     * UseCase & Repository
-     *
-     * StateFlowを持つUseCase -> factory
-     * StateFlowを持たないUseCase -> single
+     * UseCase
      */
     // create
     single<CreatePasswordGroupUseCase> { CreatePasswordGroupUseCaseImpl(get()) }
@@ -58,14 +58,18 @@ val module = module {
     single<DeletePasswordGroupUseCase> { DeletePasswordGroupUseCaseImpl(get()) }
 
     // fetch
-    factory<GetAllPasswordGroupUseCase> { GetAllPasswordGroupUseCaseImpl(get()) }
-    single<FetchAllPasswordGroupUseCaseQueryService> { LocalGetAllPasswordGroupUseCaseQueryServiceImpl(get()) }
-    factory<GetPasswordPairUseCase> { GetPasswordPairUseCaseImpl(get()) }
-    single<FetchPasswordPairUseCaseQueryService> { LocalPasswordPairQueryServiceImpl(get(), get()) }
+    single<GetAllPasswordGroupUseCase> { GetAllPasswordGroupUseCaseImpl(get()) }
+    single<GetPasswordPairUseCase> { GetPasswordPairUseCaseImpl(get()) }
 
     // sync
     single<SyncPasswordPairUseCase> { SyncPasswordPairUseCaseImpl(get(), get(), get()) }
-    single<SyncPasswordPairUseCaseQueryService> { LocalPasswordItemQueryServiceImpl(get()) }
+
+    /*** QueryService ***/
+
+    single<PasswordGroupQueryService> { LocalPasswordGroupQueryServiceImpl(get()) }
+    single<PasswordItemQueryService> { LocalPasswordItemQueryServiceImpl(get()) }
+    single<PasswordPairQueryService> { LocalPasswordPairQueryServiceImpl(get(), get()) }
+    single<UserQueryService> { LocalUserQueryServiceImpl() }
 
     /*** Repository ***/
     single<PasswordGroupRepository> { LocalPasswordGroupRepositoryImpl(get()) }
@@ -87,5 +91,9 @@ val module = module {
     single<PasswordGroupEntityDao> {
         val database by inject<PassonDatabase>()
         database.passwordGroupEntityDao()
+    }
+    single<UserEntityDao> {
+        val database by inject<PassonDatabase>()
+        database.userEntityDao()
     }
 }
