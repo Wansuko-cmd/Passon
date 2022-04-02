@@ -4,6 +4,7 @@ import java.security.MessageDigest
 
 data class User(
     val userId: UserId,
+    val displayName: DisplayName,
     val databasePath: DatabasePath,
     val loginPassword: LoginPassword.HashedLoginPassword,
 ) {
@@ -18,6 +19,9 @@ data class User(
 
 @JvmInline
 value class UserId(val value: String)
+
+@JvmInline
+value class DisplayName(val value: String)
 
 @JvmInline
 value class DatabasePath(val value: String)

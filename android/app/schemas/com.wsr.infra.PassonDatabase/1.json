@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a2954bd8e0e784bf44a6c5b38f7c81ae",
+    "identityHash": "e7a083806d32d894c1cd7fc1e8b3294c",
     "entities": [
       {
         "tableName": "password_items",
@@ -82,11 +82,17 @@
       },
       {
         "tableName": "user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`email` TEXT NOT NULL, `database_path` TEXT NOT NULL, `login_password` TEXT NOT NULL, PRIMARY KEY(`email`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`email` TEXT NOT NULL, `display_name` TEXT NOT NULL, `database_path` TEXT NOT NULL, `login_password` TEXT NOT NULL, PRIMARY KEY(`email`))",
         "fields": [
           {
             "fieldPath": "email",
             "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "displayName",
+            "columnName": "display_name",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -116,7 +122,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a2954bd8e0e784bf44a6c5b38f7c81ae')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e7a083806d32d894c1cd7fc1e8b3294c')"
     ]
   }
 }

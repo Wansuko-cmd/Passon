@@ -2,8 +2,14 @@ package com.wsr.user
 
 class UserFactory {
     fun create(
-        email: UserId,
+        userId: UserId,
+        displayName: DisplayName,
         databasePath: DatabasePath,
         loginPassword: LoginPassword.PlainLoginPassword,
-    ): User = User(email, databasePath, loginPassword.toHashed())
+    ): User = User(
+        userId = userId,
+        displayName = displayName,
+        databasePath = databasePath,
+        loginPassword = loginPassword.toHashed(),
+    )
 }
