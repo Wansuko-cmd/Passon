@@ -65,6 +65,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
         }
 
+        launchInLifecycleScope(Lifecycle.State.STARTED) {
+            loginViewModel.navigateToSignUp.collect { navigateToSignUp() }
+        }
+
         // 生体認証
         when (BiometricManager.from(requireContext()).canAuthenticate(BIOMETRIC_STRONG)) {
             BiometricManager.BIOMETRIC_SUCCESS -> {

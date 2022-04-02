@@ -8,6 +8,7 @@ import com.wsr.maybe.consume
 import com.wsr.maybe.mapBoth
 import com.wsr.utils.State
 import com.wsr.utils.asState
+import com.wsr.utils.consume
 import com.wsr.utils.map
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +33,9 @@ class LoginViewModel(
     private val _shouldPassEvent = MutableSharedFlow<Boolean>(replay = 0)
     val shouldPassEvent = _shouldPassEvent.asSharedFlow()
 
+    private val _navigateToSignUp = MutableSharedFlow<Unit>(replay = 0)
+    val navigateToSignUp get() = _navigateToSignUp.asSharedFlow()
+
     fun fetch() {
         viewModelScope.launch { _uiState.emit(LoginUiState()) }
         fetchUsers()
@@ -39,12 +43,15 @@ class LoginViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch {
-            getAllUserUseCase.getAll().mapBoth(
+            val users = getAllUserUseCase.getAll().mapBoth(
                 success = { users -> users.map { it.toLoginUiState() } },
                 failure = { ErrorLoginUiState(it.message.orEmpty()) },
             )
                 .asState()
-                .also { _uiState.update { current -> current.copy(users = it) } }
+
+            users.consume(success = { if (it.isEmpty()) _navigateToSignUp.emit(Unit) })
+
+            _uiState.update { current -> current.copy(users = users) }
         }
     }
 
