@@ -14,6 +14,10 @@ data class UserLoginUiState(
 
 fun List<UserLoginUiState>.getSelected() = this.first { it.isSelected }
 
+fun List<UserLoginUiState>.copyWithSelected(userId: String) =
+    if (this.map { it.id }.contains(userId)) this.map { it.copyWithIsSelected(it.id == userId) }
+    else this.map { it.copyWithIsSelected(it.id == this.firstOrNull()?.id ?: false) }
+
 fun UserUseCaseModel.toLoginUiState() =
     UserLoginUiState(
         id = this.id,

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.wsr.auth.LoginUseCase
 import com.wsr.get.GetAllUserUseCase
 import com.wsr.maybe.consume
+import com.wsr.maybe.map
 import com.wsr.maybe.mapBoth
 import com.wsr.utils.State
 import com.wsr.utils.asState
@@ -36,17 +37,18 @@ class LoginViewModel(
     private val _navigateToSignUp = MutableSharedFlow<Unit>(replay = 0)
     val navigateToSignUp get() = _navigateToSignUp.asSharedFlow()
 
-    fun fetch() {
+    fun fetch(beforeUsedUserId: String? = null) {
         viewModelScope.launch { _uiState.emit(LoginUiState()) }
-        fetchUsers()
+        fetchUsers(beforeUsedUserId)
     }
 
-    private fun fetchUsers() {
+    private fun fetchUsers(beforeUsedUserId: String?) {
         viewModelScope.launch {
             val users = getAllUserUseCase.getAll().mapBoth(
                 success = { users -> users.map { it.toLoginUiState() } },
                 failure = { ErrorLoginUiState(it.message.orEmpty()) },
             )
+                .map { users -> users.copyWithSelected(beforeUsedUserId ?: "") }
                 .asState()
 
             users.consume(success = { if (it.isEmpty()) _navigateToSignUp.emit(Unit) })
@@ -66,11 +68,7 @@ class LoginViewModel(
             _uiState.update { loginUiState ->
                 loginUiState.copyWithUsers(
                     users = loginUiState.users
-                        .map { users ->
-                            users.map {
-                                it.copyWithIsSelected(it.id == userId)
-                            }
-                        }
+                        .map { users -> users.copyWithSelected(userId) }
                 )
             }
         }

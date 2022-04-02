@@ -23,6 +23,7 @@
         android:background="@android:color/white"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="8dp"
+        android:padding="8dp"
         android:elevation="4dp">
 
         <RadioButton
