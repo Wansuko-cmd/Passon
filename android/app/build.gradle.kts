@@ -98,6 +98,9 @@ dependencies {
     // 指紋認証
     implementation("androidx.biometric:biometric:1.1.0")
 
+    // 設定
+    implementation("androidx.preference:preference:1.2.0")
+
     androidTestImplementation(kotlin("test"))
     androidTestImplementation("androidx.test:core:1.4.0")
     androidTestImplementation("androidx.test:runner:1.4.0")

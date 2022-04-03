@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:title="ユーザー名"
+        android:key="display_name" />
+    <Preference
+        android:title="ログイン時のパスワード"
+        android:key="login_password" />
+    <Preference
+        android:title="ログアウト"
+        android:key="logout" />
+    <Preference
+        android:title="このユーザーを削除する"
+        android:key="delete" />
+</PreferenceScreen>
