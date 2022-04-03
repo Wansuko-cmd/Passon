@@ -14,6 +14,8 @@
         <!-- Customize your theme here. -->
 
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+
+        <item name="preferenceTheme">@style/PreferenceStyle</item>
     </style>
 
     <style name="ActionBarTheme" parent="ThemeOverlay.MaterialComponents.ActionBar">
@@ -23,6 +25,9 @@
 
     <style name="EditTextStyle">
         <item name="colorControlActivated">@color/moss_green</item>
+    </style>
 
+    <style name="PreferenceStyle" parent="PreferenceThemeOverlay">
+        <item name="preferenceCategoryTitleTextColor">@color/moss_green</item>
     </style>
 </resources>

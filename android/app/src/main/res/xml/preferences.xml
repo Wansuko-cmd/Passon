@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <Preference
-        android:title="ユーザー名"
-        android:key="display_name" />
-    <Preference
-        android:title="ログイン時のパスワード"
-        android:key="login_password" />
-    <Preference
-        android:title="ログアウト"
-        android:key="logout" />
-    <Preference
-        android:title="このユーザーを削除する"
-        android:key="delete" />
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:key="edit_category"
+        android:title="編集">
+        <Preference
+            android:title="ユーザー名"
+            android:key="display_name" />
+        <Preference
+            android:title="ログイン時のパスワード"
+            android:key="login_password" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="user_category"
+        android:title="ユーザー操作">
+        <Preference
+            android:title="ログアウト"
+            android:key="logout" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="danger_category"
+        android:title="取り返しのつかない設定">
+        <Preference
+            android:layout="@layout/preferences_danger_text"
+            android:title="このユーザーを削除する"
+            android:key="delete" />
+    </PreferenceCategory>
 </PreferenceScreen>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@android:id/title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/PreferenceStyle"
+    style="@style/PreferenceStyle"
+    android:textColor="@android:color/holo_red_light"
+    android:layout_marginStart="72dp"
+    android:layout_marginVertical="16dp"
+    android:textSize="16sp"
+    tools:text="Category"/>
