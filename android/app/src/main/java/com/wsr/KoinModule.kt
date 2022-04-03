@@ -3,8 +3,8 @@ package com.wsr
 import androidx.room.Room
 import com.wsr.auth.LoginUseCase
 import com.wsr.auth.LoginUseCaseImpl
-import com.wsr.auth.ResetUseCase
-import com.wsr.auth.ResetUseCaseImpl
+import com.wsr.auth.ResetLoginPasswordUseCase
+import com.wsr.auth.ResetLoginPasswordUseCaseImpl
 import com.wsr.auth.SignUpUseCase
 import com.wsr.auth.SignUpUseCaseImpl
 import com.wsr.create.CreatePasswordGroupUseCase
@@ -84,7 +84,7 @@ val module = module {
 
     // auth
     single<LoginUseCase> { LoginUseCaseImpl(get()) }
-    single<ResetUseCase> { ResetUseCaseImpl(get(), get()) }
+    single<ResetLoginPasswordUseCase> { ResetLoginPasswordUseCaseImpl(get(), get()) }
     single<SignUpUseCase> { SignUpUseCaseImpl(get()) }
 
     /*** QueryService ***/
