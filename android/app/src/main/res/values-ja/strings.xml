@@ -7,7 +7,7 @@
     <string name="menu_title_setting">設定</string>
 
     <!-- サインアップ画面 -->
-    <string name="sign_up_display_name_hint">表示名</string>
+    <string name="sign_up_display_name_hint">ユーザー名</string>
     <string name="sign_up_login_password">ログイン用のパスワード</string>
     <string name="sign_up_next_button">次へ</string>
     <string name="sign_up_success_message">成功しました</string>
@@ -50,4 +50,13 @@
     <string name="edit_toast_on_save_message">セーブしました</string>
     <string name="edit_show_password_checkbox_text">表示する</string>
     <string name="edit_leave_page_waring">セーブされていません（もう一度押すと変更を破棄して移動します）</string>
+
+    <!-- 設定画面 -->
+    <string name="settings_edit_category_title">編集</string>
+    <string name="settings_edit_category_display_name">ユーザー名</string>
+    <string name="settings_edit_category_login_password">ログイン時のパスワード</string>
+    <string name="settings_user_category_title">ユーザー操作</string>
+    <string name="settings_user_category_logout">ログアウト</string>
+    <string name="settings_danger_category_title">危険な操作</string>
+    <string name="settings_danger_category_delete_user">このユーザーを削除する</string>
 </resources>

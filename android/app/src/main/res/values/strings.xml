@@ -51,4 +51,13 @@
     <string name="edit_toast_on_save_message">Saved</string>
     <string name="edit_show_password_checkbox_text">Show Password</string>
     <string name="edit_leave_page_waring">Data not saved (press again to discard changes and move on)</string>
+
+    <!-- 設定画面 -->
+    <string name="settings_edit_category_title">Edit</string>
+    <string name="settings_edit_category_display_name">User Name</string>
+    <string name="settings_edit_category_login_password">Password for Login</string>
+    <string name="settings_user_category_title">User Control</string>
+    <string name="settings_user_category_logout">Logout</string>
+    <string name="settings_danger_category_title">Dangerous Control</string>
+    <string name="settings_danger_category_delete_user">Delete this user</string>
 </resources>

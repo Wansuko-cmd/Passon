@@ -3,29 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         android:key="edit_category"
-        android:title="編集">
+        android:title="@string/settings_edit_category_title">
         <Preference
-            android:title="ユーザー名"
-            android:key="display_name" />
+            android:key="display_name"
+            android:title="@string/settings_edit_category_display_name" />
         <Preference
-            android:title="ログイン時のパスワード"
-            android:key="login_password" />
+            android:key="login_password"
+            android:title="@string/settings_edit_category_login_password" />
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="user_category"
-        android:title="ユーザー操作">
+        android:title="@string/settings_user_category_title">
         <Preference
-            android:title="ログアウト"
-            android:key="logout" />
+            android:key="logout"
+            android:title="@string/settings_user_category_logout" />
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="danger_category"
-        android:title="取り返しのつかない設定">
+        android:title="@string/settings_danger_category_title">
         <Preference
-            android:layout="@layout/preferences_danger_text"
-            android:title="このユーザーを削除する"
-            android:key="delete" />
+            android:key="delete_user"
+            android:title="@string/settings_danger_category_delete_user"
+            android:layout="@layout/preferences_danger_text" />
     </PreferenceCategory>
 </PreferenceScreen>

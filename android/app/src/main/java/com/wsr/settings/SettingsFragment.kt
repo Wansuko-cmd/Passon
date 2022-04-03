@@ -46,7 +46,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
-        findPreference<Preference>("delete")?.apply {
+        findPreference<Preference>("delete_user")?.apply {
 
         }
     }
