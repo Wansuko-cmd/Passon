@@ -17,21 +17,10 @@ class ResetUseCaseImpl(
 
     override suspend fun reset(
         userId: String,
-        currentPassword: String,
         newPassword: String,
     ): Maybe<Unit, ResetUseCaseException> = userQueryService.get(UserId(userId))
         .mapFailure { it.toResetUseCaseException() }
-        .checkCurrentPassword(currentPassword)
         .updatePassword(newPassword)
-
-    private fun Maybe<User, ResetUseCaseException>.checkCurrentPassword(
-        currentPassword: String,
-    ): Maybe<User, ResetUseCaseException> = when (this) {
-        is Maybe.Success ->
-            if (value.shouldPass(LoginPassword.PlainLoginPassword(currentPassword))) this
-            else Maybe.Failure(ResetUseCaseException.AuthenticationException(""))
-        is Maybe.Failure -> this
-    }
 
     private suspend fun Maybe<User, ResetUseCaseException>.updatePassword(
         newPassword: String,
