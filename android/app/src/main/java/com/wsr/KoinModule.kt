@@ -20,6 +20,8 @@ import com.wsr.get.GetAllUserUseCase
 import com.wsr.get.GetAllUserUseCaseImpl
 import com.wsr.get.GetPasswordPairUseCase
 import com.wsr.get.GetPasswordPairUseCaseImpl
+import com.wsr.get.GetUserUseCase
+import com.wsr.get.GetUserUseCaseImpl
 import com.wsr.index.IndexViewModel
 import com.wsr.index.dialog.IndexCreatePasswordGroupDialogViewModel
 import com.wsr.infra.PassonDatabase
@@ -40,6 +42,7 @@ import com.wsr.queryservice.PasswordGroupQueryService
 import com.wsr.queryservice.PasswordItemQueryService
 import com.wsr.queryservice.PasswordPairQueryService
 import com.wsr.queryservice.UserQueryService
+import com.wsr.settings.SettingsViewModel
 import com.wsr.show.ShowViewModel
 import com.wsr.signup.SignUpViewModel
 import com.wsr.sync.SyncPasswordPairUseCase
@@ -58,6 +61,7 @@ val module = module {
     viewModel { IndexCreatePasswordGroupDialogViewModel() }
     viewModel { ShowViewModel(get(), get()) }
     viewModel { EditViewModel(get(), get(), get()) }
+    viewModel { SettingsViewModel(get()) }
 
     /**
      * UseCase
@@ -73,6 +77,7 @@ val module = module {
     single<GetAllUserUseCase> { GetAllUserUseCaseImpl(get()) }
     single<GetAllPasswordGroupUseCase> { GetAllPasswordGroupUseCaseImpl(get()) }
     single<GetPasswordPairUseCase> { GetPasswordPairUseCaseImpl(get()) }
+    single<GetUserUseCase> { GetUserUseCaseImpl(get()) }
 
     // sync
     single<SyncPasswordPairUseCase> { SyncPasswordPairUseCaseImpl(get(), get(), get()) }
