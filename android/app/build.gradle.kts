@@ -70,7 +70,7 @@ dependencies {
     // Coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha04")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha05")
 
     // Epoxy
     val epoxyVersion = "4.6.3"
@@ -85,7 +85,7 @@ dependencies {
     implementation("io.insert-koin:koin-android:$koinVersion")
 
     // Material UI
-    implementation("com.google.android.material:material:1.6.0-alpha03")
+    implementation("com.google.android.material:material:1.6.0-beta01")
 
     // Room Database
     val roomVersion = "2.4.1"
@@ -95,6 +95,7 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
 
+    // 指紋認証
     implementation("androidx.biometric:biometric:1.1.0")
 
     androidTestImplementation(kotlin("test"))
