@@ -34,7 +34,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.index_menu_setting -> {
-                val action = IndexFragmentDirections.actionIndexFragmentToSettingsFragment()
+                val action = IndexFragmentDirections.actionIndexFragmentToSettingsFragment(userId)
                 findNavController().navigate(action)
             }
         }

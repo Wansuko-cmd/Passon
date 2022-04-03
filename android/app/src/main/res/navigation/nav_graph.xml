@@ -42,7 +42,11 @@
     <fragment
         android:id="@+id/settings_fragment"
         android:name="com.wsr.settings.SettingsFragment"
-        android:label="@string/menu_title_setting"/>
+        android:label="@string/menu_title_setting">
+        <argument
+            android:name="user_id"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/index_fragment"
