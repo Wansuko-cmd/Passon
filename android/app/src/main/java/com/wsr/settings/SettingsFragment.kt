@@ -3,6 +3,7 @@ package com.wsr.settings
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -38,7 +39,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<Preference>("logout")?.apply {
-
+            setOnPreferenceClickListener {
+                val action = SettingsFragmentDirections.actionSettingsFragmentToLoginFragment()
+                findNavController().navigate(action)
+                true
+            }
         }
 
         findPreference<Preference>("delete")?.apply {
