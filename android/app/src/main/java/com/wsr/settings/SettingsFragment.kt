@@ -35,7 +35,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<Preference>("login_password")?.apply {
-
         }
 
         findPreference<Preference>("logout")?.apply {
@@ -47,7 +46,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<Preference>("delete_user")?.apply {
-
         }
     }
 }

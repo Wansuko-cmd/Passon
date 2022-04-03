@@ -15,7 +15,7 @@ class GetUserUseCaseImpl(private val userQueryService: UserQueryService) : GetUs
             failure = { it.toGetUserUseCaseException() }
         )
 
-    private fun UserQueryServiceException.toGetUserUseCaseException() = when(this) {
+    private fun UserQueryServiceException.toGetUserUseCaseException() = when (this) {
         is UserQueryServiceException.NoSuchUserException ->
             GetUserUseCaseException.NoSuchUserException("")
         is UserQueryServiceException.DatabaseError ->
