@@ -84,7 +84,7 @@ val module = module {
 
     // auth
     single<LoginUseCase> { LoginUseCaseImpl(get()) }
-    single<ResetLoginPasswordUseCase> { ResetLoginPasswordUseCaseImpl(get(), get()) }
+    single<ResetLoginPasswordUseCase> { ResetLoginPasswordUseCaseImpl(get()) }
     single<SignUpUseCase> { SignUpUseCaseImpl(get()) }
 
     /*** QueryService ***/
