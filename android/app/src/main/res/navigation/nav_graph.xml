@@ -40,6 +40,11 @@
     </fragment>
 
     <fragment
+        android:id="@+id/settings_fragment"
+        android:name="com.wsr.settings.SettingsFragment"
+        android:label="@string/menu_title_setting"/>
+
+    <fragment
         android:id="@+id/index_fragment"
         android:name="com.wsr.index.IndexFragment"
         android:label="@string/app_name"
@@ -61,6 +66,13 @@
             app:popEnterAnim="@anim/slide_in_from_start"
             app:popExitAnim="@anim/slide_out_to_end"
             app:destination="@id/edit_fragment" />
+        <action
+            android:id="@+id/action_index_fragment_to_settings_fragment"
+            app:destination="@id/settings_fragment"
+            app:enterAnim="@anim/slide_in_from_end"
+            app:exitAnim="@anim/slide_out_to_start"
+            app:popEnterAnim="@anim/slide_in_from_start"
+            app:popExitAnim="@anim/slide_out_to_end"/>
     </fragment>
 
     <fragment

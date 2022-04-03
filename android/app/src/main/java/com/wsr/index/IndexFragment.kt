@@ -33,7 +33,10 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.index_menu_setting -> Toast.makeText(requireContext(), "設定項目なし", Toast.LENGTH_SHORT).show()
+            R.id.index_menu_setting -> {
+                val action = IndexFragmentDirections.actionIndexFragmentToSettingsFragment()
+                findNavController().navigate(action)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
