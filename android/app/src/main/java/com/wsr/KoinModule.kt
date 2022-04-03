@@ -47,6 +47,8 @@ import com.wsr.show.ShowViewModel
 import com.wsr.signup.SignUpViewModel
 import com.wsr.sync.SyncPasswordPairUseCase
 import com.wsr.sync.SyncPasswordPairUseCaseImpl
+import com.wsr.update.UpdateUserUseCase
+import com.wsr.update.UpdateUserUseCaseImpl
 import com.wsr.user.UserRepository
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -61,7 +63,7 @@ val module = module {
     viewModel { IndexCreatePasswordGroupDialogViewModel() }
     viewModel { ShowViewModel(get(), get()) }
     viewModel { EditViewModel(get(), get(), get()) }
-    viewModel { SettingsViewModel(get()) }
+    viewModel { SettingsViewModel(get(), get(), get()) }
 
     /**
      * UseCase
@@ -78,6 +80,9 @@ val module = module {
     single<GetAllPasswordGroupUseCase> { GetAllPasswordGroupUseCaseImpl(get()) }
     single<GetPasswordPairUseCase> { GetPasswordPairUseCaseImpl(get()) }
     single<GetUserUseCase> { GetUserUseCaseImpl(get()) }
+
+    // update
+    single<UpdateUserUseCase> { UpdateUserUseCaseImpl(get()) }
 
     // sync
     single<SyncPasswordPairUseCase> { SyncPasswordPairUseCaseImpl(get(), get(), get()) }
