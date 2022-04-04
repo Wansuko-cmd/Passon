@@ -73,7 +73,7 @@
                 android:layout_margin="16dp"
                 app:afterTextChanged="@{afterDisplayNameChanged}"
                 app:hint="@{@string/sign_up_display_name_hint}"
-                app:inputType="@{InputType.TextPassword}"
+                app:inputType="@{InputType.Text}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
