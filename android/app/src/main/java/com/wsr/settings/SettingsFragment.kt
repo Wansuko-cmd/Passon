@@ -37,15 +37,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<Preference>("login_password")?.apply {
             setOnPreferenceClickListener {
-                PassonDialog.build(requireContext())
+                PassonDialog.builder(requireContext())
                     .setTitle("Login Password")
-                    .setEditText("loginPassword")
                     .setButtons(
                         positive = { Toast.makeText(requireContext(), "Positive", Toast.LENGTH_SHORT).show() },
                         negative = { Toast.makeText(requireContext(), "Negative", Toast.LENGTH_SHORT).show() }
                     )
                     .build()
-                    .show(childFragmentManager, "")
+                    .show(childFragmentManager, tag)
                 true
             }
         }

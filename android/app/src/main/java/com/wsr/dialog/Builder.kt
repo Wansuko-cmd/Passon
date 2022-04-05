@@ -13,57 +13,65 @@ import com.wsr.dialog.Builder.Complete.Companion.toComplete
 import com.wsr.dialog.BundleValue.Companion.putValue
 
 class Builder(context: Context) {
-    private val inflater = LayoutInflater.from(context)
-
-    private val bindingItems = mutableListOf<ViewDataBinding>()
+    private val bindingItems = mutableListOf<Lazy<(LayoutInflater) -> ViewDataBinding>>()
     private val bundleAttachable = mutableListOf<Lazy<BundleAttachable>>()
 
     fun setTitle(title: String): Builder {
-        DataBindingUtil.inflate<DialogTitleBinding>(
-            inflater,
-            R.layout.dialog_title,
-            null,
-            true,
-        )
-            .apply { dialogTitle.text = title }
-            .also { bindingItems.add(it) }
+        bindingItems.add(lazy { { inflater ->
+            DataBindingUtil.inflate<DialogTitleBinding>(
+                inflater,
+                R.layout.dialog_title,
+                null,
+                true,
+            ).apply { dialogTitle.text = title }
+        } })
+
         return this
     }
 
-    fun setEditText(key: String): Builder {
-        DataBindingUtil.inflate<DialogEditTextBinding>(
-            inflater,
-            R.layout.dialog_edit_text,
-            null,
-            true,
-        )
-            .also { bindingItems.add(it) }
-            .also {
-                bundleAttachable.add(
-                    lazy {
-                        BundleAttachable(key) {
-                            it.dialogEditText.text.toString()
+    fun setEditText(key: String, hint: String = ""): Builder {
+        bindingItems.add(lazy { { inflater ->
+            DataBindingUtil.inflate<DialogEditTextBinding>(
+                inflater,
+                R.layout.dialog_edit_text,
+                null,
+                true,
+            )
+                .apply { dialogEditText.hint = hint }
+                .also {
+                    bundleAttachable.add(
+                        lazy {
+                            BundleAttachable(key) {
+                                it.dialogEditText.text.toString()
+                            }
                         }
-                    }
+                    )
+                }
+        } })
+
+        return this
+    }
+
+    fun setButtons(positive: (Bundle) -> Unit, negative: (Bundle) -> Unit): Complete {
+        val block = lazy<(LayoutInflater) -> DialogButtonsBinding> {
+            { inflater ->
+                DataBindingUtil.inflate(
+                    inflater,
+                    R.layout.dialog_buttons,
+                    null,
+                    true,
                 )
             }
-        return this
+        }
+        bindingItems.add(block)
+
+        return toComplete(block, positive, negative)
     }
 
-    fun setButtons(positive: (Bundle) -> Unit, negative: (Bundle) -> Unit) =
-        DataBindingUtil.inflate<DialogButtonsBinding>(
-            inflater,
-            R.layout.dialog_buttons,
-            null,
-            true,
-        )
-            .also { bindingItems.add(it) }
-            .let { toComplete(it, positive, negative) }
-
     class Complete private constructor(
-        private val bindingItems: List<ViewDataBinding>,
+        private val bindingItems: List<Lazy<(LayoutInflater) -> ViewDataBinding>>,
         private val bundleAttachable: List<Lazy<BundleAttachable>>,
-        private val buttonsBinding: DialogButtonsBinding,
+        private val buttonsBinding: Lazy<(LayoutInflater) -> DialogButtonsBinding>,
         private val positive: (Bundle) -> Unit,
         private val negative: (Bundle) -> Unit,
     ) {
@@ -79,7 +87,7 @@ class Builder(context: Context) {
 
         companion object {
             fun Builder.toComplete(
-                buttonsBinding: DialogButtonsBinding,
+                buttonsBinding: Lazy<(LayoutInflater) -> DialogButtonsBinding>,
                 positive: (Bundle) -> Unit,
                 negative: (Bundle) -> Unit,
             ) = Complete(bindingItems, bundleAttachable, buttonsBinding, positive, negative)

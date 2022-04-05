@@ -13,10 +13,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.wsr.R
 import com.wsr.databinding.FragmentIndexBinding
+import com.wsr.dialog.BundleValue.Companion.getValue
+import com.wsr.dialog.PassonDialog
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.ext.sharedViewModel
 import com.wsr.ext.showDialogIfNotDrawn
-import com.wsr.index.dialog.IndexCreatePasswordGroupDialogFragment
 import com.wsr.utils.consume
 import org.koin.androidx.viewmodel.ViewModelOwner.Companion.from
 
@@ -65,7 +66,21 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
 
         binding.indexFragmentFab.setOnClickListener {
             showDialogIfNotDrawn(tag) {
-                IndexCreatePasswordGroupDialogFragment.create(userId)
+                PassonDialog.builder(requireContext())
+                    .setTitle(getString(R.string.index_create_password_group_dialog_title))
+                    .setEditText(
+                        key = "passwordGroup",
+                        hint = getString(R.string.index_create_password_group_dialog_hint)
+                    )
+                    .setButtons(
+                        positive = { bundle ->
+                            bundle.getValue<String>("passwordGroup")?.let {
+                                indexViewModel.createPasswordGroup(userId, it, true)
+                            }
+                        },
+                        negative = {},
+                    )
+                    .build()
             }
         }
 
