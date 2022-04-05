@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.wsr.R
-import com.wsr.databinding.DialogButtonsBinding
 import com.wsr.databinding.DialogEditTextBinding
 import com.wsr.databinding.DialogTitleBinding
 import com.wsr.dialog.BundleValue.Companion.putValue
@@ -16,6 +15,8 @@ class Builder(context: Context) {
 
     private val bindingItems = mutableListOf<ViewDataBinding>()
     private val bundleAttachable = mutableListOf<Lazy<BundleAttachable>>()
+    private lateinit var positive: (Bundle) -> Unit
+    private lateinit var negative: (Bundle) -> Unit
 
     fun setTitle(title: String): Builder {
         DataBindingUtil.inflate<DialogTitleBinding>(
@@ -40,7 +41,7 @@ class Builder(context: Context) {
             .also {
                 bundleAttachable.add(
                     lazy {
-                        BundleAttachable(key, String::class) {
+                        BundleAttachable(key) {
                             it.dialogEditText.text.toString()
                         }
                     }
@@ -49,18 +50,16 @@ class Builder(context: Context) {
         return this
     }
 
-    fun setButtons(negative: (Bundle) -> Unit, positive: (Bundle) -> Unit) {
-        DataBindingUtil.inflate<DialogButtonsBinding>(
-            inflater,
-            R.layout.dialog_buttons,
-            null,
-            true,
-        )
-            .also { bindingItems.add(it) }
-    }
+    fun setButtons(positive: (Bundle) -> Unit, negative: (Bundle) -> Unit) = Complete(positive, negative)
 
-    fun build(): PassonDialog = PassonDialog().apply {
-        val bundle = Bundle()
-        bundle.putValue<List<ViewDataBinding>>(Argument.BINDING_ITEMS, bindingItems)
+    inner class Complete(positive: (Bundle) -> Unit, negative: (Bundle) -> Unit) {
+        fun build(): PassonDialog = PassonDialog().apply {
+            arguments = Bundle().apply {
+                putValue(Argument.BINDING_ITEMS, bindingItems)
+                putValue(Argument.BUNDLE_ATTACHABLE, bundleAttachable)
+                putValue(Argument.POSITIVE_BUTTON, positive)
+                putValue(Argument.NEGATIVE_BUTTON, negative)
+            }
+        }
     }
 }
