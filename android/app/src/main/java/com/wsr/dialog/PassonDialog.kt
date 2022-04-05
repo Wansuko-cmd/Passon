@@ -9,11 +9,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import com.wsr.R
+import com.wsr.databinding.DialogEditTextBinding
 import com.wsr.databinding.DialogMainBinding
 import com.wsr.databinding.DialogTitleBinding
 import com.wsr.dialog.BundleValue.Companion.getValue
 import com.wsr.dialog.BundleValue.Companion.putValue
 import java.io.Serializable
+import kotlin.reflect.KClass
 
 class PassonDialog : DialogFragment() {
 
@@ -23,12 +25,15 @@ class PassonDialog : DialogFragment() {
         arguments.getValue<List<ViewDataBinding>>(Argument.BINDING_ITEMS)
             ?.forEach { binding.dialogMainLinearLayout.addView(it.root) }
 
+
         return AlertDialog.Builder(requireActivity()).apply { setView(binding.root) }.create()
     }
 
-    class Builder(private val context: Context) {
+    class Builder(context: Context) {
         private val inflater = LayoutInflater.from(context)
+
         private val bindingItems = mutableListOf<ViewDataBinding>()
+        private val bundleAttachable = mutableListOf<Lazy<BundleAttachable>>()
 
         fun setTitle(title: String): Builder {
             DataBindingUtil.inflate<DialogTitleBinding>(
@@ -36,8 +41,21 @@ class PassonDialog : DialogFragment() {
                 R.layout.dialog_title,
                 null,
                 true,
-            ).apply { dialogTitle.text = title }
+            )
+                .apply { dialogTitle.text = title }
                 .also { bindingItems.add(it) }
+            return this
+        }
+
+        fun setEditText(key: String): Builder {
+            DataBindingUtil.inflate<DialogEditTextBinding>(
+                inflater,
+                R.layout.dialog_edit_text,
+                null,
+                true,
+            )
+                .also { bindingItems.add(it) }
+                .also { bundleAttachable.add(lazy { BundleAttachable(key, String::class) { it.dialogEditText.text.toString() }) }}
             return this
         }
 
@@ -48,8 +66,11 @@ class PassonDialog : DialogFragment() {
     }
 }
 
+private data class BundleAttachable(val key: String, val type: KClass<out Any>, val block: () -> Any)
+
 private enum class Argument {
-    BINDING_ITEMS;
+    BINDING_ITEMS,
+    BUNDLE_ATTACHABLE;
 }
 
 private class BundleValue<T>(private val value: T) : Serializable {
