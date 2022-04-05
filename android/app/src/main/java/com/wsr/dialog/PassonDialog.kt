@@ -2,6 +2,7 @@ package com.wsr.dialog
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -41,5 +42,9 @@ class PassonDialog : DialogFragment() {
         }
 
         return AlertDialog.Builder(requireActivity()).apply { setView(binding.root) }.create()
+    }
+
+    companion object {
+        fun build(context: Context) = Builder(context)
     }
 }

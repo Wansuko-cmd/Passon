@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import com.wsr.R
 import com.wsr.databinding.DialogEditTextBinding
 import com.wsr.databinding.DialogTitleBinding
+import com.wsr.dialog.Builder.Complete.Companion.toComplete
 import com.wsr.dialog.BundleValue.Companion.putValue
 
 class Builder(context: Context) {
@@ -15,8 +16,6 @@ class Builder(context: Context) {
 
     private val bindingItems = mutableListOf<ViewDataBinding>()
     private val bundleAttachable = mutableListOf<Lazy<BundleAttachable>>()
-    private lateinit var positive: (Bundle) -> Unit
-    private lateinit var negative: (Bundle) -> Unit
 
     fun setTitle(title: String): Builder {
         DataBindingUtil.inflate<DialogTitleBinding>(
@@ -50,9 +49,14 @@ class Builder(context: Context) {
         return this
     }
 
-    fun setButtons(positive: (Bundle) -> Unit, negative: (Bundle) -> Unit) = Complete(positive, negative)
+    fun setButtons(positive: (Bundle) -> Unit, negative: (Bundle) -> Unit) = toComplete(positive, negative)
 
-    inner class Complete(positive: (Bundle) -> Unit, negative: (Bundle) -> Unit) {
+    class Complete private constructor(
+        private val bindingItems: List<ViewDataBinding>,
+        private val bundleAttachable: List<Lazy<BundleAttachable>>,
+        private val positive: (Bundle) -> Unit,
+        private val negative: (Bundle) -> Unit,
+    ) {
         fun build(): PassonDialog = PassonDialog().apply {
             arguments = Bundle().apply {
                 putValue(Argument.BINDING_ITEMS, bindingItems)
@@ -60,6 +64,13 @@ class Builder(context: Context) {
                 putValue(Argument.POSITIVE_BUTTON, positive)
                 putValue(Argument.NEGATIVE_BUTTON, negative)
             }
+        }
+
+        companion object {
+            fun Builder.toComplete(
+                positive: (Bundle) -> Unit,
+                negative: (Bundle) -> Unit,
+            ) = Complete(bindingItems, bundleAttachable, positive, negative)
         }
     }
 }

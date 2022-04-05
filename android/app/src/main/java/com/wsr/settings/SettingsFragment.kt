@@ -8,6 +8,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.wsr.R
+import com.wsr.dialog.PassonDialog
 import com.wsr.maybe.consume
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,6 +36,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<Preference>("login_password")?.apply {
+            PassonDialog.build(requireContext())
         }
 
         findPreference<Preference>("logout")?.apply {
