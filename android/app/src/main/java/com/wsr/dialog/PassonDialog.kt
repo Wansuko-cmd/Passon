@@ -25,7 +25,6 @@ class PassonDialog : DialogFragment() {
         arguments.getValue<List<ViewDataBinding>>(Argument.BINDING_ITEMS)
             ?.forEach { binding.dialogMainLinearLayout.addView(it.root) }
 
-
         return AlertDialog.Builder(requireActivity()).apply { setView(binding.root) }.create()
     }
 
@@ -55,7 +54,15 @@ class PassonDialog : DialogFragment() {
                 true,
             )
                 .also { bindingItems.add(it) }
-                .also { bundleAttachable.add(lazy { BundleAttachable(key, String::class) { it.dialogEditText.text.toString() }) }}
+                .also {
+                    bundleAttachable.add(
+                        lazy {
+                            BundleAttachable(key, String::class) {
+                                it.dialogEditText.text.toString()
+                            }
+                        }
+                    )
+                }
             return this
         }
 
