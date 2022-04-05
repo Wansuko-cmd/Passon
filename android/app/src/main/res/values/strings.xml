@@ -9,7 +9,7 @@
     <string name="menu_title_setting">Setting</string>
 
     <!-- サインアップ画面 -->
-    <string name="sign_up_display_name_hint">Display Name</string>
+    <string name="sign_up_display_name_hint">User Name</string>
     <string name="sign_up_login_password">Password for Login</string>
     <string name="sign_up_next_button">Next</string>
     <string name="sign_up_success_message">Success</string>
