@@ -18,6 +18,7 @@ class BundleValue<T>(private val value: T) : Serializable {
 enum class Argument {
     BINDING_ITEMS,
     BUNDLE_ATTACHABLE,
+    BUTTONS_BINDING,
     POSITIVE_BUTTON,
     NEGATIVE_BUTTON;
 }

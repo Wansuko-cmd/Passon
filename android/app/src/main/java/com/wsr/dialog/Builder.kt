@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.wsr.R
+import com.wsr.databinding.DialogButtonsBinding
 import com.wsr.databinding.DialogEditTextBinding
 import com.wsr.databinding.DialogTitleBinding
 import com.wsr.dialog.Builder.Complete.Companion.toComplete
@@ -49,11 +50,20 @@ class Builder(context: Context) {
         return this
     }
 
-    fun setButtons(positive: (Bundle) -> Unit, negative: (Bundle) -> Unit) = toComplete(positive, negative)
+    fun setButtons(positive: (Bundle) -> Unit, negative: (Bundle) -> Unit) =
+        DataBindingUtil.inflate<DialogButtonsBinding>(
+            inflater,
+            R.layout.dialog_buttons,
+            null,
+            true,
+        )
+            .also { bindingItems.add(it) }
+            .let { toComplete(it, positive, negative) }
 
     class Complete private constructor(
         private val bindingItems: List<ViewDataBinding>,
         private val bundleAttachable: List<Lazy<BundleAttachable>>,
+        private val buttonsBinding: DialogButtonsBinding,
         private val positive: (Bundle) -> Unit,
         private val negative: (Bundle) -> Unit,
     ) {
@@ -61,6 +71,7 @@ class Builder(context: Context) {
             arguments = Bundle().apply {
                 putValue(Argument.BINDING_ITEMS, bindingItems)
                 putValue(Argument.BUNDLE_ATTACHABLE, bundleAttachable)
+                putValue(Argument.BUTTONS_BINDING, buttonsBinding)
                 putValue(Argument.POSITIVE_BUTTON, positive)
                 putValue(Argument.NEGATIVE_BUTTON, negative)
             }
@@ -68,9 +79,10 @@ class Builder(context: Context) {
 
         companion object {
             fun Builder.toComplete(
+                buttonsBinding: DialogButtonsBinding,
                 positive: (Bundle) -> Unit,
                 negative: (Bundle) -> Unit,
-            ) = Complete(bindingItems, bundleAttachable, positive, negative)
+            ) = Complete(bindingItems, bundleAttachable, buttonsBinding, positive, negative)
         }
     }
 }

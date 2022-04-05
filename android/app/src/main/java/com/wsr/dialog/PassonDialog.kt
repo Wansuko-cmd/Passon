@@ -25,12 +25,7 @@ class PassonDialog : DialogFragment() {
         val bundle = Bundle().apply {
             bundleAttachable?.forEach { this.putValue(it.value.key, it.value.block()) }
         }
-        DataBindingUtil.inflate<DialogButtonsBinding>(
-            layoutInflater,
-            R.layout.dialog_buttons,
-            null,
-            true,
-        ).apply {
+        arguments.getValue<DialogButtonsBinding>(Argument.BUTTONS_BINDING)?.apply {
             dialogPositiveButton.setOnClickListener {
                 arguments.getValue<(Bundle) -> Unit>(Argument.POSITIVE_BUTTON)
                     ?.let { it1 -> it1(bundle) }
