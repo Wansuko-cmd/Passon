@@ -28,8 +28,8 @@
     <!-- 一覧画面 -->
     <string name="index_no_password_group_message">Click right bottom button to create your password group</string>
     <string name="index_create_password_group_dialog_title">Title</string>
-    <string name="index_create_password_group_dialog_submit_button">Create</string>
-    <string name="index_create_password_group_dialog_cancel_button">Cancel</string>
+    <string name="index_create_password_group_dialog_positive_button">Create</string>
+    <string name="index_create_password_group_dialog_negative_button">Cancel</string>
     <string name="index_create_password_group_dialog_hint">Title</string>
     <string name="index_create_password_group_dialog_checkbox_text">Go to Edit Screen</string>
 
@@ -39,8 +39,8 @@
     <string name="show_toast_on_copy_message">Copied</string>
     <string name="show_delete_password_group_dialog_title">Waring</string>
     <string name="show_delete_password_group_dialog_text">Are you sure you want to delete this password group?</string>
-    <string name="show_delete_password_group_dialog_ok_button">Delete</string>
-    <string name="show_delete_password_group_dialog_cancel_button">Cancel</string>
+    <string name="show_delete_password_group_dialog_positive_button">Delete</string>
+    <string name="show_delete_password_group_dialog_negative_button">Cancel</string>
     <string name="show_menu_icon_delete">Delete</string>
 
     <!-- 編集画面 -->
