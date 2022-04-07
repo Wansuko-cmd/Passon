@@ -75,13 +75,14 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
                     .setCheckboxWithText("navigateToEdit", getString(R.string.index_create_password_group_dialog_checkbox_text))
                     .setButtons(
                         positive = { bundle ->
-                            val passwordGroupName = bundle.getValue<String>("passwordGroup")
-                            val navigateToEdit = bundle.getValue<Boolean>("navigateToEdit")
-                            if (passwordGroupName != null && navigateToEdit != null) {
-                                indexViewModel.createPasswordGroup(userId, passwordGroupName, navigateToEdit)
-                            }
+                            val passwordGroupName = bundle
+                                .getValue<String>("passwordGroup") ?: return@setButtons
+                            val navigateToEdit = bundle
+                                .getValue<String>("navigateToEdit")
+                                ?.toBooleanStrictOrNull() ?: return@setButtons
+                            indexViewModel.createPasswordGroup(userId, passwordGroupName, navigateToEdit)
                         },
-                        negative = {},
+                        negative = { },
                     )
                     .build()
             }

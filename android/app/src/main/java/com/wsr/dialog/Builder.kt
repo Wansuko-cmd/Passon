@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.DialogFragment
 import com.wsr.R
 import com.wsr.databinding.DialogButtonsBinding
 import com.wsr.databinding.DialogCheckboxWithTextBinding
@@ -71,7 +72,7 @@ class Builder {
         return this
     }
 
-    fun setButtons(positive: (Bundle) -> Unit, negative: (Bundle) -> Unit): Complete {
+    fun setButtons(positive: DialogFragment.(Bundle) -> Unit, negative: DialogFragment.(Bundle) -> Unit): Complete {
         val block = { inflater: LayoutInflater ->
             DataBindingUtil.inflate<DialogButtonsBinding>(
                 inflater,
@@ -80,7 +81,6 @@ class Builder {
                 true,
             )
         }
-        bindingItems.add(block)
 
         return toComplete(block, positive, negative)
     }
@@ -89,8 +89,8 @@ class Builder {
         private val bindingItems: List<(LayoutInflater) -> ViewDataBinding>,
         private val bundleAttachable: List<BundleAttachable>,
         private val buttonsBinding: (LayoutInflater) -> DialogButtonsBinding,
-        private val positive: (Bundle) -> Unit,
-        private val negative: (Bundle) -> Unit,
+        private val positive: DialogFragment.(Bundle) -> Unit,
+        private val negative: DialogFragment.(Bundle) -> Unit,
     ) {
         fun build(): PassonDialog = PassonDialog().apply {
             arguments = Bundle().apply {
@@ -105,8 +105,8 @@ class Builder {
         companion object {
             fun Builder.toComplete(
                 buttonsBinding: (LayoutInflater) -> DialogButtonsBinding,
-                positive: (Bundle) -> Unit,
-                negative: (Bundle) -> Unit,
+                positive: DialogFragment.(Bundle) -> Unit,
+                negative: DialogFragment.(Bundle) -> Unit,
             ) = Complete(bindingItems, bundleAttachable, buttonsBinding, positive, negative)
         }
     }
