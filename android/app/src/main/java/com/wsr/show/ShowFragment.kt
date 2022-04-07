@@ -15,10 +15,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.wsr.R
 import com.wsr.databinding.FragmentShowBinding
+import com.wsr.dialog.PassonDialog
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.ext.sharedViewModel
 import com.wsr.ext.showDialogIfNotDrawn
-import com.wsr.show.dialog.ShowDeletePasswordGroupDialogFragment
 import com.wsr.utils.consume
 import org.koin.androidx.viewmodel.ViewModelOwner
 
@@ -36,9 +36,7 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.show_menu_delete -> {
-                showDialogIfNotDrawn(tag) {
-                    ShowDeletePasswordGroupDialogFragment.create(passwordGroupId)
-                }
+                showDeletePasswordGroupDialog()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -109,6 +107,19 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
     private fun navigateToEdit(passwordGroupId: String) {
         val action = ShowFragmentDirections.actionShowFragmentToEditFragment(passwordGroupId)
         findNavController().navigate(action)
+    }
+
+    private fun showDeletePasswordGroupDialog() {
+        showDialogIfNotDrawn(tag) {
+            PassonDialog.builder()
+                .setTitle(getString(R.string.show_delete_password_group_dialog_title))
+                .setMessage(getString(R.string.show_delete_password_group_dialog_text))
+                .setButtons(
+                    positive = { showViewModel.delete(passwordGroupId) },
+                    negative = { /* do nothing */ },
+                )
+                .build()
+        }
     }
 
     private fun showErrorMessage(errorShowUiState: ErrorShowUiState) =
