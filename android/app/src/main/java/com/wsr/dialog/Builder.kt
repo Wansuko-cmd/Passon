@@ -1,6 +1,5 @@
 package com.wsr.dialog
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
@@ -31,7 +30,7 @@ class Builder {
     }
 
     fun setEditText(key: String, hint: String = ""): Builder {
-        bindingItems.add{ inflater ->
+        bindingItems.add { inflater ->
             DataBindingUtil.inflate<DialogEditTextBinding>(
                 inflater,
                 R.layout.dialog_edit_text,
@@ -52,7 +51,7 @@ class Builder {
     }
 
     fun setCheckboxWithText(key: String, text: String): Builder {
-        bindingItems.add{ inflater ->
+        bindingItems.add { inflater ->
             DataBindingUtil.inflate<DialogCheckboxWithTextBinding>(
                 inflater,
                 R.layout.dialog_checkbox_with_text,

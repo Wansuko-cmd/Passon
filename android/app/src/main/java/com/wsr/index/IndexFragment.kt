@@ -77,7 +77,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
                         positive = { bundle ->
                             val passwordGroupName = bundle.getValue<String>("passwordGroup")
                             val navigateToEdit = bundle.getValue<Boolean>("navigateToEdit")
-                            if(passwordGroupName != null && navigateToEdit != null) {
+                            if (passwordGroupName != null && navigateToEdit != null) {
                                 indexViewModel.createPasswordGroup(userId, passwordGroupName, navigateToEdit)
                             }
                         },
