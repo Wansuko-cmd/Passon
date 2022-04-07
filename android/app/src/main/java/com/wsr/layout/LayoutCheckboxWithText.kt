@@ -27,6 +27,12 @@ class LayoutCheckboxWithText @JvmOverloads constructor(
         )
     }
 
+    val isChecked = binding.layoutCheckboxWithTextCheckbox.isChecked
+    var text get() = binding.layoutCheckboxWithTextText.text
+        set(value) {
+            binding.layoutCheckboxWithTextText.text = value
+        }
+
     private fun setText(text: String) {
         binding.layoutCheckboxWithTextText.text = text
     }

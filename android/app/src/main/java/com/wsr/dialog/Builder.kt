@@ -7,30 +7,31 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.wsr.R
 import com.wsr.databinding.DialogButtonsBinding
+import com.wsr.databinding.DialogCheckboxWithTextBinding
 import com.wsr.databinding.DialogEditTextBinding
 import com.wsr.databinding.DialogTitleBinding
 import com.wsr.dialog.Builder.Complete.Companion.toComplete
 import com.wsr.dialog.BundleValue.Companion.putValue
 
-class Builder(context: Context) {
-    private val bindingItems = mutableListOf<Lazy<(LayoutInflater) -> ViewDataBinding>>()
-    private val bundleAttachable = mutableListOf<Lazy<BundleAttachable>>()
+class Builder {
+    private val bindingItems = mutableListOf<(LayoutInflater) -> ViewDataBinding>()
+    private val bundleAttachable = mutableListOf<BundleAttachable>()
 
     fun setTitle(title: String): Builder {
-        bindingItems.add(lazy { { inflater ->
+        bindingItems.add { inflater ->
             DataBindingUtil.inflate<DialogTitleBinding>(
                 inflater,
                 R.layout.dialog_title,
                 null,
                 true,
             ).apply { dialogTitle.text = title }
-        } })
+        }
 
         return this
     }
 
     fun setEditText(key: String, hint: String = ""): Builder {
-        bindingItems.add(lazy { { inflater ->
+        bindingItems.add{ inflater ->
             DataBindingUtil.inflate<DialogEditTextBinding>(
                 inflater,
                 R.layout.dialog_edit_text,
@@ -40,28 +41,45 @@ class Builder(context: Context) {
                 .apply { dialogEditText.hint = hint }
                 .also {
                     bundleAttachable.add(
-                        lazy {
-                            BundleAttachable(key) {
-                                it.dialogEditText.text.toString()
-                            }
+                        BundleAttachable(key) {
+                            it.dialogEditText.text.toString()
                         }
                     )
                 }
-        } })
+        }
+
+        return this
+    }
+
+    fun setCheckboxWithText(key: String, text: String): Builder {
+        bindingItems.add{ inflater ->
+            DataBindingUtil.inflate<DialogCheckboxWithTextBinding>(
+                inflater,
+                R.layout.dialog_checkbox_with_text,
+                null,
+                true,
+            )
+                .apply { dialogCheckboxWithText.text = text }
+                .also {
+                    bundleAttachable.add(
+                        BundleAttachable(key) {
+                            it.dialogCheckboxWithText.isChecked.toString()
+                        }
+                    )
+                }
+        }
 
         return this
     }
 
     fun setButtons(positive: (Bundle) -> Unit, negative: (Bundle) -> Unit): Complete {
-        val block = lazy<(LayoutInflater) -> DialogButtonsBinding> {
-            { inflater ->
-                DataBindingUtil.inflate(
-                    inflater,
-                    R.layout.dialog_buttons,
-                    null,
-                    true,
-                )
-            }
+        val block = { inflater: LayoutInflater ->
+            DataBindingUtil.inflate<DialogButtonsBinding>(
+                inflater,
+                R.layout.dialog_buttons,
+                null,
+                true,
+            )
         }
         bindingItems.add(block)
 
@@ -69,9 +87,9 @@ class Builder(context: Context) {
     }
 
     class Complete private constructor(
-        private val bindingItems: List<Lazy<(LayoutInflater) -> ViewDataBinding>>,
-        private val bundleAttachable: List<Lazy<BundleAttachable>>,
-        private val buttonsBinding: Lazy<(LayoutInflater) -> DialogButtonsBinding>,
+        private val bindingItems: List<(LayoutInflater) -> ViewDataBinding>,
+        private val bundleAttachable: List<BundleAttachable>,
+        private val buttonsBinding: (LayoutInflater) -> DialogButtonsBinding,
         private val positive: (Bundle) -> Unit,
         private val negative: (Bundle) -> Unit,
     ) {
@@ -87,7 +105,7 @@ class Builder(context: Context) {
 
         companion object {
             fun Builder.toComplete(
-                buttonsBinding: Lazy<(LayoutInflater) -> DialogButtonsBinding>,
+                buttonsBinding: (LayoutInflater) -> DialogButtonsBinding,
                 positive: (Bundle) -> Unit,
                 negative: (Bundle) -> Unit,
             ) = Complete(bindingItems, bundleAttachable, buttonsBinding, positive, negative)

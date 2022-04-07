@@ -66,16 +66,19 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
 
         binding.indexFragmentFab.setOnClickListener {
             showDialogIfNotDrawn(tag) {
-                PassonDialog.builder(requireContext())
+                PassonDialog.builder()
                     .setTitle(getString(R.string.index_create_password_group_dialog_title))
                     .setEditText(
                         key = "passwordGroup",
                         hint = getString(R.string.index_create_password_group_dialog_hint)
                     )
+                    .setCheckboxWithText("navigateToEdit", getString(R.string.index_create_password_group_dialog_checkbox_text))
                     .setButtons(
                         positive = { bundle ->
-                            bundle.getValue<String>("passwordGroup")?.let {
-                                indexViewModel.createPasswordGroup(userId, it, true)
+                            val passwordGroupName = bundle.getValue<String>("passwordGroup")
+                            val navigateToEdit = bundle.getValue<Boolean>("navigateToEdit")
+                            if(passwordGroupName != null && navigateToEdit != null) {
+                                indexViewModel.createPasswordGroup(userId, passwordGroupName, navigateToEdit)
                             }
                         },
                         negative = {},

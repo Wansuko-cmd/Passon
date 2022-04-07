@@ -2,7 +2,6 @@ package com.wsr.dialog
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.databinding.ViewDataBinding
@@ -20,16 +19,15 @@ class PassonDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogMainBinding.inflate(requireActivity().layoutInflater)
 
-        arguments.getValue<List<Lazy<(LayoutInflater) -> ViewDataBinding>>>(Argument.BINDING_ITEMS)
-            ?.forEach { binding.dialogMainLinearLayout.addView(it.value.invoke(requireActivity().layoutInflater).root) }
+        arguments.getValue<List<(LayoutInflater) -> ViewDataBinding>>(Argument.BINDING_ITEMS)
+            ?.forEach { binding.dialogMainLinearLayout.addView(it.invoke(requireActivity().layoutInflater).root) }
 
-        val bundleAttachable = arguments.getValue<List<Lazy<BundleAttachable>>>(Argument.BUNDLE_ATTACHABLE)
+        val bundleAttachable = arguments.getValue<List<BundleAttachable>>(Argument.BUNDLE_ATTACHABLE)
         val bundle = Bundle().apply {
-            bundleAttachable?.forEach { this.putValue(it.value.key, it.value.block()) }
+            bundleAttachable?.forEach { this.putValue(it.key, it.block()) }
         }
         arguments
-            .getValue<Lazy<(LayoutInflater) -> DialogButtonsBinding>>(Argument.BUTTONS_BINDING)
-            ?.value
+            .getValue<(LayoutInflater) -> DialogButtonsBinding>(Argument.BUTTONS_BINDING)
             ?.invoke(requireActivity().layoutInflater)
             ?.apply {
 
@@ -47,6 +45,6 @@ class PassonDialog : DialogFragment() {
     }
 
     companion object {
-        fun builder(context: Context) = Builder(context)
+        fun builder() = Builder()
     }
 }
