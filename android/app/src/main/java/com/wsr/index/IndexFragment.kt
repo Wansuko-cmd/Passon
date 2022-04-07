@@ -64,29 +64,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
             adapter = indexEpoxyController.adapter
         }
 
-        binding.indexFragmentFab.setOnClickListener {
-            showDialogIfNotDrawn(tag) {
-                PassonDialog.builder()
-                    .setTitle(getString(R.string.index_create_password_group_dialog_title))
-                    .setEditText(
-                        key = "passwordGroup",
-                        hint = getString(R.string.index_create_password_group_dialog_hint)
-                    )
-                    .setCheckboxWithText("navigateToEdit", getString(R.string.index_create_password_group_dialog_checkbox_text))
-                    .setButtons(
-                        positive = { bundle ->
-                            val passwordGroupName = bundle
-                                .getValue<String>("passwordGroup") ?: return@setButtons
-                            val navigateToEdit = bundle
-                                .getValue<String>("navigateToEdit")
-                                ?.toBooleanStrictOrNull() ?: return@setButtons
-                            indexViewModel.createPasswordGroup(userId, passwordGroupName, navigateToEdit)
-                        },
-                        negative = { },
-                    )
-                    .build()
-            }
-        }
+        binding.indexFragmentFab.setOnClickListener { showIndexCratePasswordGroupDialog() }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             indexViewModel.uiState.collect { indexUiState ->
@@ -114,6 +92,30 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
     private fun navigateToEdit(passwordGroupId: String) {
         val action = IndexFragmentDirections.actionIndexFragmentToEditFragment(passwordGroupId)
         findNavController().navigate(action)
+    }
+
+    private fun showIndexCratePasswordGroupDialog() {
+        showDialogIfNotDrawn(tag) {
+            PassonDialog.builder()
+                .setTitle(getString(R.string.index_create_password_group_dialog_title))
+                .setEditText(
+                    key = "passwordGroup",
+                    hint = getString(R.string.index_create_password_group_dialog_hint)
+                )
+                .setCheckboxWithText("navigateToEdit", getString(R.string.index_create_password_group_dialog_checkbox_text))
+                .setButtons(
+                    positive = { bundle ->
+                        val passwordGroupName = bundle
+                            .getValue<String>("passwordGroup") ?: return@setButtons
+                        val navigateToEdit = bundle
+                            .getValue<String>("navigateToEdit")
+                            ?.toBooleanStrictOrNull() ?: return@setButtons
+                        indexViewModel.createPasswordGroup(userId, passwordGroupName, navigateToEdit)
+                    },
+                    negative = { },
+                )
+                .build()
+        }
     }
 
     private fun showErrorMessage(errorIndexUiState: ErrorIndexUiState) =

@@ -23,7 +23,6 @@ import com.wsr.get.GetPasswordPairUseCaseImpl
 import com.wsr.get.GetUserUseCase
 import com.wsr.get.GetUserUseCaseImpl
 import com.wsr.index.IndexViewModel
-import com.wsr.index.dialog.IndexCreatePasswordGroupDialogViewModel
 import com.wsr.infra.PassonDatabase
 import com.wsr.infra.passwordgroup.LocalPasswordGroupRepositoryImpl
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
@@ -60,7 +59,6 @@ val module = module {
     viewModel { LoginViewModel(get(), get()) }
     viewModel { SignUpViewModel(get()) }
     viewModel { IndexViewModel(get(), get()) }
-    viewModel { IndexCreatePasswordGroupDialogViewModel() }
     viewModel { ShowViewModel(get(), get()) }
     viewModel { EditViewModel(get(), get(), get()) }
     viewModel { SettingsViewModel(get(), get(), get()) }
