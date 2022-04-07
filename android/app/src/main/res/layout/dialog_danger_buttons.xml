@@ -4,6 +4,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="24dp"
         xmlns:app="http://schemas.android.com/apk/res-auto">
         <Button
             android:id="@+id/dialog_danger_negative_button"
