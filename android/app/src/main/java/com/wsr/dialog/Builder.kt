@@ -87,14 +87,24 @@ class Builder {
         return this
     }
 
-    fun setButtons(positive: DialogFragment.(Bundle) -> Unit, negative: DialogFragment.(Bundle) -> Unit): Complete {
+    fun setButtons(
+        positiveText: String,
+        positive: DialogFragment.(Bundle) -> Unit,
+        negativeText: String,
+        negative: DialogFragment.(Bundle) -> Unit,
+    ): Complete {
         val block = { inflater: LayoutInflater ->
             DataBindingUtil.inflate<DialogButtonsBinding>(
                 inflater,
                 R.layout.dialog_buttons,
                 null,
                 true,
-            ).let {
+            )
+                .apply {
+                    dialogPositiveButton.text = positiveText
+                    dialogNegativeButton.text = negativeText
+                }
+                .let {
                 ButtonsBinding(
                     binding = it,
                     positive = it.dialogPositiveButton,
@@ -106,7 +116,12 @@ class Builder {
         return toComplete(block, positive, negative)
     }
 
-    fun setDangerButtons(positive: DialogFragment.(Bundle) -> Unit, negative: DialogFragment.(Bundle) -> Unit): Complete {
+    fun setDangerButtons(
+        positiveText: String,
+        positive: DialogFragment.(Bundle) -> Unit,
+        negativeText: String,
+        negative: DialogFragment.(Bundle) -> Unit,
+    ): Complete {
         val block = { inflater: LayoutInflater ->
             DataBindingUtil.inflate<DialogDangerButtonsBinding>(
                 inflater,
@@ -114,6 +129,10 @@ class Builder {
                 null,
                 true,
             )
+                .apply {
+                    dialogDangerPositiveButton.text = positiveText
+                    dialogDangerNegativeButton.text = negativeText
+                }
                 .let {
                     ButtonsBinding(
                         binding = it,
