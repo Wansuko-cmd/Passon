@@ -9,6 +9,7 @@ import com.wsr.R
 import com.wsr.databinding.DialogButtonsBinding
 import com.wsr.databinding.DialogCheckboxWithTextBinding
 import com.wsr.databinding.DialogEditTextBinding
+import com.wsr.databinding.DialogMessageBinding
 import com.wsr.databinding.DialogTitleBinding
 import com.wsr.dialog.Builder.Complete.Companion.toComplete
 import com.wsr.dialog.BundleValue.Companion.putValue
@@ -25,6 +26,19 @@ class Builder {
                 null,
                 true,
             ).apply { dialogTitle.text = title }
+        }
+
+        return this
+    }
+
+    fun setMessage(message: String): Builder {
+        bindingItems.add { inflater ->
+            DataBindingUtil.inflate<DialogMessageBinding>(
+                inflater,
+                R.layout.dialog_message,
+                null,
+                true,
+            ).apply { dialogMessage.text = message }
         }
 
         return this
