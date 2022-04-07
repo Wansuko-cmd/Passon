@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.wsr.R
 import com.wsr.databinding.DialogButtonsBinding
 import com.wsr.databinding.DialogCheckboxWithTextBinding
+import com.wsr.databinding.DialogDangerButtonsBinding
 import com.wsr.databinding.DialogEditTextBinding
 import com.wsr.databinding.DialogMessageBinding
 import com.wsr.databinding.DialogTitleBinding
@@ -93,7 +94,33 @@ class Builder {
                 R.layout.dialog_buttons,
                 null,
                 true,
+            ).let {
+                ButtonsBinding(
+                    binding = it,
+                    positive = it.dialogPositiveButton,
+                    negative = it.dialogNegativeButton,
+                )
+            }
+        }
+
+        return toComplete(block, positive, negative)
+    }
+
+    fun setDangerButtons(positive: DialogFragment.(Bundle) -> Unit, negative: DialogFragment.(Bundle) -> Unit): Complete {
+        val block = { inflater: LayoutInflater ->
+            DataBindingUtil.inflate<DialogDangerButtonsBinding>(
+                inflater,
+                R.layout.dialog_danger_buttons,
+                null,
+                true,
             )
+                .let {
+                    ButtonsBinding(
+                        binding = it,
+                        positive = it.dialogDangerPositiveButton,
+                        negative = it.dialogDangerNegativeButton
+                    )
+                }
         }
 
         return toComplete(block, positive, negative)
@@ -102,7 +129,7 @@ class Builder {
     class Complete private constructor(
         private val bindingItems: List<(LayoutInflater) -> ViewDataBinding>,
         private val bundleAttachable: List<BundleAttachable>,
-        private val buttonsBinding: (LayoutInflater) -> DialogButtonsBinding,
+        private val buttonsBinding: (LayoutInflater) -> ButtonsBinding,
         private val positive: DialogFragment.(Bundle) -> Unit,
         private val negative: DialogFragment.(Bundle) -> Unit,
     ) {
@@ -118,7 +145,7 @@ class Builder {
 
         companion object {
             fun Builder.toComplete(
-                buttonsBinding: (LayoutInflater) -> DialogButtonsBinding,
+                buttonsBinding: (LayoutInflater) -> ButtonsBinding,
                 positive: DialogFragment.(Bundle) -> Unit,
                 negative: DialogFragment.(Bundle) -> Unit,
             ) = Complete(bindingItems, bundleAttachable, buttonsBinding, positive, negative)

@@ -1,6 +1,8 @@
 package com.wsr.dialog
 
 import android.os.Bundle
+import android.view.View
+import androidx.databinding.ViewDataBinding
 import java.io.Serializable
 
 class BundleValue<T>(private val value: T) : Serializable {
@@ -24,3 +26,5 @@ enum class Argument {
 }
 
 data class BundleAttachable(val key: String, val block: () -> Any)
+
+data class ButtonsBinding(val binding: ViewDataBinding, val positive: View, val negative: View)
