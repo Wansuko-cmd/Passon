@@ -40,8 +40,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 PassonDialog.builder()
                     .setTitle("Login Password")
                     .setButtons(
+                        positiveText = "",
                         positive = { Toast.makeText(requireContext(), "Positive", Toast.LENGTH_SHORT).show() },
-                        negative = { Toast.makeText(requireContext(), "Negative", Toast.LENGTH_SHORT).show() }
+                        negativeText = "",
+                        negative = { Toast.makeText(requireContext(), "Negative", Toast.LENGTH_SHORT).show() },
                     )
                     .build()
                     .show(childFragmentManager, tag)

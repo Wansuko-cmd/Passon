@@ -114,8 +114,10 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
             PassonDialog.builder()
                 .setTitle(getString(R.string.show_delete_password_group_dialog_title))
                 .setMessage(getString(R.string.show_delete_password_group_dialog_text))
-                .setButtons(
+                .setDangerButtons(
+                    positiveText = getString(R.string.show_delete_password_group_dialog_ok_button),
                     positive = { showViewModel.delete(passwordGroupId) },
+                    negativeText = getString(R.string.show_delete_password_group_dialog_cancel_button),
                     negative = { /* do nothing */ },
                 )
                 .build()
