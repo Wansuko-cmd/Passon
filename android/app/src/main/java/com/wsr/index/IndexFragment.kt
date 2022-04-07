@@ -64,7 +64,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
             adapter = indexEpoxyController.adapter
         }
 
-        binding.indexFragmentFab.setOnClickListener { showIndexCratePasswordGroupDialog() }
+        binding.indexFragmentFab.setOnClickListener { showCreatePasswordGroupDialog() }
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             indexViewModel.uiState.collect { indexUiState ->
@@ -94,7 +94,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
         findNavController().navigate(action)
     }
 
-    private fun showIndexCratePasswordGroupDialog() {
+    private fun showCreatePasswordGroupDialog() {
         showDialogIfNotDrawn(tag) {
             PassonDialog.builder()
                 .setTitle(getString(R.string.index_create_password_group_dialog_title))
