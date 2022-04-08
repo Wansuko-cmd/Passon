@@ -51,13 +51,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<Preference>("logout")?.apply {
             setOnPreferenceClickListener {
-                val action = SettingsFragmentDirections.actionSettingsFragmentToLoginFragment()
-                findNavController().navigate(action)
+                navigateToLogin()
                 true
             }
         }
 
         findPreference<Preference>("delete_user")?.apply {
+            setOnPreferenceClickListener {
+                showDeleteUserDialog()
+                true
+            }
         }
     }
 
@@ -109,5 +112,25 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 )
                 .build()
         }
+    }
+
+    private fun showDeleteUserDialog() {
+        showDialogIfNotDrawn(tag) {
+            PassonDialog.builder()
+                .setTitle(getString(R.string.settings_delete_user_dialog_title))
+                .setMessage(getString(R.string.settings_delete_user_dialog_message))
+                .setDangerButtons(
+                    positiveText = getString(R.string.settings_delete_user_dialog_positive_button),
+                    positive = { settingsViewModel.deleteUser(userId) },
+                    negativeText = getString(R.string.settings_delete_user_dialog_negative_button),
+                    negative = {},
+                )
+                .build()
+        }
+    }
+
+    private fun navigateToLogin() {
+        val action = SettingsFragmentDirections.actionSettingsFragmentToLoginFragment()
+        findNavController().navigate(action)
     }
 }

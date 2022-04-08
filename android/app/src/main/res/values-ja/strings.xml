@@ -68,4 +68,8 @@
     <string name="settings_update_login_password_dialog_confirmation_hint">確認</string>
     <string name="settings_update_login_password_dialog_positive_button">保存</string>
     <string name="settings_update_login_password_dialog_negative_button">キャンセル</string>
+    <string name="settings_delete_user_dialog_title">警告</string>
+    <string name="settings_delete_user_dialog_message">本当にこのユーザーを削除してよろしいですか？</string>
+    <string name="settings_delete_user_dialog_positive_button">削除</string>
+    <string name="settings_delete_user_dialog_negative_button">キャンセル</string>
 </resources>
