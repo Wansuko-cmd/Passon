@@ -8,7 +8,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.wsr.R
+import com.wsr.dialog.BundleValue.Companion.getValue
 import com.wsr.dialog.PassonDialog
+import com.wsr.ext.showDialogIfNotDrawn
 import com.wsr.maybe.consume
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -27,8 +29,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             setOnPreferenceClickListener {
                 lifecycleScope.launch {
                     settingsViewModel.getDisplayName(userId).consume(
-                        success = { Toast.makeText(requireContext(), it.displayName, Toast.LENGTH_SHORT).show() },
-                        failure = { Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show() }
+                        success = {
+                            showUpdateDisplayNameDialog(it.displayName)
+                        },
+                        failure = {
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        }
                     )
                 }
                 true
@@ -60,6 +66,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<Preference>("delete_user")?.apply {
+        }
+    }
+
+    private fun showUpdateDisplayNameDialog(currentDisplayName: String) {
+        showDialogIfNotDrawn(tag) {
+            PassonDialog.builder()
+                .setTitle("")
+                .setEditText("displayName", text = currentDisplayName)
+                .setButtons(
+                    positiveText = "",
+                    positive = { bundle ->
+                        bundle.getValue<String>("displayName")
+                            ?.also { settingsViewModel.updateDisplayName(userId, it) }
+                    },
+                    negativeText = "",
+                    negative = {},
+                )
+                .build()
         }
     }
 }
