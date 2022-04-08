@@ -13,6 +13,8 @@ import com.wsr.create.CreatePasswordItemUseCase
 import com.wsr.create.CreatePasswordItemUseCaseImpl
 import com.wsr.delete.DeletePasswordGroupUseCase
 import com.wsr.delete.DeletePasswordGroupUseCaseImpl
+import com.wsr.delete.DeleteUserUseCase
+import com.wsr.delete.DeleteUserUseCaseImpl
 import com.wsr.edit.EditViewModel
 import com.wsr.get.GetAllPasswordGroupUseCase
 import com.wsr.get.GetAllPasswordGroupUseCaseImpl
@@ -72,6 +74,7 @@ val module = module {
 
     // delete
     single<DeletePasswordGroupUseCase> { DeletePasswordGroupUseCaseImpl(get()) }
+    single<DeleteUserUseCase> { DeleteUserUseCaseImpl(get()) }
 
     // get
     single<GetAllUserUseCase> { GetAllUserUseCaseImpl(get()) }
