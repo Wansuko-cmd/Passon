@@ -43,16 +43,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<Preference>("login_password")?.apply {
             setOnPreferenceClickListener {
-                PassonDialog.builder()
-                    .setTitle("Login Password")
-                    .setButtons(
-                        positiveText = "",
-                        positive = { Toast.makeText(requireContext(), "Positive", Toast.LENGTH_SHORT).show() },
-                        negativeText = "",
-                        negative = { Toast.makeText(requireContext(), "Negative", Toast.LENGTH_SHORT).show() },
-                    )
-                    .build()
-                    .show(childFragmentManager, tag)
+                showUpdateLoginPasswordDialog()
                 true
             }
         }
@@ -85,6 +76,26 @@ class SettingsFragment : PreferenceFragmentCompat() {
                             ?.also { settingsViewModel.updateDisplayName(userId, it) }
                     },
                     negativeText = getString(R.string.settings_update_display_name_dialog_negative_button),
+                    negative = {},
+                )
+                .build()
+        }
+    }
+
+    private fun showUpdateLoginPasswordDialog() {
+        showDialogIfNotDrawn(tag) {
+            PassonDialog.builder()
+                .setTitle("")
+                .setEditText("loginPassword")
+                .setEditText("loginPasswordConfirmation")
+                .setButtons(
+                    positiveText = "",
+                    positive = { bundle ->
+                        val loginPassword = bundle.getValue<String>("loginPassword") ?: return@setButtons
+                        val loginPasswordConfirmation = bundle.getValue<String>("loginPasswordConfirmation") ?: return@setButtons
+                        settingsViewModel.updateLoginPassword(userId, loginPassword, loginPasswordConfirmation)
+                    },
+                    negativeText = "",
                     negative = {},
                 )
                 .build()

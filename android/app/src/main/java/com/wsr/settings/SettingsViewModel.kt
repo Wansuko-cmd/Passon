@@ -26,9 +26,13 @@ class SettingsViewModel(
         }
     }
 
-    suspend fun updateLoginPassword(userId: String, loginPassword: String) {
+    fun updateLoginPassword(
+        userId: String,
+        loginPassword: String,
+        loginPasswordConfirmation: String,
+    ) {
         viewModelScope.launch {
-            resetLoginPasswordUseCase.reset(userId, loginPassword)
+            if(loginPassword == loginPasswordConfirmation) resetLoginPasswordUseCase.reset(userId, loginPassword)
         }
     }
 }
