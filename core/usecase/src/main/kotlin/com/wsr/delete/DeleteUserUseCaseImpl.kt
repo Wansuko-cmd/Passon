@@ -12,7 +12,7 @@ class DeleteUserUseCaseImpl(private val userRepository: UserRepository) : Delete
             .delete(UserId(id))
             .mapFailure { it.toDeleteUserUseCaseException() }
 
-    private fun DeleteDataFailedException.toDeleteUserUseCaseException() = when(this) {
+    private fun DeleteDataFailedException.toDeleteUserUseCaseException() = when (this) {
         is DeleteDataFailedException.NoSuchElementException ->
             DeleteUserUseCaseException.NoSuchPasswordGroupException("")
         is DeleteDataFailedException.DatabaseError ->
