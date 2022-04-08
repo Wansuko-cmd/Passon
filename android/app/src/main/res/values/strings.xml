@@ -64,4 +64,9 @@
     <string name="settings_update_display_name_dialog_hint">User Name</string>
     <string name="settings_update_display_name_dialog_positive_button">Save</string>
     <string name="settings_update_display_name_dialog_negative_button">Cancel</string>
+    <string name="settings_update_login_password_dialog_title">Login Password</string>
+    <string name="settings_update_login_password_dialog_hint">Login Password</string>
+    <string name="settings_update_login_password_dialog_confirmation_hint">Confirm</string>
+    <string name="settings_update_login_password_dialog_positive_button">Save</string>
+    <string name="settings_update_login_password_dialog_negative_button">Cancel</string>
 </resources>

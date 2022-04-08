@@ -63,4 +63,9 @@
     <string name="settings_update_display_name_dialog_hint">ユーザー名</string>
     <string name="settings_update_display_name_dialog_positive_button">保存</string>
     <string name="settings_update_display_name_dialog_negative_button">キャンセル</string>
+    <string name="settings_update_login_password_dialog_title">ログイン時のパスワード</string>
+    <string name="settings_update_login_password_dialog_hint">ログイン時のパスワード</string>
+    <string name="settings_update_login_password_dialog_confirmation_hint">確認</string>
+    <string name="settings_update_login_password_dialog_positive_button">保存</string>
+    <string name="settings_update_login_password_dialog_negative_button">キャンセル</string>
 </resources>

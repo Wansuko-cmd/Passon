@@ -85,17 +85,23 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun showUpdateLoginPasswordDialog() {
         showDialogIfNotDrawn(tag) {
             PassonDialog.builder()
-                .setTitle("")
-                .setEditText("loginPassword")
-                .setEditText("loginPasswordConfirmation")
+                .setTitle(getString(R.string.settings_update_login_password_dialog_title))
+                .setEditText(
+                    key = "loginPassword",
+                    hint = getString(R.string.settings_update_login_password_dialog_hint)
+                )
+                .setEditText(
+                    key = "loginPasswordConfirmation",
+                    hint = getString(R.string.settings_update_login_password_dialog_confirmation_hint)
+                )
                 .setButtons(
-                    positiveText = "",
+                    positiveText = getString(R.string.index_create_password_group_dialog_positive_button),
                     positive = { bundle ->
                         val loginPassword = bundle.getValue<String>("loginPassword") ?: return@setButtons
                         val loginPasswordConfirmation = bundle.getValue<String>("loginPasswordConfirmation") ?: return@setButtons
                         settingsViewModel.updateLoginPassword(userId, loginPassword, loginPasswordConfirmation)
                     },
-                    negativeText = "",
+                    negativeText = getString(R.string.settings_update_login_password_dialog_negative_button),
                     negative = {},
                 )
                 .build()
