@@ -32,7 +32,7 @@ class SettingsViewModel(
         loginPasswordConfirmation: String,
     ) {
         viewModelScope.launch {
-            if(loginPassword == loginPasswordConfirmation) resetLoginPasswordUseCase.reset(userId, loginPassword)
+            if (loginPassword == loginPasswordConfirmation) resetLoginPasswordUseCase.reset(userId, loginPassword)
         }
     }
 }
