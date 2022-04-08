@@ -59,4 +59,8 @@
     <string name="settings_user_category_logout">ログアウト</string>
     <string name="settings_danger_category_title">危険な操作</string>
     <string name="settings_danger_category_delete_user">このユーザーを削除する</string>
+    <string name="settings_update_display_name_dialog_title">ユーザー名</string>
+    <string name="settings_update_display_name_dialog_hint">ユーザー名</string>
+    <string name="settings_update_display_name_dialog_positive_button">保存</string>
+    <string name="settings_update_display_name_dialog_negative_button">キャンセル</string>
 </resources>

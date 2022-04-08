@@ -60,4 +60,8 @@
     <string name="settings_user_category_logout">Logout</string>
     <string name="settings_danger_category_title">Dangerous Control</string>
     <string name="settings_danger_category_delete_user">Delete this user</string>
+    <string name="settings_update_display_name_dialog_title">User Name</string>
+    <string name="settings_update_display_name_dialog_hint">User Name</string>
+    <string name="settings_update_display_name_dialog_positive_button">Save</string>
+    <string name="settings_update_display_name_dialog_negative_button">Cancel</string>
 </resources>

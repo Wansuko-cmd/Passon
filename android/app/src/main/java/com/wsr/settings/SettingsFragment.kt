@@ -72,15 +72,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun showUpdateDisplayNameDialog(currentDisplayName: String) {
         showDialogIfNotDrawn(tag) {
             PassonDialog.builder()
-                .setTitle("")
-                .setEditText("displayName", text = currentDisplayName)
+                .setTitle(getString(R.string.settings_update_display_name_dialog_title))
+                .setEditText(
+                    key = "displayName",
+                    hint = getString(R.string.settings_update_display_name_dialog_hint),
+                    text = currentDisplayName
+                )
                 .setButtons(
-                    positiveText = "",
+                    positiveText = getString(R.string.settings_update_display_name_dialog_positive_button),
                     positive = { bundle ->
                         bundle.getValue<String>("displayName")
                             ?.also { settingsViewModel.updateDisplayName(userId, it) }
                     },
-                    negativeText = "",
+                    negativeText = getString(R.string.settings_update_display_name_dialog_negative_button),
                     negative = {},
                 )
                 .build()
