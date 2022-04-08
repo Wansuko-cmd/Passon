@@ -11,6 +11,7 @@ import com.wsr.R
 import com.wsr.dialog.BundleValue.Companion.getValue
 import com.wsr.dialog.PassonDialog
 import com.wsr.ext.showDialogIfNotDrawn
+import com.wsr.layout.InputType
 import com.wsr.maybe.consume
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -88,11 +89,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 .setTitle(getString(R.string.settings_update_login_password_dialog_title))
                 .setEditText(
                     key = "loginPassword",
-                    hint = getString(R.string.settings_update_login_password_dialog_hint)
+                    hint = getString(R.string.settings_update_login_password_dialog_hint),
+                    inputType = InputType.TextPassword,
                 )
                 .setEditText(
                     key = "loginPasswordConfirmation",
-                    hint = getString(R.string.settings_update_login_password_dialog_confirmation_hint)
+                    hint = getString(R.string.settings_update_login_password_dialog_confirmation_hint),
+                    inputType = InputType.TextPassword,
                 )
                 .setButtons(
                     positiveText = getString(R.string.index_create_password_group_dialog_positive_button),

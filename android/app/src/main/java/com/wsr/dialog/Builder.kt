@@ -14,6 +14,7 @@ import com.wsr.databinding.DialogMessageBinding
 import com.wsr.databinding.DialogTitleBinding
 import com.wsr.dialog.Builder.Complete.Companion.toComplete
 import com.wsr.dialog.BundleValue.Companion.putValue
+import com.wsr.layout.InputType
 
 class Builder {
     private val bindingItems = mutableListOf<(LayoutInflater) -> ViewDataBinding>()
@@ -45,7 +46,12 @@ class Builder {
         return this
     }
 
-    fun setEditText(key: String, hint: String = "", text: String = ""): Builder {
+    fun setEditText(
+        key: String,
+        hint: String = "",
+        text: String = "",
+        inputType: InputType = InputType.Text,
+    ): Builder {
         bindingItems.add { inflater ->
             DataBindingUtil.inflate<DialogEditTextBinding>(
                 inflater,
@@ -56,6 +62,7 @@ class Builder {
                 .apply {
                     dialogEditText.hint = hint
                     dialogEditText.setText(text)
+                    dialogEditText.inputType = inputType.value
                 }
                 .also {
                     bundleAttachable.add(
