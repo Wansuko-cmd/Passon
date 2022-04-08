@@ -1,6 +1,7 @@
 package com.wsr.infra.user
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -20,4 +21,7 @@ interface UserEntityDao {
 
     @Update
     suspend fun update(userEntity: UserEntity)
+
+    @Query("DELETE FROM users WHERE id=:id")
+    suspend fun delete(id: String)
 }
