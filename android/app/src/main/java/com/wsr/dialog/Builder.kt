@@ -45,7 +45,7 @@ class Builder {
         return this
     }
 
-    fun setEditText(key: String, hint: String = ""): Builder {
+    fun setEditText(key: String, hint: String = "", text: String = ""): Builder {
         bindingItems.add { inflater ->
             DataBindingUtil.inflate<DialogEditTextBinding>(
                 inflater,
@@ -53,7 +53,10 @@ class Builder {
                 null,
                 true,
             )
-                .apply { dialogEditText.hint = hint }
+                .apply {
+                    dialogEditText.hint = hint
+                    dialogEditText.setText(text)
+                }
                 .also {
                     bundleAttachable.add(
                         BundleAttachable(key) {
@@ -105,12 +108,12 @@ class Builder {
                     dialogNegativeButton.text = negativeText
                 }
                 .let {
-                ButtonsBinding(
-                    binding = it,
-                    positive = it.dialogPositiveButton,
-                    negative = it.dialogNegativeButton,
-                )
-            }
+                    ButtonsBinding(
+                        binding = it,
+                        positive = it.dialogPositiveButton,
+                        negative = it.dialogNegativeButton,
+                    )
+                }
         }
 
         return toComplete(block, positive, negative)
