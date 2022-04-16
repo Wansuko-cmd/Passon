@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="20sp"
+                android:imeOptions="actionDone"
                 tools:text="Text" />
         </com.google.android.material.textfield.TextInputLayout>
 
