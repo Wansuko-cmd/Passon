@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import com.wsr.databinding.DialogButtonsBinding
 import com.wsr.databinding.DialogMainBinding
 import com.wsr.dialog.BundleValue.Companion.getValue
 import com.wsr.dialog.BundleValue.Companion.putValue

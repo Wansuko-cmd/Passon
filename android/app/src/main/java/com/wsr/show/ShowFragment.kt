@@ -19,7 +19,6 @@ import com.wsr.dialog.PassonDialog
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.ext.sharedViewModel
 import com.wsr.ext.showDialogIfNotDrawn
-import com.wsr.show.dialog.ShowDeletePasswordGroupDialogFragment
 import com.wsr.utils.consume
 import org.koin.androidx.viewmodel.ViewModelOwner
 
@@ -116,12 +115,11 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
                 .setTitle(getString(R.string.show_delete_password_group_dialog_title))
                 .setDangerButtons(
                     positive = { showViewModel.delete(passwordGroupId) },
-                    negative = {  },
+                    negative = {},
                 )
                 .build()
         }
     }
-
 
     private fun showErrorMessage(errorShowUiState: ErrorShowUiState) =
         Toast.makeText(

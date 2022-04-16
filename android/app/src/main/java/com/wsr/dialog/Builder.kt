@@ -1,6 +1,5 @@
 package com.wsr.dialog
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import com.wsr.R
-import com.wsr.databinding.*
+import com.wsr.databinding.DialogButtonsBinding
+import com.wsr.databinding.DialogCheckboxWithTextBinding
+import com.wsr.databinding.DialogDangerButtonsBinding
+import com.wsr.databinding.DialogEditTextBinding
+import com.wsr.databinding.DialogTitleBinding
 import com.wsr.dialog.Builder.Complete.Companion.toComplete
 import com.wsr.dialog.BundleValue.Companion.putValue
 
@@ -94,7 +97,6 @@ class Builder {
             binding.root
         }
     }
-
 
     fun setDangerButtons(
         positive: (Bundle) -> Unit,
