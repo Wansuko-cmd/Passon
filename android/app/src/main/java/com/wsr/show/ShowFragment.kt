@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.wsr.R
 import com.wsr.databinding.FragmentShowBinding
+import com.wsr.dialog.PassonDialog
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.ext.sharedViewModel
 import com.wsr.ext.showDialogIfNotDrawn
@@ -36,9 +37,7 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.show_menu_delete -> {
-                showDialogIfNotDrawn(tag) {
-                    ShowDeletePasswordGroupDialogFragment.create(passwordGroupId)
-                }
+                showDeletePasswordGroupDialog()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -110,6 +109,19 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
         val action = ShowFragmentDirections.actionShowFragmentToEditFragment(passwordGroupId)
         findNavController().navigate(action)
     }
+
+    private fun showDeletePasswordGroupDialog() {
+        showDialogIfNotDrawn(tag) {
+            PassonDialog.builder()
+                .setTitle(getString(R.string.show_delete_password_group_dialog_title))
+                .setDangerButtons(
+                    positive = { showViewModel.delete(passwordGroupId) },
+                    negative = {  },
+                )
+                .build()
+        }
+    }
+
 
     private fun showErrorMessage(errorShowUiState: ErrorShowUiState) =
         Toast.makeText(
