@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import com.wsr.databinding.DialogButtonsBinding
@@ -23,33 +24,19 @@ class PassonDialog : DialogFragment() {
             ?.forEach { binding.dialogMainLinearLayout.addView(it.invoke(requireActivity().layoutInflater).root) }
 
         arguments
-            .getValue<(LayoutInflater) -> DialogButtonsBinding>(Argument.BUTTONS_BINDING)
+            .getValue<(LayoutInflater) -> DialogFragment.(Lazy<Bundle>) -> View>(Argument.BUTTONS_BINDING)
             ?.invoke(requireActivity().layoutInflater)
-            ?.apply {
-                dialogPositiveButton.setOnClickListener {
-                    val bundleAttachable = arguments.getValue<List<BundleAttachable>>(Argument.BUNDLE_ATTACHABLE)
-                    val bundle = Bundle().apply {
+            ?.invoke(
+                this@PassonDialog,
+                lazy {
+                    val bundleAttachable =
+                        arguments.getValue<List<BundleAttachable>>(Argument.BUNDLE_ATTACHABLE)
+                    Bundle().apply {
                         bundleAttachable?.forEach { this.putValue(it.key, it.block()) }
                     }
-                    arguments.getValue<DialogFragment.(Bundle) -> Unit>(Argument.POSITIVE_BUTTON)
-                        ?.let { block ->
-                            this@PassonDialog.block(bundle)
-                            dismiss()
-                        }
                 }
-                dialogNegativeButton.setOnClickListener {
-                    val bundleAttachable = arguments.getValue<List<BundleAttachable>>(Argument.BUNDLE_ATTACHABLE)
-                    val bundle = Bundle().apply {
-                        bundleAttachable?.forEach { this.putValue(it.key, it.block()) }
-                    }
-                    arguments.getValue<DialogFragment.(Bundle) -> Unit>(Argument.NEGATIVE_BUTTON)
-                        ?.let { block ->
-                            this@PassonDialog.block(bundle)
-                            dismiss()
-                        }
-                }
-            }
-            ?.also { binding.dialogMainLinearLayout.addView(it.root) }
+            )
+            ?.also { binding.dialogMainLinearLayout.addView(it) }
 
         return AlertDialog.Builder(requireActivity()).apply { setView(binding.root) }.create()
     }

@@ -19,8 +19,6 @@ enum class Argument {
     BINDING_ITEMS,
     BUNDLE_ATTACHABLE,
     BUTTONS_BINDING,
-    POSITIVE_BUTTON,
-    NEGATIVE_BUTTON;
 }
 
 data class BundleAttachable(val key: String, val block: () -> Any)
