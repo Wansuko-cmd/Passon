@@ -24,5 +24,3 @@ enum class Argument {
 }
 
 data class BundleAttachable(val key: String, val block: () -> Any)
-
-data class ButtonsBinding(val binding: ViewDataBinding, val positive: View, val negative: View)

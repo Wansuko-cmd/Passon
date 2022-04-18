@@ -2,6 +2,7 @@ package com.wsr.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
@@ -102,28 +103,25 @@ class Builder {
         positive: DialogFragment.(Bundle) -> Unit,
         negativeText: String,
         negative: DialogFragment.(Bundle) -> Unit,
-    ): Complete {
-        val block = { inflater: LayoutInflater ->
-            DataBindingUtil.inflate<DialogButtonsBinding>(
-                inflater,
-                R.layout.dialog_buttons,
-                null,
-                true,
-            )
-                .apply {
-                    dialogPositiveButton.text = positiveText
-                    dialogNegativeButton.text = negativeText
-                }
-                .let {
-                    ButtonsBinding(
-                        binding = it,
-                        positive = it.dialogPositiveButton,
-                        negative = it.dialogNegativeButton,
-                    )
-                }
-        }
+    ): Complete  = toComplete { inflater: LayoutInflater ->
+        val binding = DataBindingUtil.inflate<DialogButtonsBinding>(
+            inflater,
+            R.layout.dialog_buttons,
+            null,
+            true,
+        )
 
-        return toComplete(block, positive, negative)
+        return@toComplete { bundle: Lazy<Bundle> ->
+            binding.dialogPositiveButton.setOnClickListener {
+                positive(bundle.value)
+                dismiss()
+            }
+            binding.dialogNegativeButton.setOnClickListener {
+                negative(bundle.value)
+                dismiss()
+            }
+            binding.root
+        }
     }
 
     fun setDangerButtons(
@@ -131,53 +129,44 @@ class Builder {
         positive: DialogFragment.(Bundle) -> Unit,
         negativeText: String,
         negative: DialogFragment.(Bundle) -> Unit,
-    ): Complete {
-        val block = { inflater: LayoutInflater ->
-            DataBindingUtil.inflate<DialogDangerButtonsBinding>(
-                inflater,
-                R.layout.dialog_danger_buttons,
-                null,
-                true,
-            )
-                .apply {
-                    dialogDangerPositiveButton.text = positiveText
-                    dialogDangerNegativeButton.text = negativeText
-                }
-                .let {
-                    ButtonsBinding(
-                        binding = it,
-                        positive = it.dialogDangerPositiveButton,
-                        negative = it.dialogDangerNegativeButton
-                    )
-                }
-        }
+    ): Complete = toComplete { inflater: LayoutInflater ->
+        val binding = DataBindingUtil.inflate<DialogButtonsBinding>(
+            inflater,
+            R.layout.dialog_buttons,
+            null,
+            true,
+        )
 
-        return toComplete(block, positive, negative)
+        return@toComplete { bundle: Lazy<Bundle> ->
+            binding.dialogPositiveButton.setOnClickListener {
+                positive(bundle.value)
+                dismiss()
+            }
+            binding.dialogNegativeButton.setOnClickListener {
+                negative(bundle.value)
+                dismiss()
+            }
+            binding.root
+        }
     }
 
     class Complete private constructor(
         private val bindingItems: List<(LayoutInflater) -> ViewDataBinding>,
         private val bundleAttachable: List<BundleAttachable>,
-        private val buttonsBinding: (LayoutInflater) -> ButtonsBinding,
-        private val positive: DialogFragment.(Bundle) -> Unit,
-        private val negative: DialogFragment.(Bundle) -> Unit,
+        private val buttonsBinding: (LayoutInflater) -> DialogFragment.(Lazy<Bundle>) -> View,
     ) {
         fun build(): PassonDialog = PassonDialog().apply {
             arguments = Bundle().apply {
                 putValue(Argument.BINDING_ITEMS, bindingItems)
                 putValue(Argument.BUNDLE_ATTACHABLE, bundleAttachable)
                 putValue(Argument.BUTTONS_BINDING, buttonsBinding)
-                putValue(Argument.POSITIVE_BUTTON, positive)
-                putValue(Argument.NEGATIVE_BUTTON, negative)
             }
         }
 
         companion object {
             fun Builder.toComplete(
-                buttonsBinding: (LayoutInflater) -> ButtonsBinding,
-                positive: DialogFragment.(Bundle) -> Unit,
-                negative: DialogFragment.(Bundle) -> Unit,
-            ) = Complete(bindingItems, bundleAttachable, buttonsBinding, positive, negative)
+                buttonsBinding: (LayoutInflater) -> DialogFragment.(Lazy<Bundle>) -> View,
+            ) = Complete(bindingItems, bundleAttachable, buttonsBinding)
         }
     }
 }
