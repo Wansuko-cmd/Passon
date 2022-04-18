@@ -135,23 +135,23 @@ class Builder {
         negativeText: String,
         negative: DialogFragment.(Bundle) -> Unit,
     ): Complete = toComplete { inflater: LayoutInflater ->
-        val binding = DataBindingUtil.inflate<DialogButtonsBinding>(
+        val binding = DataBindingUtil.inflate<DialogDangerButtonsBinding>(
             inflater,
-            R.layout.dialog_buttons,
+            R.layout.dialog_danger_buttons,
             null,
             true,
         )
 
         return@toComplete { bundle: Lazy<Bundle> ->
             binding.apply {
-                dialogPositiveButton.text = positiveText
-                dialogPositiveButton.setOnClickListener {
+                dialogDangerPositiveButton.text = positiveText
+                dialogDangerPositiveButton.setOnClickListener {
                     positive(bundle.value)
                     dismiss()
                 }
 
-                dialogNegativeButton.text = negativeText
-                dialogNegativeButton.setOnClickListener {
+                dialogDangerNegativeButton.text = negativeText
+                dialogDangerNegativeButton.setOnClickListener {
                     negative(bundle.value)
                     dismiss()
                 }
