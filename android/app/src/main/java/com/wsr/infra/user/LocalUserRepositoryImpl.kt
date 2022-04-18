@@ -1,6 +1,7 @@
 package com.wsr.infra.user
 
 import com.wsr.exceptions.CreateDataFailedException
+import com.wsr.exceptions.DeleteDataFailedException
 import com.wsr.exceptions.UpdateDataFailedException
 import com.wsr.maybe.Maybe
 import com.wsr.user.DisplayName
@@ -39,5 +40,12 @@ class LocalUserRepositoryImpl(private val userEntityDao: UserEntityDao) : UserRe
         Maybe.Success(Unit)
     } catch (e: Exception) {
         Maybe.Failure(UpdateDataFailedException.DatabaseError(e.message.orEmpty()))
+    }
+
+    override suspend fun delete(userId: UserId): Maybe<Unit, DeleteDataFailedException> = try {
+        userEntityDao.delete(userId.value)
+        Maybe.Success(Unit)
+    } catch (e: Exception) {
+        Maybe.Failure(DeleteDataFailedException.DatabaseError(e.message.orEmpty()))
     }
 }

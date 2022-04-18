@@ -20,4 +20,7 @@ interface UserEntityDao {
 
     @Update
     suspend fun update(userEntity: UserEntity)
+
+    @Query("DELETE FROM users WHERE id=:id")
+    suspend fun delete(id: String)
 }

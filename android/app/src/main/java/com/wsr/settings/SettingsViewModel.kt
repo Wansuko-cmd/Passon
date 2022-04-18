@@ -3,6 +3,7 @@ package com.wsr.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.auth.ResetLoginPasswordUseCase
+import com.wsr.delete.DeleteUserUseCase
 import com.wsr.get.GetUserUseCase
 import com.wsr.maybe.mapBoth
 import com.wsr.update.UpdateUserUseCase
@@ -12,6 +13,7 @@ class SettingsViewModel(
     private val getUserUseCase: GetUserUseCase,
     private val updateUserUseCase: UpdateUserUseCase,
     private val resetLoginPasswordUseCase: ResetLoginPasswordUseCase,
+    private val deleteUserUseCase: DeleteUserUseCase,
 ) : ViewModel() {
 
     suspend fun getDisplayName(userId: String) =
@@ -26,9 +28,19 @@ class SettingsViewModel(
         }
     }
 
-    suspend fun updateLoginPassword(userId: String, loginPassword: String) {
+    fun updateLoginPassword(
+        userId: String,
+        loginPassword: String,
+        loginPasswordConfirmation: String,
+    ) {
         viewModelScope.launch {
-            resetLoginPasswordUseCase.reset(userId, loginPassword)
+            if (loginPassword == loginPasswordConfirmation) resetLoginPasswordUseCase.reset(userId, loginPassword)
+        }
+    }
+
+    fun deleteUser(userId: String) {
+        viewModelScope.launch {
+            deleteUserUseCase.delete(userId)
         }
     }
 }
