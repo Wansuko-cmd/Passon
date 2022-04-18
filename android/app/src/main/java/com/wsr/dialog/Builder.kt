@@ -112,13 +112,18 @@ class Builder {
         )
 
         return@toComplete { bundle: Lazy<Bundle> ->
-            binding.dialogPositiveButton.setOnClickListener {
-                positive(bundle.value)
-                dismiss()
-            }
-            binding.dialogNegativeButton.setOnClickListener {
-                negative(bundle.value)
-                dismiss()
+            binding.apply {
+                dialogPositiveButton.text = positiveText
+                dialogPositiveButton.setOnClickListener {
+                    positive(bundle.value)
+                    dismiss()
+                }
+
+                dialogNegativeButton.text = negativeText
+                dialogNegativeButton.setOnClickListener {
+                    negative(bundle.value)
+                    dismiss()
+                }
             }
             binding.root
         }
@@ -138,13 +143,18 @@ class Builder {
         )
 
         return@toComplete { bundle: Lazy<Bundle> ->
-            binding.dialogPositiveButton.setOnClickListener {
-                positive(bundle.value)
-                dismiss()
-            }
-            binding.dialogNegativeButton.setOnClickListener {
-                negative(bundle.value)
-                dismiss()
+            binding.apply {
+                dialogPositiveButton.text = positiveText
+                dialogPositiveButton.setOnClickListener {
+                    positive(bundle.value)
+                    dismiss()
+                }
+
+                dialogNegativeButton.text = negativeText
+                dialogNegativeButton.setOnClickListener {
+                    negative(bundle.value)
+                    dismiss()
+                }
             }
             binding.root
         }
