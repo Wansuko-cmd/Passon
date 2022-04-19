@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.wsr.R
 import com.wsr.databinding.FragmentEditBinding
-import com.wsr.ext.launchInLifecycleScope
+import com.wsr.utils.ext.launchInLifecycleScope
 import com.wsr.utils.consume
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

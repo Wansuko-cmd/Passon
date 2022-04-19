@@ -1,4 +1,4 @@
-package com.wsr.ext
+package com.wsr.utils.ext
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow

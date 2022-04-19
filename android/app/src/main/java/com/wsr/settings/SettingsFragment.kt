@@ -9,7 +9,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.wsr.dialog.BundleValue.Companion.getValue
 import com.wsr.R
-import com.wsr.ext.showDialogIfNotDrawn
+import com.wsr.utils.ext.showDialogIfNotDrawn
 import com.wsr.layout.InputType
 import com.wsr.dialog.PassonDialog
 import com.wsr.maybe.consume

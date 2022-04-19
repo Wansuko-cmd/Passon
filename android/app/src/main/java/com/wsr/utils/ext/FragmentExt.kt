@@ -1,4 +1,4 @@
-package com.wsr.ext
+package com.wsr.utils.ext
 
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
