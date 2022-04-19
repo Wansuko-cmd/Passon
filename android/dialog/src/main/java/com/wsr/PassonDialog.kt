@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import com.wsr.BundleValue.Companion.getValue
+import com.wsr.BundleValue.Companion.putValue
 import com.wsr.databinding.DialogMainBinding
-import com.wsr.dialog.BundleValue.Companion.getValue
-import com.wsr.dialog.BundleValue.Companion.putValue
 import com.wsr.utils.autoCleared
 
 class PassonDialog : DialogFragment() {

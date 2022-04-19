@@ -15,9 +15,7 @@
             android:contentDescription="TODO"
             app:layout_constraintBottom_toBottomOf="@id/layout_text_field_with_icon_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/layout_text_field_with_icon_text"
-            app:tint="@color/black"
-            tools:src="@drawable/ic_baseline_person_24" />
+            app:layout_constraintTop_toTopOf="@id/layout_text_field_with_icon_text" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_text_field_with_icon_text"
@@ -35,7 +33,6 @@
                 android:id="@+id/layout_text_field_with_icon_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:imeOptions="actionDone"
                 tools:text="Text" />

@@ -6,13 +6,14 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import com.wsr.Builder.Complete.Companion.toComplete
+import com.wsr.BundleValue.Companion.putValue
 import com.wsr.databinding.DialogButtonsBinding
 import com.wsr.databinding.DialogCheckboxWithTextBinding
 import com.wsr.databinding.DialogDangerButtonsBinding
 import com.wsr.databinding.DialogEditTextBinding
 import com.wsr.databinding.DialogMessageBinding
 import com.wsr.databinding.DialogTitleBinding
-import com.wsr.layout.InputType
 
 class Builder {
     private val bindingItems = mutableListOf<(LayoutInflater) -> ViewDataBinding>()
