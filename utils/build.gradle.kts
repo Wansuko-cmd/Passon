@@ -3,9 +3,6 @@ plugins {
 }
 
 allprojects {
-    repositories {
-        mavenCentral()
-    }
 
     apply(plugin = "kotlin")
 

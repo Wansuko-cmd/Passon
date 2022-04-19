@@ -16,13 +16,6 @@ buildscript {
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
 task<Delete>("clean") {
     delete(rootProject.buildDir)
 }

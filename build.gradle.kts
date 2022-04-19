@@ -1,8 +1,4 @@
 allprojects {
-    repositories {
-        mavenCentral()
-    }
-
     val ktlint by configurations.creating
 
     dependencies {
