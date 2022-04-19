@@ -1,4 +1,4 @@
-package com.wsr.dialog
+package com.wsr
 
 import android.app.AlertDialog
 import android.app.Dialog

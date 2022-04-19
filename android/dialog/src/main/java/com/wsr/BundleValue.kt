@@ -1,4 +1,4 @@
-package com.wsr.dialog
+package com.wsr
 
 import android.os.Bundle
 import android.view.View

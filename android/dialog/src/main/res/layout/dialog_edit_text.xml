@@ -6,9 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints=""
-        android:backgroundTint="@color/moss_green"
         android:inputType="text"
-        android:theme="@style/EditTextStyle"
         tools:text="EditText"
         tools:ignore="LabelFor,TextFields" />
 </layout>

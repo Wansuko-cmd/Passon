@@ -1,4 +1,4 @@
-package com.wsr.dialog
+package com.wsr
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,15 +6,12 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import com.wsr.R
 import com.wsr.databinding.DialogButtonsBinding
 import com.wsr.databinding.DialogCheckboxWithTextBinding
 import com.wsr.databinding.DialogDangerButtonsBinding
 import com.wsr.databinding.DialogEditTextBinding
 import com.wsr.databinding.DialogMessageBinding
 import com.wsr.databinding.DialogTitleBinding
-import com.wsr.dialog.Builder.Complete.Companion.toComplete
-import com.wsr.dialog.BundleValue.Companion.putValue
 import com.wsr.layout.InputType
 
 class Builder {
@@ -25,7 +22,7 @@ class Builder {
         bindingItems.add { inflater ->
             DataBindingUtil.inflate<DialogTitleBinding>(
                 inflater,
-                R.layout.dialog_title,
+                R.layout.dialog_edit_text,
                 null,
                 true,
             ).apply { dialogTitle.text = title }

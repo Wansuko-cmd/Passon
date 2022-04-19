@@ -9,5 +9,5 @@
 
 rootProject.name = "Passon"
 include("core", "core:domain", "core:usecase", "core:repository")
-include("android", "android:app", "android:dialog")
+include("android", "android:app", "android:dialog", "android:layout")
 include("utils")
