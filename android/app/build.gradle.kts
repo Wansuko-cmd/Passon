@@ -62,6 +62,8 @@ dependencies {
     implementation(project(":core:usecase"))
     implementation(project(":core:repository"))
     implementation(project(":core:domain"))
+    implementation(project(":android:dialog"))
+    implementation(project(":android:layout"))
 
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.1")
