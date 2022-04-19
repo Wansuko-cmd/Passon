@@ -1,8 +1,6 @@
-package com.wsr
+package com.wsr.dialog
 
 import android.os.Bundle
-import android.view.View
-import androidx.databinding.ViewDataBinding
 import java.io.Serializable
 
 class BundleValue<T>(private val value: T) : Serializable {

@@ -5,7 +5,7 @@ import com.wsr.editAddPasswordButton
 import com.wsr.editPasswordRow
 import com.wsr.editRemarkRow
 import com.wsr.editTitleRow
-import com.wsr.AfterTextChanged
+import com.wsr.layout.AfterTextChanged
 import com.wsr.utils.MyTyped2EpoxyController
 
 class EditEpoxyController(
@@ -27,7 +27,7 @@ class EditEpoxyController(
             id(passwordGroup.id)
             title(passwordGroup.title)
             afterTitleChanged(
-                com.wsr.AfterTextChanged(this@EditEpoxyController.afterTitleChanged)
+                AfterTextChanged(this@EditEpoxyController.afterTitleChanged)
             )
         }
 
@@ -41,12 +41,12 @@ class EditEpoxyController(
                     this@EditEpoxyController.onClickShowPassword(passwordItem.id)
                 }
                 afterNameChanged(
-                    com.wsr.AfterTextChanged(
+                    AfterTextChanged(
                         curry(this@EditEpoxyController.afterNameChanged)(passwordItem.id)
                     )
                 )
                 afterPasswordChanged(
-                    com.wsr.AfterTextChanged(
+                    AfterTextChanged(
                         curry(this@EditEpoxyController.afterPasswordChanged)(passwordItem.id)
                     )
                 )
@@ -67,7 +67,7 @@ class EditEpoxyController(
             id(passwordGroup.id)
             remark(passwordGroup.remark)
             afterRemarkChanged(
-                com.wsr.AfterTextChanged(this@EditEpoxyController.afterRemarkChanged)
+                AfterTextChanged(this@EditEpoxyController.afterRemarkChanged)
             )
         }
     }

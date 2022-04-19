@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="com.wsr.InputType" />
+        <import type="com.wsr.layout.InputType" />
 
         <variable
             name="title"
@@ -13,7 +13,7 @@
 
         <variable
             name="afterTitleChanged"
-            type="com.wsr.AfterTextChanged" />
+            type="com.wsr.layout.AfterTextChanged" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +24,7 @@
         android:layout_marginBottom="24dp"
         android:orientation="vertical">
 
-        <com.wsr.LayoutTextField
+        <com.wsr.layout.LayoutTextField
             android:id="@+id/model_edit_password_row_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

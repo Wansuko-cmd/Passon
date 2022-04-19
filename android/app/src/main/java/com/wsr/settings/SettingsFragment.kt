@@ -7,11 +7,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.wsr.R
 import com.wsr.dialog.BundleValue.Companion.getValue
-import com.wsr.dialog.PassonDialog
+import com.wsr.R
 import com.wsr.ext.showDialogIfNotDrawn
-import com.wsr.InputType
+import com.wsr.layout.InputType
+import com.wsr.dialog.PassonDialog
 import com.wsr.maybe.consume
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -93,12 +93,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 .setEditText(
                     key = "loginPassword",
                     hint = getString(R.string.settings_update_login_password_dialog_hint),
-                    inputType = com.wsr.InputType.TextPassword,
+                    inputType = InputType.TextPassword,
                 )
                 .setEditText(
                     key = "loginPasswordConfirmation",
                     hint = getString(R.string.settings_update_login_password_dialog_confirmation_hint),
-                    inputType = com.wsr.InputType.TextPassword,
+                    inputType = InputType.TextPassword,
                 )
                 .setButtons(
                     positiveText = getString(R.string.index_create_password_group_dialog_positive_button),

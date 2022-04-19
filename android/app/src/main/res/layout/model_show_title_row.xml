@@ -16,7 +16,7 @@
         android:layout_marginBottom="24dp"
         android:elevation="4dp">
 
-        <com.wsr.LayoutTextField
+        <com.wsr.layout.LayoutTextField
             android:id="@+id/model_show_password_row_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

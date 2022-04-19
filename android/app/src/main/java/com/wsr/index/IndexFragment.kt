@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.wsr.R
-import com.wsr.databinding.FragmentIndexBinding
 import com.wsr.dialog.BundleValue.Companion.getValue
 import com.wsr.dialog.PassonDialog
+import com.wsr.R
+import com.wsr.databinding.FragmentIndexBinding
 import com.wsr.ext.launchInLifecycleScope
 import com.wsr.ext.sharedViewModel
 import com.wsr.ext.showDialogIfNotDrawn

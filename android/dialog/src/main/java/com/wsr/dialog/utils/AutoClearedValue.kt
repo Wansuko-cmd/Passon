@@ -1,4 +1,4 @@
-package com.wsr.utils
+package com.wsr.dialog.utils
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver

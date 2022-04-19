@@ -1,4 +1,4 @@
-package com.wsr
+package com.wsr.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,14 +6,16 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import com.wsr.Builder.Complete.Companion.toComplete
-import com.wsr.BundleValue.Companion.putValue
-import com.wsr.databinding.DialogButtonsBinding
-import com.wsr.databinding.DialogCheckboxWithTextBinding
-import com.wsr.databinding.DialogDangerButtonsBinding
-import com.wsr.databinding.DialogEditTextBinding
-import com.wsr.databinding.DialogMessageBinding
-import com.wsr.databinding.DialogTitleBinding
+import com.wsr.dialog.R
+import com.wsr.dialog.Builder.Complete.Companion.toComplete
+import com.wsr.dialog.BundleValue.Companion.putValue
+import com.wsr.dialog.databinding.DialogButtonsBinding
+import com.wsr.dialog.databinding.DialogCheckboxWithTextBinding
+import com.wsr.dialog.databinding.DialogDangerButtonsBinding
+import com.wsr.dialog.databinding.DialogEditTextBinding
+import com.wsr.dialog.databinding.DialogMessageBinding
+import com.wsr.dialog.databinding.DialogTitleBinding
+import com.wsr.layout.InputType
 
 class Builder {
     private val bindingItems = mutableListOf<(LayoutInflater) -> ViewDataBinding>()
@@ -23,7 +25,7 @@ class Builder {
         bindingItems.add { inflater ->
             DataBindingUtil.inflate<DialogTitleBinding>(
                 inflater,
-                R.layout.dialog_edit_text,
+                R.layout.dialog_title,
                 null,
                 true,
             ).apply { dialogTitle.text = title }
@@ -101,7 +103,7 @@ class Builder {
         positive: DialogFragment.(Bundle) -> Unit,
         negativeText: String,
         negative: DialogFragment.(Bundle) -> Unit,
-    ): Complete  = toComplete { inflater: LayoutInflater ->
+    ): Complete = toComplete { inflater: LayoutInflater ->
         val binding = DataBindingUtil.inflate<DialogButtonsBinding>(
             inflater,
             R.layout.dialog_buttons,

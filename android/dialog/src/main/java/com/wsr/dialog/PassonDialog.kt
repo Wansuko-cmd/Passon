@@ -1,4 +1,4 @@
-package com.wsr
+package com.wsr.dialog
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -7,10 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import com.wsr.BundleValue.Companion.getValue
-import com.wsr.BundleValue.Companion.putValue
-import com.wsr.databinding.DialogMainBinding
-import com.wsr.utils.autoCleared
+import com.wsr.dialog.BundleValue.Companion.getValue
+import com.wsr.dialog.BundleValue.Companion.putValue
+import com.wsr.dialog.databinding.DialogMainBinding
+import com.wsr.dialog.utils.autoCleared
 
 class PassonDialog : DialogFragment() {
 

@@ -5,15 +5,15 @@
 
     <data>
 
-        <import type="com.wsr.InputType" />
+        <import type="com.wsr.layout.InputType" />
 
         <variable
             name="afterDisplayNameChanged"
-            type="com.wsr.AfterTextChanged" />
+            type="com.wsr.layout.AfterTextChanged" />
 
         <variable
             name="afterLoginPasswordChanged"
-            type="com.wsr.AfterTextChanged" />
+            type="com.wsr.layout.AfterTextChanged" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -66,7 +66,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sign_up_fragment_top_design_constraint_layout">
 
-            <com.wsr.LayoutTextField
+            <com.wsr.layout.LayoutTextField
                 android:id="@+id/sign_up_fragment_display_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.wsr.LayoutTextField
+            <com.wsr.layout.LayoutTextField
                 android:id="@+id/sign_up_fragment_login_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
