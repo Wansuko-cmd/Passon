@@ -8,7 +8,6 @@ import android.widget.FrameLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
-import com.wsr.layout.R
 import com.wsr.layout.databinding.LayoutTextFieldBinding
 
 class LayoutTextField @JvmOverloads constructor(
