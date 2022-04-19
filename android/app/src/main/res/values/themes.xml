@@ -16,15 +16,14 @@
         <item name="actionBarTheme">@style/ActionBarTheme</item>
 
         <item name="preferenceTheme">@style/PreferenceStyle</item>
+
+        <item name="android:colorControlActivated">@color/moss_green</item>
+        <item name="colorControlActivated">@color/moss_green</item>
     </style>
 
     <style name="ActionBarTheme" parent="ThemeOverlay.MaterialComponents.ActionBar">
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:iconTint">@color/white</item>
-    </style>
-
-    <style name="EditTextStyle">
-        <item name="colorControlActivated">@color/moss_green</item>
     </style>
 
     <style name="PreferenceStyle" parent="PreferenceThemeOverlay">

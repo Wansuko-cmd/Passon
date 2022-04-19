@@ -22,6 +22,7 @@
             android:maxLines="1"
             android:paddingHorizontal="16dp"
             android:focusable="false"
+            android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="@id/layout_checkbox_with_text_checkbox"
             app:layout_constraintStart_toEndOf="@id/layout_checkbox_with_text_checkbox"
             app:layout_constraintTop_toTopOf="@id/layout_checkbox_with_text_checkbox"
