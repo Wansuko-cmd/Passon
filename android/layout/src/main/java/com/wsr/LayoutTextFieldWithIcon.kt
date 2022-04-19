@@ -1,4 +1,4 @@
-package com.wsr.layout
+package com.wsr
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -8,7 +8,6 @@ import android.widget.FrameLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
-import com.wsr.R
 import com.wsr.databinding.LayoutTextFieldWithIconBinding
 
 class LayoutTextFieldWithIcon @JvmOverloads constructor(

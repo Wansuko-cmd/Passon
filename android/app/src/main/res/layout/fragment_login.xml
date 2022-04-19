@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="com.wsr.layout.InputType" />
+        <import type="com.wsr.InputType" />
 
         <variable
             name="afterTextChanged"
-            type="com.wsr.layout.AfterTextChanged" />
+            type="com.wsr.AfterTextChanged" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,7 +62,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/login_fragment_top_design_constraint_layout">
 
-            <com.wsr.layout.LayoutTextField
+            <com.wsr.LayoutTextField
                 android:id="@+id/login_fragment_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

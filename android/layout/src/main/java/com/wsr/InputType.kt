@@ -1,4 +1,4 @@
-package com.wsr.layout
+package com.wsr
 
 enum class InputType(val value: Int) {
     Text(1),

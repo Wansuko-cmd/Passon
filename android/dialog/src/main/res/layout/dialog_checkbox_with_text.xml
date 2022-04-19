@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.wsr.layout.LayoutCheckboxWithText
+    <com.wsr.LayoutCheckboxWithText
         android:id="@+id/dialog_checkbox_with_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.wsr.R
 import com.wsr.databinding.FragmentSignUpBinding
 import com.wsr.ext.launchInLifecycleScope
-import com.wsr.layout.AfterTextChanged
+import com.wsr.AfterTextChanged
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
@@ -22,8 +22,9 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
         FragmentSignUpBinding.bind(view).apply {
-            afterDisplayNameChanged = AfterTextChanged(signUpViewModel::updateDisplayName)
-            afterLoginPasswordChanged = AfterTextChanged(signUpViewModel::updateLoginPassword)
+            afterDisplayNameChanged = com.wsr.AfterTextChanged(signUpViewModel::updateDisplayName)
+            afterLoginPasswordChanged =
+                com.wsr.AfterTextChanged(signUpViewModel::updateLoginPassword)
             signUpFragmentNextButton.setOnClickListener { signUpViewModel.signUp() }
         }
 

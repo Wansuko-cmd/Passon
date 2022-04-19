@@ -14,7 +14,7 @@
         android:layout_margin="8dp"
         android:elevation="4dp">
 
-        <com.wsr.layout.LayoutTextFieldWithIcon
+        <com.wsr.LayoutTextFieldWithIcon
             android:id="@+id/model_show_password_row_remark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.wsr.layout
+package com.wsr
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
-import com.wsr.R
 import com.wsr.databinding.LayoutCheckboxWithTextBinding
 
 class LayoutCheckboxWithText @JvmOverloads constructor(

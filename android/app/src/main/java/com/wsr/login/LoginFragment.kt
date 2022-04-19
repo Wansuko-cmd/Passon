@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.wsr.R
 import com.wsr.databinding.FragmentLoginBinding
 import com.wsr.ext.launchInLifecycleScope
-import com.wsr.layout.AfterTextChanged
+import com.wsr.AfterTextChanged
 import com.wsr.utils.consume
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,7 +27,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
         val binding = FragmentLoginBinding.bind(view).apply {
-            afterTextChanged = AfterTextChanged(loginViewModel::updateEnteredPassword)
+            afterTextChanged = com.wsr.AfterTextChanged(loginViewModel::updateEnteredPassword)
             loginFragmentPassword.onEnterClicked(loginViewModel::checkPassword)
             loginFragmentNextButton.setOnClickListener { loginViewModel.checkPassword() }
             loginFragmentSignUpButton.setOnClickListener { navigateToSignUp() }
