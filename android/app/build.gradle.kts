@@ -66,13 +66,13 @@ dependencies {
     implementation(project(":android:layout"))
 
     // Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.4.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.4.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
 
     // Coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha05")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha06")
 
     // Epoxy
     val epoxyVersion = "4.6.3"

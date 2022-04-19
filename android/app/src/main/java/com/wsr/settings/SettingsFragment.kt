@@ -1,7 +1,9 @@
 package com.wsr.settings
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -13,6 +15,7 @@ import com.wsr.utils.ext.showDialogIfNotDrawn
 import com.wsr.layout.InputType
 import com.wsr.dialog.PassonDialog
 import com.wsr.maybe.consume
+import com.wsr.utils.ext.launchInLifecycleScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -30,12 +33,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
             setOnPreferenceClickListener {
                 lifecycleScope.launch {
                     settingsViewModel.getDisplayName(userId).consume(
-                        success = {
-                            showUpdateDisplayNameDialog(it.displayName)
-                        },
-                        failure = {
-                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                        }
+                        success = { showUpdateDisplayNameDialog(it.displayName) },
+                        failure = { showMessage(it.message) }
                     )
                 }
                 true
@@ -64,6 +63,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        launchInLifecycleScope(Lifecycle.State.STARTED) {
+            settingsViewModel.showMessageEvent.collect(::showMessage)
+        }
+    }
+
     private fun showUpdateDisplayNameDialog(currentDisplayName: String) {
         showDialogIfNotDrawn(tag) {
             PassonDialog.builder()
@@ -84,6 +90,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 )
                 .build()
         }
+    }
+
+    private fun showMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
     private fun showUpdateLoginPasswordDialog() {

@@ -14,7 +14,3 @@ fun UserUseCaseModel.toDisplayNameSettingsUiState() =
 data class ErrorSettingsUiState(
     val message: String,
 )
-
-data class SettingsUiState(
-    val displayName: State<DisplayNameSettingsUiState, ErrorSettingsUiState> = State.Loading,
-)

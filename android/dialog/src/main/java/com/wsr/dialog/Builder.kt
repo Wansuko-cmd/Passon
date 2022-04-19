@@ -6,7 +6,6 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import com.wsr.dialog.R
 import com.wsr.dialog.Builder.Complete.Companion.toComplete
 import com.wsr.dialog.BundleValue.Companion.putValue
 import com.wsr.dialog.databinding.DialogButtonsBinding

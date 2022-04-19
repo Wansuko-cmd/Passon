@@ -63,7 +63,7 @@ val module = module {
     viewModel { IndexViewModel(get(), get()) }
     viewModel { ShowViewModel(get(), get()) }
     viewModel { EditViewModel(get(), get(), get()) }
-    viewModel { SettingsViewModel(get(), get(), get(), get()) }
+    viewModel { SettingsViewModel(androidApplication(), get(), get(), get(), get()) }
 
     /**
      * UseCase
