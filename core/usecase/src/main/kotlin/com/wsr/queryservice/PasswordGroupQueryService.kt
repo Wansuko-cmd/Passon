@@ -9,5 +9,5 @@ interface PasswordGroupQueryService {
 }
 
 sealed class PasswordGroupQueryServiceException : Throwable() {
-    data class DatabaseError(override val message: String) : PasswordGroupQueryServiceException()
+    data class SystemError(override val message: String) : PasswordGroupQueryServiceException()
 }

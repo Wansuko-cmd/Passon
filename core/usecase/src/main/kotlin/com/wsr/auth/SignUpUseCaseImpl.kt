@@ -30,7 +30,7 @@ class SignUpUseCaseImpl(private val userRepository: UserRepository) : SignUpUseC
     }
 
     private fun CreateDataFailedException.toSignUpUseCaseException() = when (this) {
-        is CreateDataFailedException.DatabaseError ->
+        is CreateDataFailedException.SystemError ->
             SignUpUseCaseException.SystemError(
                 message = this.message,
                 cause = this,

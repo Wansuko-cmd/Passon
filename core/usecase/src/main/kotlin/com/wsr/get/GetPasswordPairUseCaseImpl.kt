@@ -17,7 +17,7 @@ class GetPasswordPairUseCaseImpl(
     private fun PasswordPairQueryServiceException.toGetPasswordPairUseCaseException() = when (this) {
         is PasswordPairQueryServiceException.NoSuchPasswordGroupException ->
             GetPasswordPairUseCaseException.NoSuchPasswordGroupException("")
-        is PasswordPairQueryServiceException.DatabaseError ->
+        is PasswordPairQueryServiceException.SystemError ->
             GetPasswordPairUseCaseException.SystemError(
                 message = this.message,
                 cause = this,

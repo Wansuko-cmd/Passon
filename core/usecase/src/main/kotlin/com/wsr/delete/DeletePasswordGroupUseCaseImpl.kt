@@ -17,7 +17,7 @@ class DeletePasswordGroupUseCaseImpl(
     private fun DeleteDataFailedException.toDeletePasswordGroupUseCaseException() = when (this) {
         is DeleteDataFailedException.NoSuchElementException ->
             DeletePasswordGroupUseCaseException.NoSuchPasswordGroupException("")
-        is DeleteDataFailedException.DatabaseError ->
+        is DeleteDataFailedException.SystemError ->
             DeletePasswordGroupUseCaseException.SystemError(
                 message = this.message,
                 cause = this,

@@ -15,7 +15,7 @@ class LocalUserRepositoryImpl(private val userEntityDao: UserEntityDao) : UserRe
         userEntityDao.insert(user.toEntity())
         Maybe.Success(Unit)
     } catch (e: Exception) {
-        Maybe.Failure(CreateDataFailedException.DatabaseError(e.message.orEmpty()))
+        Maybe.Failure(CreateDataFailedException.SystemError(e.message.orEmpty()))
     }
 
     override suspend fun update(
@@ -27,7 +27,7 @@ class LocalUserRepositoryImpl(private val userEntityDao: UserEntityDao) : UserRe
             .also { userEntityDao.update(it) }
         Maybe.Success(Unit)
     } catch (e: Exception) {
-        Maybe.Failure(UpdateDataFailedException.DatabaseError(e.message.orEmpty()))
+        Maybe.Failure(UpdateDataFailedException.SystemError(e.message.orEmpty()))
     }
 
     override suspend fun update(
@@ -39,13 +39,13 @@ class LocalUserRepositoryImpl(private val userEntityDao: UserEntityDao) : UserRe
             .also { userEntityDao.update(it) }
         Maybe.Success(Unit)
     } catch (e: Exception) {
-        Maybe.Failure(UpdateDataFailedException.DatabaseError(e.message.orEmpty()))
+        Maybe.Failure(UpdateDataFailedException.SystemError(e.message.orEmpty()))
     }
 
     override suspend fun delete(userId: UserId): Maybe<Unit, DeleteDataFailedException> = try {
         userEntityDao.delete(userId.value)
         Maybe.Success(Unit)
     } catch (e: Exception) {
-        Maybe.Failure(DeleteDataFailedException.DatabaseError(e.message.orEmpty()))
+        Maybe.Failure(DeleteDataFailedException.SystemError(e.message.orEmpty()))
     }
 }

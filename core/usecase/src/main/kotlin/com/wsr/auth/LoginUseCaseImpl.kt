@@ -33,7 +33,7 @@ class LoginUseCaseImpl(
     private fun UserQueryServiceException.toLoginUseCaseException() = when (this) {
         is UserQueryServiceException.NoSuchUserException ->
             LoginUseCaseException.NoSuchUserException("")
-        is UserQueryServiceException.DatabaseError ->
+        is UserQueryServiceException.SystemError ->
             LoginUseCaseException.SystemError(
                 message = this.message,
                 cause = this,

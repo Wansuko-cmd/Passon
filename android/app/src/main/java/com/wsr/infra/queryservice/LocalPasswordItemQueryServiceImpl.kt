@@ -18,6 +18,6 @@ class LocalPasswordItemQueryServiceImpl(
             .map { it.toPassword() }
             .let { Maybe.Success(it) }
     } catch (e: Exception) {
-        Maybe.Failure(PasswordItemQueryServiceException.DatabaseError(e.message.orEmpty()))
+        Maybe.Failure(PasswordItemQueryServiceException.SystemError(e.message.orEmpty()))
     }
 }

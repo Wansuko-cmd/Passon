@@ -68,13 +68,13 @@ class GetAllPasswordGroupUseCaseImplTest {
 
         coEvery {
             queryService.getAll(mockedUserId)
-        } returns Maybe.Failure(PasswordGroupQueryServiceException.DatabaseError(""))
+        } returns Maybe.Failure(PasswordGroupQueryServiceException.SystemError(""))
 
         val actual = target.get(mockedUserId.value)
         val expected = Maybe.Failure(
             GetAllPasswordGroupUseCaseException.SystemError(
                 "",
-                PasswordGroupQueryServiceException.DatabaseError(""),
+                PasswordGroupQueryServiceException.SystemError(""),
             )
         )
 

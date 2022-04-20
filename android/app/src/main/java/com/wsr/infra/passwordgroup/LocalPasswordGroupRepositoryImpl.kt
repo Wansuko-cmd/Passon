@@ -16,7 +16,7 @@ class LocalPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: Passw
             .insert(passwordGroup.toEntity())
         Maybe.Success(Unit)
     } catch (e: Exception) {
-        Maybe.Failure(CreateDataFailedException.DatabaseError(e.message ?: ""))
+        Maybe.Failure(CreateDataFailedException.SystemError(e.message ?: ""))
     }
 
     override suspend fun update(id: PasswordGroupId, title: String, remark: String) =
@@ -27,13 +27,13 @@ class LocalPasswordGroupRepositoryImpl(private val passwordGroupEntityDao: Passw
                 .let { passwordGroupEntityDao.update(it) }
             Maybe.Success(Unit)
         } catch (e: Exception) {
-            Maybe.Failure(UpdateDataFailedException.DatabaseError(e.message ?: ""))
+            Maybe.Failure(UpdateDataFailedException.SystemError(e.message ?: ""))
         }
 
     override suspend fun delete(id: PasswordGroupId) = try {
         passwordGroupEntityDao.delete(id.value)
         Maybe.Success(Unit)
     } catch (e: Exception) {
-        Maybe.Failure(DeleteDataFailedException.DatabaseError(e.message ?: ""))
+        Maybe.Failure(DeleteDataFailedException.SystemError(e.message ?: ""))
     }
 }

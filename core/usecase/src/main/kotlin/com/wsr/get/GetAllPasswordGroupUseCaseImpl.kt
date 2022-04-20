@@ -19,7 +19,7 @@ class GetAllPasswordGroupUseCaseImpl(
             )
 
     private fun PasswordGroupQueryServiceException.toGetAllPasswordGroupUseCaseException() = when (this) {
-        is PasswordGroupQueryServiceException.DatabaseError ->
+        is PasswordGroupQueryServiceException.SystemError ->
             GetAllPasswordGroupUseCaseException.SystemError(
                 message = this.message,
                 cause = this,

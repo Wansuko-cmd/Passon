@@ -20,7 +20,7 @@ class GetAllUserUseCaseImpl(private val userQueryService: UserQueryService) : Ge
                 message = this.message,
                 cause = this,
             )
-        is UserQueryServiceException.DatabaseError ->
+        is UserQueryServiceException.SystemError ->
             GetAllUserUseCaseException.SystemError(
                 message = this.message,
                 cause = this,

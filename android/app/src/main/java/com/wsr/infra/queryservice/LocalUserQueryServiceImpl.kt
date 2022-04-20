@@ -11,7 +11,7 @@ class LocalUserQueryServiceImpl(private val userEntityDao: UserEntityDao) : User
     override suspend fun get(userId: UserId): Maybe<User, UserQueryServiceException> = try {
         userEntityDao.getById(userId.value).toUser().let { Maybe.Success(it) }
     } catch (e: Exception) {
-        Maybe.Failure(UserQueryServiceException.DatabaseError(e.message.orEmpty()))
+        Maybe.Failure(UserQueryServiceException.SystemError(e.message.orEmpty()))
     }
 
     override suspend fun getAll(): Maybe<List<User>, UserQueryServiceException> = try {
@@ -20,6 +20,6 @@ class LocalUserQueryServiceImpl(private val userEntityDao: UserEntityDao) : User
             .map { it.toUser() }
             .let { Maybe.Success(it) }
     } catch (e: Exception) {
-        Maybe.Failure(UserQueryServiceException.DatabaseError(e.message.orEmpty()))
+        Maybe.Failure(UserQueryServiceException.SystemError(e.message.orEmpty()))
     }
 }

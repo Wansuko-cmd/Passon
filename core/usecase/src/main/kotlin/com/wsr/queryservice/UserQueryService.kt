@@ -11,5 +11,5 @@ interface UserQueryService {
 
 sealed class UserQueryServiceException : Throwable() {
     class NoSuchUserException(override val message: String) : UserQueryServiceException()
-    class DatabaseError(override val message: String) : UserQueryServiceException()
+    class SystemError(override val message: String) : UserQueryServiceException()
 }

@@ -22,7 +22,7 @@ class ResetLoginPasswordUseCaseImpl(
     private fun UpdateDataFailedException.toResetLoginPasswordUseCaseException() = when (this) {
         is UpdateDataFailedException.NoSuchElementException ->
             ResetLoginPasswordUseCaseException.NoSuchUserException("")
-        is UpdateDataFailedException.DatabaseError ->
+        is UpdateDataFailedException.SystemError ->
             ResetLoginPasswordUseCaseException.SystemError(
                 message = this.message,
                 cause = this,

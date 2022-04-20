@@ -19,7 +19,7 @@ class UpdateUserUseCaseImpl(private val userRepository: UserRepository) : Update
     private fun UpdateDataFailedException.toUpdateUserUseCaseException() = when (this) {
         is UpdateDataFailedException.NoSuchElementException ->
             UpdateUserUseCaseException.NoSuchUserException(this.message)
-        is UpdateDataFailedException.DatabaseError ->
+        is UpdateDataFailedException.SystemError ->
             UpdateUserUseCaseException.SystemError(
                 message = this.message,
                 cause = this,

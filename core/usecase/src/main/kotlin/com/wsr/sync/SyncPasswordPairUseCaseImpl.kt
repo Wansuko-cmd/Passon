@@ -88,7 +88,7 @@ class SyncPasswordPairUseCaseImpl(
     private fun UpdateDataFailedException.toSyncPasswordPairUseCaseException() = when (this) {
         is UpdateDataFailedException.NoSuchElementException ->
             SyncPasswordPairUseCaseException.NoSuchPasswordGroupException("")
-        is UpdateDataFailedException.DatabaseError ->
+        is UpdateDataFailedException.SystemError ->
             SyncPasswordPairUseCaseException.SystemError(
                 message = this.message,
                 cause = this,
@@ -98,7 +98,7 @@ class SyncPasswordPairUseCaseImpl(
     private fun DeleteDataFailedException.toSyncPasswordPairUseCaseException() = when (this) {
         is DeleteDataFailedException.NoSuchElementException ->
             SyncPasswordPairUseCaseException.NoSuchPasswordGroupException("")
-        is DeleteDataFailedException.DatabaseError ->
+        is DeleteDataFailedException.SystemError ->
             SyncPasswordPairUseCaseException.SystemError(
                 message = this.message,
                 cause = this,
@@ -106,7 +106,7 @@ class SyncPasswordPairUseCaseImpl(
     }
 
     private fun UpsertDataFailedException.toSyncPasswordPairUseCaseException() = when (this) {
-        is UpsertDataFailedException.DatabaseError ->
+        is UpsertDataFailedException.SystemError ->
             SyncPasswordPairUseCaseException.SystemError(
                 message = this.message,
                 cause = this,
@@ -116,7 +116,7 @@ class SyncPasswordPairUseCaseImpl(
     private fun PasswordItemQueryServiceException.toSyncPasswordPairUseCaseException() = when (this) {
         is PasswordItemQueryServiceException.NoSuchUserException ->
             SyncPasswordPairUseCaseException.NoSuchPasswordGroupException("")
-        is PasswordItemQueryServiceException.DatabaseError ->
+        is PasswordItemQueryServiceException.SystemError ->
             SyncPasswordPairUseCaseException.SystemError(
                 message = this.message,
                 cause = this,

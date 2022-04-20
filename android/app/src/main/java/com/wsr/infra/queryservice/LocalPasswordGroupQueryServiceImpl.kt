@@ -14,6 +14,6 @@ class LocalPasswordGroupQueryServiceImpl(private val passwordGroupEntityDao: Pas
             .map { it.toPasswordGroup() }
             .let { Maybe.Success(it) }
     } catch (e: Exception) {
-        Maybe.Failure(PasswordGroupQueryServiceException.DatabaseError(e.message.orEmpty()))
+        Maybe.Failure(PasswordGroupQueryServiceException.SystemError(e.message.orEmpty()))
     }
 }

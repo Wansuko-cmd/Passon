@@ -10,5 +10,5 @@ interface PasswordItemQueryService {
 
 sealed class PasswordItemQueryServiceException : Throwable() {
     class NoSuchUserException(override val message: String) : PasswordItemQueryServiceException()
-    class DatabaseError(override val message: String) : PasswordItemQueryServiceException()
+    class SystemError(override val message: String) : PasswordItemQueryServiceException()
 }

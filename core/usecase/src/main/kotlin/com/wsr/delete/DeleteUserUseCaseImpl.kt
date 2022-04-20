@@ -15,7 +15,7 @@ class DeleteUserUseCaseImpl(private val userRepository: UserRepository) : Delete
     private fun DeleteDataFailedException.toDeleteUserUseCaseException() = when (this) {
         is DeleteDataFailedException.NoSuchElementException ->
             DeleteUserUseCaseException.NoSuchUserUseCaseException("")
-        is DeleteDataFailedException.DatabaseError ->
+        is DeleteDataFailedException.SystemError ->
             DeleteUserUseCaseException.SystemError(
                 message = this.message,
                 cause = this,
