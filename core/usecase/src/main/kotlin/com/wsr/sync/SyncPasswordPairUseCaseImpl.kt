@@ -92,9 +92,9 @@ class SyncPasswordPairUseCaseImpl(
             throw this
     }
 
-    private fun DeleteDataFailedException.toSyncPasswordPairUseCaseException() = when (this) {
+    private fun DeleteDataFailedException.toSyncPasswordPairUseCaseException(): SyncPasswordPairUseCaseException = when (this) {
         is DeleteDataFailedException.NoSuchElementException ->
-            SyncPasswordPairUseCaseException.NoSuchPasswordGroupException("")
+            throw this
         is DeleteDataFailedException.SystemError ->
             throw this
     }
@@ -104,9 +104,9 @@ class SyncPasswordPairUseCaseImpl(
             throw this
     }
 
-    private fun PasswordItemsQueryServiceException.toSyncPasswordPairUseCaseException() = when (this) {
+    private fun PasswordItemsQueryServiceException.toSyncPasswordPairUseCaseException(): SyncPasswordPairUseCaseException = when (this) {
         is PasswordItemsQueryServiceException.NoSuchUserException ->
-            SyncPasswordPairUseCaseException.NoSuchPasswordGroupException("")
+            throw this
         is PasswordItemsQueryServiceException.SystemError ->
             throw this
     }
