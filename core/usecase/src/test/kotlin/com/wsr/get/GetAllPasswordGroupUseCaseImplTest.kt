@@ -2,8 +2,21 @@
 
 package com.wsr.get
 
+import com.google.common.truth.Truth.assertThat
+import com.wsr.maybe.Maybe
+import com.wsr.maybe.sequence
+import com.wsr.passwordgroup.PasswordGroup
+import com.wsr.passwordgroup.PasswordGroupId
+import com.wsr.passwordgroup.Remark
+import com.wsr.passwordgroup.Title
 import com.wsr.queryservice.PasswordGroupQueryService
+import com.wsr.queryservice.PasswordGroupQueryServiceException
+import com.wsr.toUseCaseModel
+import com.wsr.user.UserId
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.confirmVerified
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -23,54 +36,51 @@ class GetAllPasswordGroupUseCaseImplTest {
         target = GetAllPasswordGroupUseCaseImpl(queryService)
     }
 
-    /*** fetch関数 ***/
+    /*** get関数 ***/
     @Test
     fun userIdを渡すと所属する全てのPasswordGroupを返す() = runTest {
-//        val mockedEmail = Email("mockedEmail")
-//        val mockedPasswordGroups = List(5) { index ->
-//            PasswordGroup(
-//                id = PasswordGroupId("mockedPasswordGroupId$index"),
-//                userId = mockedEmail,
-//                title = Title("mockedTitle$index"),
-//                remark = Remark("mockedRemark$index"),
-//            )
-//        }
-//
-//        coEvery { queryService.getAllPasswordGroup(mockedEmail) } returns mockedPasswordGroups.map { it.toUseCaseModel() }.map { Maybe.Success(it) }.sequence()
-//
-//        target.data.test {
-//            target.fetch(mockedEmail.value)
-//
-//            assertThat(awaitItem()).isEqualTo(Maybe.Loading)
-//
-//            val expected = mockedPasswordGroups.map { it.toUseCaseModel() }
-//            assertThat(awaitItem()).isEqualTo(Maybe.Success(expected))
-//
-//            cancelAndIgnoreRemainingEvents()
-//        }
-//
-//        coVerify(exactly = 1) { queryService.getAllPasswordGroup(mockedEmail) }
-//        confirmVerified(queryService)
+        val mockedUserId = UserId("mockedUserId")
+        val mockedPasswordGroups = List(5) { index ->
+            PasswordGroup(
+                id = PasswordGroupId("mockedPasswordGroupId$index"),
+                userId = mockedUserId,
+                title = Title("mockedTitle$index"),
+                remark = Remark("mockedRemark$index"),
+            )
+        }
+
+        coEvery {
+            queryService.getAll(mockedUserId)
+        } returns mockedPasswordGroups.map { Maybe.Success(it) }.sequence()
+
+        val actual = target.get(mockedUserId.value)
+        val expected = Maybe.Success(mockedPasswordGroups.map { it.toUseCaseModel() })
+
+        assertThat(actual).isEqualTo(expected)
+
+        coVerify(exactly = 1) { queryService.getAll(mockedUserId) }
+        confirmVerified(queryService)
     }
 
     @Test
     fun 取得するときにエラーが起きればその内容を返す() = runTest {
-//        val mockedEmail = Email("mockedEmail")
-//
-//        coEvery { queryService.getAllPasswordGroup(mockedEmail) } throws Exception()
-//
-//        target.data.test {
-//            target.fetch(mockedEmail.value)
-//
-//            assertThat(awaitItem()).isEqualTo(Maybe.Loading)
-//
-//            val expected = FetchAllPasswordGroupUseCaseException.SystemError("", Exception())
-//            assertThat(awaitItem()).isEqualTo(Maybe.Failure(expected))
-//
-//            cancelAndIgnoreRemainingEvents()
-//        }
-//
-//        coVerify(exactly = 1) { queryService.getAllPasswordGroup(mockedEmail) }
-//        confirmVerified(queryService)
+        val mockedUserId = UserId("mockedUserId")
+
+        coEvery {
+            queryService.getAll(mockedUserId)
+        } returns Maybe.Failure(PasswordGroupQueryServiceException.DatabaseError(""))
+
+        val actual = target.get(mockedUserId.value)
+        val expected = Maybe.Failure(
+            GetAllPasswordGroupUseCaseException.SystemError(
+                "",
+                PasswordGroupQueryServiceException.DatabaseError(""),
+            )
+        )
+
+        assertThat(actual).isEqualTo(expected)
+
+        coVerify(exactly = 1) { queryService.getAll(mockedUserId) }
+        confirmVerified(queryService)
     }
 }

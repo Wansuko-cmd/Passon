@@ -16,7 +16,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class DeletePasswordGroupUsecaseImplTest {
+class DeletePasswordGroupUseCaseImplTest {
 
     @MockK
     private lateinit var passwordGroupRepository: PasswordGroupRepository
