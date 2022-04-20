@@ -31,6 +31,7 @@ class CreatePasswordGroupUseCaseImpl(
     }
 
     private fun CreateDataFailedException.toCreatePasswordGroupUseCaseException(): CreatePasswordGroupUseCaseException = when (this) {
+        is CreateDataFailedException.AlreadyExistException -> throw this
         is CreateDataFailedException.SystemError -> throw this
     }
 }
