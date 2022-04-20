@@ -22,6 +22,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GetAllPasswordGroupUseCaseImplTest {
@@ -70,15 +71,7 @@ class GetAllPasswordGroupUseCaseImplTest {
             queryService.getAll(mockedUserId)
         } returns Maybe.Failure(PasswordGroupQueryServiceException.SystemError(""))
 
-        val actual = target.get(mockedUserId.value)
-        val expected = Maybe.Failure(
-            GetAllPasswordGroupUseCaseException.SystemError(
-                "",
-                PasswordGroupQueryServiceException.SystemError(""),
-            )
-        )
-
-        assertThat(actual).isEqualTo(expected)
+        assertFailsWith<PasswordGroupQueryServiceException> { target.get(mockedUserId.value) }
 
         coVerify(exactly = 1) { queryService.getAll(mockedUserId) }
         confirmVerified(queryService)

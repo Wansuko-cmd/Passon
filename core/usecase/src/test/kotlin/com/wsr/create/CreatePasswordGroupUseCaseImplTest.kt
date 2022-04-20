@@ -24,6 +24,7 @@ import kotlinx.coroutines.test.runTest
 import java.util.UUID
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CreatePasswordGroupUseCaseImplTest {
@@ -75,15 +76,16 @@ class CreatePasswordGroupUseCaseImplTest {
         val mockedEmail = UserId("mockedEmail")
         val mockedTitle = "mockTitle"
 
-        coEvery { passwordGroupRepository.create(any()) } returns Maybe.Failure(CreateDataFailedException.SystemError())
-
-        val actual = target.create(
-            userId = mockedEmail.value,
-            title = mockedTitle,
+        coEvery { passwordGroupRepository.create(any()) } returns Maybe.Failure(
+            CreateDataFailedException.SystemError()
         )
-        val expected = Maybe.Failure(CreatePasswordGroupUseCaseException.SystemError("", CreateDataFailedException.SystemError()))
 
-        assertThat(actual).isEqualTo(expected)
+        assertFailsWith<CreateDataFailedException> {
+            target.create(
+                userId = mockedEmail.value,
+                title = mockedTitle,
+            )
+        }
 
         coVerify(exactly = 1) { passwordGroupRepository.create(any()) }
         confirmVerified(passwordGroupRepository)
