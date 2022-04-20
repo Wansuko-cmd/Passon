@@ -10,6 +10,7 @@ jobs:
       - name: 仮想ブランチにチェックアウト
         uses: actions/checkout@v2
 
+
       - name: gradleのライブラリ群をキャッシュ
         uses: actions/cache@preview
         with:
@@ -18,13 +19,14 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle-
 
       - name: Javaのセットアップ
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
           java-version: 11
+
 
       - name: ./gradlewに権限を付与
         run: |
           chmod 777 ${{ github.workspace }}/gradlew
       - name: テストを実行
         run: |
-          ${{ github.workspace }}/gradlew test
+          ${{ github.workspace }}/gradlew build
