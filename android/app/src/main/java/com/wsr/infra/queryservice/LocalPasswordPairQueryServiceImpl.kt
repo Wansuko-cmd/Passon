@@ -26,6 +26,6 @@ class LocalPasswordPairQueryServiceImpl(
             ).let { Maybe.Success(it) }
         }
     } catch (e: Exception) {
-        Maybe.Failure(PasswordPairQueryServiceException.SystemError(e.message.orEmpty()))
+        Maybe.Failure(PasswordPairQueryServiceException.SystemError(e.message.orEmpty(), e))
     }
 }

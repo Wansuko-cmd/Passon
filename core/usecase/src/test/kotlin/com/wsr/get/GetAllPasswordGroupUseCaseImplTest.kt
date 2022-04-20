@@ -69,7 +69,7 @@ class GetAllPasswordGroupUseCaseImplTest {
 
         coEvery {
             queryService.getAll(mockedUserId)
-        } returns Maybe.Failure(PasswordGroupsQueryServiceException.SystemError(""))
+        } returns Maybe.Failure(PasswordGroupsQueryServiceException.SystemError("", Exception()))
 
         assertFailsWith<PasswordGroupsQueryServiceException> { target.get(mockedUserId.value) }
 

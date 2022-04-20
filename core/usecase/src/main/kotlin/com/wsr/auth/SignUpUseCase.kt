@@ -10,5 +10,4 @@ interface SignUpUseCase {
     ): Maybe<Unit, SignUpUseCaseException>
 }
 
-sealed class SignUpUseCaseException : Throwable() {
-}
+sealed class SignUpUseCaseException : Throwable()

@@ -19,6 +19,8 @@ class GetAllPasswordGroupUseCaseImpl(
             )
 
     private fun PasswordGroupsQueryServiceException.toGetAllPasswordGroupUseCaseException(): GetAllPasswordGroupUseCaseException = when (this) {
+        is PasswordGroupsQueryServiceException.NoSuchUserException ->
+            GetAllPasswordGroupUseCaseException.NoSuchUserException("")
         is PasswordGroupsQueryServiceException.SystemError ->
             throw this
     }

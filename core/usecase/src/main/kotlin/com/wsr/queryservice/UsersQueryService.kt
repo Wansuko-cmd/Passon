@@ -8,5 +8,5 @@ interface UsersQueryService {
 }
 
 sealed class UsersQueryServiceException : Throwable() {
-    class SystemError(override val message: String) : UsersQueryServiceException()
+    class SystemError(override val message: String, override val cause: Throwable) : UsersQueryServiceException()
 }

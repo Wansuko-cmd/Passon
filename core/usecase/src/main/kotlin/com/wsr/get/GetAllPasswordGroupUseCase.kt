@@ -8,4 +8,5 @@ interface GetAllPasswordGroupUseCase {
 }
 
 sealed class GetAllPasswordGroupUseCaseException : Throwable() {
+    class NoSuchUserException(override val message: String) : GetAllPasswordGroupUseCaseException()
 }

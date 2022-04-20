@@ -10,5 +10,5 @@ interface PasswordPairQueryService {
 
 sealed class PasswordPairQueryServiceException : Throwable() {
     class NoSuchPasswordGroupException(override val message: String) : PasswordPairQueryServiceException()
-    class SystemError(override val message: String) : PasswordPairQueryServiceException()
+    class SystemError(override val message: String, override val cause: Throwable) : PasswordPairQueryServiceException()
 }

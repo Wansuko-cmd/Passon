@@ -105,7 +105,7 @@ class SyncPasswordPairUseCaseImpl(
     }
 
     private fun PasswordItemsQueryServiceException.toSyncPasswordPairUseCaseException(): SyncPasswordPairUseCaseException = when (this) {
-        is PasswordItemsQueryServiceException.NoSuchUserException ->
+        is PasswordItemsQueryServiceException.NoSuchPasswordGroupException ->
             throw this
         is PasswordItemsQueryServiceException.SystemError ->
             throw this

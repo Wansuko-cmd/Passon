@@ -10,5 +10,4 @@ interface CreatePasswordGroupUseCase {
     ): Maybe<PasswordGroupUseCaseModel, CreatePasswordGroupUseCaseException>
 }
 
-sealed class CreatePasswordGroupUseCaseException : Throwable() {
-}
+sealed class CreatePasswordGroupUseCaseException : Throwable()

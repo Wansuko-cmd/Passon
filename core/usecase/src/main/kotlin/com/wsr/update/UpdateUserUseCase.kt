@@ -8,8 +8,4 @@ interface UpdateUserUseCase {
 
 sealed class UpdateUserUseCaseException : Throwable() {
     data class NoSuchUserException(override val message: String) : UpdateUserUseCaseException()
-    data class SystemError(
-        override val message: String,
-        override val cause: Throwable,
-    ) : UpdateUserUseCaseException()
 }

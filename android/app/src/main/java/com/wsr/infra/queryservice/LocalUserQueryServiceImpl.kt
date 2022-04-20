@@ -13,6 +13,6 @@ class LocalUserQueryServiceImpl(private val userEntityDao: UserEntityDao) : User
     override suspend fun get(userId: UserId): Maybe<User, UserQueryServiceException> = try {
         userEntityDao.getById(userId.value).toUser().let { Maybe.Success(it) }
     } catch (e: Exception) {
-        Maybe.Failure(UserQueryServiceException.SystemError(e.message.orEmpty()))
+        Maybe.Failure(UserQueryServiceException.SystemError(e.message.orEmpty(), e))
     }
 }

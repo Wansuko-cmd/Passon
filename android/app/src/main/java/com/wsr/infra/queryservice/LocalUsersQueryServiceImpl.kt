@@ -13,6 +13,6 @@ class LocalUsersQueryServiceImpl(private val userEntityDao: UserEntityDao) : Use
             .map { it.toUser() }
             .let { Maybe.Success(it) }
     } catch (e: Exception) {
-        Maybe.Failure(UsersQueryServiceException.SystemError(e.message.orEmpty()))
+        Maybe.Failure(UsersQueryServiceException.SystemError(e.message.orEmpty(), e))
     }
 }

@@ -7,5 +7,4 @@ interface GetAllUserUseCase {
     suspend fun getAll(): Maybe<List<UserUseCaseModel>, GetAllUserUseCaseException>
 }
 
-sealed class GetAllUserUseCaseException : Throwable() {
-}
+sealed class GetAllUserUseCaseException : Throwable()
