@@ -10,7 +10,7 @@ import com.wsr.passwordgroup.PasswordGroupId
 import com.wsr.passwordgroup.Remark
 import com.wsr.passwordgroup.Title
 import com.wsr.queryservice.PasswordGroupQueryService
-import com.wsr.queryservice.PasswordGroupQueryServiceException
+import com.wsr.queryservice.PasswordGroupsQueryServiceException
 import com.wsr.toUseCaseModel
 import com.wsr.user.UserId
 import io.mockk.MockKAnnotations
@@ -69,9 +69,9 @@ class GetAllPasswordGroupUseCaseImplTest {
 
         coEvery {
             queryService.getAll(mockedUserId)
-        } returns Maybe.Failure(PasswordGroupQueryServiceException.SystemError(""))
+        } returns Maybe.Failure(PasswordGroupsQueryServiceException.SystemError(""))
 
-        assertFailsWith<PasswordGroupQueryServiceException> { target.get(mockedUserId.value) }
+        assertFailsWith<PasswordGroupsQueryServiceException> { target.get(mockedUserId.value) }
 
         coVerify(exactly = 1) { queryService.getAll(mockedUserId) }
         confirmVerified(queryService)

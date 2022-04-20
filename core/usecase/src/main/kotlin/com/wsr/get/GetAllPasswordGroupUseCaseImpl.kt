@@ -2,7 +2,7 @@ package com.wsr.get
 
 import com.wsr.maybe.mapBoth
 import com.wsr.queryservice.PasswordGroupQueryService
-import com.wsr.queryservice.PasswordGroupQueryServiceException
+import com.wsr.queryservice.PasswordGroupsQueryServiceException
 import com.wsr.toUseCaseModel
 import com.wsr.user.UserId
 
@@ -18,8 +18,8 @@ class GetAllPasswordGroupUseCaseImpl(
                 failure = { it.toGetAllPasswordGroupUseCaseException() },
             )
 
-    private fun PasswordGroupQueryServiceException.toGetAllPasswordGroupUseCaseException(): GetAllPasswordGroupUseCaseException = when (this) {
-        is PasswordGroupQueryServiceException.SystemError ->
+    private fun PasswordGroupsQueryServiceException.toGetAllPasswordGroupUseCaseException(): GetAllPasswordGroupUseCaseException = when (this) {
+        is PasswordGroupsQueryServiceException.SystemError ->
             throw this
     }
 }

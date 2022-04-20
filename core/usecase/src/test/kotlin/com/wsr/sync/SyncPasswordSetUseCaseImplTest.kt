@@ -14,7 +14,7 @@ import com.wsr.passworditem.Password
 import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
 import com.wsr.passworditem.PasswordItemRepository
-import com.wsr.queryservice.PasswordItemQueryService
+import com.wsr.queryservice.PasswordItemsQueryService
 import com.wsr.toUseCaseModel
 import com.wsr.user.UserId
 import io.mockk.MockKAnnotations
@@ -35,7 +35,7 @@ class SyncPasswordSetUseCaseImplTest {
     @MockK
     private lateinit var passwordItemRepository: PasswordItemRepository
     @MockK
-    private lateinit var queryService: PasswordItemQueryService
+    private lateinit var queryService: PasswordItemsQueryService
     private lateinit var target: SyncPasswordPairUseCase
 
     @BeforeTest

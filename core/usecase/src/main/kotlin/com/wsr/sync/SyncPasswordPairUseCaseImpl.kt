@@ -16,13 +16,13 @@ import com.wsr.passworditem.Password
 import com.wsr.passworditem.PasswordItemFactory
 import com.wsr.passworditem.PasswordItemId
 import com.wsr.passworditem.PasswordItemRepository
-import com.wsr.queryservice.PasswordItemQueryService
-import com.wsr.queryservice.PasswordItemQueryServiceException
+import com.wsr.queryservice.PasswordItemsQueryService
+import com.wsr.queryservice.PasswordItemsQueryServiceException
 
 class SyncPasswordPairUseCaseImpl(
     private val passwordGroupRepository: PasswordGroupRepository,
     private val passwordItemRepository: PasswordItemRepository,
-    private val passwordItemQueryService: PasswordItemQueryService,
+    private val passwordItemQueryService: PasswordItemsQueryService,
 ) : SyncPasswordPairUseCase {
 
     private val passwordItemFactory = PasswordItemFactory()
@@ -104,10 +104,10 @@ class SyncPasswordPairUseCaseImpl(
             throw this
     }
 
-    private fun PasswordItemQueryServiceException.toSyncPasswordPairUseCaseException() = when (this) {
-        is PasswordItemQueryServiceException.NoSuchUserException ->
+    private fun PasswordItemsQueryServiceException.toSyncPasswordPairUseCaseException() = when (this) {
+        is PasswordItemsQueryServiceException.NoSuchUserException ->
             SyncPasswordPairUseCaseException.NoSuchPasswordGroupException("")
-        is PasswordItemQueryServiceException.SystemError ->
+        is PasswordItemsQueryServiceException.SystemError ->
             throw this
     }
 }

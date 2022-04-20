@@ -30,19 +30,13 @@ import com.wsr.infra.passwordgroup.LocalPasswordGroupRepositoryImpl
 import com.wsr.infra.passwordgroup.PasswordGroupEntityDao
 import com.wsr.infra.passworditem.LocalPasswordItemRepositoryImpl
 import com.wsr.infra.passworditem.PasswordItemEntityDao
-import com.wsr.infra.queryservice.LocalPasswordGroupQueryServiceImpl
-import com.wsr.infra.queryservice.LocalPasswordItemQueryServiceImpl
-import com.wsr.infra.queryservice.LocalPasswordPairQueryServiceImpl
-import com.wsr.infra.queryservice.LocalUserQueryServiceImpl
+import com.wsr.infra.queryservice.*
 import com.wsr.infra.user.LocalUserRepositoryImpl
 import com.wsr.infra.user.UserEntityDao
 import com.wsr.login.LoginViewModel
 import com.wsr.passwordgroup.PasswordGroupRepository
 import com.wsr.passworditem.PasswordItemRepository
-import com.wsr.queryservice.PasswordGroupQueryService
-import com.wsr.queryservice.PasswordItemQueryService
-import com.wsr.queryservice.PasswordPairQueryService
-import com.wsr.queryservice.UserQueryService
+import com.wsr.queryservice.*
 import com.wsr.settings.SettingsViewModel
 import com.wsr.show.ShowViewModel
 import com.wsr.signup.SignUpViewModel
@@ -96,9 +90,10 @@ val module = module {
     /*** QueryService ***/
 
     single<PasswordGroupQueryService> { LocalPasswordGroupQueryServiceImpl(get()) }
-    single<PasswordItemQueryService> { LocalPasswordItemQueryServiceImpl(get()) }
+    single<PasswordItemsQueryService> { LocalPasswordItemQueryServiceImpl(get()) }
     single<PasswordPairQueryService> { LocalPasswordPairQueryServiceImpl(get(), get()) }
     single<UserQueryService> { LocalUserQueryServiceImpl(get()) }
+    single<UsersQueryService> { LocalUsersQueryServiceImpl(get()) }
 
     /*** Repository ***/
     single<PasswordGroupRepository> { LocalPasswordGroupRepositoryImpl(get()) }
