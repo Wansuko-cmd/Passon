@@ -8,8 +8,4 @@ interface GetAllUserUseCase {
 }
 
 sealed class GetAllUserUseCaseException : Throwable() {
-    data class SystemError(
-        override val message: String,
-        override val cause: Throwable,
-    ) : GetAllUserUseCaseException()
 }

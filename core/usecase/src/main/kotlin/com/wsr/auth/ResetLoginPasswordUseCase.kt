@@ -8,8 +8,4 @@ interface ResetLoginPasswordUseCase {
 
 sealed class ResetLoginPasswordUseCaseException : Throwable() {
     data class NoSuchUserException(override val message: String) : ResetLoginPasswordUseCaseException()
-    data class SystemError(
-        override val message: String,
-        override val cause: Throwable,
-    ) : ResetLoginPasswordUseCaseException()
 }

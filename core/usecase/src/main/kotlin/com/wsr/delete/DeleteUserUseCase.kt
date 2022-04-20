@@ -8,8 +8,4 @@ interface DeleteUserUseCase {
 
 sealed class DeleteUserUseCaseException : Throwable() {
     data class NoSuchUserUseCaseException(override val message: String) : DeleteUserUseCaseException()
-    data class SystemError(
-        override val message: String,
-        override val cause: Throwable,
-    ) : DeleteUserUseCaseException()
 }

@@ -11,8 +11,4 @@ interface SignUpUseCase {
 }
 
 sealed class SignUpUseCaseException : Throwable() {
-    data class SystemError(
-        override val message: String,
-        override val cause: Throwable,
-    ) : SignUpUseCaseException()
 }

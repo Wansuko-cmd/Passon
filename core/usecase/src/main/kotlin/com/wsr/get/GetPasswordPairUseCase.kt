@@ -9,8 +9,4 @@ interface GetPasswordPairUseCase {
 
 sealed class GetPasswordPairUseCaseException : Throwable() {
     data class NoSuchPasswordGroupException(override val message: String) : GetUserUseCaseException()
-    data class SystemError(
-        override val message: String,
-        override val cause: Throwable,
-    ) : GetUserUseCaseException()
 }
