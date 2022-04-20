@@ -14,6 +14,7 @@ import com.wsr.passworditem.Password
 import com.wsr.passworditem.PasswordItem
 import com.wsr.passworditem.PasswordItemId
 import com.wsr.passworditem.PasswordItemRepository
+import com.wsr.queryservice.PasswordItemQueryService
 import com.wsr.toUseCaseModel
 import com.wsr.user.UserId
 import io.mockk.MockKAnnotations
@@ -34,7 +35,7 @@ class SyncPasswordSetUseCaseImplTest {
     @MockK
     private lateinit var passwordItemRepository: PasswordItemRepository
     @MockK
-    private lateinit var queryService: SyncPasswordPairUseCaseQueryService
+    private lateinit var queryService: PasswordItemQueryService
     private lateinit var target: SyncPasswordPairUseCase
 
     @BeforeTest
@@ -81,7 +82,7 @@ class SyncPasswordSetUseCaseImplTest {
         } returns Maybe.Success(Unit)
         coEvery { passwordItemRepository.delete(PasswordItemId(any())) } returns Maybe.Success(Unit)
         coEvery { passwordItemRepository.upsert(any()) } returns Maybe.Success(Unit)
-        coEvery { queryService.getAllPasswordItemId(mockedPasswordGroupId) } returns mockedPasswordItems.map { it.id }.map { Maybe.Success(it) }.sequence()
+        coEvery { queryService.getAll(mockedPasswordGroupId) } returns mockedPasswordItems.map { Maybe.Success(it) }.sequence()
 
         target.sync(
             passwordGroupId = mockedPasswordGroupId.value,
@@ -96,7 +97,7 @@ class SyncPasswordSetUseCaseImplTest {
                 title = updatedMockedPasswordGroup.title.value,
                 remark = updatedMockedPasswordGroup.remark.value,
             )
-            queryService.getAllPasswordItemId(mockedPasswordGroupId)
+            queryService.getAll(mockedPasswordGroupId)
         }
         coVerify(exactly = 2) { passwordItemRepository.delete(PasswordItemId(any())) }
         coVerify(exactly = 3) { passwordItemRepository.upsert(any()) }

@@ -2,6 +2,7 @@
 
 package com.wsr.get
 
+import com.wsr.queryservice.PasswordPairQueryService
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,7 +14,7 @@ import kotlin.test.Test
 class GetPasswordPairUseCaseImplTest {
 
     @MockK
-    private lateinit var queryService: FetchPasswordPairUseCaseQueryService
+    private lateinit var queryService: PasswordPairQueryService
     private lateinit var target: GetPasswordPairUseCaseImpl
 
     @BeforeTest
