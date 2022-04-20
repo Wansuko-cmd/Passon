@@ -18,11 +18,8 @@ class GetAllPasswordGroupUseCaseImpl(
                 failure = { it.toGetAllPasswordGroupUseCaseException() },
             )
 
-    private fun PasswordGroupQueryServiceException.toGetAllPasswordGroupUseCaseException() = when (this) {
+    private fun PasswordGroupQueryServiceException.toGetAllPasswordGroupUseCaseException(): GetAllPasswordGroupUseCaseException = when (this) {
         is PasswordGroupQueryServiceException.SystemError ->
-            GetAllPasswordGroupUseCaseException.SystemError(
-                message = this.message,
-                cause = this,
-            )
+            throw this
     }
 }

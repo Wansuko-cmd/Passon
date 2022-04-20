@@ -21,9 +21,6 @@ class GetAllUserUseCaseImpl(private val userQueryService: UserQueryService) : Ge
                 cause = this,
             )
         is UserQueryServiceException.SystemError ->
-            GetAllUserUseCaseException.SystemError(
-                message = this.message,
-                cause = this,
-            )
+            throw this
     }
 }

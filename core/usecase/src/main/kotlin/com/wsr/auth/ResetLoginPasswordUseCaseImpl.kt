@@ -23,9 +23,6 @@ class ResetLoginPasswordUseCaseImpl(
         is UpdateDataFailedException.NoSuchElementException ->
             ResetLoginPasswordUseCaseException.NoSuchUserException("")
         is UpdateDataFailedException.SystemError ->
-            ResetLoginPasswordUseCaseException.SystemError(
-                message = this.message,
-                cause = this,
-            )
+            throw this
     }
 }

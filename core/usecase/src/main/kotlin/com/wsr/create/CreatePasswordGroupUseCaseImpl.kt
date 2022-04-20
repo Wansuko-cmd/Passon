@@ -30,11 +30,7 @@ class CreatePasswordGroupUseCaseImpl(
         )
     }
 
-    private fun CreateDataFailedException.toCreatePasswordGroupUseCaseException() = when (this) {
-        is CreateDataFailedException.SystemError ->
-            CreatePasswordGroupUseCaseException.SystemError(
-                message = this.message,
-                cause = this,
-            )
+    private fun CreateDataFailedException.toCreatePasswordGroupUseCaseException(): CreatePasswordGroupUseCaseException = when (this) {
+        is CreateDataFailedException.SystemError -> throw this
     }
 }

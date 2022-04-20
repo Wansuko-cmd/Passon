@@ -34,9 +34,6 @@ class LoginUseCaseImpl(
         is UserQueryServiceException.NoSuchUserException ->
             LoginUseCaseException.NoSuchUserException("")
         is UserQueryServiceException.SystemError ->
-            LoginUseCaseException.SystemError(
-                message = this.message,
-                cause = this,
-            )
+            throw this
     }
 }

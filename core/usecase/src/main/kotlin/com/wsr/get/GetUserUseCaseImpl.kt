@@ -19,9 +19,6 @@ class GetUserUseCaseImpl(private val userQueryService: UserQueryService) : GetUs
         is UserQueryServiceException.NoSuchUserException ->
             GetUserUseCaseException.NoSuchUserException("")
         is UserQueryServiceException.SystemError ->
-            GetUserUseCaseException.SystemError(
-                message = this.message,
-                cause = this,
-            )
+            throw this
     }
 }

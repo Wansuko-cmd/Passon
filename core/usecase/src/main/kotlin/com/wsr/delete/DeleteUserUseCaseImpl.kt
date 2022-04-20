@@ -16,9 +16,6 @@ class DeleteUserUseCaseImpl(private val userRepository: UserRepository) : Delete
         is DeleteDataFailedException.NoSuchElementException ->
             DeleteUserUseCaseException.NoSuchUserUseCaseException("")
         is DeleteDataFailedException.SystemError ->
-            DeleteUserUseCaseException.SystemError(
-                message = this.message,
-                cause = this,
-            )
+            throw this
     }
 }

@@ -18,9 +18,6 @@ class GetPasswordPairUseCaseImpl(
         is PasswordPairQueryServiceException.NoSuchPasswordGroupException ->
             GetPasswordPairUseCaseException.NoSuchPasswordGroupException("")
         is PasswordPairQueryServiceException.SystemError ->
-            GetPasswordPairUseCaseException.SystemError(
-                message = this.message,
-                cause = this,
-            )
+             throw this
     }
 }
