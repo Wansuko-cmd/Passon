@@ -13,9 +13,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.wsr.R
 import com.wsr.databinding.FragmentLoginBinding
-import com.wsr.utils.ext.launchInLifecycleScope
 import com.wsr.layout.AfterTextChanged
 import com.wsr.utils.consume
+import com.wsr.utils.ext.launchInLifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment(R.layout.fragment_login) {

@@ -4,8 +4,6 @@ import com.wsr.infra.user.UserEntityDao
 import com.wsr.maybe.Maybe
 import com.wsr.queryservice.UserQueryService
 import com.wsr.queryservice.UserQueryServiceException
-import com.wsr.queryservice.UsersQueryService
-import com.wsr.queryservice.UsersQueryServiceException
 import com.wsr.user.User
 import com.wsr.user.UserId
 

@@ -1,9 +1,7 @@
 package com.wsr.settings
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.R
 import com.wsr.auth.ResetLoginPasswordUseCase
@@ -40,7 +38,7 @@ class SettingsViewModel(
                 .consume(
                     success = {
                         _showMessageEvent.emit(getApplication<Application>().getString(R.string.settings_update_display_name_dialog_success_message))
-                              },
+                    },
                     failure = { _showMessageEvent.emit(it.message.orEmpty()) }
                 )
         }

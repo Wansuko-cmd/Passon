@@ -1,7 +1,6 @@
 package com.wsr.settings
 
 import com.wsr.UserUseCaseModel
-import com.wsr.utils.State
 
 data class DisplayNameSettingsUiState(
     val id: String,

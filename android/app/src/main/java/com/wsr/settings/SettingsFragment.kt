@@ -9,13 +9,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.wsr.dialog.BundleValue.Companion.getValue
 import com.wsr.R
-import com.wsr.utils.ext.showDialogIfNotDrawn
-import com.wsr.layout.InputType
+import com.wsr.dialog.BundleValue.Companion.getValue
 import com.wsr.dialog.PassonDialog
+import com.wsr.layout.InputType
 import com.wsr.maybe.consume
 import com.wsr.utils.ext.launchInLifecycleScope
+import com.wsr.utils.ext.showDialogIfNotDrawn
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

@@ -5,8 +5,6 @@ import com.wsr.maybe.Maybe
 import com.wsr.maybe.mapBoth
 import com.wsr.queryservice.UserQueryService
 import com.wsr.queryservice.UserQueryServiceException
-import com.wsr.queryservice.UsersQueryService
-import com.wsr.queryservice.UsersQueryServiceException
 import com.wsr.toUseCaseModel
 import com.wsr.user.UserId
 
