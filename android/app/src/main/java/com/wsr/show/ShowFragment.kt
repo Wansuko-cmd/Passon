@@ -18,13 +18,12 @@ import com.wsr.databinding.FragmentShowBinding
 import com.wsr.dialog.PassonDialog
 import com.wsr.utils.consume
 import com.wsr.utils.ext.launchInLifecycleScope
-import com.wsr.utils.ext.sharedViewModel
 import com.wsr.utils.ext.showDialogIfNotDrawn
-import org.koin.androidx.viewmodel.ViewModelOwner
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ShowFragment : Fragment(R.layout.fragment_show) {
 
-    private val showViewModel: ShowViewModel by sharedViewModel(owner = { ViewModelOwner.from(this) })
+    private val showViewModel: ShowViewModel by viewModel()
 
     private val args: ShowFragmentArgs by navArgs()
     private val passwordGroupId by lazy { args.passwordGroupId }

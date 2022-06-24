@@ -17,13 +17,12 @@ import com.wsr.dialog.BundleValue.Companion.getValue
 import com.wsr.dialog.PassonDialog
 import com.wsr.utils.consume
 import com.wsr.utils.ext.launchInLifecycleScope
-import com.wsr.utils.ext.sharedViewModel
 import com.wsr.utils.ext.showDialogIfNotDrawn
-import org.koin.androidx.viewmodel.ViewModelOwner.Companion.from
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class IndexFragment : Fragment(R.layout.fragment_index) {
 
-    private val indexViewModel: IndexViewModel by sharedViewModel(owner = { from(this) })
+    private val indexViewModel: IndexViewModel by viewModel()
 
     private val args: IndexFragmentArgs by navArgs()
     private val userId by lazy { args.userId }
