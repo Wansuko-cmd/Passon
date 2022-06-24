@@ -3,13 +3,13 @@ package com.wsr.show
 import com.wsr.showPasswordRow
 import com.wsr.showRemarkRow
 import com.wsr.showTitleRow
-import com.wsr.utils.MyTyped2EpoxyController
+import com.wsr.utils.RefreshableTyped2EpoxyController
 
 class ShowEpoxyController(
     private val onClickShowPassword: (passwordItemId: String) -> Unit,
     private val onClickPasswordCopy: (PasswordItemShowUiState) -> Unit,
 ) :
-    MyTyped2EpoxyController<PasswordGroupShowUiState, List<PasswordItemShowUiState>>() {
+    RefreshableTyped2EpoxyController<PasswordGroupShowUiState, List<PasswordItemShowUiState>>() {
 
     override fun buildModels(
         passwordGroup: PasswordGroupShowUiState,

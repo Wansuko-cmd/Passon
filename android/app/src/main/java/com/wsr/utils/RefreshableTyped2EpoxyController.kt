@@ -2,7 +2,7 @@ package com.wsr.utils
 
 import com.airbnb.epoxy.Typed2EpoxyController
 
-abstract class MyTyped2EpoxyController<T, U> : Typed2EpoxyController<T, U>() {
+abstract class RefreshableTyped2EpoxyController<T, U> : Typed2EpoxyController<T, U>() {
     private var data1: T? = null
     private var data2: U? = null
 
