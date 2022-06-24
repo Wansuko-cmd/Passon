@@ -2,7 +2,6 @@ package com.wsr.login
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
@@ -16,6 +15,7 @@ import com.wsr.databinding.FragmentLoginBinding
 import com.wsr.layout.AfterTextChanged
 import com.wsr.utils.consume
 import com.wsr.utils.ext.launchInLifecycleScope
+import com.wsr.utils.ext.showMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -123,10 +123,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         biometricPrompt.authenticate(promptInfo)
     }
-
-    private fun showMessage(message: String) = Toast
-        .makeText(requireContext(), message, Toast.LENGTH_SHORT)
-        .show()
 
     private fun navigateToIndex(userId: String) {
         val action = LoginFragmentDirections.actionLoginFragmentToIndexFragment(userId)

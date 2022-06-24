@@ -2,7 +2,6 @@ package com.wsr.signup
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -11,6 +10,7 @@ import com.wsr.R
 import com.wsr.databinding.FragmentSignUpBinding
 import com.wsr.layout.AfterTextChanged
 import com.wsr.utils.ext.launchInLifecycleScope
+import com.wsr.utils.ext.showMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
@@ -38,10 +38,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                 else showMessage(getString(R.string.sign_up_failure_message))
             }
         }
-    }
-
-    private fun showMessage(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun navigateToIndex() {

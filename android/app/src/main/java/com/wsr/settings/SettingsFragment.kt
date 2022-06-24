@@ -2,7 +2,6 @@ package com.wsr.settings
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -16,6 +15,7 @@ import com.wsr.layout.InputType
 import com.wsr.maybe.consume
 import com.wsr.utils.ext.launchInLifecycleScope
 import com.wsr.utils.ext.showDialogIfNotDrawn
+import com.wsr.utils.ext.showMessage
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -66,7 +66,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         launchInLifecycleScope(Lifecycle.State.STARTED) {
-            settingsViewModel.showMessageEvent.collect(::showMessage)
+            settingsViewModel.showMessageEvent.collect { showMessage(it) }
         }
     }
 
@@ -90,10 +90,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 )
                 .build()
         }
-    }
-
-    private fun showMessage(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
     private fun showUpdateLoginPasswordDialog() {
