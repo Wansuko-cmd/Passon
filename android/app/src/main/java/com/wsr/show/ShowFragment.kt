@@ -1,14 +1,10 @@
 package com.wsr.show
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
@@ -17,8 +13,11 @@ import com.wsr.R
 import com.wsr.databinding.FragmentShowBinding
 import com.wsr.dialog.PassonDialog
 import com.wsr.utils.consume
+import com.wsr.utils.ext.copyToClipboard
 import com.wsr.utils.ext.launchInLifecycleScope
 import com.wsr.utils.ext.showDialogIfNotDrawn
+import com.wsr.utils.ext.showErrorMessage
+import com.wsr.utils.ext.showMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ShowFragment : Fragment(R.layout.fragment_show) {
@@ -53,7 +52,10 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
 
         val showEpoxyController = ShowEpoxyController(
             onClickShowPassword = { showViewModel.updateShowPassword(it) },
-            onClickPasswordCopy = { writePasswordToClipboard(it.password) },
+            onClickPasswordCopy = {
+                copyToClipboard(it.password)
+                showMessage(getString(R.string.show_toast_on_copy_message))
+            },
         )
 
         binding.showFragmentRecyclerView.apply {
@@ -68,7 +70,7 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
 
                 showUiState.passwordGroup.consume(
                     success = showEpoxyController::setFirstData,
-                    failure = ::showErrorMessage,
+                    failure = { showErrorMessage(it.message) },
                     loading = { /* do nothing */ },
                 )
 
@@ -77,7 +79,7 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
                         binding.showFragmentNoPasswordMessage.visibility = if (passwordItems.isEmpty()) View.VISIBLE else View.GONE
                         showEpoxyController.setSecondData(passwordItems)
                     },
-                    failure = ::showErrorMessage,
+                    failure = { showErrorMessage(it.message) },
                     loading = { /* do nothing */ },
                 )
             }
@@ -88,19 +90,6 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
                 findNavController().popBackStack()
             }
         }
-    }
-
-    private fun writePasswordToClipboard(text: String) {
-        val clip = ClipData.newPlainText("password", text)
-        val clipBoardManager =
-            requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipBoardManager.setPrimaryClip(clip)
-
-        Toast.makeText(
-            context,
-            getString(R.string.show_toast_on_copy_message),
-            Toast.LENGTH_SHORT,
-        ).show()
     }
 
     private fun navigateToEdit(passwordGroupId: String) {
@@ -122,11 +111,4 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
                 .build()
         }
     }
-
-    private fun showErrorMessage(errorShowUiState: ErrorShowUiState) =
-        Toast.makeText(
-            context,
-            errorShowUiState.message,
-            Toast.LENGTH_LONG,
-        ).show()
 }

@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -18,6 +17,7 @@ import com.wsr.dialog.PassonDialog
 import com.wsr.utils.consume
 import com.wsr.utils.ext.launchInLifecycleScope
 import com.wsr.utils.ext.showDialogIfNotDrawn
+import com.wsr.utils.ext.showErrorMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class IndexFragment : Fragment(R.layout.fragment_index) {
@@ -69,7 +69,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
             indexViewModel.uiState.collect { indexUiState ->
                 indexUiState.passwordGroupsState.consume(
                     success = indexEpoxyController::setData,
-                    failure = ::showErrorMessage,
+                    failure = { showErrorMessage(it.message) },
                     loading = { /* do nothing */ },
                 )
             }
@@ -113,16 +113,9 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
                         indexViewModel.createPasswordGroup(userId, passwordGroupName, navigateToEdit)
                     },
                     negativeText = getString(R.string.index_create_password_group_dialog_negative_button),
-                    negative = { },
+                    negative = { /* do nothing */ },
                 )
                 .build()
         }
     }
-
-    private fun showErrorMessage(errorIndexUiState: ErrorIndexUiState) =
-        Toast.makeText(
-            context,
-            errorIndexUiState.message,
-            Toast.LENGTH_LONG,
-        ).show()
 }
