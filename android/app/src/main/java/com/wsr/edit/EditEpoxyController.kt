@@ -36,7 +36,7 @@ class EditEpoxyController(
                 id(passwordItem.id)
                 name(passwordItem.name)
                 password(passwordItem.password)
-                showPassword(passwordItem.showPassword)
+                showPassword(passwordItem.shouldShowPassword)
                 onClickShowPassword { _, _, _, _ ->
                     this@EditEpoxyController.onClickShowPassword(passwordItem.id)
                 }

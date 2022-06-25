@@ -42,81 +42,71 @@ class EditViewModel(
         viewModelScope.launch {
             val passwordPair = getPasswordPairUseCase.get(passwordGroupId).asState()
             _uiState.update { showUiState ->
-                showUiState.mapPasswordGroup(
-                    passwordGroup = passwordPair.map { it.passwordGroup }.mapBoth(
+                showUiState.mapPasswordGroup {
+                    passwordPair.map { it.passwordGroup }.mapBoth(
                         success = { it.toEditUiState() },
                         failure = { ErrorEditUiState(it.message ?: "") },
                     )
-                ).mapPasswordItems(
-                    passwordItems = passwordPair.map { it.passwordItems }.mapBoth(
+                }.mapPasswordItems {
+                    passwordPair.map { it.passwordItems }.mapBoth(
                         success = { list -> list.map { it.toEditUiState() } },
                         failure = { ErrorEditUiState(it.message ?: "") }
                     )
-                )
+                }
             }
         }
     }
 
     fun updateTitle(newTitle: String) {
         _uiState.update { editUiState ->
-            editUiState.mapPasswordGroup(
-                passwordGroup = editUiState.passwordGroup
-                    .map { it.copyWithTitle(newTitle) }
-            )
+            editUiState.mapPasswordGroup { passwordGroup ->
+                passwordGroup.map { it.copy(title = newTitle) }
+            }
         }
     }
 
     fun updateRemark(newRemark: String) {
         _uiState.update { editUiState ->
-            editUiState.mapPasswordGroup(
-                passwordGroup = editUiState.passwordGroup
-                    .map { it.copyWithRemark(newRemark) }
-            )
+            editUiState.mapPasswordGroup { passwordGroup ->
+                passwordGroup.map { it.copy(remark = newRemark) }
+            }
         }
     }
 
     fun updateName(passwordItemId: String, newName: String) {
-        val newPasswords = _uiState.value
-            .passwordItems
-            .map { list ->
-                list.map {
-                    if (it.id == passwordItemId) it.copyWithName(newName) else it
+        _uiState.update { editUiState ->
+            editUiState.mapPasswordItems { passwordItems ->
+                passwordItems.map { list ->
+                    list.map {
+                        if (it.id == passwordItemId) it.copy(name = newName) else it
+                    }
                 }
             }
-
-        _uiState.update { editUiState ->
-            editUiState.mapPasswordItems(newPasswords)
         }
     }
 
     fun updatePassword(passwordItemId: String, newPassword: String) {
-        val newPasswords = _uiState.value
-            .passwordItems
-            .map { list ->
-                list.map {
-                    if (it.id == passwordItemId) it.copyWithPassword(newPassword) else it
+        _uiState.update { editUiState ->
+            editUiState.mapPasswordItems { passwordItems ->
+                passwordItems.map { list ->
+                    list.map {
+                        if (it.id == passwordItemId) it.copy(password = newPassword) else it
+                    }
                 }
             }
-
-        _uiState.update { editUiState ->
-            editUiState.mapPasswordItems(newPasswords)
         }
     }
 
-    fun updateShowPassword(passwordItemId: String) {
+    fun updateShouldShowPassword(passwordItemId: String) {
         val newPasswordItems = _uiState.value
             .passwordItems
             .map { list ->
                 list.map {
-                    if (it.id == passwordItemId) it.copyWithShowPassword(!it.showPassword) else it
+                    if (it.id == passwordItemId) it.copy(shouldShowPassword = !it.shouldShowPassword) else it
                 }
             }
 
-        val newUiState = _uiState.value.mapPasswordItems(
-            passwordItems = newPasswordItems
-        )
-
-        _uiState.update { newUiState }
+        _uiState.update { editUiState -> editUiState.mapPasswordItems { newPasswordItems } }
 
         viewModelScope.launch {
             newPasswordItems.consume(
@@ -136,7 +126,7 @@ class EditViewModel(
             }
 
         _uiState.update { editUiState ->
-            editUiState.mapPasswordItems(newPasswordItems)
+            editUiState.mapPasswordItems { newPasswordItems }
         }
 
         viewModelScope.launch {
@@ -178,7 +168,7 @@ class EditViewModel(
             .map { passwordItems -> passwordItems.filter { it.id != passwordItemId } }
 
         _uiState.update { editUiState ->
-            editUiState.mapPasswordItems(newPasswordItems)
+            editUiState.mapPasswordItems { newPasswordItems }
         }
 
         viewModelScope.launch {

@@ -8,15 +8,12 @@ data class PasswordItemEditUiState(
     val id: String,
     val name: String,
     val password: String,
-    val showPassword: Boolean,
+    val shouldShowPassword: Boolean,
 ) {
-    fun copyWithName(name: String) = this.copy(name = name)
-    fun copyWithPassword(password: String) = this.copy(password = password)
-    fun copyWithShowPassword(showPassword: Boolean) = this.copy(showPassword = showPassword)
 
     companion object {
         fun PasswordItemUseCaseModel.toEditUiState() =
-            PasswordItemEditUiState(id = id, name = name, password = password, showPassword = false)
+            PasswordItemEditUiState(id = id, name = name, password = password, shouldShowPassword = false)
         fun PasswordItemEditUiState.toUseCaseModel(passwordGroupId: String) =
             PasswordItemUseCaseModel(id = id, passwordGroupId = passwordGroupId, name = name, password = password)
     }
@@ -27,9 +24,6 @@ data class PasswordGroupEditUiState(
     val title: String,
     val remark: String,
 ) {
-    fun copyWithTitle(title: String) = this.copy(title = title)
-    fun copyWithRemark(remark: String) = this.copy(remark = remark)
-
     companion object {
         fun PasswordGroupUseCaseModel.toEditUiState() =
             PasswordGroupEditUiState(id = id, title = title, remark = remark)
@@ -41,11 +35,15 @@ data class EditUiState(
     val passwordItems: State<List<PasswordItemEditUiState>, ErrorEditUiState> = State.Loading,
     val edited: Boolean = false,
 ) {
-    fun mapPasswordGroup(passwordGroup: State<PasswordGroupEditUiState, ErrorEditUiState>) =
-        this.copy(passwordGroup = passwordGroup, edited = true)
+    fun mapPasswordGroup(
+        passwordGroup: (State<PasswordGroupEditUiState, ErrorEditUiState>) -> State<PasswordGroupEditUiState, ErrorEditUiState>
+    ) =
+        this.copy(passwordGroup = passwordGroup(this.passwordGroup), edited = true)
 
-    fun mapPasswordItems(passwordItems: State<List<PasswordItemEditUiState>, ErrorEditUiState>) =
-        this.copy(passwordItems = passwordItems, edited = true)
+    fun mapPasswordItems(
+        passwordItems: (State<List<PasswordItemEditUiState>, ErrorEditUiState>) -> State<List<PasswordItemEditUiState>, ErrorEditUiState>
+    ) =
+        this.copy(passwordItems = passwordItems(this.passwordItems), edited = true)
 
     fun resetEdited() = this.copy(edited = false)
 }
