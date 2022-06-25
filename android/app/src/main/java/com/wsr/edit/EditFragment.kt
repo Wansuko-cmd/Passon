@@ -75,7 +75,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
         binding.editFragmentFab.setOnClickListener {
             launchInLifecycleScope(Lifecycle.State.STARTED) {
-                editViewModel.sync(passwordGroupId).consume(
+                editViewModel.syncPasswordPair(passwordGroupId).consume(
                     success = { showMessage(getString(R.string.edit_toast_on_save_message)) },
                     failure = { showErrorMessage(it.message) },
                     loading = { /* do nothing */ },

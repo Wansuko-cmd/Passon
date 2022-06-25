@@ -23,7 +23,7 @@ import kotlinx.coroutines.withContext
 
 class EditViewModel(
     private val getPasswordPairUseCase: GetPasswordPairUseCase,
-    private val syncPasswordSetUseCase: SyncPasswordPairUseCase,
+    private val syncPasswordPairUseCase: SyncPasswordPairUseCase,
     private val createPasswordItemUseCase: CreatePasswordItemUseCase,
 ) : ViewModel() {
 
@@ -42,12 +42,12 @@ class EditViewModel(
         viewModelScope.launch {
             val passwordPair = getPasswordPairUseCase.get(passwordGroupId).asState()
             _uiState.update { showUiState ->
-                showUiState.copyWithPasswordGroup(
+                showUiState.mapPasswordGroup(
                     passwordGroup = passwordPair.map { it.passwordGroup }.mapBoth(
                         success = { it.toEditUiState() },
                         failure = { ErrorEditUiState(it.message ?: "") },
                     )
-                ).copyWithPasswordItems(
+                ).mapPasswordItems(
                     passwordItems = passwordPair.map { it.passwordItems }.mapBoth(
                         success = { list -> list.map { it.toEditUiState() } },
                         failure = { ErrorEditUiState(it.message ?: "") }
@@ -58,24 +58,20 @@ class EditViewModel(
     }
 
     fun updateTitle(newTitle: String) {
-        viewModelScope.launch {
-            _uiState.update { editUiState ->
-                editUiState.copyWithPasswordGroup(
-                    passwordGroup = editUiState.passwordGroup
-                        .map { it.copyWithTitle(newTitle) }
-                )
-            }
+        _uiState.update { editUiState ->
+            editUiState.mapPasswordGroup(
+                passwordGroup = editUiState.passwordGroup
+                    .map { it.copyWithTitle(newTitle) }
+            )
         }
     }
 
     fun updateRemark(newRemark: String) {
-        viewModelScope.launch {
-            _uiState.update { editUiState ->
-                editUiState.copyWithPasswordGroup(
-                    passwordGroup = editUiState.passwordGroup
-                        .map { it.copyWithRemark(newRemark) }
-                )
-            }
+        _uiState.update { editUiState ->
+            editUiState.mapPasswordGroup(
+                passwordGroup = editUiState.passwordGroup
+                    .map { it.copyWithRemark(newRemark) }
+            )
         }
     }
 
@@ -88,10 +84,8 @@ class EditViewModel(
                 }
             }
 
-        viewModelScope.launch {
-            _uiState.update { editUiState ->
-                editUiState.copyWithPasswordItems(newPasswords)
-            }
+        _uiState.update { editUiState ->
+            editUiState.mapPasswordItems(newPasswords)
         }
     }
 
@@ -104,49 +98,48 @@ class EditViewModel(
                 }
             }
 
-        viewModelScope.launch {
-            _uiState.update { editUiState ->
-                editUiState.copyWithPasswordItems(newPasswords)
-            }
+        _uiState.update { editUiState ->
+            editUiState.mapPasswordItems(newPasswords)
         }
     }
 
-    fun updateShowPassword(passwordItemId: String) =
-        viewModelScope.launch {
-
-            val newPasswordItems = _uiState.value
-                .passwordItems
-                .map { list ->
-                    list.map {
-                        if (it.id == passwordItemId) it.copyWithShowPassword(!it.showPassword) else it
-                    }
+    fun updateShowPassword(passwordItemId: String) {
+        val newPasswordItems = _uiState.value
+            .passwordItems
+            .map { list ->
+                list.map {
+                    if (it.id == passwordItemId) it.copyWithShowPassword(!it.showPassword) else it
                 }
+            }
 
-            val newUiState = _uiState.value.copyWithPasswordItems(
-                passwordItems = newPasswordItems
-            )
+        val newUiState = _uiState.value.mapPasswordItems(
+            passwordItems = newPasswordItems
+        )
 
-            _uiState.emit(newUiState)
+        _uiState.update { newUiState }
 
+        viewModelScope.launch {
             newPasswordItems.consume(
                 success = { _editRefreshEvent.emit(EditRefreshEvent(passwordItems = it)) },
                 failure = { /* do nothing */ },
                 loading = { /* do nothing */ },
             )
         }
+    }
 
     fun createPasswordItem(passwordGroupId: String) {
-        viewModelScope.launch {
-            val newPasswordItems = _uiState.value.passwordItems
-                .map { list ->
-                    list + createPasswordItemUseCase.createPasswordItemInstance(passwordGroupId)
-                        .toEditUiState()
-                }
 
-            _uiState.update { editUiState ->
-                editUiState.copyWithPasswordItems(newPasswordItems)
+        val newPasswordItems = _uiState.value.passwordItems
+            .map { list ->
+                list + createPasswordItemUseCase.createPasswordItemInstance(passwordGroupId)
+                    .toEditUiState()
             }
 
+        _uiState.update { editUiState ->
+            editUiState.mapPasswordItems(newPasswordItems)
+        }
+
+        viewModelScope.launch {
             newPasswordItems.consume(
                 success = { _editRefreshEvent.emit(EditRefreshEvent(passwordItems = it)) },
                 failure = { /* do nothing */ },
@@ -155,7 +148,7 @@ class EditViewModel(
         }
     }
 
-    suspend fun sync(passwordGroupId: String): State<Unit, ErrorEditUiState> =
+    suspend fun syncPasswordPair(passwordGroupId: String): State<Unit, ErrorEditUiState> =
         withContext(viewModelScope.coroutineContext) {
             val passwordGroup = _uiState.value.passwordGroup
             val passwordItems = _uiState.value.passwordItems
@@ -163,7 +156,7 @@ class EditViewModel(
             when (passwordGroup) {
                 is State.Success -> when (passwordItems) {
                     is State.Success -> {
-                        syncPasswordSetUseCase.sync(
+                        syncPasswordPairUseCase.sync(
                             passwordGroupId,
                             passwordGroup.value.title,
                             passwordGroup.value.remark,
@@ -181,14 +174,14 @@ class EditViewModel(
         }
 
     fun deletePasswordItem(passwordItemId: String) {
+        val newPasswordItems = _uiState.value.passwordItems
+            .map { passwordItems -> passwordItems.filter { it.id != passwordItemId } }
+
+        _uiState.update { editUiState ->
+            editUiState.mapPasswordItems(newPasswordItems)
+        }
+
         viewModelScope.launch {
-            val newPasswordItems = _uiState.value.passwordItems
-                .map { passwordItems -> passwordItems.filter { it.id != passwordItemId } }
-
-            _uiState.update { editUiState ->
-                editUiState.copyWithPasswordItems(newPasswordItems)
-            }
-
             newPasswordItems.consume(
                 success = { _editRefreshEvent.emit(EditRefreshEvent(passwordItems = it)) },
                 failure = { /* do nothing */ },
@@ -198,10 +191,8 @@ class EditViewModel(
     }
 
     fun resetEdited() {
-        viewModelScope.launch {
-            _uiState.update { editUiState ->
-                editUiState.resetEdited()
-            }
+        _uiState.update { editUiState ->
+            editUiState.resetEdited()
         }
     }
 }

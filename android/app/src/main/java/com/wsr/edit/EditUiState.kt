@@ -41,10 +41,10 @@ data class EditUiState(
     val passwordItems: State<List<PasswordItemEditUiState>, ErrorEditUiState> = State.Loading,
     val edited: Boolean = false,
 ) {
-    fun copyWithPasswordGroup(passwordGroup: State<PasswordGroupEditUiState, ErrorEditUiState>) =
+    fun mapPasswordGroup(passwordGroup: State<PasswordGroupEditUiState, ErrorEditUiState>) =
         this.copy(passwordGroup = passwordGroup, edited = true)
 
-    fun copyWithPasswordItems(passwordItems: State<List<PasswordItemEditUiState>, ErrorEditUiState>) =
+    fun mapPasswordItems(passwordItems: State<List<PasswordItemEditUiState>, ErrorEditUiState>) =
         this.copy(passwordItems = passwordItems, edited = true)
 
     fun resetEdited() = this.copy(edited = false)
