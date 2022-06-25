@@ -33,9 +33,11 @@ data class ShowUiState(
     val passwordGroup: State<PasswordGroupShowUiState, ErrorShowUiState> = State.Loading,
     val passwordItems: State<List<PasswordItemShowUiState>, ErrorShowUiState> = State.Loading,
 ) {
-    fun copyWithPasswordGroup(passwordGroup: State<PasswordGroupShowUiState, ErrorShowUiState>) =
-        this.copy(passwordGroup = passwordGroup)
+    fun mapPasswordGroup(
+        passwordGroup: (State<PasswordGroupShowUiState, ErrorShowUiState>) -> State<PasswordGroupShowUiState, ErrorShowUiState>
+    ) = this.copy(passwordGroup = passwordGroup(this.passwordGroup))
 
-    fun copyWithPasswordItems(passwordItems: State<List<PasswordItemShowUiState>, ErrorShowUiState>) =
-        this.copy(passwordItems = passwordItems)
+    fun mapPasswordItems(
+        passwordItems: (State<List<PasswordItemShowUiState>, ErrorShowUiState>) -> State<List<PasswordItemShowUiState>, ErrorShowUiState>
+    ) = this.copy(passwordItems = passwordItems(this.passwordItems))
 }

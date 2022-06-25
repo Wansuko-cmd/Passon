@@ -28,7 +28,7 @@ class ShowViewModel(
     val navigateToIndexEvent = _navigateToIndexEvent.asSharedFlow()
 
     fun fetch(passwordGroupId: String) {
-        viewModelScope.launch { _uiState.emit(ShowUiState()) }
+        _uiState.update { ShowUiState() }
         fetchPasswordPair(passwordGroupId)
     }
 
@@ -36,34 +36,32 @@ class ShowViewModel(
         viewModelScope.launch {
             val passwordPair = getPasswordPairUseCase.get(passwordGroupId).asState()
             _uiState.update { showUiState ->
-                showUiState.copyWithPasswordGroup(
-                    passwordGroup = passwordPair.map { it.passwordGroup }.mapBoth(
+                showUiState.mapPasswordGroup {
+                    passwordPair.map { it.passwordGroup }.mapBoth(
                         success = { it.toShowUiModel() },
                         failure = { ErrorShowUiState(it.message ?: "") },
                     )
-                ).copyWithPasswordItems(
-                    passwordItems = passwordPair.map { it.passwordItems }.mapBoth(
+                }.mapPasswordItems {
+                    passwordPair.map { it.passwordItems }.mapBoth(
                         success = { list -> list.map { it.toShowUiModel() } },
                         failure = { ErrorShowUiState(it.message ?: "") }
                     )
-                )
+                }
             }
         }
     }
 
-    fun updateShouldShowPassword(passwordItemId: String) =
-        viewModelScope.launch {
-            _uiState.update { showUiState ->
-                val passwordItems = showUiState.passwordItems.map { list ->
+    fun updateShouldShowPassword(passwordItemId: String) {
+        _uiState.update { showUiState ->
+            showUiState.mapPasswordItems { passwordItems ->
+                passwordItems.map { list ->
                     list.map {
                         if (it.id == passwordItemId) it.copy(shouldShowPassword = !it.shouldShowPassword) else it
                     }
                 }
-                showUiState.copyWithPasswordItems(
-                    passwordItems = passwordItems
-                )
             }
         }
+    }
 
     fun delete(passwordGroupId: String) {
         viewModelScope.launch {
