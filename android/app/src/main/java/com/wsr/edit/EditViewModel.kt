@@ -108,13 +108,11 @@ class EditViewModel(
 
         _uiState.update { editUiState -> editUiState.mapPasswordItems { newPasswordItems } }
 
-        viewModelScope.launch {
-            newPasswordItems.consume(
-                success = { _editRefreshEvent.emit(EditRefreshEvent(passwordItems = it)) },
-                failure = { /* do nothing */ },
-                loading = { /* do nothing */ },
-            )
-        }
+        newPasswordItems.consume(
+            success = { emitRefreshEvent(passwordItems = it) },
+            failure = { /* do nothing */ },
+            loading = { /* do nothing */ },
+        )
     }
 
     fun createPasswordItem(passwordGroupId: String) {
@@ -129,13 +127,11 @@ class EditViewModel(
             editUiState.mapPasswordItems { newPasswordItems }
         }
 
-        viewModelScope.launch {
-            newPasswordItems.consume(
-                success = { _editRefreshEvent.emit(EditRefreshEvent(passwordItems = it)) },
-                failure = { /* do nothing */ },
-                loading = { /* do nothing */ },
-            )
-        }
+        newPasswordItems.consume(
+            success = { emitRefreshEvent(passwordItems = it) },
+            failure = { /* do nothing */ },
+            loading = { /* do nothing */ },
+        )
     }
 
     suspend fun syncPasswordPair(passwordGroupId: String): State<Unit, ErrorEditUiState> =
@@ -171,18 +167,25 @@ class EditViewModel(
             editUiState.mapPasswordItems { newPasswordItems }
         }
 
-        viewModelScope.launch {
-            newPasswordItems.consume(
-                success = { _editRefreshEvent.emit(EditRefreshEvent(passwordItems = it)) },
-                failure = { /* do nothing */ },
-                loading = { /* do nothing */ },
-            )
-        }
+        newPasswordItems.consume(
+            success = { emitRefreshEvent(passwordItems = it) },
+            failure = { /* do nothing */ },
+            loading = { /* do nothing */ },
+        )
     }
 
     fun resetEdited() {
         _uiState.update { editUiState ->
             editUiState.resetEdited()
+        }
+    }
+
+    private fun emitRefreshEvent(
+        passwordGroup: PasswordGroupEditUiState? = null,
+        passwordItems: List<PasswordItemEditUiState>? = null,
+    ) {
+        viewModelScope.launch {
+            _editRefreshEvent.emit(EditRefreshEvent(passwordGroup, passwordItems))
         }
     }
 }
