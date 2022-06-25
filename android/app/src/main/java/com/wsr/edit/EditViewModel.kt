@@ -63,7 +63,7 @@ class EditViewModel(
                 editUiState.copyWithPasswordGroup(
                     passwordGroup = editUiState.passwordGroup
                         .map { it.copyWithTitle(newTitle) }
-                ).copyWithEdited(edited = true)
+                )
             }
         }
     }
@@ -74,7 +74,7 @@ class EditViewModel(
                 editUiState.copyWithPasswordGroup(
                     passwordGroup = editUiState.passwordGroup
                         .map { it.copyWithRemark(newRemark) }
-                ).copyWithEdited(edited = true)
+                )
             }
         }
     }
@@ -90,7 +90,7 @@ class EditViewModel(
 
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.copyWithPasswordItems(newPasswords).copyWithEdited(edited = true)
+                editUiState.copyWithPasswordItems(newPasswords)
             }
         }
     }
@@ -106,7 +106,7 @@ class EditViewModel(
 
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.copyWithPasswordItems(newPasswords).copyWithEdited(edited = true)
+                editUiState.copyWithPasswordItems(newPasswords)
             }
         }
     }
@@ -144,7 +144,7 @@ class EditViewModel(
                 }
 
             _uiState.update { editUiState ->
-                editUiState.copyWithPasswordItems(newPasswordItems).copyWithEdited(edited = true)
+                editUiState.copyWithPasswordItems(newPasswordItems)
             }
 
             newPasswordItems.consume(
@@ -169,7 +169,7 @@ class EditViewModel(
                             passwordGroup.value.remark,
                             passwordItems.value.map { it.toUseCaseModel(passwordGroupId) },
                         )
-                        _uiState.update { editUiState -> editUiState.copyWithEdited(edited = false) }
+                        _uiState.update { editUiState -> editUiState.resetEdited() }
                         State.Success(Unit)
                     }
                     is State.Failure -> passwordItems
@@ -186,7 +186,7 @@ class EditViewModel(
                 .map { passwordItems -> passwordItems.filter { it.id != passwordItemId } }
 
             _uiState.update { editUiState ->
-                editUiState.copyWithPasswordItems(newPasswordItems).copyWithEdited(edited = true)
+                editUiState.copyWithPasswordItems(newPasswordItems)
             }
 
             newPasswordItems.consume(
@@ -200,7 +200,7 @@ class EditViewModel(
     fun resetEdited() {
         viewModelScope.launch {
             _uiState.update { editUiState ->
-                editUiState.copyWithEdited(edited = false)
+                editUiState.resetEdited()
             }
         }
     }

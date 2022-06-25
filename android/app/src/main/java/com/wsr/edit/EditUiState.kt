@@ -42,12 +42,12 @@ data class EditUiState(
     val edited: Boolean = false,
 ) {
     fun copyWithPasswordGroup(passwordGroup: State<PasswordGroupEditUiState, ErrorEditUiState>) =
-        this.copy(passwordGroup = passwordGroup)
+        this.copy(passwordGroup = passwordGroup, edited = true)
 
     fun copyWithPasswordItems(passwordItems: State<List<PasswordItemEditUiState>, ErrorEditUiState>) =
-        this.copy(passwordItems = passwordItems)
+        this.copy(passwordItems = passwordItems, edited = true)
 
-    fun copyWithEdited(edited: Boolean) = this.copy(edited = edited)
+    fun resetEdited() = this.copy(edited = false)
 }
 
 data class ErrorEditUiState(val message: String)
