@@ -51,7 +51,7 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
         showViewModel.fetch(passwordGroupId)
 
         val showEpoxyController = ShowEpoxyController(
-            onClickShowPassword = { showViewModel.updateShowPassword(it) },
+            onClickShouldShowPassword = { showViewModel.updateShouldShowPassword(it) },
             onClickPasswordCopy = {
                 copyToClipboard(it.password)
                 showMessage(getString(R.string.show_toast_on_copy_message))

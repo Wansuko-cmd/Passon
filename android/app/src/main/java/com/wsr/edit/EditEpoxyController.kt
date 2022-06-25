@@ -15,7 +15,7 @@ class EditEpoxyController(
     private val afterPasswordChanged: (passwordItemId: String, newPassword: String) -> Unit,
     private val onClickDeletePasswordItemButton: (passwordItemId: String) -> Unit,
     private val onClickAddPasswordButton: () -> Unit,
-    private val onClickShowPassword: (passwordItemId: String) -> Unit,
+    private val onClickShouldShowPassword: (passwordItemId: String) -> Unit,
 ) : RefreshableTyped2EpoxyController<PasswordGroupEditUiState, List<PasswordItemEditUiState>>() {
 
     override fun buildModels(
@@ -36,9 +36,9 @@ class EditEpoxyController(
                 id(passwordItem.id)
                 name(passwordItem.name)
                 password(passwordItem.password)
-                showPassword(passwordItem.shouldShowPassword)
-                onClickShowPassword { _, _, _, _ ->
-                    this@EditEpoxyController.onClickShowPassword(passwordItem.id)
+                shouldShowPassword(passwordItem.shouldShowPassword)
+                onClickShouldShowPassword { _, _, _, _ ->
+                    this@EditEpoxyController.onClickShouldShowPassword(passwordItem.id)
                 }
                 afterNameChanged(
                     AfterTextChanged(

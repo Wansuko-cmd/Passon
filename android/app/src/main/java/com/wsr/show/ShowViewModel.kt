@@ -51,12 +51,12 @@ class ShowViewModel(
         }
     }
 
-    fun updateShowPassword(passwordItemId: String) =
+    fun updateShouldShowPassword(passwordItemId: String) =
         viewModelScope.launch {
             _uiState.update { showUiState ->
                 val passwordItems = showUiState.passwordItems.map { list ->
                     list.map {
-                        if (it.id == passwordItemId) it.copyWithShowPassword(!it.showPassword) else it
+                        if (it.id == passwordItemId) it.copy(shouldShowPassword = !it.shouldShowPassword) else it
                     }
                 }
                 showUiState.copyWithPasswordItems(

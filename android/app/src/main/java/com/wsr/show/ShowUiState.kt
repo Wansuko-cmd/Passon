@@ -8,13 +8,11 @@ data class PasswordItemShowUiState(
     val id: String,
     val name: String,
     val password: String,
-    val showPassword: Boolean,
+    val shouldShowPassword: Boolean,
 ) {
-    fun copyWithShowPassword(showPassword: Boolean) = this.copy(showPassword = showPassword)
-
     companion object {
         fun PasswordItemUseCaseModel.toShowUiModel() =
-            PasswordItemShowUiState(id = id, name = name, password = password, showPassword = false)
+            PasswordItemShowUiState(id = id, name = name, password = password, shouldShowPassword = false)
     }
 }
 

@@ -65,7 +65,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             afterPasswordChanged = editViewModel::updatePassword,
             onClickDeletePasswordItemButton = { editViewModel.deletePasswordItem(it) },
             onClickAddPasswordButton = { editViewModel.createPasswordItem(passwordGroupId) },
-            onClickShowPassword = { editViewModel.updateShouldShowPassword(it) },
+            onClickShouldShowPassword = { editViewModel.updateShouldShowPassword(it) },
         )
 
         binding.editFragmentRecyclerView.apply {
