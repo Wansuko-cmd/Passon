@@ -127,7 +127,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 .setMessage(getString(R.string.settings_delete_user_dialog_message))
                 .setDangerButtons(
                     positiveText = getString(R.string.settings_delete_user_dialog_positive_button),
-                    positive = { settingsViewModel.deleteUser(userId) },
+                    positive = {
+                        settingsViewModel.deleteUser(userId)
+                        navigateToLogin()
+                    },
                     negativeText = getString(R.string.settings_delete_user_dialog_negative_button),
                     negative = {},
                 )
