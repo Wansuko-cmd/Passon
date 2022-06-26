@@ -63,7 +63,7 @@ class ShowViewModel(
         }
     }
 
-    fun delete(passwordGroupId: String) {
+    fun deletePasswordGroup(passwordGroupId: String) {
         viewModelScope.launch {
             deletePasswordGroupUseCase.delete(passwordGroupId)
             _navigateToIndexEvent.emit(Unit)

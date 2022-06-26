@@ -104,7 +104,7 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
                 .setMessage(getString(R.string.show_delete_password_group_dialog_text))
                 .setDangerButtons(
                     positiveText = getString(R.string.show_delete_password_group_dialog_positive_button),
-                    positive = { showViewModel.delete(passwordGroupId) },
+                    positive = { showViewModel.deletePasswordGroup(passwordGroupId) },
                     negativeText = getString(R.string.show_delete_password_group_dialog_negative_button),
                     negative = { /* do nothing */ },
                 )
