@@ -4,12 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.auth.LoginUseCase
 import com.wsr.get.GetAllUserUseCase
+import com.wsr.login.UserLoginUiState.Companion.checkSelectedUser
+import com.wsr.login.UserLoginUiState.Companion.getSelectedUser
 import com.wsr.maybe.consume
 import com.wsr.maybe.map
 import com.wsr.maybe.mapBoth
 import com.wsr.utils.State
 import com.wsr.utils.asState
 import com.wsr.utils.consume
+import com.wsr.utils.flatMap
 import com.wsr.utils.map
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +27,7 @@ class LoginViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUiState())
-    val uiState get() = _uiState.asStateFlow()
+    val uiState = _uiState.asStateFlow()
 
     private val _enteredPassword = MutableStateFlow("")
 
@@ -32,10 +35,10 @@ class LoginViewModel(
     val shouldPassEvent = _shouldPassEvent.asSharedFlow()
 
     private val _navigateToIndex = MutableSharedFlow<String>(replay = 0)
-    val navigateToIndex get() = _navigateToIndex.asSharedFlow()
+    val navigateToIndex = _navigateToIndex.asSharedFlow()
 
     private val _navigateToSignUp = MutableSharedFlow<Unit>(replay = 0)
-    val navigateToSignUp get() = _navigateToSignUp.asSharedFlow()
+    val navigateToSignUp = _navigateToSignUp.asSharedFlow()
 
     fun fetch(beforeUsedUserId: String? = null) {
         viewModelScope.launch { _uiState.emit(LoginUiState()) }
@@ -48,7 +51,7 @@ class LoginViewModel(
                 success = { users -> users.map { it.toLoginUiState() } },
                 failure = { ErrorLoginUiState(it.message.orEmpty()) },
             )
-                .map { users -> users.copyWithSelected(beforeUsedUserId ?: "") }
+                .map { users -> users.checkSelectedUser(beforeUsedUserId ?: "") }
                 .asState()
 
             users.consume(success = { if (it.isEmpty()) _navigateToSignUp.emit(Unit) })
@@ -64,46 +67,59 @@ class LoginViewModel(
     }
 
     fun updateIsSelected(userId: String) {
-        viewModelScope.launch {
-            _uiState.update { loginUiState ->
-                loginUiState.copyWithUsers(
-                    users = loginUiState.users
-                        .map { users -> users.copyWithSelected(userId) }
-                )
-            }
+        _uiState.update { loginUiState ->
+            loginUiState.copy(
+                users = loginUiState.users
+                    .map { users -> users.checkSelectedUser(userId) }
+            )
         }
     }
 
+    /**
+     * パスワード認証の際に用いるロジック
+     */
     fun checkPassword() {
         viewModelScope.launch {
-            val user = _uiState.value.users.map { it.getSelected() }
-            if (user is State.Success && user.value != null) {
-                loginUseCase.shouldPass(
-                    userId = user.value.id,
-                    password = _enteredPassword.value,
-                ).consume(
-                    success = {
-                        _shouldPassEvent.emit(true)
-                        _navigateToIndex.emit(user.value.id)
+            _uiState.value.users
+                .map { it.getSelectedUser() }
+                .flatMap {
+                    it?.let { State.Success(it) }
+                        ?: State.Failure(ErrorLoginUiState("Userが指定されていません"))
+                }
+                .consume(
+                    success = { user ->
+                        loginUseCase.shouldPass(
+                            userId = user.id,
+                            password = _enteredPassword.value,
+                        ).consume(
+                            success = {
+                                _shouldPassEvent.emit(true)
+                                _navigateToIndex.emit(user.id)
+                            },
+                            failure = { _shouldPassEvent.emit(false) }
+                        )
                     },
                     failure = { _shouldPassEvent.emit(false) }
                 )
-            } else _shouldPassEvent.emit(false)
         }
     }
 
+    /**
+     * 生体認証等のAndroid側のロジックで認証する際に用いるロジック
+     */
     fun passAuthentication() {
         viewModelScope.launch {
             _uiState.value
                 .users
-                .map { it.getSelected() }
+                .map { it.getSelectedUser() }
+                .flatMap {
+                    it?.let { State.Success(it) }
+                        ?: State.Failure(ErrorLoginUiState("Userが指定されていません"))
+                }
                 .consume(
                     success = {
-                        if (it == null) _shouldPassEvent.emit(false)
-                        else {
-                            _shouldPassEvent.emit(true)
-                            _navigateToIndex.emit(it.id)
-                        }
+                        _shouldPassEvent.emit(true)
+                        _navigateToIndex.emit(it.id)
                     },
                     failure = { _shouldPassEvent.emit(false) }
                 )
