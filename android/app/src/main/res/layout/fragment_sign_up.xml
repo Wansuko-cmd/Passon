@@ -16,95 +16,99 @@
             type="com.wsr.layout.AfterTextChanged" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/sign_up_fragment_top_design_constraint_layout"
-            android:layout_width="0dp"
-            android:layout_height="320dp"
-            android:background="@color/moss_green"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/sign_up_fragment_key_icon"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:background="@drawable/bg_shape_rounded_full"
-                android:backgroundTint="@color/white"
-                android:contentDescription="TODO"
-                android:padding="4dp"
-                android:src="@drawable/ic_outline_vpn_key_24"
-                app:layout_constraintBottom_toBottomOf="@id/sign_up_fragment_sign_up_text"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/sign_up_fragment_top_design_constraint_layout"
+                android:layout_width="0dp"
+                android:layout_height="320dp"
+                android:background="@color/moss_green"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/black" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/sign_up_fragment_sign_up_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/jetbrains_mono"
-                android:text="Sign Up"
-                android:textColor="@color/white"
-                android:textSize="64sp"
+                <ImageView
+                    android:id="@+id/sign_up_fragment_key_icon"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/bg_shape_rounded_full"
+                    android:backgroundTint="@color/white"
+                    android:contentDescription="TODO"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_outline_vpn_key_24"
+                    app:layout_constraintBottom_toBottomOf="@id/sign_up_fragment_sign_up_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:id="@+id/sign_up_fragment_sign_up_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/jetbrains_mono"
+                    android:text="Sign Up"
+                    android:textColor="@color/white"
+                    android:textSize="64sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/sign_up_fragment_key_icon" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/sign_up_fragment_key_icon" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@id/sign_up_fragment_top_design_constraint_layout">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sign_up_fragment_top_design_constraint_layout">
+                <com.wsr.layout.LayoutTextField
+                    android:id="@+id/sign_up_fragment_display_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    app:afterTextChanged="@{afterDisplayNameChanged}"
+                    app:hint="@{@string/sign_up_display_name_hint}"
+                    app:inputType="@{InputType.Text}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <com.wsr.layout.LayoutTextField
-                android:id="@+id/sign_up_fragment_display_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:afterTextChanged="@{afterDisplayNameChanged}"
-                app:hint="@{@string/sign_up_display_name_hint}"
-                app:inputType="@{InputType.Text}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <com.wsr.layout.LayoutTextField
+                    android:id="@+id/sign_up_fragment_login_password"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    app:afterTextChanged="@{afterLoginPasswordChanged}"
+                    app:hint="@{@string/login_password_hint}"
+                    app:inputType="@{InputType.TextPassword}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sign_up_fragment_display_name" />
 
-            <com.wsr.layout.LayoutTextField
-                android:id="@+id/sign_up_fragment_login_password"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:afterTextChanged="@{afterLoginPasswordChanged}"
-                app:hint="@{@string/login_password_hint}"
-                app:inputType="@{InputType.TextPassword}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sign_up_fragment_display_name" />
+                <Button
+                    android:id="@+id/sign_up_fragment_next_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="32dp"
+                    android:background="@drawable/bg_shape_rounded_corners"
+                    android:backgroundTint="@color/moss_green"
+                    android:text="@{@string/sign_up_next_button}"
+                    android:textFontWeight="700"
+                    app:layout_constraintTop_toBottomOf="@id/sign_up_fragment_login_password"
+                    tools:text="@{@string/sign_up_next_button}" />
 
-            <Button
-                android:id="@+id/sign_up_fragment_next_button"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="32dp"
-                android:background="@drawable/bg_shape_rounded_corners"
-                android:backgroundTint="@color/moss_green"
-                android:text="@{@string/sign_up_next_button}"
-                android:textFontWeight="700"
-                app:layout_constraintTop_toBottomOf="@id/sign_up_fragment_login_password"
-                tools:text="@{@string/sign_up_next_button}" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
